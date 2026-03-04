@@ -83,6 +83,173 @@
             </div>
         </div>
     </section>
+    <section id="menu" class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif tracking-widest text-[#2E4D07] mb-2">MENU</h2>
+                <p class="text-stone-400 text-sm tracking-widest uppercase">Healthy & Delicious</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="group">
+                    <div class="overflow-hidden rounded-lg mb-4 aspect-square shadow-sm">
+                        <img src="http://googleusercontent.com/placeholder-salad"
+                            alt="nappa特製 15品目のサラダプレート"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-bold text-lg text-stone-800">15品目のサラダプレート</h3>
+                        <span class="text-[#F29159] font-serif">¥1,480</span>
+                    </div>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        契約農家から届く有機野菜をたっぷりと。自家製ドレッシングで素材の味を。
+                    </p>
+                </div>
+
+                <div class="group">
+                    <div class="overflow-hidden rounded-lg mb-4 aspect-square shadow-sm">
+                        <img src="http://googleusercontent.com/placeholder-dessert"
+                            alt="季節のテリーヌショコラ"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-bold text-lg text-stone-800">季節のテリーヌショコラ</h3>
+                        <span class="text-[#F29159] font-serif">¥800</span>
+                    </div>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        濃厚ながらも後味は軽やか。旬のフルーツを添えた、心ほどける一皿。
+                    </p>
+                </div>
+
+                <div class="group">
+                    <div class="overflow-hidden rounded-lg mb-4 aspect-square shadow-sm">
+                        <img src="http://googleusercontent.com/placeholder-drink"
+                            alt="自家製ハーブレモネード"
+                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="flex justify-between items-baseline mb-2">
+                        <h3 class="font-bold text-lg text-stone-800">自家製レモネード</h3>
+                        <span class="text-[#F29159] font-serif">¥750</span>
+                    </div>
+                    <p class="text-stone-500 text-sm leading-relaxed">
+                        数種のハーブを漬け込んだ、爽やかな香りと優しい甘みが特徴。
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center">
+                <a href="#" class="capsule-btn">VIEW ALL MENU</a>
+            </div>
+        </div>
+    </section>
+    <section id="access" class="py-20 bg-[#F5F2E8]">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-serif tracking-widest text-[#2E4D07] mb-2">ACCESS</h2>
+                <p class="text-stone-400 text-sm tracking-widest uppercase">Map & Information</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div class="w-full h-[400px] rounded-xl overflow-hidden shadow-md bg-stone-100">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3244.6033327663223!2d139.65882697624646!3d35.58814573539062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185f83984d416b%3A0x6a0c56784013470!2sHanaCAFE%20nappa69!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+
+                <div class="flex flex-col gap-6 text-stone-700">
+                    <div>
+                        <h3 class="font-bold text-[#2E4D07] mb-2">住所</h3>
+                        <p class="text-sm leading-relaxed">
+                            〒211-0004<br>
+                            神奈川県川崎市中原区新丸子町963-1
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[#2E4D07] mb-2">アクセス</h3>
+                        <p class="text-sm leading-relaxed">
+                            東急東横線「新丸子駅」西口より徒歩2分<br>
+                            JR南武線・横須賀線「武蔵小杉駅」北口より徒歩7分
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[#2E4D07] mb-2">営業時間 / 定休日</h3>
+                        <p class="text-sm leading-relaxed">
+                            11:00 - 23:00 (L.O. 22:30)<br>
+                            定休日：不定休
+                        </p>
+                    </div>
+                    <div class="mt-4">
+                        <a href="tel:0448729286" class="capsule-btn text-center w-full md:w-auto">
+                            お電話でお問い合わせ
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="news" class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+                <div>
+                    <h2 class="text-3xl font-serif tracking-widest text-[#2E4D07] mb-2">NEWS</h2>
+                    <p class="text-stone-400 text-sm tracking-widest uppercase">Latest Updates</p>
+                </div>
+                <a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>" class="text-stone-500 hover:text-[#2E4D07] transition-colors text-sm tracking-widest flex items-center gap-2 group">
+                    VIEW ALL
+                    <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+                </a>
+            </div>
+
+            <div class="grid gap-8">
+                <?php
+                $args = array(
+                    'post_type'      => 'post',
+                    'posts_per_page' => 3,
+                );
+                $news_query = new WP_Query($args);
+
+                if ($news_query->have_posts()) :
+                    while ($news_query->have_posts()) : $news_query->the_post();
+                ?>
+                        <article class="group border-b border-stone-100 pb-8 last:border-0">
+                            <a href="<?php the_permalink(); ?>" class="flex flex-col md:flex-row gap-4 md:items-center">
+                                <time class="text-stone-400 font-medium text-sm w-32" datetime="<?php echo get_the_date('c'); ?>">
+                                    <?php echo get_the_date('Y . m . d'); ?>
+                                </time>
+                                <div class="flex-1">
+                                    <h3 class="text-lg text-stone-800 group-hover:text-[#2E4D07] transition-colors duration-300">
+                                        <?php the_title(); ?>
+                                    </h3>
+                                </div>
+                                <div class="text-[#F29159] opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </a>
+                        </article>
+                    <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                    ?>
+                    <p class="text-stone-500">現在、新しいお知らせはありません。</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
 </main>
 
 <?php get_footer(); ?>
