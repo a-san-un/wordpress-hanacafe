@@ -31,7 +31,10 @@ function hanacafe_scripts()
     // Tailwind CSS CDN (制作フェーズ用)
     wp_enqueue_script('tailwind-cdn', 'https://cdn.tailwindcss.com', array(), null, false);
 
-    // Material Symbols (アイコン)
+    // Material Symbols
     wp_enqueue_style('material-symbols', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0', array(), null);
+
+    // メインのJavaScript（Intersection Observer用）を追加
+    wp_enqueue_script('hanacafe-main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'hanacafe_scripts');

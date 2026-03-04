@@ -1,4 +1,4 @@
-<footer class="bg-[#2E4D07] text-white py-12">
+<footer class="bg-dark-green text-white py-12">
     <div class="container mx-auto px-4 text-center">
         <div class="mb-8">
             <h2 class="text-2xl font-['Montserrat'] font-bold mb-4">HanaCAFE nappa69</h2>
