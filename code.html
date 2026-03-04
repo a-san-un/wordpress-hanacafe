@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HanaCAFE nappa69 | 豊かな緑と安らぎのカフェ</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&amp;family=Noto+Sans+JP:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+<style type="text/tailwindcss">
+        @layer base {
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                @apply bg-[#F5F2E8] text-stone-800 font-['Noto_Sans_JP'] antialiased;
+            }
+            h1, h2, h3, h4, .font-serif {
+                @apply font-['Noto_Serif_JP'];
+            }
+        }
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4));
+        }
+        .reveal {
+            opacity: 1;}
+        .capsule-btn {
+            @apply bg-[#F29159] text-white px-10 py-3.5 rounded-[50px] transition-all hover:bg-[#e07d47] inline-block shadow-sm hover:shadow-lg text-sm tracking-widest font-medium;
+        }
+        .status-badge-ok {
+            @apply bg-[#2E4D07] text-white text-[11px] px-3 py-1 rounded-full flex items-center gap-1 shadow-md;
+        }
+        .status-badge-few {
+            @apply bg-[#EB4E34] text-white text-[11px] px-3 py-1 rounded-full flex items-center gap-1 shadow-md;
+        }
+        .status-badge-full {
+            @apply bg-stone-500 text-white text-[11px] px-3 py-1 rounded-full flex items-center gap-1 shadow-md;
+        }
+    </style>
+</head>
+<body>
+<header class="fixed w-full z-50 bg-[#F5F2E8]/90 backdrop-blur-md border-b border-stone-200">
+<div class="max-w-7xl mx-auto px-8 h-24 flex justify-between items-center">
+<a class="font-serif text-2xl font-bold tracking-tighter text-[#2E4D07]" href="#">HanaCAFE <span class="text-lg">nappa69</span></a>
+<nav class="hidden md:flex items-center space-x-12 text-[13px] tracking-[0.2em] font-medium text-stone-600">
+<a class="hover:text-[#2E4D07] transition-colors relative group" href="#">HOME<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#2E4D07] transition-all group-hover:w-full"></span></a>
+<a class="hover:text-[#2E4D07] transition-colors relative group" href="#about">ABOUT</a>
+<a class="hover:text-[#2E4D07] transition-colors relative group" href="#menu">MENU</a>
+<a class="hover:text-[#2E4D07] transition-colors relative group" href="#access">ACCESS</a>
+<a class="hover:text-[#2E4D07] transition-colors relative group" href="#news">NEWS</a>
+</nav>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-[#2E4D07] scale-125">menu</span>
+</div>
+</div>
+</header>
+<section class="relative h-[100vh] flex items-center justify-center overflow-hidden">
+<img alt="Greenery-filled entrance" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCpn82iLNyZV0Rpf5F4yvNepHLkWt75_LyGmJQnpPbhIO_S-WbQB5GEqOc6EEOYfCGBkfygGcFXV7eOkO7IkEvtmQutdlarJ0XbHRQtb7ZLDe1dkd8gsyq9fxtELao0o46AlCNFSGVRshJqx_iOKPw85VMOjyC--qPxWEyw2bf2KcaCciip0HtDHrjW8LVZ4kwxNdAvQKlWBk9fYiCZ_s91h5u1qF1p2oUdGlfKjcpL6v2QFLoZ55adCYEsG8NKimAS3xEbKtRvTo"/>
+<div class="absolute inset-0 hero-overlay"></div>
+<div class="relative z-10 text-center px-4 space-y-8">
+<h2 class="font-serif text-4xl md:text-6xl tracking-[0.2em] leading-relaxed drop-shadow-lg text-white">
+                日常に緑を、<br class="md:hidden"/>心に安らぎを。
+            </h2>
+<p class="text-lg md:text-xl tracking-[0.3em] font-light text-white drop-shadow-md">
+                体に優しい心が嬉しいお料理
+            </p>
+<div class="w-16 h-[1px] bg-white mx-auto opacity-50"></div>
+</div>
+</section>
+<section class="py-40 px-6 bg-[#F5F2E8]" id="about">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-24 reveal">
+<span class="text-[#2E4D07] text-sm tracking-[0.4em] font-bold block mb-6">ABOUT &amp; SEATS</span>
+<h3 class="text-3xl md:text-4xl mb-10 leading-relaxed text-[#2E4D07]">物語が動き出す、<br class="md:hidden"/>呼吸する空間。</h3>
+<p class="max-w-3xl mx-auto leading-[2.2] text-stone-600 text-[15px]">
+                    築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、玄米や有機野菜を中心とした体に優しいお料理をご用意しております。シーンに合わせて選べる3つの空間で、心地よいひとときをお過ごしください。
+                </p>
+</div>
+<div class="grid md:grid-cols-3 gap-8 lg:gap-12 mb-24">
+<div class="reveal flex flex-col group">
+<div class="relative overflow-hidden rounded-lg mb-8 aspect-[4/5]">
+<img alt="窓際カウンター席" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQvTfNt7-Vr7_IJNSr_G4mtCQDjIIVloTCXp5HuKraRFH3mo42RWLtwpIwH9G9tMF_nCT9V27Vw3zFeZyr4STKs-TC5EaUmkzMZyGsZ8L4O9fv1DtnrbqtUadjyzYLZX8pHIo5u-NO89tqfQGLrNE6HRZninh0PCsrxB55FoU5cvWM6NCC_1HGmyvk2X4UWDOhRaGSjw35e5QALhI-ebjHf9S-YXe4BcEl9Ctp0TSXPWIPIuyS5q9CPru-pbV3-ud2sg9laYvVh4E"/>
+<div class="absolute top-5 right-5 status-badge-ok">
+<span class="text-[8px]">●</span> ◯ 空席あり
+                        </div>
+</div>
+<div class="px-2">
+<span class="text-[#F29159] text-[11px] tracking-widest font-bold mb-3 block">COUNTER SEATS</span>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">一人の時間を愉しむ</h4>
+<p class="text-stone-500 text-sm leading-relaxed">読書や作業に最適な窓際席。柔らかな光に包まれて、自分だけの静かなリズムを取り戻す場所に。</p>
+</div>
+</div>
+<div class="reveal flex flex-col group">
+<div class="relative overflow-hidden rounded-lg mb-8 aspect-[4/5]">
+<img alt="テーブル・ソファ席" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEeworhgY1bIG0XstAF83pQUYLkrayFsrRZK6SNMBKzpDongt81x5RpScIRyxoE0sM8MLDAMtQ9UiGdk2fD-kEY1hTfaTfcfaurKoqn2wbVvopVCHuiTCs2H8m7_JBOxcN197Nv1n5Gs034m87ONv43mq5nQKTGlBt8YG-EIbDkJsJaTG5Np2OlLEwJ7-CYsOMUaoKXm-Cpbww7XjpiA6B4kFZErWC_3AYSoBcVxj2b9F9hTCpNdtY29e0vLM0NR6Sbz4f6Uijy04"/>
+<div class="absolute top-5 right-5 status-badge-few">
+<span class="text-[8px]">●</span> △ 残りわずか
+                        </div>
+</div>
+<div class="px-2">
+<span class="text-[#F29159] text-[11px] tracking-widest font-bold mb-3 block">TABLE &amp; SOFA</span>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">大切な人と寛ぐ</h4>
+<p class="text-stone-500 text-sm leading-relaxed">ゆったりとしたソファ席。美味しいお料理を囲みながら、会話が弾む温かな時間をご提供します。</p>
+</div>
+</div>
+<div class="reveal flex flex-col group">
+<div class="relative overflow-hidden rounded-lg mb-8 aspect-[4/5]">
+<img alt="縁側・テラス席" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp3YNUvQUL3VF3ctJdu4GEKx1G3VDdam1WwyvVOmPxpeN87uQubC3qVertHg91J7J9lTH3t3z2OVqMS35SF7zKN2z2RrJ8Zefwg6e-kz1aP-p2a1mvwWYqjCeu8rojX0_VVYNW2Rsn4qTPZvc2ECKVyU0tCso_BIyHN2evxNoAV2Ox-npiNmZ4dguEqzvyWm3wXe2xeXIs5XdIMj49F301mkoAXAQwa-QUkjOEzpQbKhQk_gqRI-t5Qy9FtDWciFwvxrhztQ_tdpI"/>
+<div class="absolute top-5 right-5 status-badge-ok">
+<span class="text-[8px]">●</span> ◯ 空席あり
+                        </div>
+<div class="absolute bottom-5 left-5 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded text-[11px] flex items-center gap-2 text-[#2E4D07] font-bold">
+<span class="material-symbols-outlined text-sm">pets</span> Pet Friendly
+                        </div>
+</div>
+<div class="px-2">
+<span class="text-[#F29159] text-[11px] tracking-widest font-bold mb-3 block">PORCH / TERRACE</span>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">自然の風を感じる</h4>
+<p class="text-stone-500 text-sm leading-relaxed">四季の移ろいを肌で感じる縁側席。ペットと一緒に、開放的な空間でリフレッシュを。</p>
+</div>
+</div>
+</div>
+<div class="text-center reveal">
+<a class="capsule-btn" href="#">空間について詳しく見る</a>
+</div>
+</div>
+</section>
+<section class="py-40 bg-white" id="menu">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-stone-100 pb-10 reveal">
+<div>
+<span class="text-[#2E4D07] text-sm tracking-[0.4em] font-bold block mb-4 uppercase">Menu</span>
+<h3 class="text-3xl md:text-4xl text-[#2E4D07]">身体が喜ぶ、旬の味覚。</h3>
+</div>
+<a class="text-[#F29159] font-medium hover:opacity-70 transition-opacity flex items-center gap-3 mt-8 md:mt-0 tracking-widest text-sm" href="#">
+                    VIEW ALL MENU <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-16">
+<div class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-8 aspect-[4/5]">
+<img alt="15品目のサラダプレート" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmDMHtGo0Naml4b6pxDr1u_VoL_pBBcNBPkez5MgAZ3KOZWer_EJqA7_O29i6EqbDQxN4YfFbvzjmSFLiB_soCa2gGU1HxrvvH3eSlz7MoU-n4Ol6kh-4LKCM0Wp48RjXXqVqwOZrqlKm3D_OFozidFqz8vba_MHqpTL-rtQruqY-WITms4guNMtI8jyR5vbRcU0TscH9VmmX0p43t7vAKCk1ng9MiRElxNrB4Lc5riL24J-yneABd28a8ktqBckOAmgGflnzC6bY"/>
+</div>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">nappa特製 15品目のサラダプレート</h4>
+<p class="text-stone-500 text-sm leading-[1.8] mb-4 italic">
+<span class="text-[#2E4D07] font-bold mr-2">有機野菜</span>をたっぷりと使用。一皿で必要な栄養を。
+                    </p>
+<p class="text-stone-400 text-sm leading-[1.8] mb-6">
+                        契約農家直送の旬野菜と<span class="font-medium text-stone-600">玄米</span>を合わせた、体の中から整う一番人気のランチ。
+                    </p>
+<p class="text-[#2E4D07] text-lg font-bold tracking-tighter">¥1,480</p>
+</div>
+<div class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-8 aspect-[4/5]">
+<img alt="季節のテリーヌショコラ" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEeworhgY1bIG0XstAF83pQUYLkrayFsrRZK6SNMBKzpDongt81x5RpScIRyxoE0sM8MLDAMtQ9UiGdk2fD-kEY1hTfaTfcfaurKoqn2wbVvopVCHuiTCs2H8m7_JBOxcN197Nv1n5Gs034m87ONv43mq5nQKTGlBt8YG-EIbDkJsJaTG5Np2OlLEwJ7-CYsOMUaoKXm-Cpbww7XjpiA6B4kFZErWC_3AYSoBcVxj2b9F9hTCpNdtY29e0vLM0NR6Sbz4f6Uijy04"/>
+</div>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">自家製 季節のテリーヌショコラ</h4>
+<p class="text-stone-500 text-sm leading-[1.8] mb-4 italic">
+                        卵や乳製品にもこだわった、優しく濃厚な味わい。
+                    </p>
+<p class="text-stone-400 text-sm leading-[1.8] mb-6">
+                        厳選したカカオと旬のフルーツを使用。体への負担を考えた控えめな甘さのスイーツ。
+                    </p>
+<p class="text-[#2E4D07] text-lg font-bold tracking-tighter">¥800</p>
+</div>
+<div class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-8 aspect-[4/5]">
+<img alt="ハーブティーレモネード" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8shmy6Vm3t2DA_gljwLhqog6G8EVnq2kooNCMo5giFJHQp5p4ifCWmH3GQv8V5bUvum1D0Oyc5gYnH4c7GrDhImDrFLD0rnxmTAhgzSzj89oQw2yKoszKULXHFtx_2uRVMNgpPTBa1WXKY0IvIdB7QYNCsruWtYV8ig_U4bluB6elPN700wAArjnunYO4tssPUYa58x7HvBNgYxdbgs9eWnOwub-QsBKoMUQnV9W24y39LfYkuZSLhVuoCTtkNnkB3k9EA9pAnOk"/>
+</div>
+<h4 class="text-xl mb-4 font-serif text-[#2E4D07]">自家製ハーブティーレモネード</h4>
+<p class="text-stone-500 text-sm leading-[1.8] mb-4 italic">
+                        心身をリセットする、自家製ボタニカルドリンク。
+                    </p>
+<p class="text-stone-400 text-sm leading-[1.8] mb-6">
+                        数種類のハーブと瀬戸内レモンを漬け込んだ、ビタミンたっぷりの爽やかな一杯。
+                    </p>
+<p class="text-[#2E4D07] text-lg font-bold tracking-tighter">¥750</p>
+</div>
+</div>
+</div>
+</section>
+<section class="py-40 bg-[#F5F2E8]" id="access">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid lg:grid-cols-2 gap-24 items-start">
+<div class="space-y-16 reveal">
+<div>
+<span class="text-[#2E4D07] text-sm tracking-[0.4em] font-bold block mb-6 uppercase">Access</span>
+<h3 class="text-4xl mb-14 text-[#2E4D07]">アクセス・店舗情報</h3>
+<div class="space-y-10 text-stone-600">
+<div class="flex gap-8 border-b border-stone-200 pb-8">
+<p class="text-[11px] tracking-widest text-stone-400 uppercase w-24 flex-shrink-0 pt-1">Address</p>
+<div class="space-y-2">
+<p class="text-lg font-serif">神奈川県川崎市中原区新丸子町963-1</p>
+<p class="text-sm text-stone-400">※新丸子駅西口より商店街を抜けてすぐ</p>
+</div>
+</div>
+<div class="flex gap-8 border-b border-stone-200 pb-8">
+<p class="text-[11px] tracking-widest text-stone-400 uppercase w-24 flex-shrink-0 pt-1">Access</p>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<span class="bg-[#2E4D07] text-white text-[10px] px-2 py-0.5 rounded">東急</span>
+<p class="text-[15px]">東横線「新丸子駅」西口 徒歩<span class="font-bold text-[#2E4D07] text-lg mx-1">2</span>分</p>
+</div>
+<div class="flex items-center gap-3">
+<span class="bg-stone-500 text-white text-[10px] px-2 py-0.5 rounded">JR</span>
+<p class="text-[15px]">南武線・横須賀線「武蔵小杉駅」JR北口 徒歩<span class="font-bold text-[#2E4D07] text-lg mx-1">5</span>分</p>
+</div>
+</div>
+</div>
+<div class="flex gap-8 border-b border-stone-200 pb-8">
+<p class="text-[11px] tracking-widest text-stone-400 uppercase w-24 flex-shrink-0 pt-1">Hours</p>
+<div class="space-y-1">
+<p class="text-lg font-serif">11:00 - 23:00</p>
+<p class="text-[13px] opacity-70">L.O. 22:30 / Lunch L.O. 15:00</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-8">
+<div class="flex flex-col gap-2">
+<p class="text-[11px] tracking-widest text-stone-400 uppercase">Tel</p>
+<p class="text-xl font-serif">044-872-9288</p>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-[11px] tracking-widest text-stone-400 uppercase">Closed</p>
+<p class="text-xl font-serif">不定休</p>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-6">
+<a class="capsule-btn flex items-center gap-3 justify-center w-fit" href="#">
+<span class="material-symbols-outlined text-lg">calendar_month</span>
+                            Web予約はこちら
+                        </a>
+</div>
+</div>
+<div class="reveal aspect-square rounded-sm overflow-hidden relative group shadow-2xl">
+<div class="absolute inset-0 flex items-center justify-center bg-stone-100">
+<div class="text-center p-12">
+<span class="material-symbols-outlined text-5xl text-[#2E4D07] mb-6">location_on</span>
+<p class="text-stone-400 text-sm tracking-[0.2em] mb-4">Google Maps で見る</p>
+<p class="text-[11px] text-stone-300">Google Maps を読み込み中...</p>
+</div>
+</div>
+<div class="absolute inset-0 bg-[#2E4D07] opacity-0 group-hover:opacity-10 transition-opacity duration-500 cursor-pointer"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="py-40 bg-white" id="news">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-24 reveal">
+<span class="text-[#2E4D07] text-sm tracking-[0.4em] font-bold block mb-6 uppercase">News</span>
+<h3 class="text-3xl text-[#2E4D07]">大切なお知らせ</h3>
+</div>
+<div class="grid md:grid-cols-3 gap-12">
+<article class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-6 aspect-video">
+<img alt="News" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcawJZ9TgVsGN8sNJsB-tSumuzCCMZigH0eFBm61R_7oGdJGdZLYzehoYsiuIPZkYTYN9VAz4nfGeVMhh883mLF9EGTeWi8PhNGemQG9YPHS_Rlhp-h-yeczbU5pL-UTDbWNvSmxyX-jl50xDuEjKducO_l9_JorV9D8axyMuKRBDtj6t43gE8PTeUMaAVPuxOE14_uV2DiIXwSx-p2XkOJxAIVqxTm9QyfVbIqp8WCtjKYy_-kXefz0WAOvsEu-4ClecgnzpUvD0"/>
+</div>
+<time class="text-[11px] text-stone-400 tracking-widest block mb-3">2024.05.15</time>
+<h4 class="text-stone-800 font-medium group-hover:text-[#F29159] transition-colors leading-relaxed">初夏のフラワーワークショップ開催のお知らせ</h4>
+</article>
+<article class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-6 aspect-video">
+<img alt="News" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbfrlThY_M65AbiMr5RI3l85jKPpCDzL2fhRfWFsPwp-YAc_VzO2FARqht0rb3l0FCXiLaFvxXgORYDkdg8MxH9fGWQHHM-2A3G8be2RSy0BWkRKxQP08MvvyvzXnmdVAvQNnQGu9KIkEcVYrKC7m8_RTrSqWvYrAK90TIRqeqJinFPSCS18opQ8O09qFuivn089IfiLIxnODjrRasrCbdziscBcbZallcqXnWo5Z6sHLU2D4hhvhLvym9TYnA8TYkJ2-Me7c77iI"/>
+</div>
+<time class="text-[11px] text-stone-400 tracking-widest block mb-3">2024.05.01</time>
+<h4 class="text-stone-800 font-medium group-hover:text-[#F29159] transition-colors leading-relaxed">GW期間中の営業時間とご予約について</h4>
+</article>
+<article class="reveal group cursor-pointer">
+<div class="overflow-hidden rounded-sm mb-6 aspect-video">
+<img alt="News" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmDMHtGo0Naml4b6pxDr1u_VoL_pBBcNBPkez5MgAZ3KOZWer_EJqA7_O29i6EqbDQxN4YfFbvzjmSFLiB_soCa2gGU1HxrvvH3eSlz7MoU-n4Ol6kh-4LKCM0Wp48RjXXqVqwOZrqlKm3D_OFozidFqz8vba_MHqpTL-rtQruqY-WITms4guNMtI8jyR5vbRcU0TscH9VmmX0p43t7vAKCk1ng9MiRElxNrB4Lc5riL24J-yneABd28a8ktqBckOAmgGflnzC6bY"/>
+</div>
+<time class="text-[11px] text-stone-400 tracking-widest block mb-3">2024.04.20</time>
+<h4 class="text-stone-800 font-medium group-hover:text-[#F29159] transition-colors leading-relaxed">春の新作ランチプレート：有機野菜と自家製ドレッシング</h4>
+</article>
+</div>
+<div class="text-center mt-20 reveal">
+<a class="text-[#2E4D07] border-b border-[#2E4D07] pb-2 text-xs tracking-[0.3em] font-bold hover:text-[#F29159] hover:border-[#F29159] transition-all" href="#">READ MORE NEWS</a>
+</div>
+</div>
+</section>
+<footer class="bg-[#2E4D07] text-white/50 py-32 px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid md:grid-cols-2 gap-20 items-start mb-24">
+<div>
+<h2 class="text-white text-4xl font-serif mb-12 tracking-widest leading-tight">HanaCAFE<br/>nappa69</h2>
+<div class="space-y-6 text-sm leading-relaxed tracking-wider">
+<p class="flex items-start gap-4 text-white/80"><span class="material-symbols-outlined text-sm opacity-50 pt-1">location_on</span> 神奈川県川崎市中原区新丸子町963-1</p>
+<p class="flex items-start gap-4 text-white/80"><span class="material-symbols-outlined text-sm opacity-50 pt-1">call</span> 044-872-9288</p>
+<p class="flex items-start gap-4 text-white/80"><span class="material-symbols-outlined text-sm opacity-50 pt-1">schedule</span> 11:00 - 23:00 (Lunch L.O. 15:00)</p>
+</div>
+</div>
+<div class="flex flex-col md:items-end space-y-12">
+<div class="flex gap-12 text-[11px] tracking-[0.4em] font-bold">
+<a class="text-white/80 hover:text-[#F29159] transition-colors" href="#">INSTAGRAM</a>
+<a class="text-white/80 hover:text-[#F29159] transition-colors" href="#">FACEBOOK</a>
+<a class="text-white/80 hover:text-[#F29159] transition-colors" href="#">RESERVE</a>
+</div>
+<div class="flex flex-col md:items-end gap-6 text-[11px] tracking-widest text-white/30">
+<a class="hover:text-white transition-colors" href="#">プライバシーポリシー</a>
+<a class="hover:text-white transition-colors" href="#">特定商取引法に基づく表記</a>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 pt-12 text-[10px] tracking-[0.3em] flex flex-col md:flex-row justify-between items-center gap-6">
+<p>© 2024 HanaCAFE nappa69. All rights reserved.</p>
+<p class="text-white/30 uppercase">Designed for calm daily life</p>
+</div>
+</div>
+</footer>
+<script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 1.2s ease-out';
+            observer.observe(el);
+        });
+    </script>
+
+</body></html>
