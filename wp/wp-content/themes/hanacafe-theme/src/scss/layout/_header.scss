@@ -7,7 +7,7 @@
 .site-header {
 	position: fixed;
 	width: 100%;
-	height: 97px;
+	height: 96px; // 97pxからFigma通り96pxへ修正
 	left: 0;
 	top: 0;
 	background: rgba(245, 242, 232, 0.9);
@@ -16,12 +16,11 @@
 	z-index: 100;
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	border-bottom: 1px solid rgba(87, 83, 78, 0.1);
 
-	// 🌟 WordPress 管理バーが表示されている時の位置調整
+	// WordPress 管理バー対応
 	body.admin-bar & {
 		top: 32px;
-
 		@include m.mq(md) {
 			top: 46px;
 		}
@@ -30,22 +29,21 @@
 
 .header-inner {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-between; // gap: 585px の代わり（レスポンシブ対応）
 	width: 100%;
-	max-width: v.$w-wide;
-	padding: 0 32px;
+	max-width: v.$w-wide; // 1280px
+	margin: 0 auto;
+	padding: 0 32px; // PC版の余白
 
 	@include m.mq(md) {
-		padding: 0 29px 0 32px;
+		padding: 0 29px 0 32px; // SP版の余白をFigma通りに完全再現
 	}
 }
 
 /* ロゴエリア */
 .header-logo {
 	display: flex;
-	flex-direction: row;
 	align-items: flex-end;
 	text-decoration: none;
 	gap: 8px;
@@ -56,7 +54,7 @@
 		font-size: 22.1px;
 		line-height: 1;
 		letter-spacing: -1.2px;
-		color: v.$c-main; // $c-green から修正
+		color: v.$c-main;
 	}
 
 	.logo-nappa {
@@ -65,29 +63,28 @@
 		font-size: 14.9px;
 		line-height: 1;
 		letter-spacing: -1.2px;
-		color: v.$c-main; // $c-green から修正
+		color: v.$c-main;
 		padding-bottom: 2px;
 	}
 }
 
-/* ナビゲーション */
+/* ナビゲーション (PCデフォルト) */
 .header-nav {
 	display: flex;
-	gap: 48px;
+	gap: 48px; // Figmaの padding-left: 48px と同義
 
 	@include m.mq(md) {
-		display: none;
-		position: fixed;
-		top: 97px;
+		display: none; // SP時はデフォルト非表示
+		flex-direction: column;
+		position: absolute;
+		top: 96px; // ヘッダーの高さに合わせる
 		left: 0;
 		width: 100%;
-		height: calc(100vh - 97px);
-		background-color: rgba(245, 242, 232, 0.98);
-		flex-direction: column;
-		align-items: center;
+		height: calc(100vh - 96px);
+		background: rgba(245, 242, 232, 0.98);
 		padding-top: 60px;
 		gap: 40px;
-		z-index: 90;
+		align-items: center;
 
 		&.is-active {
 			display: flex;
@@ -95,52 +92,52 @@
 	}
 
 	a {
-		font-family: v.$f-en;
-		font-weight: 500;
+		font-family: v.$f-sans;
+		font-weight: 400; // アクセシビリティのため thin から標準へ
 		font-size: 13px;
-		letter-spacing: 2.6px;
-		color: v.$c-text; // $c-gray から修正
+		letter-spacing: 0.2em;
+		color: v.$c-text;
 		text-decoration: none;
 		transition: color 0.3s;
 
-		@include m.mq(md) {
-			font-size: 18px;
-		}
-
 		&:hover {
-			color: v.$c-main; // $c-green から修正
+			color: v.$c-accent;
 		}
 	}
 }
 
-/* ハンバーガーボタン */
-.mobile-menu-btn {
-	display: none;
+/* ハンバーガーボタン (PCデフォルト) */
+.header-hamburger {
+	display: none; // PCでは非表示
 
 	@include m.mq(md) {
-		display: flex;
+		display: flex; // SPで表示
 		align-items: center;
 		justify-content: center;
 		background: none;
 		border: none;
-		color: v.$c-main; // $c-green から修正
 		cursor: pointer;
-		width: 30px;
-		height: 30px;
-		padding: 0;
-		z-index: 101;
+		color: v.$c-main;
+		padding: 0; // アイコンのみのサイズで判定させるためリセット
+	}
 
-		.material-symbols-outlined {
-			font-size: 30px;
-			line-height: 30px;
-			transition: transform 0.3s;
+	// Figma指定のアイコンサイズを適用
+	.material-symbols-outlined {
+		font-size: 30px;
+		line-height: 1;
+	}
+
+	.icon-close {
+		display: none;
+	}
+
+	&.is-active {
+		.icon-menu {
+			display: none;
 		}
-
-		&.is-active {
-			.material-symbols-outlined {
-				color: v.$c-accent; // $c-orange から修正
-				transform: rotate(90deg);
-			}
+		.icon-close {
+			display: block;
+			color: v.$c-accent;
 		}
 	}
 }
