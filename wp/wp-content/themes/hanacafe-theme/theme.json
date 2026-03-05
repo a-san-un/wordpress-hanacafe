@@ -1,0 +1,101 @@
+{
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "768px",
+			"wideSize": "1280px"
+		},
+		"color": {
+			"palette": [
+				{
+					"name": "Main Green",
+					"slug": "main-green",
+					"color": "#2E4D07"
+				},
+				{
+					"name": "Accent Orange",
+					"slug": "accent-orange",
+					"color": "#F29159"
+				},
+				{
+					"name": "Base Ecru",
+					"slug": "base-ecru",
+					"color": "#F5F2E8"
+				},
+				{
+					"name": "Sub Red",
+					"slug": "sub-red",
+					"color": "#EB4E34"
+				},
+				{
+					"name": "Text Gray",
+					"slug": "text-gray",
+					"color": "#57534E"
+				},
+				{
+					"name": "Text Light",
+					"slug": "text-light",
+					"color": "#78716C"
+				},
+				{
+					"name": "Text Cloudy",
+					"slug": "text-cloudy",
+					"color": "#A8A29E"
+				},
+				{
+					"name": "White",
+					"slug": "white",
+					"color": "#FFFFFF"
+				}
+			]
+		},
+		"typography": {
+			"fontFamilies": [
+				{
+					"name": "Noto Sans JP",
+					"slug": "noto-sans-jp",
+					"fontFamily": "\"Noto Sans JP\", sans-serif"
+				},
+				{
+					"name": "Noto Serif JP",
+					"slug": "noto-serif-jp",
+					"fontFamily": "\"Noto Serif JP\", serif"
+				},
+				{
+					"name": "Montserrat",
+					"slug": "montserrat",
+					"fontFamily": "\"Montserrat\", sans-serif"
+				}
+			]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--base-ecru)",
+			"text": "var(--wp--preset--color--text-gray)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--noto-sans-jp)",
+			"fontSmoothing": "antialiased"
+		},
+		"elements": {
+			"h1": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--noto-serif-jp)" }
+			},
+			"h2": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--noto-serif-jp)" }
+			},
+			"h3": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--noto-serif-jp)" }
+			},
+			"h4": {
+				"typography": { "fontFamily": "var(--wp--preset--font-family--noto-serif-jp)" }
+			},
+			"link": {
+				"color": { "text": "var(--wp--preset--color--text-gray)" },
+				"typography": { "textDecoration": "none" }
+			}
+		}
+	}
+}

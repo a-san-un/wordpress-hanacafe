@@ -1,0 +1,27 @@
+// ===================================================
+// Variables
+// ===================================================
+
+// カラーパレット (theme.json と連携)
+$c-green: var(--wp--preset--color--main-green);
+$c-orange: var(--wp--preset--color--accent-orange);
+$c-ecru: var(--wp--preset--color--base-ecru);
+$c-red: var(--wp--preset--color--sub-red);
+$c-gray: var(--wp--preset--color--text-gray); // $c-text-gray から変更
+$c-light: var(--wp--preset--color--text-light);
+$c-cloudy: var(--wp--preset--color--text-cloudy);
+$c-white: var(--wp--preset--color--white);
+
+// フォントファミリー
+$f-sans: var(--wp--preset--font-family--noto-sans-jp);
+$f-serif: var(--wp--preset--font-family--noto-serif-jp);
+$f-en: var(--wp--preset--font-family--montserrat);
+
+// コンテナ幅
+$w-wide: var(--wp--style--global--wide-size, 1280px);
+
+// ブレイクポイント
+$breakpoints: (
+  md: 768px,
+  lg: 1024px,
+);

@@ -22,19 +22,16 @@ add_action('after_setup_theme', 'hanacafe_setup');
  */
 function hanacafe_scripts()
 {
-    // メインのCSS
-    wp_enqueue_style('hanacafe-style', get_stylesheet_uri(), array(), '1.0.0');
+    // テーマ情報のみの style.css
+    wp_enqueue_style('hanacafe-style', get_stylesheet_uri(), array(), '1.1.0');
+
+    // ★ コンパイルされたメインの app.css を読み込む
+    wp_enqueue_style('hanacafe-app', get_template_directory_uri() . '/assets/css/app.css', array(), '1.1.0');
 
     // Google Fonts
-    wp_enqueue_style('hanacafe-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@700&display=swap', array(), null);
-
-    // Tailwind CSS CDN (制作フェーズ用)
-    wp_enqueue_script('tailwind-cdn', 'https://cdn.tailwindcss.com', array(), null, false);
+    wp_enqueue_style('hanacafe-fonts', 'https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;700&family=Noto+Sans+JP:wght@100;300;400;500;700&family=Noto+Serif+JP:wght@200;700&display=swap', array(), null);
 
     // Material Symbols
     wp_enqueue_style('material-symbols', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0', array(), null);
-
-    // メインのJavaScript（Intersection Observer用）を追加
-    wp_enqueue_script('hanacafe-main', get_template_directory_uri() . '/js/main.js', array(), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'hanacafe_scripts');

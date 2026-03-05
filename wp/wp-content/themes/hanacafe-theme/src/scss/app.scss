@@ -1,0 +1,21 @@
+// 1. 外部モジュールの読み込み（必ず一番上に！）
+@use "foundation/variables" as v;
+@use "foundation/mixins" as m;
+@use "layout/header";
+// @use "project/home-menu"; // 今後ここに追記
+
+// 2. 基本レイアウト（@use の後に記述）
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    max-width: v.$w-wide;
+    margin: 0 auto;
+    padding: 0 32px;
+
+    @include m.mq() {
+        padding: 0 24px;
+    }
+}

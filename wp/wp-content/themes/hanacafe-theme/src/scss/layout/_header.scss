@@ -1,0 +1,149 @@
+// ===================================================
+// Layout: Header
+// ===================================================
+@use "../foundation/variables" as v;
+@use "../foundation/mixins" as m;
+
+.site-header {
+    position: fixed;
+    width: 100%;
+    height: 97px;
+    left: 0;
+    top: 0;
+    background: rgba(245, 242, 232, 0.9);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // 🌟 WordPress 管理バーが表示されている時の位置調整
+    body.admin-bar & {
+        top: 32px;
+
+        @include m.mq(md) {
+            top: 46px;
+        }
+    }
+}
+
+.header-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: v.$w-wide;
+    padding: 0 32px;
+
+    @include m.mq(md) {
+        padding: 0 29px 0 32px;
+    }
+}
+
+/* ロゴエリア (下揃え設定) */
+.header-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    text-decoration: none;
+    gap: 8px;
+
+    .logo-hanacafe {
+        font-family: v.$f-en;
+        font-weight: 700;
+        font-size: 22.1px;
+        line-height: 1;
+        letter-spacing: -1.2px;
+        color: v.$c-green;
+    }
+
+    .logo-nappa {
+        font-family: v.$f-en;
+        font-weight: 700;
+        font-size: 14.9px;
+        line-height: 1;
+        letter-spacing: -1.2px;
+        color: v.$c-green;
+        padding-bottom: 2px;
+    }
+}
+
+/* ナビゲーション (PC/SP切り替え) */
+.header-nav {
+    display: flex;
+    gap: 48px;
+
+    // 🌟 スマホ時のメニュー展開 (Food Science流)
+    @include m.mq(md) {
+        display: none; // ★SP(768px以下)では初期状態で非表示
+        position: fixed;
+        top: 97px; // ヘッダーの高さ分下げる
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 97px); // 画面いっぱいに広げる
+        background-color: rgba(245, 242, 232, 0.98); // 背景色（少し濃いめの生成色）
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60px;
+        gap: 40px;
+        z-index: 90;
+
+        // JSで .is-active がついた時に表示
+        &.is-active {
+            display: flex;
+        }
+    }
+
+    a {
+        font-family: v.$f-en;
+        font-weight: 500;
+        font-size: 13px;
+        letter-spacing: 2.6px;
+        color: v.$c-gray;
+        text-decoration: none;
+        transition: color 0.3s;
+
+        @include m.mq(md) {
+            font-size: 18px; // スマホではタップしやすいよう大きく
+        }
+
+        &:hover {
+            color: v.$c-green;
+        }
+    }
+}
+
+/* ハンバーガーボタン (PCでは非表示) */
+.mobile-menu-btn {
+    display: none; // ★PCでは隠す
+
+    @include m.mq(md) {
+        display: flex; // ★SP(768px以下)で表示
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: v.$c-green;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        z-index: 101;
+
+        .material-symbols-outlined {
+            font-size: 30px;
+            line-height: 30px;
+            transition: transform 0.3s;
+        }
+
+        // 🌟 アクティブ時（メニューが開いている時）のアイコン変化
+        &.is-active {
+            .material-symbols-outlined {
+                color: v.$c-orange;
+                transform: rotate(90deg);
+            }
+        }
+    }
+}

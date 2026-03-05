@@ -8,20 +8,21 @@
 
 get_header(); ?>
 
-<main id="primary" class="site-main py-20">
-    <div class="container mx-auto px-4">
-        <?php
-        if (have_posts()) {
-            while (have_posts()) {
-                the_post();
-                the_content();
+<main id="primary" class="site-main">
+    <section style="padding-top: 160px; padding-bottom: 160px;">
+        <div class="container">
+            <?php
+            if (have_posts()) {
+                while (have_posts()) {
+                    the_post();
+                    the_content();
+                }
+            } else {
+                echo '<p style="text-align: center;">記事が見つかりませんでした。</p>';
             }
-        } else {
-            echo '<p>記事が見つかりませんでした。</p>';
-        }
-        ?>
-    </div>
+            ?>
+        </div>
+    </section>
 </main>
 
-<?php
-get_footer();
+<?php get_footer(); ?>
