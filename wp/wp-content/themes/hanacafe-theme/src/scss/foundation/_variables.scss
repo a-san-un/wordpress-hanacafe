@@ -1,24 +1,26 @@
 // ===================================================
-// Variables
+// Variables (役割名で管理)
 // ===================================================
 
-// カラーパレット (theme.json と連携)
-$c-green: var(--wp--preset--color--main-green);
-$c-orange: var(--wp--preset--color--accent-orange);
-$c-ecru: var(--wp--preset--color--base-ecru);
-$c-red: var(--wp--preset--color--sub-red);
-$c-gray: var(--wp--preset--color--text-gray); // $c-text-gray から変更
-$c-light: var(--wp--preset--color--text-light);
-$c-cloudy: var(--wp--preset--color--text-cloudy);
-$c-white: var(--wp--preset--color--white);
+// カラーパレット (スタイルガイドの「役割」に合わせる)
+$c-main:   var(--wp--preset--color--main-green);   // メインカラー：深緑
+$c-accent: var(--wp--preset--color--accent-orange); // アクセント：オレンジ
+$c-base:   var(--wp--preset--color--base-ecru);     // ベース：生成色
+$c-sub:    var(--wp--preset--color--sub-red);        // サブ：レッド
 
-// フォントファミリー
-$f-sans: var(--wp--preset--font-family--noto-sans-jp);
-$f-serif: var(--wp--preset--font-family--noto-serif-jp);
-$f-en: var(--wp--preset--font-family--montserrat);
+// テキスト・基本色
+$c-text:   var(--wp--preset--color--text-gray);
+$c-light:  var(--wp--preset--color--text-light);
+$c-white:  var(--wp--preset--color--white);
 
-// コンテナ幅
-$w-wide: var(--wp--style--global--wide-size, 1280px);
+// フォントファミリー (役割名で管理)
+$f-serif: var(--wp--preset--font-family--noto-serif-jp); // 見出し：明朝
+$f-sans:  var(--wp--preset--font-family--noto-sans-jp);  // 本文：ゴシック
+$f-en:    var(--wp--preset--font-family--montserrat);    // 英数：Montserrat
+
+// コンテナ幅 (theme.json の layout 設定と同期)
+$w-content: var(--wp--style--global--content-size, 768px); // 追記推奨
+$w-wide:    var(--wp--style--global--wide-size, 1280px);
 
 // ブレイクポイント
 $breakpoints: (
