@@ -1,0 +1,31 @@
+@use "../../global/mixins" as m;
+
+.p-page {
+	// ヘッダーが固定されているため、上部に余白を設ける
+	padding-top: 120px; // ヘッダー高さ＋アルファ
+	padding-bottom: 80px;
+
+	@include m.mq(md) {
+		padding-top: 160px;
+		padding-bottom: 120px;
+	}
+
+	&__title {
+		text-align: center;
+		margin-bottom: 40px;
+		font-size: 24px;
+
+		@include m.mq(md) {
+			font-size: 32px;
+		}
+	}
+
+	&__content {
+		// WPのブロックエディターで入力された内容のスタイルを整える
+		line-height: 2;
+		
+		p {
+			margin-bottom: 24px;
+		}
+	}
+}

@@ -387,4 +387,31 @@ button {
   font-size: 10px;
   color: #2E4D07;
   font-weight: 700;
+}
+
+.p-page {
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+@media screen and (min-width: 768px) {
+  .p-page {
+    padding-top: 160px;
+    padding-bottom: 120px;
+  }
+}
+.p-page__title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 24px;
+}
+@media screen and (min-width: 768px) {
+  .p-page__title {
+    font-size: 32px;
+  }
+}
+.p-page__content {
+  line-height: 2;
+}
+.p-page__content p {
+  margin-bottom: 24px;
 }/*# sourceMappingURL=app.css.map */

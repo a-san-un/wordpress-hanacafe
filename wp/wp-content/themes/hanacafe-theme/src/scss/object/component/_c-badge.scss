@@ -9,14 +9,20 @@
 	border-radius: 20px;
 	font-size: 11px;
 	font-weight: 700;
-	display: flex;
+	display: inline-flex; // ★横並びを強制
 	align-items: center;
-	gap: 4px;
+	justify-content: center;
+	gap: 6px;
 	border: 1px solid transparent;
 	z-index: 2;
+	white-space: nowrap; // ★バッジ全体の改行を禁止
 
+	// ★ここがアイコンの設定場所です（サイズを変えたい時はここを変更）
 	.material-symbols-outlined {
-		font-size: 14px;
+		font-size: 16px; 
+		line-height: 1;
+		white-space: nowrap; // ★アイコン自体の改行も絶対に禁止
+		word-break: keep-all; 
 	}
 
 	&.is-success {
@@ -32,5 +38,28 @@
 	&.is-full {
 		color: #999;
 		border-color: #999;
+	}
+}
+
+.c-badge-feature {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	padding: 6px 12px;
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(v.$c-main, 0.2);
+	border-radius: 4px;
+	font-family: v.$f-en;
+	font-size: 10px;
+	color: v.$c-main;
+	font-weight: 700;
+	display: inline-flex; // ★横並びを強制
+	align-items: center;
+	gap: 4px;
+	white-space: nowrap; // ★改行禁止
+
+	.material-symbols-outlined {
+		font-size: 14px; // サイズ設定
+		line-height: 1;
 	}
 }
