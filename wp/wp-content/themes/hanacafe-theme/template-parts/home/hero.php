@@ -1,11 +1,55 @@
-    <section class="relative h-screen flex items-center justify-center overflow-hidden">
-        <img class="absolute inset-0 w-full h-full object-cover object-[50%_35%] scale-105" src="<?php echo esc_url(get_template_directory_uri() . '/images/hero.jpg'); ?>" alt="HanaCAFE nappa69">
+<?php
 
-        <div class="absolute inset-0 bg-dark-green/20 z-0 mix-blend-multiply"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-transparent via-dark-green/20 to-transparent z-0"></div>
+/**
+ * Hero Section Template
+ * * [設計意図]
+ * 1. WP_Queryでカスタム投稿 'main-visual' を取得
+ * 2. 画像がない場合は /images/hero.jpg を表示するフォールバック機能
+ * 3. <img>タグを採用し、CSSでの高度な位置制御を可能にする
+ */
+$args = [
+    'post_type'      => 'main-visual',
+    'posts_per_page' => -1,
+    'orderby'        => 'menu_order',
+    'order'          => 'ASC',
+];
+$the_query = new WP_Query($args);
+?>
 
-        <div class="text-center text-white z-10">
-            <h2 class="text-4xl md:text-6xl font-serif mb-6 leading-tight drop-shadow-lg">日常に緑を、心に安らぎを。</h2>
-            <p class="text-lg md:text-xl opacity-90 drop-shadow-md">体に優しい 心が嬉しい お料理</p>
+<section class="p-hero">
+    <?php if ($the_query->have_posts()) : ?>
+        <?php while ($the_query->have_posts()) : $the_query->the_post();
+            $pic = get_field('pic'); // ACF
+            $image_url = !empty($pic) ? $pic['url'] : get_theme_file_uri('/images/hero.jpg');
+        ?>
+            <div class="p-hero__item">
+                <div class="p-hero__img-wrapper">
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php the_title_attribute(); ?>" class="p-hero__img">
+                </div>
+                <div class="p-hero__overlay-multiply"></div>
+                <div class="p-hero__overlay-gradient"></div>
+                <div class="p-hero__content">
+                    <h2 class="p-hero__title">日常に緑を、<br class="u-hidden-md">心に安らぎを。</h2>
+                    <p class="p-hero__subtitle">体に優しい心が嬉しいお料理</p>
+                    <div class="p-hero__line"></div>
+                </div>
+            </div>
+        <?php endwhile;
+        wp_reset_postdata(); ?>
+
+    <?php else : ?>
+        <?php /* 投稿がまだない時用の静的表示 */ ?>
+        <div class="p-hero__item">
+            <div class="p-hero__img-wrapper">
+                <img src="<?php echo esc_url(get_theme_file_uri('/images/hero.jpg')); ?>" alt="HanaCAFE nappa69" class="p-hero__img">
+            </div>
+            <div class="p-hero__overlay-multiply"></div>
+            <div class="p-hero__overlay-gradient"></div>
+            <div class="p-hero__content">
+                <h2 class="p-hero__title">日常に緑を、<br class="u-hidden-md">心に安らぎを。</h2>
+                <p class="p-hero__subtitle">体に優しい心が嬉しいお料理</p>
+                <div class="p-hero__line"></div>
+            </div>
         </div>
-    </section>
+    <?php endif; ?>
+</section>

@@ -10,26 +10,27 @@
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
 
-    <header class="site-header">
-        <div class="header-inner">
-            <a href="<?php echo esc_url(home_url('/')); ?>" class="header-logo">
-                <span class="logo-hanacafe">HanaCAFE</span>
-                <span class="logo-nappa">nappa69</span>
-            </a>
+    <header class="l-header">
+        <div class="l-container">
+            <div class="l-header__inner">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="p-header__logo">
+                    HanaCAFE <span class="p-header__logo-sub">nappa69</span>
+                </a>
 
-            <nav class="header-nav js-menu">
-                <a href="<?php echo esc_url(home_url('/')); ?>">HOME</a>
-                <a href="<?php echo esc_url(home_url('/#about')); ?>">ABOUT</a>
-                <a href="<?php echo esc_url(home_url('/#menu')); ?>">MENU</a>
-                <a href="<?php echo esc_url(home_url('/#access')); ?>">ACCESS</a>
-                <a href="<?php echo esc_url(home_url('/#news')); ?>">NEWS</a>
-            </nav>
+                <nav class="p-header__nav">
+                    <ul class="p-header__nav-list">
+                        <?php /* HOMEを復活 */ ?>
+                        <li><a href="<?php echo esc_url(home_url('/')); ?>">HOME</a></li>
+                        <li><a href="#about">ABOUT</a></li>
+                        <li><a href="#menu">MENU</a></li>
+                        <li><a href="#access">ACCESS</a></li>
+                        <li><a href="#news">NEWS</a></li>
+                    </ul>
+                </nav>
 
-            <button type="button" class="header-hamburger js-hamburger" aria-label="メニューを開く">
-                <span class="material-symbols-outlined icon-menu">menu</span>
-                <span class="material-symbols-outlined icon-close">close</span>
-            </button>
+                <button class="p-header__hamburger js-hamburger" aria-label="メニューを開く">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
         </div>
     </header>
-
-    <main class="site-main">

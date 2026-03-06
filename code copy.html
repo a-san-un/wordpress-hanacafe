@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>HanaCAFE nappa69 | 豊かな緑と安らぎのカフェ</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Variables (将来の _variable.scss) --- */
+        :root {
+            --c-main: #2E4D07;
+            --c-accent: #F29159;
+            --c-base: #F5F2E8;
+            --c-sub: #EB4E34;
+            --c-text: #57534E;
+            --c-white: #FFFFFF;
+            /* 全ページで英数字Montserratを最優先 */
+            --f-serif: "Montserrat", "Noto Serif JP", serif;
+            --f-sans: "Montserrat", "Noto Sans JP", sans-serif;
+        }
+
+        /* --- Base --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: var(--c-base);
+            color: var(--c-text);
+            font-family: var(--f-sans);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, h4 { font-family: var(--f-serif); font-weight: 700; color: var(--c-main); }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        img { max-width: 100%; height: auto; display: block; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'wght' 300;
+            vertical-align: middle;
+            color: var(--c-main);
+        }
+
+        /* --- Layout (l-) --- */
+        .l-header {
+            position: fixed; width: 100%; z-index: 100;
+            background-color: rgba(245, 242, 232, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            height: 96px;
+            display: flex; align-items: center;
+        }
+        .l-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
+
+        /* --- Component (c-) --- */
+        .c-btn-capsule {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--c-accent); color: var(--c-white);
+            padding: 16px 40px; border-radius: 50px;
+            font-size: 14px; font-weight: 700; letter-spacing: 0.2em;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .c-btn-capsule:hover { opacity: 0.8; transform: translateY(-1px); }
+
+        .c-badge-status {
+            display: inline-flex; align-items: center; gap: 6px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--c-main); color: var(--c-main);
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 700;
+        }
+        .c-badge-status--few { border-color: var(--c-sub); color: var(--c-sub); }
+        .c-badge-status--few .material-symbols-outlined { color: var(--c-sub); }
+
+        /* --- Project (p-) --- */
+        .p-section-padding { padding: 80px 0; }
+        @media (min-width: 768px) { .p-section-padding { padding: 120px 0; } }
+
+        /* Header (Perfect PC + Responsive SP) */
+        .p-header__logo { font-size: 24px; font-weight: 700; color: var(--c-main); font-family: var(--f-serif); letter-spacing: -0.05em; }
+        .p-header__logo span { font-size: 18px; }
+        
+        .p-header__nav { display: none; } /* SPでは隠す */
+        .p-header__hamburger { background: none; border: none; cursor: pointer; display: block; }
+        .p-header__hamburger span { font-size: 32px; }
+
+        @media (min-width: 768px) {
+            .p-header__nav { display: flex; gap: 40px; font-size: 13px; font-weight: 700; letter-spacing: 0.2em; color: var(--c-text); }
+            .p-header__nav a:hover { color: var(--c-main); }
+            .p-header__hamburger { display: none; } /* PCでは隠す */
+        }
+
+        /* Hero */
+        .p-hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .p-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .p-hero__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.3); }
+        .p-hero__content { position: relative; z-index: 1; text-align: center; color: var(--c-white); display: flex; flex-direction: column; gap: 32px; align-items: center; }
+        .p-hero__title { font-family: var(--f-serif); color: var(--c-white); font-size: 36px; letter-spacing: 0.2em; line-height: 1.5; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .p-hero__subtitle { font-size: 16px; letter-spacing: 0.3em; color: var(--c-white); }
+        .p-hero__line { width: 64px; height: 1px; background: rgba(255,255,255,0.5); }
+        @media (min-width: 768px) {
+            .p-hero__title { font-size: 60px; }
+            .p-hero__subtitle { font-size: 20px; }
+        }
+
+        /* Utility Grid */
+        .u-grid { display: grid; gap: 40px; }
+        @media (min-width: 768px) { .u-grid--3col { grid-template-columns: repeat(3, 1fr); gap: 48px; } }
+
+        /* About */
+        .p-about__header { text-align: center; margin-bottom: 60px; }
+        .p-about__label { display: block; color: var(--c-main); font-size: 14px; font-weight: 700; letter-spacing: 0.4em; margin-bottom: 24px; text-transform: uppercase; }
+        .p-seat-card { cursor: pointer; }
+        .p-seat-card__img-box { position: relative; aspect-ratio: 4/5; border-radius: 8px; overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .p-seat-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; }
+        .p-seat-card:hover .p-seat-card__img { transform: scale(1.1); }
+
+        /* Menu */
+        .p-menu { background-color: var(--c-white); }
+        .p-menu__header { display: flex; flex-direction: column; gap: 24px; border-bottom: 1px solid #eee; padding-bottom: 40px; margin-bottom: 60px; }
+        @media (min-width: 768px) { .p-menu__header { flex-direction: row; justify-content: space-between; align-items: flex-end; } }
+        .p-menu-card__img { aspect-ratio: 4/3; border-radius: 4px; overflow: hidden; margin-bottom: 24px; }
+        .p-menu-card__price { font-size: 20px; font-weight: 700; color: var(--c-main); margin-top: 16px; }
+
+        /* Access */
+        .p-access__info-item { border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 24px; margin-bottom: 24px; }
+        .p-access__info-label { font-size: 10px; font-weight: 700; color: rgba(46, 77, 7, 0.6); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; }
+        .p-access__map { background: #e5e5e5; aspect-ratio: 1/1; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        /* News (完全復活: ホバー演出 & READ MORE) */
+        .p-news { background-color: var(--c-white); }
+        .p-news-card { display: flex; flex-direction: column; gap: 24px; cursor: pointer; }
+        .p-news-card__img-box { aspect-ratio: 16/9; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .p-news-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+        .p-news-card__date { font-size: 12px; font-weight: 700; color: var(--c-main); letter-spacing: 0.1em; display: block; margin-bottom: 8px; text-transform: uppercase; }
+        .p-news-card__title { font-size: 16px; line-height: 1.6; color: var(--c-text); transition: color 0.3s; font-weight: 700; }
+        .p-news-card:hover .p-news-card__img { transform: scale(1.05); }
+        .p-news-card:hover .p-news-card__title { color: var(--c-accent); }
+        .p-news__more-link { display: inline-block; color: var(--c-main); border-bottom: 1px solid rgba(46, 77, 7, 0.3); padding-bottom: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.3em; transition: 0.3s; }
+        .p-news__more-link:hover { color: var(--c-accent); border-color: var(--c-accent); }
+
+        /* Footer (3-column PC / 1-column SP) */
+        .l-footer { background-color: var(--c-main); color: rgba(255, 255, 255, 0.6); padding: 80px 0 40px; }
+        .p-footer__main { display: grid; gap: 60px; margin-bottom: 60px; }
+        @media (min-width: 768px) { .p-footer__main { grid-template-columns: 1.2fr 1fr 1fr; align-items: start; } }
+        .p-footer__logo-text { color: var(--c-white); font-family: var(--f-serif); font-size: 32px; line-height: 1.2; letter-spacing: 0.1em; margin-bottom: 32px; }
+        .p-footer__info-list { display: flex; flex-direction: column; gap: 20px; }
+        .p-footer__info-item { display: flex; align-items: flex-start; gap: 16px; font-size: 14px; color: rgba(255, 255, 255, 0.9); }
+        .p-footer__info-item .material-symbols-outlined { color: rgba(255, 255, 255, 0.4); font-size: 18px; margin-top: 4px; }
+        .p-footer__nav-group { display: flex; flex-direction: column; gap: 40px; }
+        @media (min-width: 768px) { .p-footer__nav-group { align-items: flex-end; } }
+        .p-footer__sns-links { display: flex; gap: 32px; font-size: 11px; font-weight: 700; letter-spacing: 0.4em; }
+        .p-footer__sns-links a:hover { color: var(--c-accent); }
+        .p-footer__policy-links { display: flex; flex-direction: column; gap: 12px; font-size: 11px; letter-spacing: 0.1em; opacity: 0.4; }
+        @media (min-width: 768px) { .p-footer__policy-links { align-items: flex-end; } }
+        .p-footer__bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 40px; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: space-between; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+        @media (min-width: 768px) { .p-footer__bottom { flex-direction: row; } }
+    </style>
+</head>
+<body>
+
+<header class="l-header">
+    <div class="l-container" style="display: flex; justify-content: space-between; align-items: center;">
+        <a class="p-header__logo" href="#">HanaCAFE <span>nappa69</span></a>
+        
+        <nav class="p-header__nav">
+            <a href="#">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#menu">MENU</a>
+            <a href="#access">ACCESS</a>
+            <a href="#news">NEWS</a>
+        </nav>
+
+        <button class="p-header__hamburger js-hamburger">
+            <span class="material-symbols-outlined">menu</span>
+        </button>
+    </div>
+</header>
+
+<main>
+    <section class="p-hero">
+        <img class="p-hero__img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCpn82iLNyZV0Rpf5F4yvNepHLkWt75_LyGmJQnpPbhIO_S-WbQB5GEqOc6EEOYfCGBkfygGcFXV7eOkO7IkEvtmQutdlarJ0XbHRQtb7ZLDe1dkd8gsyq9fxtELao0o46AlCNFSGVRshJqx_iOKPw85VMOjyC--qPxWEyw2bf2KcaCciip0HtDHrjW8LVZ4kwxNdAvQKlWBk9fYiCZ_s91h5u1qF1p2oUdGlfKjcpL6v2QFLoZ55adCYEsG8NKimAS3xEbKtRvTo" alt="Hero">
+        <div class="p-hero__overlay"></div>
+        <div class="p-hero__content">
+            <h2 class="p-hero__title">日常に緑を、<br>心に安らぎを。</h2>
+            <p class="p-hero__subtitle">体に優しい心が嬉しいお料理</p>
+            <div class="p-hero__line"></div>
+        </div>
+    </section>
+
+    <section class="p-about p-section-padding" id="about">
+        <div class="l-container">
+            <div class="p-about__header">
+                <span class="p-about__label">About & Seats</span>
+                <h3 style="font-size: 32px; margin-bottom: 24px;">物語が動き出す、呼吸する空間。</h3>
+                <p class="p-about__text">築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、心地よいひとときをお過ごしください。</p>
+            </div>
+            <div class="u-grid u-grid--3col">
+                <article class="p-seat-card">
+                    <div class="p-seat-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQvTfNt7-Vr7_IJNSr_G4mtCQDjIIVloTCXp5HuKraRFH3mo42RWLtwpIwH9G9tMF_nCT9V27Vw3zFeZyr4STKs-TC5EaUmkzMZyGsZ8L4O9fv1DtnrbqtUadjyzYLZX8pHIo5u-NO89tqfQGLrNE6HRZninh0PCsrxB55FoU5cvWM6NCC_1HGmyvk2X4UWDOhRaGSjw35e5QALhI-ebjHf9S-YXe4BcEl9Ctp0TSXPWIPIuyS5q9CPru-pbV3-ud2sg9laYvVh4E" alt="Counter" class="p-seat-card__img">
+                        <div style="position: absolute; top: 20px; right: 20px;" class="c-badge-status">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span> ◯ 空席あり
+                        </div>
+                    </div>
+                    <h4>一人の時間を愉しむ</h4>
+                    <p style="font-size: 14px; opacity: 0.8;">読書や作業に最適な窓際席。自分だけの静かなリズムを。</p>
+                </article>
+                <article class="p-seat-card">
+                    <div class="p-seat-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEeworhgY1bIG0XstAF83pQUYLkrayFsrRZK6SNMBKzpDongt81x5RpScIRyxoE0sM8MLDAMtQ9UiGdk2fD-kEY1hTfaTfcfaurKoqn2wbVvopVCHuiTCs2H8m7_JBOxcN197Nv1n5Gs034m87ONv43mq5nQKTGlBt8YG-EIbDkJsJaTG5Np2OlLEwJ7-CYsOMUaoKXm-Cpbww7XjpiA6B4kFZErWC_3AYSoBcVxj2b9F9hTCpNdtY29e0vLM0NR6Sbz4f6Uijy04" alt="Sofa" class="p-seat-card__img">
+                        <div style="position: absolute; top: 20px; right: 20px;" class="c-badge-status c-badge-status--few">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">error</span> △ 残りわずか
+                        </div>
+                    </div>
+                    <h4>大切な人と寛ぐ</h4>
+                    <p style="font-size: 14px; opacity: 0.8;">ゆったりとしたソファ席。美味しいお料理を囲みながら。</p>
+                </article>
+                <article class="p-seat-card">
+                    <div class="p-seat-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp3YNUvQUL3VF3ctJdu4GEKx1G3VDdam1WwyvVOmPxpeN87uQubC3qVertHg91J7J9lTH3t3z2OVqMS35SF7zKN2z2RrJ8Zefwg6e-kz1aP-p2a1mvwWYqjCeu8rojX0_VVYNW2Rsn4qTPZvc2ECKVyU0tCso_BIyHN2evxNoAV2Ox-npiNmZ4dguEqzvyWm3wXe2xeXIs5XdIMj49F301mkoAXAQwa-QUkjOEzpQbKhQk_gqRI-t5Qy9FtDWciFwvxrhztQ_tdpI" alt="Terrace" class="p-seat-card__img">
+                        <div style="position: absolute; top: 20px; right: 20px;" class="c-badge-status">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">check_circle</span> ◯ 空席あり
+                        </div>
+                        <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(255,255,255,0.9); padding: 6px 12px; border-radius: 4px; font-size: 10px; font-weight: 700; color: var(--c-main); display: flex; gap: 6px; align-items: center; border: 1px solid rgba(46,77,7,0.2);">
+                            <span class="material-symbols-outlined" style="font-size: 14px;">pets</span> Pet Friendly
+                        </div>
+                    </div>
+                    <h4>自然の風を感じる</h4>
+                    <p style="font-size: 14px; opacity: 0.8;">四季の移ろいを肌で感じる縁側席。ペットと一緒に。</p>
+                </article>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="#concept" class="c-btn-capsule">空間について詳しく見る</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-menu p-section-padding" id="menu">
+        <div class="l-container">
+            <div class="p-menu__header">
+                <div>
+                    <span class="p-about__label" style="text-align: left;">Menu</span>
+                    <h3 style="font-size: 32px; margin-bottom: 0;">身体が喜ぶ、旬の味覚。</h3>
+                </div>
+                <a href="#" style="color: var(--c-accent); font-weight: 700; font-size: 13px; letter-spacing: 0.1em;">VIEW ALL MENU →</a>
+            </div>
+            <div class="u-grid u-grid--3col">
+                <div class="p-menu-card">
+                    <div class="p-menu-card__img"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmDMHtGo0Naml4b6pxDr1u_VoL_pBBcNBPkez5MgAZ3KOZWer_EJqA7_O29i6EqbDQxN4YfFbvzjmSFLiB_soCa2gGU1HxrvvH3eSlz7MoU-n4Ol6kh-4LKCM0Wp48RjXXqVqwOZrqlKm3D_OFozidFqz8vba_MHqpTL-rtQruqY-WITms4guNMtI8jyR5vbRcU0TscH9VmmX0p43t7vAKCk1ng9MiRElxNrB4Lc5riL24J-yneABd28a8ktqBckOAmgGflnzC6bY" alt="Salad" style="width:100%; height:100%; object-fit:cover;"></div>
+                    <h4>nappa特製 15品目のサラダプレート</h4>
+                    <p class="p-menu-card__price">¥1,480</p>
+                </div>
+                <div class="p-menu-card">
+                    <div class="p-menu-card__img"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEeworhgY1bIG0XstAF83pQUYLkrayFsrRZK6SNMBKzpDongt81x5RpScIRyxoE0sM8MLDAMtQ9UiGdk2fD-kEY1hTfaTfcfaurKoqn2wbVvopVCHuiTCs2H8m7_JBOxcN197Nv1n5Gs034m87ONv43mq5nQKTGlBt8YG-EIbDkJsJaTG5Np2OlLEwJ7-CYsOMUaoKXm-Cpbww7XjpiA6B4kFZErWC_3AYSoBcVxj2b9F9hTCpNdtY29e0vLM0NR6Sbz4f6Uijy04" alt="Sweets" style="width:100%; height:100%; object-fit:cover;"></div>
+                    <h4>自家製 季節のテリーヌショコラ</h4>
+                    <p class="p-menu-card__price">¥800</p>
+                </div>
+                <div class="p-menu-card">
+                    <div class="p-menu-card__img"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8shmy6Vm3t2DA_gljwLhqog6G8EVnq2kooNCMo5giFJHQp5p4ifCWmH3GQv8V5bUvum1D0Oyc5gYnH4c7GrDhImDrFLD0rnxmTAhgzSzj89oQw2yKoszKULXHFtx_2uRVMNgpPTBa1WXKY0IvIdB7QYNCsruWtYV8ig_U4bluB6elPN700wAArjnunYO4tssPUYa58x7HvBNgYxdbgs9eWnOwub-QsBKoMUQnV9W24y39LfYkuZSLhVuoCTtkNnkB3k9EA9pAnOk" alt="Drink" style="width:100%; height:100%; object-fit:cover;"></div>
+                    <h4>自家製ハーブティーレモネード</h4>
+                    <p class="p-menu-card__price">¥750</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-access p-section-padding" id="access">
+        <div class="l-container">
+            <div class="p-access__grid u-grid u-grid--2col">
+                <div class="p-access__info">
+                    <span class="p-about__label" style="text-align: left;">Access</span>
+                    <h3 style="font-size: 32px; margin-bottom: 32px;">アクセス・店舗情報</h3>
+                    <div class="p-access__info-list">
+                        <div class="p-access__info-item">
+                            <p class="p-access__info-label">Address</p>
+                            <p style="font-family: var(--f-serif); font-size: 18px;">神奈川県川崎市中原区新丸子町963-1</p>
+                        </div>
+                        <div class="p-access__info-item">
+                            <p class="p-access__info-label">Hours / Contact</p>
+                            <p style="font-family: var(--f-serif); font-size: 18px;">11:00 - 23:00</p>
+                            <p style="font-family: var(--f-serif); font-size: 18px; margin-top: 4px;">044-872-9288</p>
+                        </div>
+                    </div>
+                    <a href="#" class="c-btn-capsule">
+                        <span class="material-symbols-outlined" style="color: white; margin-right: 8px;">event_available</span>
+                        お席の状況を確認する
+                    </a>
+                </div>
+                <div class="p-access__map">
+                    <span class="material-symbols-outlined" style="font-size: 48px;">location_on</span>
+                    <p style="font-weight: 700; letter-spacing: 0.1em; font-size: 14px;">GOOGLE MAPS で見る</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="p-news p-section-padding" id="news">
+        <div class="l-container">
+            <div style="text-align: center; margin-bottom: 60px;">
+                <span class="p-about__label">News</span>
+                <h3 style="font-size: 32px;">大切なお知らせ</h3>
+            </div>
+            <div class="u-grid u-grid--3col">
+                <article class="p-news-card">
+                    <div class="p-news-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcawJZ9TgVsGN8sNJsB-tSumuzCCMZigH0eFBm61R_7oGdJGdZLYzehoYsiuIPZkYTYN9VAz4nfGeVMhh883mLF9EGTeWi8PhNGemQG9YPHS_Rlhp-h-yeczbU5pL-UTDbWNvSmxyX-jl50xDuEjKducO_l9_JorV9D8axyMuKRBDtj6t43gE8PTeUMaAVPuxOE14_uV2DiIXwSx-p2XkOJxAIVqxTm9QyfVbIqp8WCtjKYy_-kXefz0WAOvsEu-4ClecgnzpUvD0" alt="News" class="p-news-card__img">
+                    </div>
+                    <div>
+                        <time class="p-news-card__date">2024.05.15</time>
+                        <h4 class="p-news-card__title">初夏のフラワーワークショップ開催のお知らせ</h4>
+                    </div>
+                </article>
+                <article class="p-news-card">
+                    <div class="p-news-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbfrlThY_M65AbiMr5RI3l85jKPpCDzL2fhRfWFsPwp-YAc_VzO2FARqht0rb3l0FCXiLaFvxXgORYDkdg8MxH9fGWQHHM-2A3G8be2RSy0BWkRKxQP08MvvyvzXnmdVAvQNnQGu9KIkEcVYrKC7m8_RTrSqWvYrAK90TIRqeqJinFPSCS18opQ8O09qFuivn089IfiLIxnODjrRasrCbdziscBcbZallcqXnWo5Z6sHLU2D4hhvhLvym9TYnA8TYkJ2-Me7c77iI" alt="News" class="p-news-card__img">
+                    </div>
+                    <div>
+                        <time class="p-news-card__date">2024.05.01</time>
+                        <h4 class="p-news-card__title">GW期間中の営業時間とお席の確認について</h4>
+                    </div>
+                </article>
+                <article class="p-news-card">
+                    <div class="p-news-card__img-box">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmDMHtGo0Naml4b6pxDr1u_VoL_pBBcNBPkez5MgAZ3KOZWer_EJqA7_O29i6EqbDQxN4YfFbvzjmSFLiB_soCa2gGU1HxrvvH3eSlz7MoU-n4Ol6kh-4LKCM0Wp48RjXXqVqwOZrqlKm3D_OFozidFqz8vba_MHqpTL-rtQruqY-WITms4guNMtI8jyR5vbRcU0TscH9VmmX0p43t7vAKCk1ng9MiRElxNrB4Lc5riL24J-yneABd28a8ktqBckOAmgGflnzC6bY" alt="News" class="p-news-card__img">
+                    </div>
+                    <div>
+                        <time class="p-news-card__date">2024.04.20</time>
+                        <h4 class="p-news-card__title">春の新作ランチ：有機野菜と自家製ドレッシング</h4>
+                    </div>
+                </article>
+            </div>
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="#" class="p-news__more-link">READ MORE NEWS</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="l-footer">
+    <div class="l-container">
+        <div class="p-footer__main">
+            <div class="p-footer__col">
+                <h2 class="p-footer__logo-text">HanaCAFE<br>nappa69</h2>
+            </div>
+            <div class="p-footer__col">
+                <div class="p-footer__info-list">
+                    <p class="p-footer__info-item"><span class="material-symbols-outlined">location_on</span>神奈川県川崎市中原区新丸子町963-1</p>
+                    <p class="p-footer__info-item"><span class="material-symbols-outlined">call</span>044-872-9288</p>
+                    <p class="p-footer__info-item"><span class="material-symbols-outlined">schedule</span>11:00 - 23:00 (Lunch L.O. 15:00)</p>
+                </div>
+            </div>
+            <div class="p-footer__col">
+                <div class="p-footer__nav-group">
+                    <nav class="p-footer__sns-links">
+                        <a href="#">INSTAGRAM</a>
+                        <a href="#">FACEBOOK</a>
+                        <a href="#" style="color: var(--c-accent);">RESERVE</a>
+                    </nav>
+                    <nav class="p-footer__policy-links">
+                        <a href="#">プライバシーポリシー</a>
+                        <a href="#">特定商取引法に基づく表記</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="p-footer__bottom">
+            <p>© 2024 HanaCAFE nappa69. All rights reserved.</p>
+            <p style="opacity: 0.5;">Designed for calm daily life</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+@use "../../global/variables" as v;
+
+.c-btn-capsule {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: v.$c-accent;
+  color: v.$c-white;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-family: v.$f-en;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  transition: 0.3s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
+  &:hover {
+    opacity: 0.8;
+    transform: translateY(-1px);
+  }
+}

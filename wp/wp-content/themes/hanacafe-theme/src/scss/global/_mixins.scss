@@ -1,0 +1,14 @@
+@use "sass:map"; // 最新のDart Sass用
+@use "variables" as v;
+
+$breakpoints: (
+  "sm": "screen and (max-width: 767px)",
+  "md": "screen and (min-width: 768px)",
+  "lg": "screen and (min-width: 1024px)",
+);
+
+@mixin mq($breakpoint) {
+  @media #{map.get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}

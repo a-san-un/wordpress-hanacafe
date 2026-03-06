@@ -1,0 +1,107 @@
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
+
+.p-hero {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden; // scale(1.05)のはみ出しをカット
+	display: flex;
+	flex-direction: column;
+
+	&__item {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__img-wrapper {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+	}
+
+	&__img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		/* 写真の上部35%を基準に固定。木漏れ日を綺麗に見せるための調整 */
+		object-position: 50% 35%;
+		/* 没入感を出し、境界の余白を防ぐためわずかに拡大 */
+		transform: scale(1.05);
+	}
+
+	// フィルター1: ブランドカラー（深緑）の乗算レイヤー
+	&__overlay-multiply {
+		position: absolute;
+		inset: 0;
+		background-color: rgba(v.$c-main, 0.2); // $c-mainを20%で使用
+		mix-blend-mode: multiply;
+		z-index: 1;
+	}
+
+	// フィルター2: 文字の視認性を高めるグラデーションレイヤー
+	&__overlay-gradient {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.3) 0%,
+			transparent 40%,
+			transparent 60%,
+			rgba(0, 0, 0, 0.3) 100%
+		);
+		z-index: 2;
+	}
+
+	&__content {
+		position: relative;
+		z-index: 10;
+		text-align: center;
+		color: v.$c-white;
+		padding: 0 24px;
+	}
+
+	&__title {
+		font-family: v.$f-serif;
+		color: v.$c-white;
+		font-size: 36px;
+		line-height: 1.5;
+		letter-spacing: 0.15em;
+		text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+		margin-bottom: 24px;
+
+		@include m.mq(md) {
+			font-size: 60px;
+			line-height: 90px;
+			letter-spacing: 0.2em;
+			margin-bottom: 32px;
+		}
+	}
+
+	&__subtitle {
+		font-family: v.$f-en;
+		font-size: 16px;
+		letter-spacing: 0.2em;
+		color: v.$c-white;
+
+		@include m.mq(md) {
+			font-size: 20px;
+			letter-spacing: 6px;
+		}
+	}
+
+	&__line {
+		width: 48px;
+		height: 1px;
+		background-color: rgba(255, 255, 255, 0.5);
+		margin: 32px auto 0;
+
+		@include m.mq(md) {
+			width: 64px;
+		}
+	}
+}
