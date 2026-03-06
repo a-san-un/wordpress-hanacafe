@@ -1,81 +1,102 @@
-<section id="about" class="section-base reveal">
-    <div class="container mx-auto px-4">
-        <div class="text-center mb-16">
-            <span class="text-sm tracking-[0.3em] text-dark-green font-bold">ABOUT & SEATS</span>
-            <h2 class="text-3xl font-serif mt-4">物語が動き出す、呼吸する空間</h2>
-        </div>
+<?php
 
-        <div class="grid md:grid-cols-3 gap-8 mb-16">
+/**
+ * About & Seats Section
+ * * [修正ポイント]
+ * 1. 以前動いていた get_field() ロジックを、新しいBEM構造へ再統合。
+ * 2. $seat_data 配列の 'field_name' を、実際のACFフィールド名に合わせてください。
+ */
+
+// 固定ページのIDを取得（front-page.php等で使用している場合、aboutページのIDを指定すると確実です）
+$about_page = get_page_by_path('about');
+$post_id = $about_page ? $about_page->ID : get_the_ID();
+?>
+
+<section class="p-about l-container">
+    <div class="p-about__header">
+        <span class="p-about__label">About & Seats</span>
+        <h2 class="p-about__title"><?php echo esc_html(get_the_title($post_id)); ?></h2>
+        <div class="p-about__text">
             <?php
-            $seat_types = [
-                [
-                    'id'    => 'counter',
-                    'title' => 'COUNTER SEAT',
-                    'desc'  => '一人の時間を愉しむ。<br>読書や作業に最適な窓際席。柔らかな光に包まれて、自分だけの静かなリズムを取り戻す場所に。',
-                    'img'   => get_template_directory_uri() . '/images/counter.jpg',
-                    'field' => 'status_counter',
-                    'pet'   => false
-                ],
-                [
-                    'id'    => 'table',
-                    'title' => 'TABLE & SOFA',
-                    'desc'  => '大切な人と寛ぐ。<br>ゆったりとしたソファ席。美味しいお料理を囲みながら、会話が弾む温かな時間をご提供します。',
-                    'img'   => get_template_directory_uri() . '/images/table.jpg',
-                    'field' => 'status_table',
-                    'pet'   => false
-                ],
-                [
-                    'id'    => 'terrace',
-                    'title' => 'PORCH / TERRACE',
-                    'desc'  => '自然の風を感じる。<br>四季の移ろいを肌で感じる縁側席。ペットと一緒に、開放的な空間でリフレッシュ。',
-                    'img'   => get_template_directory_uri() . '/images/terrace.jpg',
-                    'field' => 'status_terrace',
-                    'pet'   => true
-                ]
-            ];
-
-            foreach ($seat_types as $seat) {
-                $current_status = get_field($seat['field']) ?: 'ok';
-                $badge_label = '◯ 空席あり';
-                $badge_class = 'badge-ok';
-                $icon        = 'check_circle';
-
-                if ($current_status === 'few') {
-                    $badge_label = '△ 残りわずか';
-                    $badge_class = 'badge-few';
-                    $icon        = 'warning';
-                } elseif ($current_status === 'full') {
-                    $badge_label = '✕ 満席';
-                    $badge_class = 'badge-full';
-                    $icon        = 'block';
-                }
+            $content = get_post_field('post_content', $post_id);
+            echo wp_kses_post(wpautop($content));
             ?>
-                <div class="card group">
-                    <div class="card-image-wrap">
-                        <img src="<?php echo esc_url($seat['img']); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt="<?php echo esc_attr($seat['title']); ?>">
+        </div>
+    </div>
 
-                        <div class="badge <?php echo $badge_class; ?>">
-                            <span class="material-symbols-outlined" style="font-size: 14px;"><?php echo $icon; ?></span><?php echo $badge_label; ?>
+    <div class="p-about__grid u-grid">
+        <?php
+        // 座席データの定義（'field_name' はACFのフィールド名に合わせて要確認）
+        $seat_configs = [
+            [
+                'title' => '一人の時間を愉しむ',
+                'text'  => '読書や作業に最適な窓際席。自分だけの静かなリズムを。',
+                'img'   => 'counter.jpg',
+                'field_name' => 'seat1_status', // ★ここを実際のACFフィールド名に！
+                'is_pet' => false
+            ],
+            [
+                'title' => '大切な人と寛ぐ',
+                'text'  => 'ゆったりとしたソファ席。美味しいお料理を囲みながら。',
+                'img'   => 'sofa.jpg',
+                'field_name' => 'seat2_status', // ★ここを実際のACFフィールド名に！
+                'is_pet' => false
+            ],
+            [
+                'title' => '自然の風を感じる',
+                'text'  => '四季の移ろいを肌で感じる縁側席。ペットと一緒に。',
+                'img'   => 'terrace.jpg',
+                'field_name' => 'seat3_status', // ★ここを実際のACFフィールド名に！
+                'is_pet' => true
+            ],
+        ];
+
+        foreach ($seat_configs as $config) :
+            // 以前のロジック：ACFから値を取得
+            $current_status = get_field($config['field_name'], $post_id) ?: 'ok';
+
+            // 表示の切り替え判定
+            $badge_label = '◯ 空席あり';
+            $badge_modifier = 'is-success';
+            $icon = 'check_circle';
+
+            if ($current_status === 'few') {
+                $badge_label = '△ 残りわずか';
+                $badge_modifier = 'is-alert';
+                $icon = 'warning';
+            } elseif ($current_status === 'full') {
+                $badge_label = '✕ 満席';
+                $badge_modifier = 'is-full';
+                $icon = 'block';
+            }
+        ?>
+            <article class="p-seat-card">
+                <figure class="p-seat-card__img-box">
+                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/' . $config['img'])); ?>" alt="<?php echo esc_attr($config['title']); ?>" class="p-seat-card__img">
+
+                    <div class="c-badge-status <?php echo esc_attr($badge_modifier); ?>">
+                        <span class="material-symbols-outlined"><?php echo esc_html($icon); ?></span>
+                        <span class="c-badge-status__text"><?php echo esc_html($badge_label); ?></span>
+                    </div>
+
+                    <?php if ($config['is_pet']) : ?>
+                        <div class="c-badge-feature">
+                            <span class="material-symbols-outlined">pets</span>
+                            <span class="c-badge-feature__text">Pet Friendly</span>
                         </div>
-
-                        <?php if ($seat['pet']) { ?>
-                            <div class="absolute top-4 left-4 bg-white/90 text-dark-green text-xs px-3 py-1.5 rounded-full flex items-center gap-1 backdrop-blur-sm font-medium z-10">
-                                <span class="material-symbols-outlined" style="font-size: 14px;">pets</span>Pet Friendly
-                            </div>
-                        <?php } ?>
-                    </div>
-                    <div class="card-body">
-                        <h3 class="card-title"><?php echo $seat['title']; ?></h3>
-                        <p class="card-text"><?php echo $seat['desc']; ?></p>
-                    </div>
+                    <?php endif; ?>
+                </figure>
+                <div class="p-seat-card__body">
+                    <h3 class="p-seat-card__title"><?php echo esc_html($config['title']); ?></h3>
+                    <p class="p-seat-card__text"><?php echo esc_html($config['text']); ?></p>
                 </div>
-            <?php } ?>
-        </div>
+            </article>
+        <?php endforeach; ?>
+    </div>
 
-        <div class="text-center">
-            <a href="<?php echo esc_url(home_url('/concept/')); ?>" class="inline-block border-2 border-dark-green text-dark-green px-10 py-3 rounded-full hover:bg-dark-green hover:text-white transition-colors text-sm font-bold tracking-widest">
-                空間について詳しく見る
-            </a>
-        </div>
+    <div class="p-about__footer">
+        <a href="<?php echo esc_url(home_url('/about/')); ?>" class="c-btn-capsule">
+            空間について詳しく見る
+        </a>
     </div>
 </section>

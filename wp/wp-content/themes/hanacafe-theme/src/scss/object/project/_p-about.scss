@@ -1,0 +1,154 @@
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
+
+.p-about {
+	// 黄金律5: コンテナ余白は共通クラス l-container で制御。セクション固有の上下余白を設定。
+	padding-top: 60px;
+	padding-bottom: 60px;
+
+	@include m.mq(md) {
+		padding-top: 100px;
+		padding-bottom: 100px;
+	}
+
+	&__header {
+		text-align: center;
+		margin-bottom: 40px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 16px;
+
+		@include m.mq(md) {
+			margin-bottom: 60px;
+			gap: 24px;
+		}
+	}
+
+	&__label {
+		font-family: v.$f-en;
+		font-weight: 700;
+		font-size: 14px;
+		color: v.$c-main; // 黄金律2: SSOT変数マッピング
+		letter-spacing: 0.4em;
+		text-transform: uppercase;
+	}
+
+	&__title {
+		font-family: v.$f-serif;
+		font-size: 24px;
+		color: v.$c-main;
+		line-height: 1.6;
+
+		@include m.mq(md) {
+			font-size: 32px;
+		}
+	}
+
+	&__text {
+		max-width: 600px;
+		font-size: 15px;
+		line-height: 1.8;
+		color: v.$c-text; // 黄金律2: #57534E を $c-text へ
+	}
+
+	// 黄金律3: 流体UI (Grid)
+	&__grid {
+		display: grid;
+		gap: 32px;
+		margin-bottom: 48px;
+
+		@include m.mq(md) {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 48px;
+			margin-bottom: 60px;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+/* --- Seat Card (Project Component) --- */
+.p-seat-card {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	&__img-box {
+		position: relative;
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+		aspect-ratio: 352 / 440; // 比率固定
+	}
+
+	&__img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.3s ease;
+
+		.p-seat-card:hover & {
+			transform: scale(1.05); // 没入感
+		}
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__title {
+		font-family: v.$f-serif;
+		font-size: 18px;
+		color: v.$c-main;
+	}
+
+	&__text {
+		font-size: 14px;
+		line-height: 1.6;
+		color: v.$c-text;
+		opacity: 0.8;
+	}
+}
+
+/* --- Badge Components --- */
+.c-badge-status {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	padding: 4px 12px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+	font-size: 11px;
+	font-weight: 700;
+	border: 1px solid transparent;
+
+	&.is-success {
+		color: v.$c-main;
+		border-color: v.$c-main;
+	}
+
+	&.is-alert {
+		color: v.$c-accent; // $c-accent = #EB4E34
+		border-color: v.$c-accent;
+	}
+}
+
+.c-badge-feature {
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	padding: 6px 12px;
+	background: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(v.$c-main, 0.2);
+	border-radius: 4px;
+	font-family: v.$f-en;
+	font-size: 10px;
+	color: v.$c-main;
+	font-weight: 700;
+}

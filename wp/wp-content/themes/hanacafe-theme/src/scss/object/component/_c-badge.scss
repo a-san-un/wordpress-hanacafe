@@ -1,0 +1,36 @@
+@use "../../global/variables" as v;
+
+.c-badge-status {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	padding: 4px 12px;
+	background: rgba(255, 255, 255, 0.9);
+	border-radius: 20px;
+	font-size: 11px;
+	font-weight: 700;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	border: 1px solid transparent;
+	z-index: 2;
+
+	.material-symbols-outlined {
+		font-size: 14px;
+	}
+
+	&.is-success {
+		color: v.$c-main;
+		border-color: v.$c-main;
+	}
+
+	&.is-alert {
+		color: v.$c-accent;
+		border-color: v.$c-accent;
+	}
+
+	&.is-full {
+		color: #999;
+		border-color: #999;
+	}
+}
