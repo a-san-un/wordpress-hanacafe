@@ -11,7 +11,6 @@ get_header(); ?>
 
             <header class="p-page__header">
                 <h1 class="p-page__title"><?php echo esc_html(get_the_title()); ?></h1>
-                <p class="u-text-center">空間について</p>
             </header>
 
             <div class="p-page__content">
