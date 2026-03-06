@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 // Foundation
 @use "foundation/base";
 
@@ -7,10 +9,9 @@
 
 // Object - Component
 @use "object/component/button";
+@use "object/component/c-badge"; // ★ 復活させました
 
 // Object - Project
-@use "object/project/p-hero"; // ファイル名のアンダースコア(_)を除いた名前で記述
-
+@use "object/project/p-hero";
 @use "object/project/p-about";
-
-@use "object/project/p-page"
+@use "object/project/p-page";   // ★ セミコロンを追加。これで読み込まれます

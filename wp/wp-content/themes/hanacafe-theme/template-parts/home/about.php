@@ -6,6 +6,31 @@
 
 // 空席状況のACFフィールドは「現在のページ(Home)」にあるため、現在のIDを取得
 $home_id = get_the_ID();
+
+// 座席データとACFフィールド名のマッピング
+$seat_configs = [
+    [
+        'title'      => '一人の時間を愉しむ',
+        'text'       => '読書や作業に最適な窓際席。自分だけの静かなリズムを。',
+        'img'        => 'counter.jpg',
+        'field_name' => 'status_counter',
+        'is_pet'     => false
+    ],
+    [
+        'title'      => '大切な人と寛ぐ',
+        'text'       => 'ゆったりとしたソファ席。美味しいお料理を囲みながら。',
+        'img'        => 'table.jpg',
+        'field_name' => 'status_table',
+        'is_pet'     => false
+    ],
+    [
+        'title'      => '自然の風を感じる',
+        'text'       => '四季を肌で感じる縁側席。ペットと一緒にリフレッシュ。',
+        'img'        => 'terrace.jpg',
+        'field_name' => 'status_terrace',
+        'is_pet'     => true // ★ ここを true に修正
+    ],
+];
 ?>
 
 <section class="p-about l-container">
@@ -19,49 +44,23 @@ $home_id = get_the_ID();
 
     <div class="p-about__grid u-grid">
         <?php
-        // 座席データとACFフィールド名のマッピング（Homeに紐づくフィールドを指定）
-        $seat_configs = [
-            [
-                'title'      => '一人の時間を愉しむ',
-                'text'       => '読書や作業に最適な窓際席。自分だけの静かなリズムを。',
-                'img'        => 'counter.jpg',
-                'field_name' => 'status_counter', // 管理画面のACFフィールド名
-                'is_pet'     => false
-            ],
-            [
-                'title'      => '大切な人と寛ぐ',
-                'text'       => 'ゆったりとしたソファ席。美味しいお料理を囲みながら。',
-                'img'        => 'table.jpg',
-                'field_name' => 'status_table',   // 管理画面のACFフィールド名
-                'is_pet'     => false
-            ],
-            [
-                'title'      => '自然の風を感じる',
-                'text'       => '四季の移ろいを肌で感じる縁側席。ペットと一緒に。',
-                'img'        => 'terrace.jpg',
-                'field_name' => 'status_terrace', // 管理画面のACFフィールド名
-                'is_pet'     => true
-            ],
-        ];
-
         foreach ($seat_configs as $config) :
-            // HomeページのID($home_id)から値を取得
-            $current_status = get_field($config['field_name'], $home_id) ?: 'ok';
+            // ACFの値を取得
+            $status_slug = get_field($config['field_name'], $home_id);
 
-            // デフォルト設定
-            $badge_label    = '◯ 空席あり';
-            $badge_modifier = 'is-success';
-            $icon           = 'check_circle';
+            // 取得したスラッグに基づいてクラス名、ラベル、アイコンを判定
+            $badge_modifier = 'is-full';
+            $badge_label    = '× 満席';
+            $icon           = 'block';
 
-            // ステータスに応じた切り替え
-            if ($current_status === 'few') {
-                $badge_label    = '△ 残りわずか';
+            if ($status_slug === 'ok') {
+                $badge_modifier = 'is-success';
+                $badge_label    = '◯ 空席あり';
+                $icon           = 'check_circle';
+            } elseif ($status_slug === 'few') {
                 $badge_modifier = 'is-alert';
+                $badge_label    = '△ 残りわずか';
                 $icon           = 'warning';
-            } elseif ($current_status === 'full') {
-                $badge_label    = '✕ 満席';
-                $badge_modifier = 'is-full';
-                $icon           = 'block';
             }
         ?>
             <article class="p-seat-card">

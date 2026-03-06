@@ -1,19 +1,26 @@
+@use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
 .p-page {
-	// ヘッダーが固定されているため、上部に余白を設ける
-	padding-top: 120px; // ヘッダー高さ＋アルファ
+	/* ヘッダー(96px) + 余白(24px) = 120px を最低ラインに設定 */
+	padding-top: 120px;
 	padding-bottom: 80px;
 
 	@include m.mq(md) {
-		padding-top: 160px;
+		padding-top: 160px; /* PCはさらに余裕を持たせる */
 		padding-bottom: 120px;
 	}
 
-	&__title {
+	&__header {
 		text-align: center;
 		margin-bottom: 40px;
+	}
+
+	&__title {
 		font-size: 24px;
+		font-weight: 700;
+		color: v.$c-main;
+		margin-bottom: 8px;
 
 		@include m.mq(md) {
 			font-size: 32px;
@@ -21,11 +28,36 @@
 	}
 
 	&__content {
-		// WPのブロックエディターで入力された内容のスタイルを整える
 		line-height: 2;
+		color: v.$c-text;
 		
 		p {
 			margin-bottom: 24px;
+		}
+	}
+
+	&__footer {
+		margin-top: 60px;
+		text-align: center;
+	}
+
+	/* リンク：ヘッダーのナビと同じ色使いへ */
+	&__back-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		color: v.$c-text;      /* ヘッダーと同じテキスト色 */
+		font-weight: 700;
+		text-decoration: none;
+		transition: color 0.3s, transform 0.3s;
+
+		&:hover {
+			color: v.$c-accent;  /* ホバーでアクセント（オレンジ系）へ */
+			transform: translateX(-4px); /* 少し左に動くアニメーション */
+		}
+		
+		.material-symbols-outlined {
+			font-size: 18px;
 		}
 	}
 }

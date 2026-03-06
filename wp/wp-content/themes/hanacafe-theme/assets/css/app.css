@@ -155,6 +155,60 @@ button {
   transform: translateY(-1px);
 }
 
+/* ステータスバッジ（丸型：右上） */
+.c-badge-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px;
+  width: auto !important;
+  height: auto !important;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
+}
+.c-badge-status .material-symbols-outlined {
+  font-size: 14px;
+  line-height: 1;
+}
+.c-badge-status.is-alert {
+  color: #F29159;
+  border: 1px solid #F29159;
+}
+.c-badge-status.is-success {
+  color: #2E4D07;
+  border: 1px solid #2E4D07;
+}
+
+/* ★ 特徴バッジ（角丸：左下）：元ネタのスタイルを反映 */
+.c-badge-feature {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px;
+  position: absolute;
+  bottom: 20px; /* 元ネタ準拠 */
+  left: 20px; /* 元ネタ準拠 */
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px; /* ここが丸型ではなく角丸 */
+  border: 1px solid rgba(46, 77, 7, 0.2); /* メインカラーの20%透過 */
+  color: #2E4D07;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 2;
+}
+.c-badge-feature .material-symbols-outlined {
+  font-size: 14px;
+  line-height: 1;
+}
+
 .p-hero {
   position: relative;
   width: 100%;
@@ -390,19 +444,25 @@ button {
 }
 
 .p-page {
+  /* ヘッダー(96px) + 余白(24px) = 120px を最低ラインに設定 */
   padding-top: 120px;
   padding-bottom: 80px;
 }
 @media screen and (min-width: 768px) {
   .p-page {
-    padding-top: 160px;
+    padding-top: 160px; /* PCはさらに余裕を持たせる */
     padding-bottom: 120px;
   }
 }
-.p-page__title {
+.p-page__header {
   text-align: center;
   margin-bottom: 40px;
+}
+.p-page__title {
   font-size: 24px;
+  font-weight: 700;
+  color: #2E4D07;
+  margin-bottom: 8px;
 }
 @media screen and (min-width: 768px) {
   .p-page__title {
@@ -411,7 +471,31 @@ button {
 }
 .p-page__content {
   line-height: 2;
+  color: #57534E;
 }
 .p-page__content p {
   margin-bottom: 24px;
+}
+.p-page__footer {
+  margin-top: 60px;
+  text-align: center;
+}
+.p-page {
+  /* リンク：ヘッダーのナビと同じ色使いへ */
+}
+.p-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #57534E; /* ヘッダーと同じテキスト色 */
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+.p-page__back-link:hover {
+  color: #F29159; /* ホバーでアクセント（オレンジ系）へ */
+  transform: translateX(-4px); /* 少し左に動くアニメーション */
+}
+.p-page__back-link .material-symbols-outlined {
+  font-size: 18px;
 }/*# sourceMappingURL=app.css.map */
