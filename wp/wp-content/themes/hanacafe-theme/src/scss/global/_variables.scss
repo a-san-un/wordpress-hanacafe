@@ -1,15 +1,28 @@
-// --- Colors (wordpress-hanacafe.md 準拠) ---
+// ==========================================================================
+// Variables (SSOT)
+// ==========================================================================
+
+// --- Colors ---
 $c-main: #2E4D07;
 $c-accent: #F29159;
 $c-base: #F5F2E8;
 $c-sub: #EB4E34;
 $c-text: #57534E;
 $c-white: #FFFFFF;
+$c-black: #000000; // 追加: シャドウ透過などに使う黒
 
 // --- Typography ---
 $f-en: "Montserrat", "Noto Sans JP", sans-serif;
 $f-serif: "Montserrat", "Noto Serif JP", serif;
 $f-sans: "Montserrat", "Noto Sans JP", sans-serif;
 
-// --- Z-index ---
+// --- Z-index (Global) ---
 $z-header: 100;
+
+// --- Animation ---
+$t-duration: 0.3s; // 追加: 共通のホバーアニメーション時間
+
+// --- Border Radius ---
+$radius-s: 4px;      // 追加: 小さい角丸（機能バッジ等）
+$radius-m: 8px;      // 追加: 中くらいの角丸（カード等）
+$radius-round: 50px; // 追加: 強い丸み（ステータスバッジ等）

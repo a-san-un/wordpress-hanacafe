@@ -1,11 +1,6 @@
 @use "../global/variables" as v;
 @use "../global/mixins" as m;
 
-/* ===============================================
-   Layout: Header
-   * 役割: サイト共通ヘッダーのレイアウト
-   * 修正: モバイルファースト化。デフォルトをSPとし、mqでPC幅を上書き。
-=============================================== */
 .p-header {
 	position: fixed;
 	top: 0;
@@ -14,11 +9,9 @@
 	z-index: v.$z-header;
 	background-color: rgba(v.$c-base, 0.95);
 	
-	// WP管理バー表示時の位置調整（SPデフォルト）
 	.admin-bar & {
 		top: 46px;
 		
-		// PC時の管理バー高さ上書き
 		@include m.mq {
 			top: 32px;
 		}
@@ -28,9 +21,8 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		height: 70px; // SPの高さがデフォルト
+		height: 70px;
 
-		// PC時の高さ上書き
 		@include m.mq {
 			height: 90px;
 		}
@@ -38,13 +30,12 @@
 
 	&__logo {
 		font-family: v.$f-serif;
-		font-size: 20px; // SPのフォントサイズがデフォルト
+		font-size: 20px;
 		font-weight: 700;
 		color: v.$c-main;
 		text-decoration: none;
 		line-height: 1;
 
-		// PC時のフォントサイズ上書き
 		@include m.mq {
 			font-size: 26px;
 		}
@@ -60,11 +51,9 @@
 		}
 	}
 
-	/* PCナビゲーションの制御 */
 	&__nav {
-		display: none; // スマホでは非表示がデフォルト
+		display: none;
 
-		// PC時のみ表示
 		@include m.mq {
 			display: block;
 		}
@@ -82,7 +71,8 @@
 			letter-spacing: 0.1em;
 			color: v.$c-text;
 			text-decoration: none;
-			transition: color 0.3s;
+			// 修正: トランジション時間の共通化
+			transition: color v.$t-duration;
 
 			&:hover {
 				color: v.$c-main;
@@ -95,9 +85,8 @@
 		}
 	}
 
-	/* ハンバーガーメニューの制御 */
 	&__hamburger {
-		display: flex; // スマホでは表示がデフォルト
+		display: flex;
 		align-items: center;
 		background: none;
 		border: none;
@@ -105,7 +94,6 @@
 		color: v.$c-main;
 		padding: 8px;
 
-		// PC時のみ非表示
 		@include m.mq {
 			display: none;
 		}
@@ -120,22 +108,18 @@
 	}
 }
 
-/* ===============================================
-   Project: Drawer (SP版開閉メニュー)
-=============================================== */
 .p-drawer {
 	position: fixed;
 	inset: 0;
 	background-color: v.$c-base;
-	// DRY原則: ヘッダーのz-indexから-1して常に背面に回るよう計算
 	z-index: v.$z-header - 1;
 	transform: translateX(100%);
+	// 修正: トランジションの共通化（※スライドは少し遅めにしたい等があれば別途定義も可）
 	transition: transform 0.4s ease;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	// PCサイズになったらドロワー自体を無効化（誤作動防止）
 	@include m.mq {
 		display: none;
 	}

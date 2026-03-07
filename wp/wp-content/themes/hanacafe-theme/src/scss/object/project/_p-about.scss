@@ -2,11 +2,9 @@
 @use "../../global/mixins" as m;
 
 .p-about {
-	// 黄金律5: コンテナ余白は共通クラス l-container で制御。セクション固有の上下余白を設定。
 	padding-top: 60px;
 	padding-bottom: 60px;
 
-	// 修正: mq(md) -> mq に変更（引数なしで768px以上のPC用スタイルを適用）
 	@include m.mq {
 		padding-top: 100px;
 		padding-bottom: 100px;
@@ -20,7 +18,6 @@
 		align-items: center;
 		gap: 16px;
 
-		// 修正: mq(md) -> mq
 		@include m.mq {
 			margin-bottom: 60px;
 			gap: 24px;
@@ -31,7 +28,7 @@
 		font-family: v.$f-en;
 		font-weight: 700;
 		font-size: 14px;
-		color: v.$c-main; // 黄金律2: SSOT変数マッピング
+		color: v.$c-main;
 		letter-spacing: 0.4em;
 		text-transform: uppercase;
 	}
@@ -42,7 +39,6 @@
 		color: v.$c-main;
 		line-height: 1.6;
 
-		// 修正: mq(md) -> mq
 		@include m.mq {
 			font-size: 32px;
 		}
@@ -52,16 +48,14 @@
 		max-width: 600px;
 		font-size: 15px;
 		line-height: 1.8;
-		color: v.$c-text; // 黄金律2: #57534E を $c-text へ
+		color: v.$c-text;
 	}
 
-	// 黄金律3: 流体UI (Grid)
 	&__grid {
 		display: grid;
 		gap: 32px;
 		margin-bottom: 48px;
 
-		// 修正: mq(md) -> mq
 		@include m.mq {
 			grid-template-columns: repeat(3, 1fr);
 			gap: 48px;
@@ -75,7 +69,7 @@
 	}
 }
 
-/* --- Seat Card (Project Component) --- */
+/* --- Seat Card --- */
 .p-seat-card {
 	display: flex;
 	flex-direction: column;
@@ -83,20 +77,23 @@
 
 	&__img-box {
 		position: relative;
-		border-radius: 8px;
+		// 修正: 角丸変数を使用
+		border-radius: v.$radius-m;
 		overflow: hidden;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-		aspect-ratio: 352 / 440; // 比率固定
+		// 修正: 影の色を黒変数で管理
+		box-shadow: 0 4px 20px rgba(v.$c-black, 0.08);
+		aspect-ratio: 352 / 440;
 	}
 
 	&__img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		transition: transform 0.3s ease;
+		// 修正: アニメーション時間変数を使用
+		transition: transform v.$t-duration ease;
 
 		.p-seat-card:hover & {
-			transform: scale(1.05); // 没入感
+			transform: scale(1.05);
 		}
 	}
 
@@ -118,41 +115,4 @@
 		color: v.$c-text;
 		opacity: 0.8;
 	}
-}
-
-/* --- Badge Components --- */
-.c-badge-status {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	padding: 4px 12px;
-	background: rgba(255, 255, 255, 0.9);
-	border-radius: 20px;
-	font-size: 11px;
-	font-weight: 700;
-	border: 1px solid transparent;
-
-	&.is-success {
-		color: v.$c-main;
-		border-color: v.$c-main;
-	}
-
-	&.is-alert {
-		color: v.$c-accent; // $c-accent = #EB4E34
-		border-color: v.$c-accent;
-	}
-}
-
-.c-badge-feature {
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	padding: 6px 12px;
-	background: rgba(255, 255, 255, 0.9);
-	border: 1px solid rgba(v.$c-main, 0.2);
-	border-radius: 4px;
-	font-family: v.$f-en;
-	font-size: 10px;
-	color: v.$c-main;
-	font-weight: 700;
 }

@@ -66,11 +66,6 @@ button {
   max-width: none;
 }
 
-/* ===============================================
-   Layout: Header
-   * 役割: サイト共通ヘッダーのレイアウト
-   * 修正: モバイルファースト化。デフォルトをSPとし、mqでPC幅を上書き。
-=============================================== */
 .p-header {
   position: fixed;
   top: 0;
@@ -119,9 +114,6 @@ button {
   outline: 2px solid #2E4D07;
   outline-offset: 4px;
 }
-.p-header {
-  /* PCナビゲーションの制御 */
-}
 .p-header__nav {
   display: none;
 }
@@ -151,9 +143,6 @@ button {
   outline: 2px solid #2E4D07;
   outline-offset: 4px;
 }
-.p-header {
-  /* ハンバーガーメニューの制御 */
-}
 .p-header__hamburger {
   display: flex;
   align-items: center;
@@ -175,9 +164,6 @@ button {
   outline: 2px solid #2E4D07;
 }
 
-/* ===============================================
-   Project: Drawer (SP版開閉メニュー)
-=============================================== */
 .p-drawer {
   position: fixed;
   inset: 0;
@@ -232,13 +218,15 @@ button {
   transform: translateY(-1px);
 }
 
+/* ===============================================
+   Component: Badge
+   * 役割: サイト全体のカード等で使用するバッジ部品
+=============================================== */
 /* ステータスバッジ（丸型：右上） */
 .c-badge-status {
-  display: inline-flex !important;
-  align-items: center !important;
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
-  width: auto !important;
-  height: auto !important;
   position: absolute;
   top: 20px;
   right: 20px;
@@ -263,18 +251,18 @@ button {
   border: 1px solid #2E4D07;
 }
 
-/* ★ 特徴バッジ（角丸：左下）：元ネタのスタイルを反映 */
+/* 特徴バッジ（角丸：左下） */
 .c-badge-feature {
-  display: inline-flex !important;
-  align-items: center !important;
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
   position: absolute;
-  bottom: 20px; /* 元ネタ準拠 */
-  left: 20px; /* 元ネタ準拠 */
+  bottom: 20px;
+  left: 20px;
   padding: 6px 12px;
   background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 4px; /* ここが丸型ではなく角丸 */
-  border: 1px solid rgba(46, 77, 7, 0.2); /* メインカラーの20%透過 */
+  border-radius: 4px;
+  border: 1px solid rgba(46, 77, 7, 0.2);
   color: #2E4D07;
   font-size: 10px;
   font-weight: 700;
@@ -286,24 +274,15 @@ button {
   line-height: 1;
 }
 
-/**
- * Project: Hero Section
- * ------------------------------------------------------------------
- * 1. .u-alignfull（全幅）に対応
- * 2. mix-blend-mode: multiply によるブランドカラーの浸透
- * 3. デバイスごとの object-position 微調整（SP/PCでの見え方最適化）
- * 4. タイトルの中央配置（左揃え維持）
- * ------------------------------------------------------------------
- */
 .p-hero {
-  height: 70vh; /* スマホでは画面の70%の高さ */
+  height: 70vh;
   min-height: 500px;
   position: relative;
   overflow: hidden;
 }
 @media screen and (min-width: 768px) {
   .p-hero {
-    height: 100vh; /* PCでは全画面表示 */
+    height: 100vh;
   }
 }
 .p-hero__inner {
@@ -313,22 +292,15 @@ button {
 .p-hero__img {
   width: 100%;
   height: 100%;
-  background-color: #2E4D07; /* フィルターのベースとなる深緑 */
+  background-color: #2E4D07;
 }
 .p-hero__img img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  /* * リファクタリング(DRY原則):
-   * SP/PCともに 50% 35% がベストな位置のため、
-   * メディアクエリでの上書き記述を削除し共通化。
-   */
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
-}
-.p-hero__img {
-  /* 写真の上にブランドカラーを重ねる「乗算フィルター」 */
 }
 .p-hero__img::after {
   content: "";
@@ -338,7 +310,6 @@ button {
   width: 100%;
   height: 100%;
   background: linear-gradient(rgba(245, 242, 232, 0.1), rgba(46, 77, 7, 0.4));
-  /* 写真に色を馴染ませる乗算モード */
   mix-blend-mode: multiply;
   z-index: 1;
 }
@@ -350,9 +321,6 @@ button {
   transform: translateY(-50%);
   z-index: 2;
 }
-.p-hero {
-  /* タイトルの中央配置用（左揃え維持） */
-}
 .p-hero__title-box {
   width: -moz-fit-content;
   width: fit-content;
@@ -363,8 +331,8 @@ button {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  text-align: left; /* 左揃え */
-  color: #ffffff; /* 白を強制 */
+  text-align: left;
+  color: #FFFFFF;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 .p-hero__title-en {
@@ -380,7 +348,7 @@ button {
 }
 .p-hero__title-jp {
   font-size: 16px;
-  font-weight: 700; /* 視認性確保のため太字 */
+  font-weight: 700;
   letter-spacing: 0.15em;
   margin-top: 16px;
 }
@@ -456,7 +424,7 @@ button {
   justify-content: center;
 }
 
-/* --- Seat Card (Project Component) --- */
+/* --- Seat Card --- */
 .p-seat-card {
   display: flex;
   flex-direction: column;
@@ -496,49 +464,13 @@ button {
   opacity: 0.8;
 }
 
-/* --- Badge Components --- */
-.c-badge-status {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 4px 12px;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 700;
-  border: 1px solid transparent;
-}
-.c-badge-status.is-success {
-  color: #2E4D07;
-  border-color: #2E4D07;
-}
-.c-badge-status.is-alert {
-  color: #F29159;
-  border-color: #F29159;
-}
-
-.c-badge-feature {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(46, 77, 7, 0.2);
-  border-radius: 4px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 10px;
-  color: #2E4D07;
-  font-weight: 700;
-}
-
 .p-page {
-  /* ヘッダー(96px) + 余白(24px) = 120px を最低ラインに設定 */
   padding-top: 120px;
   padding-bottom: 80px;
 }
 @media screen and (min-width: 768px) {
   .p-page {
-    padding-top: 160px; /* PCはさらに余裕を持たせる */
+    padding-top: 160px;
     padding-bottom: 120px;
   }
 }
@@ -568,21 +500,18 @@ button {
   margin-top: 60px;
   text-align: center;
 }
-.p-page {
-  /* リンク：ヘッダーのナビと同じ色使いへ */
-}
 .p-page__back-link {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #57534E; /* ヘッダーと同じテキスト色 */
+  color: #57534E;
   font-weight: 700;
   text-decoration: none;
   transition: color 0.3s, transform 0.3s;
 }
 .p-page__back-link:hover {
-  color: #F29159; /* ホバーでアクセント（オレンジ系）へ */
-  transform: translateX(-4px); /* 少し左に動くアニメーション */
+  color: #F29159;
+  transform: translateX(-4px);
 }
 .p-page__back-link .material-symbols-outlined {
   font-size: 18px;

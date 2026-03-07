@@ -2,13 +2,11 @@
 @use "../../global/mixins" as m;
 
 .p-page {
-	/* ヘッダー(96px) + 余白(24px) = 120px を最低ラインに設定 */
 	padding-top: 120px;
 	padding-bottom: 80px;
 
-	// 修正: 引数なしのmqへ
 	@include m.mq {
-		padding-top: 160px; /* PCはさらに余裕を持たせる */
+		padding-top: 160px;
 		padding-bottom: 120px;
 	}
 
@@ -23,7 +21,6 @@
 		color: v.$c-main;
 		margin-bottom: 8px;
 
-		// 修正: 引数なしのmqへ
 		@include m.mq {
 			font-size: 32px;
 		}
@@ -43,19 +40,19 @@
 		text-align: center;
 	}
 
-	/* リンク：ヘッダーのナビと同じ色使いへ */
 	&__back-link {
 		display: inline-flex;
 		align-items: center;
 		gap: 8px;
-		color: v.$c-text;      /* ヘッダーと同じテキスト色 */
+		color: v.$c-text;
 		font-weight: 700;
 		text-decoration: none;
-		transition: color 0.3s, transform 0.3s;
+		// 修正: アニメーション時間変数を使用
+		transition: color v.$t-duration, transform v.$t-duration;
 
 		&:hover {
-			color: v.$c-accent;  /* ホバーでアクセント（オレンジ系）へ */
-			transform: translateX(-4px); /* 少し左に動くアニメーション */
+			color: v.$c-accent;
+			transform: translateX(-4px);
 		}
 		
 		.material-symbols-outlined {
