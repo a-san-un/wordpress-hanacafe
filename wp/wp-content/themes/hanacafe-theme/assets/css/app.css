@@ -1,0 +1,592 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F5F2E8;
+  color: #57534E;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-weight: 700;
+  color: #2E4D07;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.l-container {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@media screen and (min-width: 768px) {
+  .l-container {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+/**
+ * .u-alignfull: コンテナを無視して画面横幅いっぱい(100vw)に広げる
+ */
+.u-alignfull {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: none;
+}
+
+/* ===============================================
+   Layout: Header
+=============================================== */
+.l-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: rgba(245, 242, 232, 0.9);
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  /* WP管理バー対応 */
+}
+.admin-bar .l-header {
+  top: 32px;
+}
+@media screen and (max-width: 600px) {
+  .admin-bar .l-header {
+    top: 46px;
+  }
+}
+.l-header.is-scrolled {
+  background-color: rgba(245, 242, 232, 0.95);
+  border-bottom: 1px solid rgba(87, 83, 78, 0.05);
+}
+
+/* ===============================================
+   Project: Header
+=============================================== */
+.p-header__inner {
+  display: flex;
+  justify-content: space-between; /* 左右にきれいに分ける */
+  align-items: center;
+  width: 100%;
+  height: 96px; /* ヘッダーの高さはインナーで確保 */
+}
+.p-header__logo-wrapper {
+  margin: 0;
+  flex-shrink: 0;
+}
+.p-header__logo {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2E4D07;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.p-header__logo-sub {
+  font-size: 18px;
+}
+.p-header {
+  /* PC用ナビゲーション */
+}
+.p-header__nav {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .p-header__nav {
+    display: block;
+  }
+}
+.p-header__nav-list {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.p-header__nav-list a {
+  display: block;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #57534E;
+  letter-spacing: 2px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.p-header__nav-list a:hover {
+  color: #2E4D07;
+}
+.p-header {
+  /* ハンバーガーボタン */
+}
+.p-header__hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+@media screen and (min-width: 768px) {
+  .p-header__hamburger {
+    display: none;
+  }
+}
+.p-header__hamburger .material-symbols-outlined {
+  font-size: 32px;
+  color: #2E4D07;
+}
+
+/* ===============================================
+   Project: Drawer (ドロワーメニュー)
+=============================================== */
+.p-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%; /* 初期状態は画面の右外 */
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(245, 242, 232, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 90; /* ヘッダーの下に潜り込ませる */
+  transition: right 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* JSで付与される表示クラス */
+}
+.p-drawer.is-active {
+  right: 0; /* 画面内にスライド */
+}
+.p-drawer__list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+.p-drawer__list li {
+  margin-bottom: 40px;
+}
+.p-drawer__list a {
+  display: block;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2E4D07;
+  letter-spacing: 4px;
+  text-decoration: none;
+}
+
+.c-btn-capsule {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F29159;
+  color: #FFFFFF;
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  transition: 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.c-btn-capsule:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+/* ステータスバッジ（丸型：右上） */
+.c-badge-status {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px;
+  width: auto !important;
+  height: auto !important;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50px;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
+}
+.c-badge-status .material-symbols-outlined {
+  font-size: 14px;
+  line-height: 1;
+}
+.c-badge-status.is-alert {
+  color: #F29159;
+  border: 1px solid #F29159;
+}
+.c-badge-status.is-success {
+  color: #2E4D07;
+  border: 1px solid #2E4D07;
+}
+
+/* ★ 特徴バッジ（角丸：左下）：元ネタのスタイルを反映 */
+.c-badge-feature {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px;
+  position: absolute;
+  bottom: 20px; /* 元ネタ準拠 */
+  left: 20px; /* 元ネタ準拠 */
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px; /* ここが丸型ではなく角丸 */
+  border: 1px solid rgba(46, 77, 7, 0.2); /* メインカラーの20%透過 */
+  color: #2E4D07;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  z-index: 2;
+}
+.c-badge-feature .material-symbols-outlined {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/**
+ * Project: Hero Section
+ * ------------------------------------------------------------------
+ * 1. .u-alignfull（全幅）に対応
+ * 2. mix-blend-mode: multiply によるブランドカラーの浸透
+ * 3. デバイスごとの object-position 微調整（SP/PCでの見え方最適化）
+ * 4. タイトルの中央配置（左揃え維持）
+ * ------------------------------------------------------------------
+ */
+.p-hero {
+  height: 70vh; /* スマホでは画面の70%の高さ */
+  min-height: 500px;
+  position: relative;
+  overflow: hidden;
+}
+@media screen and (min-width: 768px) {
+  .p-hero {
+    height: 100vh; /* PCでは全画面表示 */
+  }
+}
+.p-hero__inner {
+  width: 100%;
+  height: 100%;
+}
+.p-hero__img {
+  width: 100%;
+  height: 100%;
+  background-color: #2E4D07; /* フィルターのベースとなる深緑 */
+}
+.p-hero__img img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  /* * スマホ用の位置調整:
+   * 縦長画面では左右が切れるため、上下の位置を「25%」程度に上げると
+   * 木漏れ日の光源がより印象的に入ります。
+   */
+  -o-object-position: 50% 35%;
+     object-position: 50% 35%;
+}
+@media screen and (min-width: 768px) {
+  .p-hero__img img {
+    /* PC用の位置調整: 以前のベストな位置(35%)を維持 */
+    -o-object-position: 50% 35%;
+       object-position: 50% 35%;
+  }
+}
+.p-hero__img {
+  /* 写真の上にブランドカラーを重ねる「乗算フィルター」 */
+}
+.p-hero__img::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(245, 242, 232, 0.1), rgba(46, 77, 7, 0.4));
+  /* 写真に色を馴染ませる乗算モード */
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+.p-hero__content {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.p-hero {
+  /* タイトルの中央配置用（左揃え維持） */
+}
+.p-hero__title-box {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+.p-hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left; /* 左揃え */
+  color: #ffffff; /* 白を強制 */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.p-hero__title-en {
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+@media screen and (min-width: 768px) {
+  .p-hero__title-en {
+    font-size: 80px;
+  }
+}
+.p-hero__title-jp {
+  font-size: 16px;
+  font-weight: 700; /* 視認性確保のため太字 */
+  letter-spacing: 0.15em;
+  margin-top: 16px;
+}
+@media screen and (min-width: 768px) {
+  .p-hero__title-jp {
+    font-size: 20px;
+  }
+}
+
+.p-about {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+@media screen and (min-width: 768px) {
+  .p-about {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+.p-about__header {
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+@media screen and (min-width: 768px) {
+  .p-about__header {
+    margin-bottom: 60px;
+    gap: 24px;
+  }
+}
+.p-about__label {
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #2E4D07;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+.p-about__title {
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 24px;
+  color: #2E4D07;
+  line-height: 1.6;
+}
+@media screen and (min-width: 768px) {
+  .p-about__title {
+    font-size: 32px;
+  }
+}
+.p-about__text {
+  max-width: 600px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #57534E;
+}
+.p-about__grid {
+  display: grid;
+  gap: 32px;
+  margin-bottom: 48px;
+}
+@media screen and (min-width: 768px) {
+  .p-about__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-bottom: 60px;
+  }
+}
+.p-about__footer {
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Seat Card (Project Component) --- */
+.p-seat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.p-seat-card__img-box {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  aspect-ratio: 352/440;
+}
+.p-seat-card__img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.p-seat-card:hover .p-seat-card__img {
+  transform: scale(1.05);
+}
+.p-seat-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.p-seat-card__title {
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 18px;
+  color: #2E4D07;
+}
+.p-seat-card__text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #57534E;
+  opacity: 0.8;
+}
+
+/* --- Badge Components --- */
+.c-badge-status {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+.c-badge-status.is-success {
+  color: #2E4D07;
+  border-color: #2E4D07;
+}
+.c-badge-status.is-alert {
+  color: #F29159;
+  border-color: #F29159;
+}
+
+.c-badge-feature {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(46, 77, 7, 0.2);
+  border-radius: 4px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 10px;
+  color: #2E4D07;
+  font-weight: 700;
+}
+
+.p-page {
+  /* ヘッダー(96px) + 余白(24px) = 120px を最低ラインに設定 */
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+@media screen and (min-width: 768px) {
+  .p-page {
+    padding-top: 160px; /* PCはさらに余裕を持たせる */
+    padding-bottom: 120px;
+  }
+}
+.p-page__header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.p-page__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2E4D07;
+  margin-bottom: 8px;
+}
+@media screen and (min-width: 768px) {
+  .p-page__title {
+    font-size: 32px;
+  }
+}
+.p-page__content {
+  line-height: 2;
+  color: #57534E;
+}
+.p-page__content p {
+  margin-bottom: 24px;
+}
+.p-page__footer {
+  margin-top: 60px;
+  text-align: center;
+}
+.p-page {
+  /* リンク：ヘッダーのナビと同じ色使いへ */
+}
+.p-page__back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #57534E; /* ヘッダーと同じテキスト色 */
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.3s, transform 0.3s;
+}
+.p-page__back-link:hover {
+  color: #F29159; /* ホバーでアクセント（オレンジ系）へ */
+  transform: translateX(-4px); /* 少し左に動くアニメーション */
+}
+.p-page__back-link .material-symbols-outlined {
+  font-size: 18px;
+}/*# sourceMappingURL=app.css.map */
