@@ -1,14 +1,19 @@
-@use "sass:map"; // 最新のDart Sass用
+@use "sass:map";
 @use "variables" as v;
 
-$breakpoints: (
-  "sm": "screen and (max-width: 767px)",
-  "md": "screen and (min-width: 768px)",
-  "lg": "screen and (min-width: 1024px)",
-);
+// ブレイクポイントを768pxの1点に絞る
+$breakpoint-pc: 768px;
 
-@mixin mq($breakpoint) {
-  @media #{map.get($breakpoints, $breakpoint)} {
-    @content;
-  }
+@mixin mq($device) {
+	@if $device == "pc" {
+		// 768px以上
+		@media screen and (min-width: #{$breakpoint-pc}) {
+			@content;
+		}
+	} @else if $device == "sp" {
+		// 767px以下
+		@media screen and (max-width: #{$breakpoint-pc - 1px}) {
+			@content;
+		}
+	}
 }

@@ -44,12 +44,6 @@ button {
   padding-left: 24px;
   padding-right: 24px;
 }
-@media screen and (min-width: 768px) {
-  .l-container {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
-}
 
 /**
  * .u-alignfull: コンテナを無視して画面横幅いっぱい(100vw)に広げる
@@ -62,102 +56,101 @@ button {
 }
 
 /* ===============================================
-   Layout: Header
+   Project: Header
+   - ロゴ(左端)とナビ(右端)の配置
+   - レスポンシブによる出し分け制御
 =============================================== */
-.l-header {
+.p-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
-  background-color: rgba(245, 242, 232, 0.9);
-  border-bottom: 1px solid transparent;
-  backdrop-filter: blur(4px);
-  transition: background-color 0.4s ease, border-color 0.4s ease;
-  /* WP管理バー対応 */
+  background-color: rgba(245, 242, 232, 0.95);
 }
-.admin-bar .l-header {
+.admin-bar .p-header {
   top: 32px;
 }
-@media screen and (max-width: 600px) {
-  .admin-bar .l-header {
+@media screen and (max-width: 767px) {
+  .admin-bar .p-header {
     top: 46px;
   }
 }
-.l-header.is-scrolled {
-  background-color: rgba(245, 242, 232, 0.95);
-  border-bottom: 1px solid rgba(87, 83, 78, 0.05);
-}
-
-/* ===============================================
-   Project: Header
-=============================================== */
 .p-header__inner {
   display: flex;
-  justify-content: space-between; /* 左右にきれいに分ける */
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 96px; /* ヘッダーの高さはインナーで確保 */
+  height: 70px;
 }
-.p-header__logo-wrapper {
-  margin: 0;
-  flex-shrink: 0;
+@media screen and (min-width: 768px) {
+  .p-header__inner {
+    height: 90px;
+  }
 }
 .p-header__logo {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
   font-family: "Montserrat", "Noto Serif JP", serif;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   color: #2E4D07;
   text-decoration: none;
-  white-space: nowrap;
-}
-.p-header__logo-sub {
-  font-size: 18px;
-}
-.p-header {
-  /* PC用ナビゲーション */
-}
-.p-header__nav {
-  display: none;
+  line-height: 1;
 }
 @media screen and (min-width: 768px) {
+  .p-header__logo {
+    font-size: 26px;
+  }
+}
+.p-header__logo-sub {
+  font-size: 0.7em;
+  margin-left: 4px;
+}
+.p-header__logo:focus-visible {
+  outline: 2px solid #2E4D07;
+  outline-offset: 4px;
+}
+.p-header {
+  /* PCナビゲーションの制御 */
+}
+.p-header__nav {
+  display: block;
+}
+@media screen and (max-width: 767px) {
   .p-header__nav {
-    display: block;
+    display: none;
   }
 }
 .p-header__nav-list {
   display: flex;
-  gap: 40px;
+  gap: 32px;
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
-.p-header__nav-list a {
-  display: block;
+.p-header__nav-link {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0.1em;
   color: #57534E;
-  letter-spacing: 2px;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s;
 }
-.p-header__nav-list a:hover {
+.p-header__nav-link:hover {
   color: #2E4D07;
 }
+.p-header__nav-link:focus-visible {
+  outline: 2px solid #2E4D07;
+  outline-offset: 4px;
+}
 .p-header {
-  /* ハンバーガーボタン */
+  /* ハンバーガーメニューの制御 */
 }
 .p-header__hamburger {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
+  color: #2E4D07;
+  padding: 8px;
 }
 @media screen and (min-width: 768px) {
   .p-header__hamburger {
@@ -166,45 +159,45 @@ button {
 }
 .p-header__hamburger .material-symbols-outlined {
   font-size: 32px;
-  color: #2E4D07;
+}
+.p-header__hamburger:focus-visible {
+  outline: 2px solid #2E4D07;
 }
 
 /* ===============================================
-   Project: Drawer (ドロワーメニュー)
+   Project: Drawer (SP版開閉メニュー)
 =============================================== */
 .p-drawer {
   position: fixed;
-  top: 0;
-  right: -100%; /* 初期状態は画面の右外 */
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(245, 242, 232, 0.98);
-  backdrop-filter: blur(10px);
-  z-index: 90; /* ヘッダーの下に潜り込ませる */
-  transition: right 0.5s ease;
+  inset: 0;
+  background-color: #F5F2E8;
+  z-index: 99;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* JSで付与される表示クラス */
+}
+@media screen and (min-width: 768px) {
+  .p-drawer {
+    display: none;
+  }
 }
 .p-drawer.is-active {
-  right: 0; /* 画面内にスライド */
+  transform: translateX(0);
 }
 .p-drawer__list {
   list-style: none;
-  padding: 0;
   text-align: center;
 }
-.p-drawer__list li {
-  margin-bottom: 40px;
+.p-drawer__item {
+  margin-bottom: 32px;
 }
-.p-drawer__list a {
-  display: block;
+.p-drawer__link {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 24px;
   font-weight: 700;
   color: #2E4D07;
-  letter-spacing: 4px;
   text-decoration: none;
 }
 
@@ -297,11 +290,6 @@ button {
   position: relative;
   overflow: hidden;
 }
-@media screen and (min-width: 768px) {
-  .p-hero {
-    height: 100vh; /* PCでは全画面表示 */
-  }
-}
 .p-hero__inner {
   width: 100%;
   height: 100%;
@@ -322,13 +310,6 @@ button {
    */
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
-}
-@media screen and (min-width: 768px) {
-  .p-hero__img img {
-    /* PC用の位置調整: 以前のベストな位置(35%)を維持 */
-    -o-object-position: 50% 35%;
-       object-position: 50% 35%;
-  }
 }
 .p-hero__img {
   /* 写真の上にブランドカラーを重ねる「乗算フィルター」 */
@@ -376,32 +357,16 @@ button {
   font-weight: 700;
   line-height: 1.1;
 }
-@media screen and (min-width: 768px) {
-  .p-hero__title-en {
-    font-size: 80px;
-  }
-}
 .p-hero__title-jp {
   font-size: 16px;
   font-weight: 700; /* 視認性確保のため太字 */
   letter-spacing: 0.15em;
   margin-top: 16px;
 }
-@media screen and (min-width: 768px) {
-  .p-hero__title-jp {
-    font-size: 20px;
-  }
-}
 
 .p-about {
   padding-top: 60px;
   padding-bottom: 60px;
-}
-@media screen and (min-width: 768px) {
-  .p-about {
-    padding-top: 100px;
-    padding-bottom: 100px;
-  }
 }
 .p-about__header {
   text-align: center;
@@ -410,12 +375,6 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
-}
-@media screen and (min-width: 768px) {
-  .p-about__header {
-    margin-bottom: 60px;
-    gap: 24px;
-  }
 }
 .p-about__label {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
@@ -431,11 +390,6 @@ button {
   color: #2E4D07;
   line-height: 1.6;
 }
-@media screen and (min-width: 768px) {
-  .p-about__title {
-    font-size: 32px;
-  }
-}
 .p-about__text {
   max-width: 600px;
   font-size: 15px;
@@ -446,13 +400,6 @@ button {
   display: grid;
   gap: 32px;
   margin-bottom: 48px;
-}
-@media screen and (min-width: 768px) {
-  .p-about__grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 48px;
-    margin-bottom: 60px;
-  }
 }
 .p-about__footer {
   display: flex;
@@ -539,12 +486,6 @@ button {
   padding-top: 120px;
   padding-bottom: 80px;
 }
-@media screen and (min-width: 768px) {
-  .p-page {
-    padding-top: 160px; /* PCはさらに余裕を持たせる */
-    padding-bottom: 120px;
-  }
-}
 .p-page__header {
   text-align: center;
   margin-bottom: 40px;
@@ -554,11 +495,6 @@ button {
   font-weight: 700;
   color: #2E4D07;
   margin-bottom: 8px;
-}
-@media screen and (min-width: 768px) {
-  .p-page__title {
-    font-size: 32px;
-  }
 }
 .p-page__content {
   line-height: 2;

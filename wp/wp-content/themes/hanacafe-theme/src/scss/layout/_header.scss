@@ -2,152 +2,155 @@
 @use "../global/mixins" as m;
 
 /* ===============================================
-   Layout: Header
+   Project: Header
+   - ロゴ(左端)とナビ(右端)の配置
+   - レスポンシブによる出し分け制御
 =============================================== */
-.l-header {
+.p-header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	z-index: v.$z-header;
+	background-color: rgba(v.$c-base, 0.95);
 	
-	background-color: rgba(v.$c-base, 0.9);
-	border-bottom: 1px solid transparent;
-	backdrop-filter: blur(4px);
-	transition: background-color 0.4s ease, border-color 0.4s ease;
-
-	/* WP管理バー対応 */
+	// 管理バー表示時の位置調整
 	.admin-bar & {
 		top: 32px;
-		@media screen and (max-width: 600px) { top: 46px; }
+		@include m.mq(sp) {
+			top: 46px;
+		}
 	}
 
-	&.is-scrolled {
-		background-color: rgba(v.$c-base, 0.95);
-		border-bottom: 1px solid rgba(v.$c-text, 0.05);
-	}
-}
-
-/* ===============================================
-   Project: Header
-=============================================== */
-.p-header {
 	&__inner {
 		display: flex;
-		justify-content: space-between; /* 左右にきれいに分ける */
+		justify-content: space-between; // 左右両端へ配置
 		align-items: center;
-		width: 100%;
-		height: 96px; /* ヘッダーの高さはインナーで確保 */
-	}
+		height: 70px; // SP時の高さ
 
-	&__logo-wrapper {
-		margin: 0;
-		flex-shrink: 0;
+		@include m.mq(pc) {
+			height: 90px; // PC時の高さ
+		}
 	}
 
 	&__logo {
-		display: inline-flex;
-		align-items: baseline;
-		gap: 6px;
 		font-family: v.$f-serif;
-		font-size: 24px;
+		font-size: 20px;
 		font-weight: 700;
 		color: v.$c-main;
 		text-decoration: none;
-		white-space: nowrap;
+		line-height: 1;
 
-		&-sub { font-size: 18px; }
+		@include m.mq(pc) {
+			font-size: 26px;
+		}
+
+		&-sub {
+			font-size: 0.7em;
+			margin-left: 4px;
+		}
+
+		&:focus-visible {
+			outline: 2px solid v.$c-main;
+			outline-offset: 4px;
+		}
 	}
 
-	/* PC用ナビゲーション */
+	/* PCナビゲーションの制御 */
 	&__nav {
-		display: none;
+		display: block;
 
-		@include m.mq(md) {
-			display: block;
+		@include m.mq(sp) {
+			display: none; // SPでは完全に非表示
 		}
 
 		&-list {
 			display: flex;
-			gap: 40px;
+			gap: 32px;
 			list-style: none;
-			margin: 0;
-			padding: 0;
+		}
 
-			a {
-				display: block;
-				font-family: v.$f-en;
-				font-size: 13px;
-				font-weight: 700;
-				color: v.$c-text;
-				letter-spacing: 2px;
-				text-decoration: none;
-				transition: color 0.3s ease;
+		&-link {
+			font-family: v.$f-en;
+			font-size: 14px;
+			font-weight: 700;
+			letter-spacing: 0.1em;
+			color: v.$c-text;
+			text-decoration: none;
+			transition: color 0.3s;
 
-				&:hover { color: v.$c-main; }
+			&:hover {
+				color: v.$c-main;
+			}
+			
+			&:focus-visible {
+				outline: 2px solid v.$c-main;
+				outline-offset: 4px;
 			}
 		}
 	}
 
-	/* ハンバーガーボタン */
+	/* ハンバーガーメニューの制御 */
 	&__hamburger {
-		display: flex;
+		display: flex; // SPでは表示
 		align-items: center;
-		justify-content: center;
-		background: transparent;
+		background: none;
 		border: none;
 		cursor: pointer;
+		color: v.$c-main;
+		padding: 8px;
 
-		@include m.mq(md) {
-			display: none;
+		@include m.mq(pc) {
+			display: none; // PCでは完全に非表示
 		}
 
 		.material-symbols-outlined {
 			font-size: 32px;
-			color: v.$c-main;
+		}
+
+		&:focus-visible {
+			outline: 2px solid v.$c-main;
 		}
 	}
 }
 
 /* ===============================================
-   Project: Drawer (ドロワーメニュー)
+   Project: Drawer (SP版開閉メニュー)
 =============================================== */
 .p-drawer {
 	position: fixed;
-	top: 0;
-	right: -100%; /* 初期状態は画面の右外 */
-	width: 100%;
-	height: 100vh;
-	background-color: rgba(v.$c-base, 0.98);
-	backdrop-filter: blur(10px);
-	z-index: 90; /* ヘッダーの下に潜り込ませる */
-	transition: right 0.5s ease;
+	inset: 0;
+	background-color: v.$c-base;
+	z-index: v.$z-header - 1;
+	transform: translateX(100%);
+	transition: transform 0.4s ease;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	/* JSで付与される表示クラス */
+	// PC版ではドロワー自体を無効化
+	@include m.mq(pc) {
+		display: none;
+	}
+
 	&.is-active {
-		right: 0; /* 画面内にスライド */
+		transform: translateX(0);
 	}
 
 	&__list {
 		list-style: none;
-		padding: 0;
 		text-align: center;
+	}
 
-		li {
-			margin-bottom: 40px;
-		}
+	&__item {
+		margin-bottom: 32px;
+	}
 
-		a {
-			display: block;
-			font-family: v.$f-en;
-			font-size: 24px;
-			font-weight: 700;
-			color: v.$c-main;
-			letter-spacing: 4px;
-			text-decoration: none;
-		}
+	&__link {
+		font-family: v.$f-en;
+		font-size: 24px;
+		font-weight: 700;
+		color: v.$c-main;
+		text-decoration: none;
 	}
 }

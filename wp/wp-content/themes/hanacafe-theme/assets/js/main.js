@@ -1,50 +1,30 @@
 /**
- * HanaCAFE nappa69 Main JavaScript
+ * HanaCAFE nappa69 Main JS
  */
-
-// 1. スクロール監視 (Intersection Observer) - そのまま維持
-document.addEventListener('DOMContentLoaded', () => {
-	const observerOptions = {
-		threshold: 0.1,
-		rootMargin: '0px 0px -50px 0px'
-	};
-
-	const observer = new IntersectionObserver((entries) => {
-		entries.forEach(entry => {
-			if (entry.isIntersecting) {
-				entry.target.classList.add('visible');
-			}
-		});
-	}, observerOptions);
-
-	document.querySelectorAll('.reveal').forEach(el => {
-		observer.observe(el);
-	});
-});
-
-// 2. ハンバーガー・ドロワー制御（Food Science流のシンプル実装）
 jQuery(function ($) {
 	const $hamburger = $('.js-hamburger');
 	const $drawer = $('.js-drawer');
+	const $body = $('body');
 
+	/* ハンバーガーメニュー開閉 */
 	$hamburger.on('click', function () {
-		$(this).toggleClass('is-active');
+		const expanded = $(this).attr('aria-expanded') === 'true';
+		
+		$(this).attr('aria-expanded', !expanded);
 		$drawer.toggleClass('is-active');
-
-		const isActive = $(this).hasClass('is-active');
-		$(this).attr('aria-expanded', isActive);
-
-		if (isActive) {
-			$('body').css('overflow', 'hidden');
+		
+		// 背景固定
+		if (!expanded) {
+			$body.css('overflow', 'hidden');
 		} else {
-			$('body').css('overflow', '');
+			$body.css('overflow', '');
 		}
 	});
 
-	// リンククリック時に閉じる
-	$('.p-drawer a').on('click', function () {
-		$hamburger.removeClass('is-active').attr('aria-expanded', 'false');
+	/* メニュー内リンククリックで閉じる */
+	$drawer.find('a').on('click', function () {
+		$hamburger.attr('aria-expanded', 'false');
 		$drawer.removeClass('is-active');
-		$('body').css('overflow', '');
+		$body.css('overflow', '');
 	});
 });
