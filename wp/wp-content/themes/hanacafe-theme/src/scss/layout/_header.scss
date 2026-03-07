@@ -2,14 +2,13 @@
 @use "../global/mixins" as m;
 
 /* ===============================================
-   Layout: Header (ガワの固定とスクロール)
+   Layout: Header
 =============================================== */
 .l-header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 96px;
 	z-index: v.$z-header;
 	
 	background-color: rgba(v.$c-base, 0.9);
@@ -17,16 +16,12 @@
 	backdrop-filter: blur(4px);
 	transition: background-color 0.4s ease, border-color 0.4s ease;
 
-	display: flex;
-	align-items: center;
-
-	/* WordPress管理バー表示時の位置調整 */
+	/* WP管理バー対応 */
 	.admin-bar & {
 		top: 32px;
 		@media screen and (max-width: 600px) { top: 46px; }
 	}
 
-	/* JSで20pxスクロールした時に付与されるクラス */
 	&.is-scrolled {
 		background-color: rgba(v.$c-base, 0.95);
 		border-bottom: 1px solid rgba(v.$c-text, 0.05);
@@ -34,14 +29,15 @@
 }
 
 /* ===============================================
-   Project: Header (中身のデザイン)
+   Project: Header
 =============================================== */
 .p-header {
 	&__inner {
 		display: flex;
-		justify-content: space-between; /* ★ロゴとナビを左右に飛ばす */
+		justify-content: space-between; /* 左右にきれいに分ける */
 		align-items: center;
-		width: 100%; /* ★コンテナ(1200px)の中で全幅を確保 */
+		width: 100%;
+		height: 96px; /* ヘッダーの高さはインナーで確保 */
 	}
 
 	&__logo-wrapper {
@@ -60,19 +56,15 @@
 		text-decoration: none;
 		white-space: nowrap;
 
-		&-sub {
-			font-family: v.$f-en;
-			font-size: 18px;
-		}
+		&-sub { font-size: 18px; }
 	}
 
 	/* PC用ナビゲーション */
 	&__nav {
-		display: none; /* スマホでは隠す */
+		display: none;
 
 		@include m.mq(md) {
 			display: block;
-			margin-left: auto; /* 右寄せのダメ押し */
 		}
 
 		&-list {
@@ -89,11 +81,10 @@
 				font-weight: 700;
 				color: v.$c-text;
 				letter-spacing: 2px;
+				text-decoration: none;
 				transition: color 0.3s ease;
 
-				&:hover {
-					color: v.$c-main;
-				}
+				&:hover { color: v.$c-main; }
 			}
 		}
 	}
@@ -106,10 +97,9 @@
 		background: transparent;
 		border: none;
 		cursor: pointer;
-		margin-left: auto; /* スマホで右端に寄せる */
 
 		@include m.mq(md) {
-			display: none; /* PCでは消す */
+			display: none;
 		}
 
 		.material-symbols-outlined {
@@ -117,42 +107,47 @@
 			color: v.$c-main;
 		}
 	}
+}
 
-	/* ドロワーメニューの中身（スマホ用フルスクリーン） */
-	&__drawer {
-		position: fixed;
-		top: 0;
-		right: -100%; /* 初期は右に隠す */
-		width: 100%;
-		height: 100vh;
-		background-color: rgba(v.$c-base, 0.98);
-		backdrop-filter: blur(10px);
-		z-index: -1; /* ヘッダーより後ろ、コンテンツより前 */
-		transition: right 0.5s ease;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+/* ===============================================
+   Project: Drawer (ドロワーメニュー)
+=============================================== */
+.p-drawer {
+	position: fixed;
+	top: 0;
+	right: -100%; /* 初期状態は画面の右外 */
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(v.$c-base, 0.98);
+	backdrop-filter: blur(10px);
+	z-index: 90; /* ヘッダーの下に潜り込ませる */
+	transition: right 0.5s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-		&.is-active {
-			right: 0; /* 画面にスライドイン */
+	/* JSで付与される表示クラス */
+	&.is-active {
+		right: 0; /* 画面内にスライド */
+	}
+
+	&__list {
+		list-style: none;
+		padding: 0;
+		text-align: center;
+
+		li {
+			margin-bottom: 40px;
 		}
 
-		&-list {
-			list-style: none;
-			padding: 0;
-			text-align: center;
-
-			li {
-				margin-bottom: 40px;
-			}
-
-			a {
-				font-family: v.$f-en;
-				font-size: 24px;
-				font-weight: 700;
-				color: v.$c-main;
-				letter-spacing: 4px;
-			}
+		a {
+			display: block;
+			font-family: v.$f-en;
+			font-size: 24px;
+			font-weight: 700;
+			color: v.$c-main;
+			letter-spacing: 4px;
+			text-decoration: none;
 		}
 	}
 }

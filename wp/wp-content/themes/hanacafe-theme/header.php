@@ -36,16 +36,16 @@
 
             </div>
         </div>
-
-        <div class="p-header__drawer js-menu" aria-hidden="true">
-            <nav class="p-header__drawer-nav">
-                <ul class="p-header__drawer-list">
-                    <li><a href="<?php echo esc_url(home_url('/')); ?>">HOME</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#about')); ?>">ABOUT</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#menu')); ?>">MENU</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#access')); ?>">ACCESS</a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#news')); ?>">NEWS</a></li>
-                </ul>
-            </nav>
-        </div>
     </header>
+
+    <div class="p-drawer js-menu" aria-hidden="true">
+        <nav class="p-drawer__nav">
+            <ul class="p-drawer__list">
+                <li><a href="<?php echo esc_url(home_url('/')); ?>">HOME</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#about')); ?>">ABOUT</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#menu')); ?>">MENU</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#access')); ?>">ACCESS</a></li>
+                <li><a href="<?php echo esc_url(home_url('/#news')); ?>">NEWS</a></li>
+            </ul>
+        </nav>
+    </div>
