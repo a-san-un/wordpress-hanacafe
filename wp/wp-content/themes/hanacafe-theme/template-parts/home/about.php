@@ -28,12 +28,12 @@ $seat_configs = [
         'text'       => '四季を肌で感じる縁側席。ペットと一緒にリフレッシュ。',
         'img'        => 'terrace.jpg',
         'field_name' => 'status_terrace',
-        'is_pet'     => true // ★ ここを true に修正
+        'is_pet'     => true
     ],
 ];
 ?>
 
-<section class="p-about l-container">
+<section id="about" class="p-about l-container">
     <div class="p-about__header">
         <span class="p-about__label">About & Seats</span>
         <h2 class="p-about__title">物語が動き出す、呼吸する空間。</h2>
