@@ -17,7 +17,8 @@
 	position: relative;
 	overflow: hidden;
 
-	@include m.mq(md) {
+	// 修正: 引数なしのmqへ
+	@include m.mq {
 		height: 100vh; /* PCでは全画面表示 */
 	}
 
@@ -36,16 +37,11 @@
 			height: 100%;
 			object-fit: cover;
 			
-			/* * スマホ用の位置調整:
-			 * 縦長画面では左右が切れるため、上下の位置を「25%」程度に上げると
-			 * 木漏れ日の光源がより印象的に入ります。
+			/* * リファクタリング(DRY原則):
+			 * SP/PCともに 50% 35% がベストな位置のため、
+			 * メディアクエリでの上書き記述を削除し共通化。
 			 */
 			object-position: 50% 35%; 
-
-			@include m.mq(md) {
-				/* PC用の位置調整: 以前のベストな位置(35%)を維持 */
-				object-position: 50% 35%; 
-			}
 		}
 
 		/* 写真の上にブランドカラーを重ねる「乗算フィルター」 */
@@ -96,7 +92,8 @@
 			font-weight: 700;
 			line-height: 1.1;
 
-			@include m.mq(md) {
+			// 修正: 引数なしのmqへ
+			@include m.mq {
 				font-size: 80px;
 			}
 		}
@@ -107,7 +104,8 @@
 			letter-spacing: 0.15em;
 			margin-top: 16px;
 
-			@include m.mq(md) {
+			// 修正: 引数なしのmqへ
+			@include m.mq {
 				font-size: 20px;
 			}
 		}

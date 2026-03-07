@@ -1,19 +1,13 @@
-@use "sass:map";
-@use "variables" as v;
+/* ===============================================
+   Global: Mixins
+   * 役割: サイト全体で使い回す関数の定義
+   * 修正: モバイルファースト設計に基づき、768px以上のPC用上書き専用に単純化
+=============================================== */
 
-// ブレイクポイントを768pxの1点に絞る
-$breakpoint-pc: 768px;
-
-@mixin mq($device) {
-	@if $device == "pc" {
-		// 768px以上
-		@media screen and (min-width: #{$breakpoint-pc}) {
-			@content;
-		}
-	} @else if $device == "sp" {
-		// 767px以下
-		@media screen and (max-width: #{$breakpoint-pc - 1px}) {
-			@content;
-		}
+// PC向けレイアウトを適用するためのメディアクエリ
+// 使い方: @include m.mq { ...PC用のスタイル... }
+@mixin mq {
+	@media screen and (min-width: 768px) {
+		@content;
 	}
 }

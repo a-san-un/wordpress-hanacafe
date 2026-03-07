@@ -8,7 +8,8 @@
 	padding-left: 24px;
 	padding-right: 24px;
 
-	@include m.mq(md) {
+	// 修正: 引数なしのmqへ
+	@include m.mq {
 		padding-left: 80px;
 		padding-right: 80px;
 	}

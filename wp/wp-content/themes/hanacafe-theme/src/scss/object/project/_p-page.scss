@@ -6,7 +6,8 @@
 	padding-top: 120px;
 	padding-bottom: 80px;
 
-	@include m.mq(md) {
+	// 修正: 引数なしのmqへ
+	@include m.mq {
 		padding-top: 160px; /* PCはさらに余裕を持たせる */
 		padding-bottom: 120px;
 	}
@@ -22,7 +23,8 @@
 		color: v.$c-main;
 		margin-bottom: 8px;
 
-		@include m.mq(md) {
+		// 修正: 引数なしのmqへ
+		@include m.mq {
 			font-size: 32px;
 		}
 	}

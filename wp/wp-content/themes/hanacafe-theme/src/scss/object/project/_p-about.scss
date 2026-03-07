@@ -6,7 +6,8 @@
 	padding-top: 60px;
 	padding-bottom: 60px;
 
-	@include m.mq(md) {
+	// 修正: mq(md) -> mq に変更（引数なしで768px以上のPC用スタイルを適用）
+	@include m.mq {
 		padding-top: 100px;
 		padding-bottom: 100px;
 	}
@@ -19,7 +20,8 @@
 		align-items: center;
 		gap: 16px;
 
-		@include m.mq(md) {
+		// 修正: mq(md) -> mq
+		@include m.mq {
 			margin-bottom: 60px;
 			gap: 24px;
 		}
@@ -40,7 +42,8 @@
 		color: v.$c-main;
 		line-height: 1.6;
 
-		@include m.mq(md) {
+		// 修正: mq(md) -> mq
+		@include m.mq {
 			font-size: 32px;
 		}
 	}
@@ -58,7 +61,8 @@
 		gap: 32px;
 		margin-bottom: 48px;
 
-		@include m.mq(md) {
+		// 修正: mq(md) -> mq
+		@include m.mq {
 			grid-template-columns: repeat(3, 1fr);
 			gap: 48px;
 			margin-bottom: 60px;

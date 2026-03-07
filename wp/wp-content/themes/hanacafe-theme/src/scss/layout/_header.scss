@@ -2,9 +2,9 @@
 @use "../global/mixins" as m;
 
 /* ===============================================
-   Project: Header
-   - ロゴ(左端)とナビ(右端)の配置
-   - レスポンシブによる出し分け制御
+   Layout: Header
+   * 役割: サイト共通ヘッダーのレイアウト
+   * 修正: モバイルファースト化。デフォルトをSPとし、mqでPC幅を上書き。
 =============================================== */
 .p-header {
 	position: fixed;
@@ -14,34 +14,38 @@
 	z-index: v.$z-header;
 	background-color: rgba(v.$c-base, 0.95);
 	
-	// 管理バー表示時の位置調整
+	// WP管理バー表示時の位置調整（SPデフォルト）
 	.admin-bar & {
-		top: 32px;
-		@include m.mq(sp) {
-			top: 46px;
+		top: 46px;
+		
+		// PC時の管理バー高さ上書き
+		@include m.mq {
+			top: 32px;
 		}
 	}
 
 	&__inner {
 		display: flex;
-		justify-content: space-between; // 左右両端へ配置
+		justify-content: space-between;
 		align-items: center;
-		height: 70px; // SP時の高さ
+		height: 70px; // SPの高さがデフォルト
 
-		@include m.mq(pc) {
-			height: 90px; // PC時の高さ
+		// PC時の高さ上書き
+		@include m.mq {
+			height: 90px;
 		}
 	}
 
 	&__logo {
 		font-family: v.$f-serif;
-		font-size: 20px;
+		font-size: 20px; // SPのフォントサイズがデフォルト
 		font-weight: 700;
 		color: v.$c-main;
 		text-decoration: none;
 		line-height: 1;
 
-		@include m.mq(pc) {
+		// PC時のフォントサイズ上書き
+		@include m.mq {
 			font-size: 26px;
 		}
 
@@ -58,10 +62,11 @@
 
 	/* PCナビゲーションの制御 */
 	&__nav {
-		display: block;
+		display: none; // スマホでは非表示がデフォルト
 
-		@include m.mq(sp) {
-			display: none; // SPでは完全に非表示
+		// PC時のみ表示
+		@include m.mq {
+			display: block;
 		}
 
 		&-list {
@@ -92,7 +97,7 @@
 
 	/* ハンバーガーメニューの制御 */
 	&__hamburger {
-		display: flex; // SPでは表示
+		display: flex; // スマホでは表示がデフォルト
 		align-items: center;
 		background: none;
 		border: none;
@@ -100,8 +105,9 @@
 		color: v.$c-main;
 		padding: 8px;
 
-		@include m.mq(pc) {
-			display: none; // PCでは完全に非表示
+		// PC時のみ非表示
+		@include m.mq {
+			display: none;
 		}
 
 		.material-symbols-outlined {
@@ -121,6 +127,7 @@
 	position: fixed;
 	inset: 0;
 	background-color: v.$c-base;
+	// DRY原則: ヘッダーのz-indexから-1して常に背面に回るよう計算
 	z-index: v.$z-header - 1;
 	transform: translateX(100%);
 	transition: transform 0.4s ease;
@@ -128,8 +135,8 @@
 	align-items: center;
 	justify-content: center;
 
-	// PC版ではドロワー自体を無効化
-	@include m.mq(pc) {
+	// PCサイズになったらドロワー自体を無効化（誤作動防止）
+	@include m.mq {
 		display: none;
 	}
 

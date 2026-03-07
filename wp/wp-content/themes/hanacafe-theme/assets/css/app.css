@@ -37,12 +37,23 @@ button {
   cursor: pointer;
 }
 
+/* ===============================================
+   Global: Mixins
+   * 役割: サイト全体で使い回す関数の定義
+   * 修正: モバイルファースト設計に基づき、768px以上のPC用上書き専用に単純化
+=============================================== */
 .l-container {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 24px;
   padding-right: 24px;
+}
+@media screen and (min-width: 768px) {
+  .l-container {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }
 
 /**
@@ -56,9 +67,9 @@ button {
 }
 
 /* ===============================================
-   Project: Header
-   - ロゴ(左端)とナビ(右端)の配置
-   - レスポンシブによる出し分け制御
+   Layout: Header
+   * 役割: サイト共通ヘッダーのレイアウト
+   * 修正: モバイルファースト化。デフォルトをSPとし、mqでPC幅を上書き。
 =============================================== */
 .p-header {
   position: fixed;
@@ -69,11 +80,11 @@ button {
   background-color: rgba(245, 242, 232, 0.95);
 }
 .admin-bar .p-header {
-  top: 32px;
+  top: 46px;
 }
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 768px) {
   .admin-bar .p-header {
-    top: 46px;
+    top: 32px;
   }
 }
 .p-header__inner {
@@ -112,11 +123,11 @@ button {
   /* PCナビゲーションの制御 */
 }
 .p-header__nav {
-  display: block;
+  display: none;
 }
-@media screen and (max-width: 767px) {
+@media screen and (min-width: 768px) {
   .p-header__nav {
-    display: none;
+    display: block;
   }
 }
 .p-header__nav-list {
@@ -290,6 +301,11 @@ button {
   position: relative;
   overflow: hidden;
 }
+@media screen and (min-width: 768px) {
+  .p-hero {
+    height: 100vh; /* PCでは全画面表示 */
+  }
+}
 .p-hero__inner {
   width: 100%;
   height: 100%;
@@ -304,9 +320,9 @@ button {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  /* * スマホ用の位置調整:
-   * 縦長画面では左右が切れるため、上下の位置を「25%」程度に上げると
-   * 木漏れ日の光源がより印象的に入ります。
+  /* * リファクタリング(DRY原則):
+   * SP/PCともに 50% 35% がベストな位置のため、
+   * メディアクエリでの上書き記述を削除し共通化。
    */
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
@@ -357,16 +373,32 @@ button {
   font-weight: 700;
   line-height: 1.1;
 }
+@media screen and (min-width: 768px) {
+  .p-hero__title-en {
+    font-size: 80px;
+  }
+}
 .p-hero__title-jp {
   font-size: 16px;
   font-weight: 700; /* 視認性確保のため太字 */
   letter-spacing: 0.15em;
   margin-top: 16px;
 }
+@media screen and (min-width: 768px) {
+  .p-hero__title-jp {
+    font-size: 20px;
+  }
+}
 
 .p-about {
   padding-top: 60px;
   padding-bottom: 60px;
+}
+@media screen and (min-width: 768px) {
+  .p-about {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
 }
 .p-about__header {
   text-align: center;
@@ -375,6 +407,12 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 16px;
+}
+@media screen and (min-width: 768px) {
+  .p-about__header {
+    margin-bottom: 60px;
+    gap: 24px;
+  }
 }
 .p-about__label {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
@@ -390,6 +428,11 @@ button {
   color: #2E4D07;
   line-height: 1.6;
 }
+@media screen and (min-width: 768px) {
+  .p-about__title {
+    font-size: 32px;
+  }
+}
 .p-about__text {
   max-width: 600px;
   font-size: 15px;
@@ -400,6 +443,13 @@ button {
   display: grid;
   gap: 32px;
   margin-bottom: 48px;
+}
+@media screen and (min-width: 768px) {
+  .p-about__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-bottom: 60px;
+  }
 }
 .p-about__footer {
   display: flex;
@@ -486,6 +536,12 @@ button {
   padding-top: 120px;
   padding-bottom: 80px;
 }
+@media screen and (min-width: 768px) {
+  .p-page {
+    padding-top: 160px; /* PCはさらに余裕を持たせる */
+    padding-bottom: 120px;
+  }
+}
 .p-page__header {
   text-align: center;
   margin-bottom: 40px;
@@ -495,6 +551,11 @@ button {
   font-weight: 700;
   color: #2E4D07;
   margin-bottom: 8px;
+}
+@media screen and (min-width: 768px) {
+  .p-page__title {
+    font-size: 32px;
+  }
 }
 .p-page__content {
   line-height: 2;
