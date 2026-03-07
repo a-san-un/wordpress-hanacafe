@@ -38,7 +38,7 @@ button {
 }
 
 .l-container {
-  width: 100%;
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 24px;
@@ -51,6 +51,19 @@ button {
   }
 }
 
+/**
+ * .u-alignfull: コンテナを無視して画面横幅いっぱい(100vw)に広げる
+ */
+.u-alignfull {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: none;
+}
+
+/* ===============================================
+   Layout: Header (ガワの固定とスクロール)
+=============================================== */
 .l-header {
   position: fixed;
   top: 0;
@@ -59,10 +72,12 @@ button {
   height: 96px;
   z-index: 100;
   background-color: rgba(245, 242, 232, 0.9);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
+  border-bottom: 1px solid transparent;
+  backdrop-filter: blur(4px);
+  transition: background-color 0.4s ease, border-color 0.4s ease;
   display: flex;
   align-items: center;
+  /* WordPress管理バー表示時の位置調整 */
 }
 .admin-bar .l-header {
   top: 32px;
@@ -72,32 +87,52 @@ button {
     top: 46px;
   }
 }
-.l-header__inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.l-header {
+  /* JSで20pxスクロールした時に付与されるクラス */
+}
+.l-header.is-scrolled {
+  background-color: rgba(245, 242, 232, 0.95);
+  border-bottom: 1px solid rgba(87, 83, 78, 0.05);
 }
 
-.p-header__logo {
+/* ===============================================
+   Project: Header (中身のデザイン)
+=============================================== */
+.p-header__inner {
   display: flex;
+  justify-content: space-between; /* ★ロゴとナビを左右に飛ばす */
+  align-items: center;
+  width: 100%; /* ★コンテナ(1200px)の中で全幅を確保 */
+}
+.p-header__logo-wrapper {
+  margin: 0;
+  flex-shrink: 0;
+}
+.p-header__logo {
+  display: inline-flex;
   align-items: baseline;
-  gap: 5px;
+  gap: 6px;
   font-family: "Montserrat", "Noto Serif JP", serif;
   font-size: 24px;
   font-weight: 700;
   color: #2E4D07;
+  text-decoration: none;
   white-space: nowrap;
 }
 .p-header__logo-sub {
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 18px;
 }
+.p-header {
+  /* PC用ナビゲーション */
+}
 .p-header__nav {
-  display: none;
+  display: none; /* スマホでは隠す */
 }
 @media screen and (min-width: 768px) {
   .p-header__nav {
     display: block;
+    margin-left: auto; /* 右寄せのダメ押し */
   }
 }
 .p-header__nav-list {
@@ -107,32 +142,73 @@ button {
   margin: 0;
   padding: 0;
 }
-.p-header__nav-list li {
-  display: block;
-}
 .p-header__nav-list a {
+  display: block;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: #57534E;
-  letter-spacing: 0.2em;
-  transition: color 0.3s;
-  white-space: nowrap;
+  letter-spacing: 2px;
+  transition: color 0.3s ease;
 }
 .p-header__nav-list a:hover {
   color: #2E4D07;
 }
+.p-header {
+  /* ハンバーガーボタン */
+}
 .p-header__hamburger {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: auto; /* スマホで右端に寄せる */
 }
 @media screen and (min-width: 768px) {
   .p-header__hamburger {
-    display: none;
+    display: none; /* PCでは消す */
   }
 }
 .p-header__hamburger .material-symbols-outlined {
   font-size: 32px;
   color: #2E4D07;
+}
+.p-header {
+  /* ドロワーメニューの中身（スマホ用フルスクリーン） */
+}
+.p-header__drawer {
+  position: fixed;
+  top: 0;
+  right: -100%; /* 初期は右に隠す */
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(245, 242, 232, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: -1; /* ヘッダーより後ろ、コンテンツより前 */
+  transition: right 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.p-header__drawer.is-active {
+  right: 0; /* 画面にスライドイン */
+}
+.p-header__drawer-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
+.p-header__drawer-list li {
+  margin-bottom: 40px;
+}
+.p-header__drawer-list a {
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #2E4D07;
+  letter-spacing: 4px;
 }
 
 .c-btn-capsule {
@@ -209,96 +285,114 @@ button {
   line-height: 1;
 }
 
+/**
+ * Project: Hero Section
+ * ------------------------------------------------------------------
+ * 1. .u-alignfull（全幅）に対応
+ * 2. mix-blend-mode: multiply によるブランドカラーの浸透
+ * 3. デバイスごとの object-position 微調整（SP/PCでの見え方最適化）
+ * 4. タイトルの中央配置（左揃え維持）
+ * ------------------------------------------------------------------
+ */
 .p-hero {
+  height: 70vh; /* スマホでは画面の70%の高さ */
+  min-height: 500px;
   position: relative;
-  width: 100%;
-  height: 100vh;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
-.p-hero__item {
-  position: relative;
+@media screen and (min-width: 768px) {
+  .p-hero {
+    height: 100vh; /* PCでは全画面表示 */
+  }
+}
+.p-hero__inner {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.p-hero__img-wrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
 }
 .p-hero__img {
   width: 100%;
   height: 100%;
+  background-color: #2E4D07; /* フィルターのベースとなる深緑 */
+}
+.p-hero__img img {
+  width: 100%;
+  height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  /* 写真の上部35%を基準に固定。木漏れ日を綺麗に見せるための調整 */
+  /* * スマホ用の位置調整:
+   * 縦長画面では左右が切れるため、上下の位置を「25%」程度に上げると
+   * 木漏れ日の光源がより印象的に入ります。
+   */
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
-  /* 没入感を出し、境界の余白を防ぐためわずかに拡大 */
-  transform: scale(1.05);
 }
-.p-hero__overlay-multiply {
+@media screen and (min-width: 768px) {
+  .p-hero__img img {
+    /* PC用の位置調整: 以前のベストな位置(35%)を維持 */
+    -o-object-position: 50% 35%;
+       object-position: 50% 35%;
+  }
+}
+.p-hero__img {
+  /* 写真の上にブランドカラーを重ねる「乗算フィルター」 */
+}
+.p-hero__img::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  background-color: rgba(46, 77, 7, 0.2);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(245, 242, 232, 0.1), rgba(46, 77, 7, 0.4));
+  /* 写真に色を馴染ませる乗算モード */
   mix-blend-mode: multiply;
   z-index: 1;
 }
-.p-hero__overlay-gradient {
+.p-hero__content {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, transparent 40%, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
   z-index: 2;
 }
-.p-hero__content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
-  color: #FFFFFF;
-  padding: 0 24px;
+.p-hero {
+  /* タイトルの中央配置用（左揃え維持） */
+}
+.p-hero__title-box {
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 .p-hero__title {
-  font-family: "Montserrat", "Noto Serif JP", serif;
-  color: #FFFFFF;
-  font-size: 36px;
-  line-height: 1.5;
-  letter-spacing: 0.15em;
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left; /* 左揃え */
+  color: #ffffff; /* 白を強制 */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
-@media screen and (min-width: 768px) {
-  .p-hero__title {
-    font-size: 60px;
-    line-height: 90px;
-    letter-spacing: 0.2em;
-    margin-bottom: 32px;
-  }
-}
-.p-hero__subtitle {
+.p-hero__title-en {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 16px;
-  letter-spacing: 0.2em;
-  color: #FFFFFF;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
 }
 @media screen and (min-width: 768px) {
-  .p-hero__subtitle {
-    font-size: 20px;
-    letter-spacing: 6px;
+  .p-hero__title-en {
+    font-size: 80px;
   }
 }
-.p-hero__line {
-  width: 48px;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.5);
-  margin: 32px auto 0;
+.p-hero__title-jp {
+  font-size: 16px;
+  font-weight: 700; /* 視認性確保のため太字 */
+  letter-spacing: 0.15em;
+  margin-top: 16px;
 }
 @media screen and (min-width: 768px) {
-  .p-hero__line {
-    width: 64px;
+  .p-hero__title-jp {
+    font-size: 20px;
   }
 }
 

@@ -3,47 +3,50 @@
 /**
  * Hero Section Template
  */
+
+// 1. デフォルト値の準備
+$hero_img_url = get_template_directory_uri() . '/assets/images/hero.jpg';
+$hero_title_jp = '木漏れ日と、手作りの温もり。';
+
+// 2. データの取得 (WP_Query)
 $args = [
     'post_type'      => 'main-visual',
-    'posts_per_page' => -1,
+    'posts_per_page' => 1,
     'orderby'        => 'menu_order',
     'order'          => 'ASC',
 ];
 $the_query = new WP_Query($args);
+
+// 3. 投稿がある場合はデータを上書き
+if ($the_query->have_posts()) {
+    while ($the_query->have_posts()) {
+        $the_query->the_post();
+        if (has_post_thumbnail()) {
+            $hero_img_url = get_the_post_thumbnail_url(get_the_ID(), 'full');
+        }
+        // 投稿タイトルを日本語タイトルとして使用
+        $hero_title_jp = get_the_title();
+    }
+    wp_reset_postdata();
+}
 ?>
 
-<section class="p-hero">
-    <?php if ($the_query->have_posts()) : ?>
-        <?php while ($the_query->have_posts()) : $the_query->the_post();
-            $pic = get_field('pic');
-            $image_url = !empty($pic) ? $pic['url'] : get_theme_file_uri('/assets/images/hero.jpg');
-        ?>
-            <div class="p-hero__item">
-                <div class="p-hero__img-wrapper">
-                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php the_title_attribute(); ?>" class="p-hero__img">
+<section class="p-hero u-alignfull">
+    <div class="p-hero__inner">
+        <div class="p-hero__img">
+            <img src="<?php echo esc_url($hero_img_url); ?>" alt="HanaCAFE nappa69">
+        </div>
+
+        <div class="p-hero__content">
+            <div class="l-container">
+                <div class="p-hero__title-box">
+                    <h2 class="p-hero__title">
+                        <span class="p-hero__title-en">Slow Time,</span>
+                        <span class="p-hero__title-en">Slow Life.</span>
+                        <span class="p-hero__title-jp"><?php echo esc_html($hero_title_jp); ?></span>
+                    </h2>
                 </div>
-                <div class="p-hero__overlay-multiply"></div>
-                <div class="p-hero__overlay-gradient"></div>
-                <div class="p-hero__content">
-                    <h2 class="p-hero__title">日常に緑を、<br class="u-hidden-md">心に安らぎを。</h2>
-                    <p class="p-hero__subtitle">体に優しい心が嬉しいお料理</p>
-                    <div class="p-hero__line"></div>
-                </div>
-            </div>
-        <?php endwhile;
-        wp_reset_postdata(); ?>
-    <?php else : ?>
-        <div class="p-hero__item">
-            <div class="p-hero__img-wrapper">
-                <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/hero.jpg')); ?>" alt="HanaCAFE nappa69" class="p-hero__img">
-            </div>
-            <div class="p-hero__overlay-multiply"></div>
-            <div class="p-hero__overlay-gradient"></div>
-            <div class="p-hero__content">
-                <h2 class="p-hero__title">日常に緑を、<br class="u-hidden-md">心に安らぎを。</h2>
-                <p class="p-hero__subtitle">体に優しい心が嬉しいお料理</p>
-                <div class="p-hero__line"></div>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 </section>

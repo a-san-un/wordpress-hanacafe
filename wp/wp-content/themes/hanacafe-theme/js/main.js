@@ -2,75 +2,55 @@
  * HanaCAFE nappa69 Main JavaScript
  */
 
-// 1. スクロール監視 (Intersection Observer) - ふわっと表示するアニメーション用
-document.addEventListener('DOMContentLoaded', () => {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // .reveal 要素が画面に入ったら .visible クラスを付与
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    // 全ての .reveal 要素を監視
-    document.querySelectorAll('.reveal').forEach(el => {
-        observer.observe(el);
-    });
-});
-
-// 2. jQuery を使った動的制御 (ハンバーガー・ヘッダー)
 jQuery(function($) {
     /**
-     * ハンバーガーメニューの開閉制御
+     * ハンバーガーメニューとドロワーの制御
      */
-    var $hamburger = $('.js-hamburger');
-    var $menu = $('.js-menu');
-    var isShow = false;
+    const $hamburger = $('.js-hamburger');
+    const $drawer = $('.js-menu');
+    let isShow = false;
 
     $hamburger.on('click', function() {
-        if (isShow === false) {
+        // アクセシビリティ：開閉状態を通知
+        const expanded = $(this).attr('aria-expanded') === 'true';
+        $(this).attr('aria-expanded', !expanded);
+
+        if (!isShow) {
             // メニューを開く
             $hamburger.addClass('is-active');
-            $menu.addClass('is-active');
-            // 背景スクロールを防止したい場合は body にクラスを付ける
-            $('body').css('overflow', 'hidden');
+            $drawer.addClass('is-active').attr('aria-hidden', 'false');
+            $('body').css('overflow', 'hidden'); // 背後をスクロールさせない
             isShow = true;
         } else {
             // メニューを閉じる
             $hamburger.removeClass('is-active');
-            $menu.removeClass('is-active');
+            $drawer.removeClass('is-active').attr('aria-hidden', 'true');
             $('body').css('overflow', 'auto');
             isShow = false;
         }
     });
 
     /**
-     * メニュー内リンククリック時に閉じる
-     * （アンカーリンク移動時にメニューが開きっぱなしになるのを防ぐ）
+     * ドロワー内のリンクをクリックしたら閉じる
      */
     $('.js-menu a').on('click', function() {
-        if (isShow === true) {
-            $hamburger.removeClass('is-active');
-            $menu.removeClass('is-active');
+        if (isShow) {
+            $hamburger.removeClass('is-active').attr('aria-expanded', 'false');
+            $drawer.removeClass('is-active').attr('aria-hidden', 'true');
             $('body').css('overflow', 'auto');
             isShow = false;
         }
     });
 
     /**
-     * スクロールに応じてヘッダーにクラスを付与
+     * ヘッダーのスクロール検知 (20px)
      */
-    $(window).on('scroll', function () {
-        if ($(this).scrollTop() > 100) {
-            $(".site-header").addClass("is-scrolled");
+    const $header = $('.l-header');
+    $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 20) {
+            $header.addClass('is-scrolled');
         } else {
-            $(".site-header").removeClass("is-scrolled");
+            $header.removeClass('is-scrolled');
         }
     });
 });

@@ -1,18 +1,25 @@
+@use "../global/variables" as v;
 @use "../global/mixins" as m;
 
 .l-container {
-  width: 100%;         // 常に全幅
-  margin-left: auto;
-  margin-right: auto;
-  
-  // ★SP版：左右に24pxの「絶対的な余白」を確保
-  padding-left: 24px;
-  padding-right: 24px;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 24px;
+	padding-right: 24px;
 
-  @include m.mq(md) {
-    // ★PC版：解像度に関わらず、左右に「80pxの余白」を死守
-    // これにより、中身は常に calc(100% - 160px) の相対幅になります
-    padding-left: 80px;
-    padding-right: 80px;
-  }
+	@include m.mq(md) {
+		padding-left: 80px;
+		padding-right: 80px;
+	}
+}
+
+/**
+ * .u-alignfull: コンテナを無視して画面横幅いっぱい(100vw)に広げる
+ */
+.u-alignfull {
+	width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
+	max-width: none;
 }
