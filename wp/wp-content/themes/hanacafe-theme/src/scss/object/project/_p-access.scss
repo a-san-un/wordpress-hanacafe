@@ -3,34 +3,30 @@
 
 /* ============================================
    Project: Access (p-access)
-   ============================================ */
+============================================ */
 .p-access {
     background-color: v.$c-base;
-    padding: 80px 0;
-
-    @include m.mq {
-        padding: 160px 0;
-    }
+    // padding は .l-section に任せるため削除
 
     &__inner {
         display: flex;
         flex-direction: column;
-        gap: 64px;
+        gap: m.vw-clamp(64, 96); // 余白を滑らかに可変
 
         @include m.mq {
             flex-direction: row; 
             align-items: center; 
-            gap: 96px;
         }
     }
 
     &__info {
-        @include m.mq {
-            flex: 1; 
-        }
         display: flex;
         flex-direction: column;
         gap: 40px;
+
+        @include m.mq {
+            flex: 1; 
+        }
     }
 
     &__subtitle {
@@ -43,7 +39,7 @@
 
     &__title {
         color: v.$c-main;
-        font-size: 28px;
+        font-size: m.vw-clamp(24, 28); // 滑らかに可変
         font-family: v.$f-serif;
         font-weight: 400;
         margin-top: 8px;
@@ -56,41 +52,54 @@
 
     &__row {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: 32px;               // ラベルとテキストの間隔を32pxに固定
+        flex-direction: column;
         padding: 24px 0;
-        border-bottom: 1px solid v.$c-text;
+        border-bottom: 1px solid v.$c-border;
+        gap: 12px;
+
+        @include m.mq {
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 24px;
+        }
 
         &--split {
-            display: flex;
-            justify-content: flex-start;
-            gap: 32px;           // ★修正: TelとClosedの間隔を32pxに更新
+            flex-direction: row;
+            gap: 24px;
+
+            @include m.mq {
+                gap: 48px;
+            }
         }
 
         &--no-border {
             border-bottom: none;
-            padding-bottom: 0;
         }
     }
 
+    &__col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        flex: 1;
+    }
+
     &__label {
-        flex: 0 0 96px;          // ラベル幅 96px 固定 (Figma準拠)
+        font-family: v.$f-en;
+        font-weight: 700;
         color: v.$c-main;
-        font-family: v.$f-sans;
-        font-weight: 600;
-        font-size: 11px;
-        text-transform: uppercase;
+        font-size: 15px;
         letter-spacing: 0.1em;
-        padding-top: 4px;
+
+        @include m.mq {
+            width: 80px; 
+            flex-shrink: 0;
+        }
     }
 
     &__detail {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        text-align: left;
         gap: 12px;
         flex: 1;
     }
@@ -114,6 +123,13 @@
         }
     }
 
+    &__note {
+        font-size: 13px;
+        color: v.$c-text-light;
+        line-height: 1.6;
+        margin-top: 4px;
+    }
+
     &__badge {
         display: inline-flex;
         align-items: center;
@@ -124,8 +140,13 @@
         color: v.$c-white;
         font-size: 10px;
         font-family: v.$f-sans;
+
         &--tokyu { background-color: v.$c-main; }
         &--jr { background-color: v.$c-text-gray; }
+    }
+
+    &__action {
+        margin-top: 16px;
     }
 
     &__btn {
@@ -139,30 +160,38 @@
         text-decoration: none;
         font-weight: 600;
         width: fit-content;
-        transition: opacity 0.3s;
+        transition: opacity v.$t-duration ease;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    &__map {
+        width: 100%;
+        
+        @include m.mq {
+            flex: 1;
+        }
+    }
+
+    &__map-link {
+        display: block;
+        width: 100%;
+        border-radius: v.$radius-m;
+        overflow: hidden;
+        transition: opacity v.$t-duration;
 
         &:hover {
             opacity: 0.8;
         }
     }
 
-    &__map {
-        @include m.mq {
-            flex: 1;
-        }
+    &__map img {
         width: 100%;
-        
-        img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-        }
-    }
-
-    &__note {
-        font-size: 13px;
-        color: v.$c-text-gray;
-        margin-top: 4px;
+        height: auto;
+        vertical-align: bottom;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
     }
 }

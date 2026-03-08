@@ -1,27 +1,20 @@
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
-.p-about {
-	padding-top: 60px;
-	padding-bottom: 60px;
+/* ===============================================
+   Project: About & Seats (.p-about)
+=============================================== */
 
-	@include m.mq {
-		padding-top: 100px;
-		padding-bottom: 100px;
-	}
+.p-about {
+	// padding-top/bottom は .l-section に任せるため削除
 
 	&__header {
 		text-align: center;
-		margin-bottom: 40px;
+		margin-bottom: m.vw-clamp(40, 60); // 滑らかに可変
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 16px;
-
-		@include m.mq {
-			margin-bottom: 60px;
-			gap: 24px;
-		}
+		gap: m.vw-clamp(16, 24); // 滑らかに可変
 	}
 
 	&__label {
@@ -35,13 +28,9 @@
 
 	&__title {
 		font-family: v.$f-serif;
-		font-size: 24px;
+		font-size: m.vw-clamp(24, 32); // 滑らかに可変
 		color: v.$c-main;
 		line-height: 1.6;
-
-		@include m.mq {
-			font-size: 32px;
-		}
 	}
 
 	&__text {
@@ -49,17 +38,19 @@
 		font-size: 15px;
 		line-height: 1.8;
 		color: v.$c-text;
+
+		p + p {
+			margin-top: 1em;
+		}
 	}
 
 	&__grid {
 		display: grid;
-		gap: 32px;
-		margin-bottom: 48px;
+		gap: m.vw-clamp(32, 48); // 滑らかに可変
+		margin-bottom: m.vw-clamp(48, 60); // 滑らかに可変
 
 		@include m.mq {
 			grid-template-columns: repeat(3, 1fr);
-			gap: 48px;
-			margin-bottom: 60px;
 		}
 	}
 
@@ -69,28 +60,24 @@
 	}
 }
 
-/* --- Seat Card --- */
+/* --- Seat Card (Individual) --- */
 .p-seat-card {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
 
 	&__img-box {
-		position: relative;
-		// 修正: 角丸変数を使用
-		border-radius: v.$radius-m;
+		position: relative; 
+		aspect-ratio: 3 / 2;
 		overflow: hidden;
-		// 修正: 影の色を黒変数で管理
-		box-shadow: 0 4px 20px rgba(v.$c-black, 0.08);
-		aspect-ratio: 352 / 440;
+		border-radius: v.$radius-m;
 	}
 
 	&__img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		// 修正: アニメーション時間変数を使用
-		transition: transform v.$t-duration ease;
+		transition: transform v.$t-duration;
 
 		.p-seat-card:hover & {
 			transform: scale(1.05);
@@ -107,12 +94,12 @@
 		font-family: v.$f-serif;
 		font-size: 18px;
 		color: v.$c-main;
+		font-weight: 700;
 	}
 
 	&__text {
 		font-size: 14px;
 		line-height: 1.6;
 		color: v.$c-text;
-		opacity: 0.8;
 	}
 }

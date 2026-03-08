@@ -1,4 +1,4 @@
-<section id="news" class="p-news">
+<section id="news" class="p-news l-section">
     <div class="l-container">
         <div class="p-news__header">
             <span class="p-news__subtitle">News</span>
@@ -10,7 +10,7 @@
             $args = array(
                 'post_type'      => 'post',
                 'posts_per_page' => 3,
-                // 'category_name'  => 'lunch', // 必要に応じてコメントアウトを解除
+                // 'category_name'  => 'lunch', // 特定のカテゴリーに絞る場合はコメントを解除
             );
             $news_query = new WP_Query($args);
 
@@ -23,7 +23,7 @@
                                 <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('medium', array('class' => 'p-news-card__img')); ?>
                                 <?php else : ?>
-                                    <img src="https://placehold.co/373x210" alt="No Image" class="p-news-card__img">
+                                    <img src="https://placehold.co/370x210" alt="No Image" class="p-news-card__img">
                                 <?php endif; ?>
                             </div>
 

@@ -33,7 +33,7 @@ $seat_configs = [
 ];
 ?>
 
-<section id="about" class="p-about l-container">
+<section id="about" class="p-about l-container l-section">
     <div class="p-about__header">
         <span class="p-about__label">About & Seats</span>
         <h2 class="p-about__title">物語が動き出す、呼吸する空間。</h2>
@@ -45,7 +45,7 @@ $seat_configs = [
     <div class="p-about__grid u-grid">
         <?php
         foreach ($seat_configs as $config) :
-            // ACFの値を取得
+            // ACFの値を取得（ok / few / full）
             $status_slug = get_field($config['field_name'], $home_id);
 
             // 取得したスラッグに基づいてクラス名、ラベル、アイコンを判定

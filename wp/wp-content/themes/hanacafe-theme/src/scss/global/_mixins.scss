@@ -1,8 +1,24 @@
+@use "sass:math";
+
 /* ===============================================
-   Global: Mixins
-   * 役割: サイト全体で使い回す関数の定義
-   * 修正: モバイルファースト設計に基づき、768px以上のPC用上書き専用に単純化
+   Global: Mixins & Functions
+   * 役割: サイト全体で使い回す計算・記述の定義
 =============================================== */
+
+// --- Functions (値を計算して返す) ---
+
+// 最小値、最大値、最小画面幅、最大画面幅から clamp() を自動計算する関数
+// 使い方: f.vw-clamp(最小サイズ, 最大サイズ)
+@function vw-clamp($min-size, $max-size, $min-vw: 375, $max-vw: 768) {
+  $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
+  $y-axis-intersection: $min-size - ($slope * $min-vw);
+  $preferred-value: calc(#{$y-axis-intersection}px + #{$slope * 100}vw);
+  
+  @return clamp(#{$min-size}px, #{$preferred-value}, #{$max-size}px);
+}
+
+
+// --- Mixins (CSSプロパティを注入する) ---
 
 // PC向けレイアウトを適用するためのメディアクエリ
 // 使い方: @include m.mq { ...PC用のスタイル... }

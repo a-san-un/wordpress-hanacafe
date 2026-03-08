@@ -2,58 +2,45 @@
 @use "../../global/mixins" as m;
 
 /* ============================================
-   Project: News (p-news)
-   ============================================ */
+Project: News (p-news)
+============================================ */
 .p-news {
-	padding: 80px 0;
+	// padding は .l-section に任せるため削除
 	background-color: v.$c-white;
-
-	@include m.mq {
-		padding: 160px 0;
-	}
 
 	&__header {
 		text-align: center;
-		margin-bottom: 40px;
+		margin-bottom: m.vw-clamp(40, 80); // 滑らかに可変
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 24px; // Figma: gap: 24px
-
-		@include m.mq {
-			margin-bottom: 80px;
-		}
+		gap: 24px;
 	}
 
 	&__subtitle {
 		display: block;
 		font-family: v.$f-sans;
 		font-size: 14px;
-		font-weight: 400; // Figma: 100だがWeb標準の400で調整
+		font-weight: 400;
 		color: v.$c-main;
-		letter-spacing: 0.4em; // Figma: 5.6px / 14px
+		letter-spacing: 0.4em;
 		text-transform: uppercase;
 	}
 
 	&__title {
 		font-family: v.$f-serif;
-		font-size: 24px;
+		font-size: m.vw-clamp(24, 30); // 滑らかに可変
 		color: v.$c-main;
-		font-weight: 400; // Noto Serifの標準ウエイト
-
-		@include m.mq {
-			font-size: 30px; // Figma: 30px
-		}
+		font-weight: 400;
 	}
 
 	&__list {
 		display: grid;
-		gap: 32px;
+		gap: m.vw-clamp(32, 48); // 滑らかに可変
 		margin-bottom: 60px;
 
 		@include m.mq {
-			grid-template-columns: repeat(3, 1fr); // 3カラムレイアウト
-			gap: 48px; // Figma: gap: 48px
+			grid-template-columns: repeat(3, 1fr); // PCで3カラム
 		}
 	}
 
@@ -66,9 +53,9 @@
 		color: v.$c-main;
 		border-bottom: 1px solid v.$c-main;
 		padding-bottom: 8px;
-		font-size: 12px; // Figma: 12px
+		font-size: 12px;
 		font-family: v.$f-sans;
-		letter-spacing: 0.3em; // Figma: 3.6px / 12px
+		letter-spacing: 0.3em;
 		text-transform: uppercase;
 		text-decoration: none;
 		transition: opacity v.$t-duration;
@@ -91,23 +78,23 @@
 		flex-direction: column;
 		gap: 24px;
 		text-decoration: none;
-		
+
 		&:hover {
 			.p-news-card__img {
-				transform: scale(1.05);
+				transform: scale(1.05); // ホバー時に画像をわずかに拡大
 			}
 			.p-news-card__title {
-				color: v.$c-main; // ホバー時にタイトルを緑に
+				color: v.$c-main;
 			}
 		}
 	}
 
 	&__img-box {
 		position: relative;
-		aspect-ratio: 373 / 210; // Figmaの画像比率に準拠
-		border-radius: 2px; // Figma: border-radius: 2px
+		aspect-ratio: 370 / 210; // ★ エンジニアの判断でキリの良い数値に調整
+		border-radius: 2px;
 		overflow: hidden;
-		background-color: v.$c-border; // プレースホルダー色
+		background-color: v.$c-border;
 	}
 
 	&__img {
@@ -125,16 +112,16 @@
 
 	&__date {
 		font-family: v.$f-sans;
-		font-size: 11px; // Figma: 11px
-		color: v.$c-text-light; // #A8A29E に該当する変数
-		letter-spacing: 0.1em; // Figma: 1.1px / 11px
+		font-size: 11px;
+		color: v.$c-text-light;
+		letter-spacing: 0.1em;
 	}
 
 	&__title {
 		font-family: v.$f-serif;
-		font-size: 16px; // Figma: 16px
-		line-height: 1.625; // Figma: 26px / 16px
-		color: v.$c-text; // Figma: #292524 に近い基本色
+		font-size: 16px;
+		line-height: 1.625;
+		color: v.$c-text;
 		transition: color v.$t-duration;
 	}
 }

@@ -10,7 +10,7 @@
  * @package HanaCAFE_Theme
  */
 ?>
-<section id="access" class="p-access">
+<section id="access" class="p-access l-section">
     <div class="p-access__inner l-container">
 
         <div class="p-access__info">
@@ -33,21 +33,24 @@
                     <dd class="p-access__detail">
                         <div class="p-access__transport-item">
                             <span class="p-access__badge p-access__badge--tokyu">東急</span>
-                            <p class="p-access__text">東横線「新丸子駅」西口 徒歩2分</p>
+                            <p class="p-access__text">東横線・目黒線「新丸子駅」より徒歩3分</p>
                         </div>
                         <div class="p-access__transport-item">
                             <span class="p-access__badge p-access__badge--jr">JR</span>
-                            <p class="p-access__text">南武線「武蔵小杉駅」北口 徒歩7分</p>
+                            <p class="p-access__text">南武線・横須賀線「武蔵小杉駅」より徒歩6分</p>
                         </div>
                     </dd>
                 </div>
 
                 <div class="p-access__row">
-                    <dt class="p-access__label">Hours</dt>
+                    <dt class="p-access__label">Open</dt>
                     <dd class="p-access__detail">
-                        <div class="p-access__time">
-                            <p class="p-access__text p-access__text--large">11:00 - 19:00</p>
-                            <p class="p-access__alert">※木曜日のみ 17:00 クローズ</p>
+                        <p class="p-access__text">11:00 ～ 22:30</p>
+                        <div class="p-access__note">
+                            <p>Lunch / 11:00 ～ 15:00</p>
+                            <p>Tea Time / 15:00 ～ 17:00</p>
+                            <p>Dinner / 17:00 ～ 22:30 (L.O. 21:30)</p>
+                            <p>※20:00以降ノーゲストの場合は早めにクローズ</p>
                         </div>
                     </dd>
                 </div>

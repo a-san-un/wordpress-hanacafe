@@ -2,40 +2,29 @@
 @use "../../global/mixins" as m;
 
 /* ============================================
-   Project: Menu (p-menu)
-   ============================================ */
+Project: Menu (p-menu)
+============================================ */
 .p-menu {
-	// SPデフォルト
-	padding: 80px 0;
+	// padding は .l-section に任せるため削除
 	background-color: v.$c-white;
-
-	// PC上書き: 160px
-	@include m.mq {
-		padding: 160px 0;
-	}
 
 	&__inner {
 		display: flex;
 		flex-direction: column;
-		gap: 56px;
-
-		@include m.mq {
-			gap: 96px;
-		}
+		gap: m.vw-clamp(56, 96); // 滑らかに可変
 	}
 
 	&__header {
 		display: flex;
 		flex-direction: column;
 		gap: 24px;
-		padding-bottom: 24px;
+		padding-bottom: m.vw-clamp(24, 40); // 滑らかに可変
 		border-bottom: 1px solid v.$c-border;
 
 		@include m.mq {
 			flex-direction: row;
 			justify-content: space-between;
 			align-items: flex-end;
-			padding-bottom: 40px;
 		}
 	}
 
@@ -55,13 +44,9 @@
 
 	&__title {
 		color: v.$c-main;
-		font-size: 28px;
+		font-size: m.vw-clamp(28, 36); // 滑らかに可変
 		font-family: v.$f-serif;
 		font-weight: 400;
-
-		@include m.mq {
-			font-size: 36px;
-		}
 	}
 
 	&__link {
@@ -87,30 +72,25 @@
 	&__list {
 		display: grid;
 		grid-template-columns: 1fr; // SPは縦1列
-		gap: 48px;
+		gap: m.vw-clamp(48, 64); // 滑らかに可変
 
 		@include m.mq {
-			// PCで3列横並びを強制
-			grid-template-columns: repeat(3, 1fr) !important; 
-			gap: 64px;
+			// PCで3列横並び (!importantを排除)
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 
 	&__item {
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
-
-		@include m.mq {
-			gap: 24px;
-		}
+		gap: m.vw-clamp(16, 24); // 滑らかに可変
 	}
 
 	&__img-wrapper {
 		position: relative;
 		overflow: hidden;
 		border-radius: v.$radius-s;
-		aspect-ratio: 363 / 453;
+		aspect-ratio: 4 / 5; // ★ 363/453 を美しい比率（0.8）に最適化
 	}
 
 	&__img {
@@ -132,13 +112,9 @@
 
 	&__name {
 		color: v.$c-main;
-		font-size: 18px;
+		font-size: m.vw-clamp(18, 20); // 滑らかに可変
 		font-weight: 500;
 		line-height: 1.4;
-
-		@include m.mq {
-			font-size: 20px;
-		}
 	}
 
 	&__desc-top {
@@ -154,12 +130,8 @@
 
 	&__desc {
 		color: v.$c-text-light;
-		font-size: 13px;
+		font-size: m.vw-clamp(13, 14); // 滑らかに可変
 		line-height: 1.8;
-
-		@include m.mq {
-			font-size: 14px;
-		}
 	}
 
 	&__price {

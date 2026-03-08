@@ -1,0 +1,14 @@
+@use "../global/variables" as v;
+@use "../global/mixins" as m;
+
+/* ===============================================
+   Layout: Section (.l-section)
+   * 役割: 各セクションの上下共通の余白管理（DRY原則）
+   * 根拠: 各_p-*.scssに散らばっていたpaddingを一元管理
+=============================================== */
+
+.l-section {
+  // スマホサイズ(375px)で 60px、PCサイズ(768px以上)で 100px に滑らかに可変
+  padding-top: m.vw-clamp(60, 100);
+  padding-bottom: m.vw-clamp(60, 100);
+}

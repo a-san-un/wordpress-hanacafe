@@ -1,29 +1,25 @@
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
+/* ============================================
+   Project: Page (p-page)
+   * 役割: 下層ページ（固定ページ等）の共通スタイル
+============================================ */
 .p-page {
-	padding-top: 120px;
-	padding-bottom: 80px;
-
-	@include m.mq {
-		padding-top: 160px;
-		padding-bottom: 120px;
-	}
+	// 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
+	padding-top: m.vw-clamp(120, 160);
+	padding-bottom: m.vw-clamp(80, 120);
 
 	&__header {
 		text-align: center;
-		margin-bottom: 40px;
+		margin-bottom: m.vw-clamp(40, 60); // 滑らかに可変
 	}
 
 	&__title {
-		font-size: 24px;
+		font-size: m.vw-clamp(24, 32); // 滑らかに可変
 		font-weight: 700;
 		color: v.$c-main;
 		margin-bottom: 8px;
-
-		@include m.mq {
-			font-size: 32px;
-		}
 	}
 
 	&__content {
@@ -36,7 +32,7 @@
 	}
 
 	&__footer {
-		margin-top: 60px;
+		margin-top: m.vw-clamp(40, 60); // 滑らかに可変
 		text-align: center;
 	}
 
@@ -47,16 +43,11 @@
 		color: v.$c-text;
 		font-weight: 700;
 		text-decoration: none;
-		// 修正: アニメーション時間変数を使用
 		transition: color v.$t-duration, transform v.$t-duration;
 
 		&:hover {
 			color: v.$c-accent;
 			transform: translateX(-4px);
-		}
-		
-		.material-symbols-outlined {
-			font-size: 18px;
 		}
 	}
 }

@@ -2,13 +2,10 @@
 
 /**
  * Template part for displaying the menu section.
- * * 修正内容:
- * - チーズケーキとコーヒーの価格に「〜」を追加。
- * - 画像名を nappa_plate.jpg, cheesecake.jpg, coffee.jpg に変更。
  * * @package HanaCAFE_Theme
  */
 ?>
-<section id="menu" class="p-menu">
+<section id="menu" class="p-menu l-section">
     <div class="p-menu__inner l-container">
 
         <div class="p-menu__header">
