@@ -5,140 +5,164 @@
    Project: Access (p-access)
    ============================================ */
 .p-access {
-	background-color: v.$c-base;
-	padding: 80px 0; // 元の余白を復元
+    background-color: v.$c-base;
+    padding: 80px 0;
 
-	@include m.mq {
-		padding: 160px 0;
-	}
+    @include m.mq {
+        padding: 160px 0;
+    }
 
-	&__inner {
-		display: flex;
-		flex-direction: column;
-		gap: 64px; // 元の数値を復元
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        gap: 64px;
 
-		@include m.mq {
-			flex-direction: row; 
-			align-items: center; // 【重要】地図写真を垂直方向の真ん中へ
-			gap: 96px;
-		}
-	}
+        @include m.mq {
+            flex-direction: row; 
+            align-items: center; 
+            gap: 96px;
+        }
+    }
 
-	&__info {
-		@include m.mq {
-			flex: 1; // 左右 1:1 分割を維持
-		}
-		display: flex;
-		flex-direction: column;
-		gap: 40px;
-	}
+    &__info {
+        @include m.mq {
+            flex: 1; 
+        }
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
 
-	&__subtitle {
-		color: v.$c-main;
-		font-size: 14px;
-		font-family: v.$f-sans; // 元のフォントスタックを復元
-		text-transform: uppercase;
-		letter-spacing: 0.4em;
-	}
+    &__subtitle {
+        color: v.$c-main;
+        font-size: 14px;
+        font-family: v.$f-sans;
+        text-transform: uppercase;
+        letter-spacing: 0.4em;
+    }
 
-	&__title {
-		color: v.$c-main;
-		font-size: 28px; // 元のサイズを復元
-		font-family: v.$f-serif;
-		font-weight: 400;
-	}
+    &__title {
+        color: v.$c-main;
+        font-size: 28px;
+        font-family: v.$f-serif;
+        font-weight: 400;
+        margin-top: 8px;
+    }
 
-	&__list {
-		display: flex;
-		flex-direction: column;
-	}
+    &__list {
+        display: flex;
+        flex-direction: column;
+    }
 
-	// [Step 8] ボトムラインの追加（Address, Access, Hours用）
-	&__row {
-		display: flex;
-		padding: 24px 0;
-		border-bottom: 1px solid v.$c-text; // 指定の濃いグレー (#57534E) を使用
+    &__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 32px;               // ラベルとテキストの間隔を32pxに固定
+        padding: 24px 0;
+        border-bottom: 1px solid v.$c-text;
 
-		&--split {
-			display: flex;
-			gap: 20px;
-		}
+        &--split {
+            display: flex;
+            justify-content: flex-start;
+            gap: 32px;           // ★修正: TelとClosedの間隔を32pxに更新
+        }
 
-		&--no-border {
-			border-bottom: none; // Tel/Closed 行は線を消去
-			padding-bottom: 0;
-		}
-	}
+        &--no-border {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    }
 
-	&__label {
-		flex: 0 0 100px;
-		color: v.$c-main;
-		font-family: v.$f-sans; // 元のフォントを復元
-		font-weight: 600;
-		font-size: 14px;
-	}
+    &__label {
+        flex: 0 0 96px;          // ラベル幅 96px 固定 (Figma準拠)
+        color: v.$c-main;
+        font-family: v.$f-sans;
+        font-weight: 600;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding-top: 4px;
+    }
 
-	&__text {
-		color: v.$c-text;
-		line-height: 1.6;
-		&--large {
-			font-size: 18px;
-			font-family: v.$f-sans;
-			font-weight: 500;
-		}
-	}
+    &__detail {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        gap: 12px;
+        flex: 1;
+    }
 
-	&__badge {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 42px;
-		height: 20px;
-		border-radius: 2px;
-		color: v.$c-white;
-		font-size: 10px;
-		font-family: v.$f-sans; // 元のフォントを復元
-		&--tokyu { background-color: v.$c-main; }
-		&--jr { background-color: v.$c-text-gray; }
-	}
+    &__transport-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+    }
 
-	&__btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		gap: 12px;
-		width: 100%;
-		height: 56px;
-		background-color: v.$c-accent;
-		color: v.$c-white;
-		border-radius: v.$radius-round;
-		font-size: 14px;
-		font-family: v.$f-sans; // 元のフォントを復元
-		text-decoration: none;
-		transition: transform v.$t-duration ease;
+    &__text {
+        color: v.$c-text;
+        line-height: 1.6;
+        font-size: 15px;
 
-		&:hover { transform: translateY(-2px); }
-		@include m.mq { width: 240px; }
-	}
+        &--large {
+            font-size: 18px;
+            font-family: v.$f-sans;
+            font-weight: 500;
+        }
+    }
 
-	// [Step 9] マップ画像の比率維持設定 (810:673)
-	&__map {
-		width: 100%;
-		border-radius: v.$radius-s;
-		overflow: hidden;
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 20px;
+        border-radius: 2px;
+        color: v.$c-white;
+        font-size: 10px;
+        font-family: v.$f-sans;
+        &--tokyu { background-color: v.$c-main; }
+        &--jr { background-color: v.$c-text-gray; }
+    }
 
-		@include m.mq {
-			flex: 1;
-		}
+    &__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: v.$c-accent;
+        color: v.$c-white;
+        padding: 16px 32px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        width: fit-content;
+        transition: opacity 0.3s;
 
-		&-link {
-			display: block;
-			aspect-ratio: 810 / 673; // デザインカンプの比率を厳守
-			img {
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-		}
-	}
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
+    &__map {
+        @include m.mq {
+            flex: 1;
+        }
+        width: 100%;
+        
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+    }
+
+    &__note {
+        font-size: 13px;
+        color: v.$c-text-gray;
+        margin-top: 4px;
+    }
 }

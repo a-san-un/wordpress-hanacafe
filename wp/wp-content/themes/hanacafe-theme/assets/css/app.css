@@ -198,6 +198,156 @@ button {
   text-decoration: none;
 }
 
+/* ============================================
+   Layout: Footer (l-footer)
+   ============================================ */
+.l-footer {
+  background-color: #2E4D07;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 80px 0 40px;
+}
+@media screen and (min-width: 768px) {
+  .l-footer {
+    padding: 100px 0 40px;
+  }
+}
+.l-footer__main {
+  display: grid;
+  gap: 60px;
+  margin-bottom: 60px;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__main {
+    grid-template-columns: 1.2fr 1fr 1.2fr;
+    align-items: start;
+    text-align: left;
+    gap: 40px;
+  }
+}
+.l-footer {
+  /* ロゴ部分 */
+}
+.l-footer__logo-text {
+  color: #FFFFFF;
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  margin-bottom: 24px;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__logo-text {
+    font-size: 32px;
+  }
+}
+.l-footer {
+  /* 店舗情報 */
+}
+.l-footer__info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__info-list {
+    align-items: flex-start;
+  }
+}
+.l-footer__info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+.l-footer__info-item a {
+  color: inherit;
+  text-decoration: none;
+}
+.l-footer__info-item .material-symbols-outlined {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 18px;
+  margin-top: 4px;
+}
+.l-footer {
+  /* SNS・ポリシーリンク */
+}
+.l-footer__nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__nav-group {
+    align-items: flex-end;
+  }
+}
+.l-footer__sns-links {
+  display: flex;
+  gap: 32px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+}
+.l-footer__sns-links a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.l-footer__sns-links a:hover {
+  color: #F29159;
+}
+.l-footer__policy-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__policy-links {
+    align-items: flex-end;
+  }
+}
+.l-footer__policy-links a {
+  color: inherit;
+  text-decoration: none;
+}
+.l-footer__policy-links a:hover {
+  text-decoration: underline;
+}
+.l-footer {
+  /* コピーライトエリア */
+}
+.l-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+@media screen and (min-width: 768px) {
+  .l-footer__bottom {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.l-footer__copy {
+  opacity: 0.6;
+}
+.l-footer__tagline {
+  opacity: 0.4;
+}
+
 .c-btn-capsule {
   display: inline-flex;
   align-items: center;
@@ -721,6 +871,7 @@ button {
   font-size: 28px;
   font-family: "Montserrat", "Noto Serif JP", serif;
   font-weight: 400;
+  margin-top: 8px;
 }
 .p-access__list {
   display: flex;
@@ -728,27 +879,50 @@ button {
 }
 .p-access__row {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
   padding: 24px 0;
   border-bottom: 1px solid #57534E;
 }
 .p-access__row--split {
   display: flex;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 32px;
 }
 .p-access__row--no-border {
   border-bottom: none;
   padding-bottom: 0;
 }
 .p-access__label {
-  flex: 0 0 100px;
+  flex: 0 0 96px;
   color: #2E4D07;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+}
+.p-access__detail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 12px;
+  flex: 1;
+}
+.p-access__transport-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
 }
 .p-access__text {
   color: #57534E;
   line-height: 1.6;
+  font-size: 15px;
 }
 .p-access__text--large {
   font-size: 18px;
@@ -775,43 +949,161 @@ button {
 .p-access__btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: 100%;
-  height: 56px;
+  gap: 8px;
   background-color: #F29159;
   color: #FFFFFF;
+  padding: 16px 32px;
   border-radius: 50px;
-  font-size: 14px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
   text-decoration: none;
-  transition: transform 0.3s ease;
+  font-weight: 600;
+  width: -moz-fit-content;
+  width: fit-content;
+  transition: opacity 0.3s;
 }
 .p-access__btn:hover {
-  transform: translateY(-2px);
-}
-@media screen and (min-width: 768px) {
-  .p-access__btn {
-    width: 240px;
-  }
-}
-.p-access__map {
-  width: 100%;
-  border-radius: 4px;
-  overflow: hidden;
+  opacity: 0.8;
 }
 @media screen and (min-width: 768px) {
   .p-access__map {
     flex: 1;
   }
 }
-.p-access__map-link {
-  display: block;
-  aspect-ratio: 810/673;
+.p-access__map {
+  width: 100%;
 }
-.p-access__map-link img {
+.p-access__map img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+.p-access__note {
+  font-size: 13px;
+  color: #78716C;
+  margin-top: 4px;
+}
+
+/* ============================================
+   Project: News (p-news)
+   ============================================ */
+.p-news {
+  padding: 80px 0;
+  background-color: #FFFFFF;
+}
+@media screen and (min-width: 768px) {
+  .p-news {
+    padding: 160px 0;
+  }
+}
+.p-news__header {
+  text-align: center;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+@media screen and (min-width: 768px) {
+  .p-news__header {
+    margin-bottom: 80px;
+  }
+}
+.p-news__subtitle {
+  display: block;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #2E4D07;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+.p-news__title {
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 24px;
+  color: #2E4D07;
+  font-weight: 400;
+}
+@media screen and (min-width: 768px) {
+  .p-news__title {
+    font-size: 30px;
+  }
+}
+.p-news__list {
+  display: grid;
+  gap: 32px;
+  margin-bottom: 60px;
+}
+@media screen and (min-width: 768px) {
+  .p-news__list {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+}
+.p-news__footer {
+  text-align: center;
+}
+.p-news__more-link {
+  display: inline-block;
+  color: #2E4D07;
+  border-bottom: 1px solid #2E4D07;
+  padding-bottom: 8px;
+  font-size: 12px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+.p-news__more-link:hover {
+  opacity: 0.7;
+}
+.p-news__empty {
+  text-align: center;
+  color: #78716C;
+}
+
+/* --- News Card --- */
+.p-news-card__link {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-decoration: none;
+}
+.p-news-card__link:hover .p-news-card__img {
+  transform: scale(1.05);
+}
+.p-news-card__link:hover .p-news-card__title {
+  color: #2E4D07;
+}
+.p-news-card__img-box {
+  position: relative;
+  aspect-ratio: 373/210;
+  border-radius: 2px;
+  overflow: hidden;
+  background-color: #F5F5F4;
+}
+.p-news-card__img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  transition: transform 0.3s;
+}
+.p-news-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.p-news-card__date {
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 11px;
+  color: #A8A29E;
+  letter-spacing: 0.1em;
+}
+.p-news-card__title {
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: 16px;
+  line-height: 1.625;
+  color: #57534E;
+  transition: color 0.3s;
 }/*# sourceMappingURL=app.css.map */
