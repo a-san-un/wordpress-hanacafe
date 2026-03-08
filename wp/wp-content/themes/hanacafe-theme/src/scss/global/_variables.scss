@@ -1,28 +1,35 @@
 // ==========================================================================
 // Variables (SSOT)
+// HanaCAFE nappa69 リニューアルプロジェクト
 // ==========================================================================
 
 // --- Colors ---
-$c-main: #2E4D07;
-$c-accent: #F29159;
-$c-base: #F5F2E8;
-$c-sub: #EB4E34;
-$c-text: #57534E;
-$c-white: #FFFFFF;
-$c-black: #000000; // 追加: シャドウ透過などに使う黒
+$c-main:       #2E4D07; // 濃い緑（メインブランドカラー）
+$c-accent:     #F29159; // オレンジ（アクセント・リンク色）
+$c-base:       #F5F2E8; // 生成色（背景ベース）
+$c-sub:        #EB4E34; // 赤（警告・強調用）
+$c-text:       #57534E; // 基本テキスト色（濃いグレー）
+$c-white:      #FFFFFF; // 白
+$c-black:      #000000; // 黒
+$c-border:     #F5F5F4; // 区切り線用（Figma: grey-96）
+
+// 【補完】メニューセクションのテキスト階層に必須な色
+$c-text-gray:  #78716C; // 中間色グレー（Figma: stone-500）
+$c-text-light: #A8A29E; // 薄いグレー（Figma: stone-400）
 
 // --- Typography ---
-$f-en: "Montserrat", "Noto Sans JP", sans-serif;
+// 【重要】Montserratを先頭に置くことで、英数字のみにMontserratを適用し、日本語はNotoを適用させる設定
+$f-en:    "Montserrat", "Noto Sans JP", sans-serif;
 $f-serif: "Montserrat", "Noto Serif JP", serif;
-$f-sans: "Montserrat", "Noto Sans JP", sans-serif;
+$f-sans:  "Montserrat", "Noto Sans JP", sans-serif;
 
 // --- Z-index (Global) ---
 $z-header: 100;
 
 // --- Animation ---
-$t-duration: 0.3s; // 追加: 共通のホバーアニメーション時間
+$t-duration: 0.3s; // 共通のホバーアニメーション時間
 
 // --- Border Radius ---
-$radius-s: 4px;      // 追加: 小さい角丸（機能バッジ等）
-$radius-m: 8px;      // 追加: 中くらいの角丸（カード等）
-$radius-round: 50px; // 追加: 強い丸み（ステータスバッジ等）
+$radius-s:     4px;  // 小さい角丸
+$radius-m:     8px;  // 中くらいの角丸
+$radius-round: 50px; // 強い丸み（ボタン等）

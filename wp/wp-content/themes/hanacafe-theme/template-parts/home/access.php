@@ -1,51 +1,86 @@
-   <section id="access" class="py-20 bg-[#F5F2E8]">
-       <div class="container mx-auto px-4 max-w-5xl">
-           <div class="text-center mb-12">
-               <h2 class="text-3xl font-serif tracking-widest text-[#2E4D07] mb-2">ACCESS</h2>
-               <p class="text-stone-400 text-sm tracking-widest uppercase">Map & Information</p>
-           </div>
+<?php
 
-           <div class="grid md:grid-cols-2 gap-12 items-start">
-               <div class="w-full h-[400px] rounded-xl overflow-hidden shadow-md bg-stone-100">
-                   <iframe
-                       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3244.6033327663223!2d139.65882697624646!3d35.58814573539062!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60185f83984d416b%3A0x6a0c56784013470!2sHanaCAFE%20nappa69!5e0!3m2!1sja!2sjp!4v1710000000000!5m2!1sja!2sjp"
-                       width="100%"
-                       height="100%"
-                       style="border:0;"
-                       allowfullscreen=""
-                       loading="lazy"
-                       referrerpolicy="no-referrer-when-downgrade">
-                   </iframe>
-               </div>
+/**
+ * Template part for displaying the access section.
+ * * 修正内容: 
+ * - Google Maps リンクの更新
+ * - マップ画像の比率(810:673)維持設定
+ * - 数字の強調スタイル調整
+ *
+ * @package HanaCAFE_Theme
+ */
+?>
+<section id="access" class="p-access">
+    <div class="p-access__inner l-container">
 
-               <div class="flex flex-col gap-6 text-stone-700">
-                   <div>
-                       <h3 class="font-bold text-[#2E4D07] mb-2">住所</h3>
-                       <p class="text-sm leading-relaxed">
-                           〒211-0004<br>
-                           神奈川県川崎市中原区新丸子町963-1
-                       </p>
-                   </div>
-                   <div>
-                       <h3 class="font-bold text-[#2E4D07] mb-2">アクセス</h3>
-                       <p class="text-sm leading-relaxed">
-                           東急東横線「新丸子駅」西口より徒歩2分<br>
-                           JR南武線・横須賀線「武蔵小杉駅」北口より徒歩7分
-                       </p>
-                   </div>
-                   <div>
-                       <h3 class="font-bold text-[#2E4D07] mb-2">営業時間 / 定休日</h3>
-                       <p class="text-sm leading-relaxed">
-                           11:00 - 23:00 (L.O. 22:30)<br>
-                           定休日：不定休
-                       </p>
-                   </div>
-                   <div class="mt-4">
-                       <a href="tel:0448729286" class="capsule-btn text-center w-full md:w-auto">
-                           お電話でお問い合わせ
-                       </a>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </section>
+        <div class="p-access__info">
+            <div class="p-access__header">
+                <span class="p-access__subtitle">Access</span>
+                <h2 class="p-access__title">アクセス・店舗情報</h2>
+            </div>
+
+            <dl class="p-access__list">
+                <div class="p-access__row">
+                    <dt class="p-access__label">Address</dt>
+                    <dd class="p-access__detail">
+                        <p class="p-access__text">神奈川県川崎市中原区新丸子東1-983-1</p>
+                        <p class="p-access__note">※新丸子駅西口より商店街を抜けてすぐ</p>
+                    </dd>
+                </div>
+
+                <div class="p-access__row">
+                    <dt class="p-access__label">Access</dt>
+                    <dd class="p-access__detail">
+                        <div class="p-access__transport-item">
+                            <span class="p-access__badge p-access__badge--tokyu">東急</span>
+                            <p class="p-access__text">東横線「新丸子駅」西口 徒歩<span class="p-access__num">2</span>分</p>
+                        </div>
+                        <div class="p-access__transport-item">
+                            <span class="p-access__badge p-access__badge--jr">JR</span>
+                            <p class="p-access__text">南武線・横須賀線「武蔵小杉駅」JR北口 徒歩<span class="p-access__num">5</span>分</p>
+                        </div>
+                    </dd>
+                </div>
+
+                <div class="p-access__row">
+                    <dt class="p-access__label">Hours</dt>
+                    <dd class="p-access__detail">
+                        <p class="p-access__text">11:00 - 23:00 <span class="p-access__small">(L.O. 22:30)</span></p>
+                        <div class="p-access__note">
+                            <p>Lunch: 11:30-16:00 / Cafe: 15:00-18:00 / Dinner: 18:00-23:00</p>
+                            <p class="p-access__alert">※木曜日のみ 17:00 クローズ</p>
+                        </div>
+                    </dd>
+                </div>
+
+                <div class="p-access__row p-access__row--split">
+                    <div class="p-access__col">
+                        <dt class="p-access__label">Tel</dt>
+                        <dd class="p-access__text p-access__text--large">
+                            <a href="tel:0448729288">044-872-9288</a>
+                        </dd>
+                    </div>
+                    <div class="p-access__col">
+                        <dt class="p-access__label">Closed</dt>
+                        <dd class="p-access__text p-access__text--large">不定休</dd>
+                    </div>
+                </div>
+            </dl>
+
+            <div class="p-access__action">
+                <a href="<?php echo esc_url(home_url('/reservation/')); ?>" class="p-access__btn">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    お席の確認
+                </a>
+            </div>
+        </div>
+
+        <div class="p-access__map">
+            <a href="https://maps.app.goo.gl/7kTkwWaozcjH1z6f9" target="_blank" rel="noopener" class="p-access__map-link">
+                <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/map.png')); ?>" alt="HanaCAFE nappa69 周辺地図" class="p-access__map-img">
+                <span class="p-access__map-overlay">Google Maps で見る</span>
+            </a>
+        </div>
+
+    </div>
+</section>

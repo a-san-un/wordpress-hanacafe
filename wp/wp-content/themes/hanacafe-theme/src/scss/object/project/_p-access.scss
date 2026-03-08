@@ -1,0 +1,235 @@
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
+
+/* ============================================
+   Project: Access (p-access)
+   ============================================ */
+.p-access {
+	background-color: v.$c-base;
+	padding: 80px 0;
+
+	@include m.mq {
+		padding: 160px 0;
+	}
+
+	&__inner {
+		display: flex;
+		flex-direction: column;
+		gap: 64px;
+
+		@include m.mq {
+			flex-direction: row; // 横並び
+			align-items: flex-start; // 高さはコンテンツに合わせる
+			gap: 96px;
+		}
+	}
+
+	// 左側：情報ブロック
+	&__info {
+		@include m.mq {
+			flex: 1; // 左右 1:1
+		}
+		display: flex;
+		flex-direction: column;
+		gap: 40px;
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__subtitle {
+		color: v.$c-main;
+		font-size: 14px;
+		font-family: v.$f-sans;
+		text-transform: uppercase;
+		letter-spacing: 0.4em;
+	}
+
+	&__title {
+		color: v.$c-main;
+		font-size: 28px;
+		font-family: v.$f-serif;
+		font-weight: 400;
+
+		@include m.mq {
+			font-size: 36px;
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	// 各項目の境界線設定
+	&__row {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		padding-bottom: 24px;
+		margin-bottom: 24px;
+		border-bottom: 1px solid v.$c-border; // Figmaの線を復活
+
+		@include m.mq {
+			flex-direction: row;
+			gap: 32px;
+			padding-bottom: 32px;
+			margin-bottom: 32px;
+		}
+
+		&--split {
+			flex-direction: row;
+			border-bottom: none;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+	}
+
+	&__label {
+		color: v.$c-text-light;
+		font-size: 11px;
+		font-family: v.$f-sans;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+
+		@include m.mq {
+			width: 96px;
+			flex-shrink: 0;
+			padding-top: 4px;
+		}
+	}
+
+	&__detail {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	&__text {
+		color: v.$c-text;
+		font-size: 16px;
+		line-height: 1.6;
+
+		@include m.mq { font-size: 18px; }
+
+		&--large {
+			font-size: 18px;
+			font-family: v.$f-sans;
+			@include m.mq { font-size: 20px; }
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+			transition: opacity v.$t-duration ease;
+			&:hover { opacity: 0.7; }
+		}
+	}
+
+	// アクセス情報の1行化
+	&__transport-item {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		white-space: nowrap;
+	}
+
+	// 【重要】数字：太くせず、20pxにサイズアップ
+	&__num {
+		color: v.$c-main;
+		font-size: 20px;
+		font-family: v.$f-sans;
+		font-weight: 350; // 重くしない
+		margin: 0 2px;
+		line-height: 1;
+	}
+
+	&__badge {
+		display: inline-flex;
+		padding: 2px 8px;
+		border-radius: v.$radius-s;
+		color: v.$c-white;
+		font-size: 10px;
+		font-family: v.$f-sans;
+		&--tokyu { background-color: v.$c-main; }
+		&--jr { background-color: v.$c-text-gray; }
+	}
+
+	&__note {
+		color: v.$c-text-light;
+		font-size: 13px;
+		line-height: 1.6;
+	}
+
+	&__alert {
+		color: v.$c-sub;
+		font-weight: 500;
+	}
+
+	&__col { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+
+	&__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		width: 100%;
+		height: 56px;
+		background-color: v.$c-accent;
+		color: v.$c-white;
+		border-radius: v.$radius-round;
+		font-size: 14px;
+		font-family: v.$f-sans;
+		text-decoration: none;
+		transition: transform v.$t-duration ease;
+
+		&:hover { transform: translateY(-2px); }
+		@include m.mq { width: 240px; }
+	}
+
+	// 【重要】右側：マップ画像ブロック
+	&__map {
+		width: 100%;
+		border-radius: v.$radius-s;
+		overflow: hidden;
+
+		@include m.mq {
+			flex: 1; // 左右 1:1
+			// 元の比率 810x673 を維持するための設定
+			aspect-ratio: 810 / 673; 
+		}
+	}
+
+	&__map-link {
+		display: block;
+		width: 100%;
+		height: 100%;
+		position: relative;
+	}
+
+	&__map-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover; // 枠に合わせてフィット
+	}
+
+	&__map-overlay {
+		position: absolute;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
+		background: rgba(v.$c-main, 0.9);
+		color: v.$c-white;
+		padding: 12px 24px;
+		border-radius: v.$radius-s;
+		font-size: 14px;
+		font-family: v.$f-sans;
+		opacity: 0;
+		transition: opacity v.$t-duration ease;
+
+		.p-access__map-link:hover & { opacity: 1; }
+	}
+}

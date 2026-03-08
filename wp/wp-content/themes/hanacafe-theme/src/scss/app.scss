@@ -15,3 +15,5 @@
 @use "object/project/p-hero";
 @use "object/project/p-about";
 @use "object/project/p-page";   // ★ セミコロンを追加。これで読み込まれます
+@use "object/project/p-menu";
+@use "object/project/p-access";
