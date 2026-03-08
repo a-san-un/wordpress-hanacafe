@@ -695,7 +695,7 @@ button {
 @media screen and (min-width: 768px) {
   .p-access__inner {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
     gap: 96px;
   }
 }
@@ -708,11 +708,6 @@ button {
   display: flex;
   flex-direction: column;
   gap: 40px;
-}
-.p-access__header {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 .p-access__subtitle {
   color: #2E4D07;
@@ -727,102 +722,46 @@ button {
   font-family: "Montserrat", "Noto Serif JP", serif;
   font-weight: 400;
 }
-@media screen and (min-width: 768px) {
-  .p-access__title {
-    font-size: 36px;
-  }
-}
 .p-access__list {
   display: flex;
   flex-direction: column;
 }
 .p-access__row {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-bottom: 24px;
-  margin-bottom: 24px;
-  border-bottom: 1px solid #F5F5F4;
-}
-@media screen and (min-width: 768px) {
-  .p-access__row {
-    flex-direction: row;
-    gap: 32px;
-    padding-bottom: 32px;
-    margin-bottom: 32px;
-  }
+  padding: 24px 0;
+  border-bottom: 1px solid #57534E;
 }
 .p-access__row--split {
-  flex-direction: row;
+  display: flex;
+  gap: 20px;
+}
+.p-access__row--no-border {
   border-bottom: none;
-  margin-bottom: 0;
   padding-bottom: 0;
 }
 .p-access__label {
-  color: #A8A29E;
-  font-size: 11px;
+  flex: 0 0 100px;
+  color: #2E4D07;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-@media screen and (min-width: 768px) {
-  .p-access__label {
-    width: 96px;
-    flex-shrink: 0;
-    padding-top: 4px;
-  }
-}
-.p-access__detail {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  font-weight: 600;
+  font-size: 14px;
 }
 .p-access__text {
   color: #57534E;
-  font-size: 16px;
   line-height: 1.6;
-}
-@media screen and (min-width: 768px) {
-  .p-access__text {
-    font-size: 18px;
-  }
 }
 .p-access__text--large {
   font-size: 18px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-}
-@media screen and (min-width: 768px) {
-  .p-access__text--large {
-    font-size: 20px;
-  }
-}
-.p-access__text a {
-  color: inherit;
-  text-decoration: none;
-  transition: opacity 0.3s ease;
-}
-.p-access__text a:hover {
-  opacity: 0.7;
-}
-.p-access__transport-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  white-space: nowrap;
-}
-.p-access__num {
-  color: #2E4D07;
-  font-size: 20px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-weight: 350;
-  margin: 0 2px;
-  line-height: 1;
+  font-weight: 500;
 }
 .p-access__badge {
   display: inline-flex;
-  padding: 2px 8px;
-  border-radius: 4px;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 20px;
+  border-radius: 2px;
   color: #FFFFFF;
   font-size: 10px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
@@ -832,21 +771,6 @@ button {
 }
 .p-access__badge--jr {
   background-color: #78716C;
-}
-.p-access__note {
-  color: #A8A29E;
-  font-size: 13px;
-  line-height: 1.6;
-}
-.p-access__alert {
-  color: #EB4E34;
-  font-weight: 500;
-}
-.p-access__col {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 .p-access__btn {
   display: inline-flex;
@@ -879,35 +803,15 @@ button {
 @media screen and (min-width: 768px) {
   .p-access__map {
     flex: 1;
-    aspect-ratio: 810/673;
   }
 }
 .p-access__map-link {
   display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
+  aspect-ratio: 810/673;
 }
-.p-access__map-img {
+.p-access__map-link img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-}
-.p-access__map-overlay {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(46, 77, 7, 0.9);
-  color: #FFFFFF;
-  padding: 12px 24px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-.p-access__map-link:hover .p-access__map-overlay {
-  opacity: 1;
 }/*# sourceMappingURL=app.css.map */
