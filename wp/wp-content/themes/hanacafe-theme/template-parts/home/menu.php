@@ -1,69 +1,68 @@
 <?php
 
 /**
- * Template part for displaying the menu section.
- * * @package HanaCAFE_Theme
+ * Home: Menu Section
+ * * 2026-03-09: VIEW ALL MENU のリンクをカスタム投稿アーカイブへ動的化
  */
 ?>
-<section id="menu" class="p-menu l-section">
-    <div class="p-menu__inner l-container">
-
-        <div class="p-menu__header">
-            <div class="p-menu__heading">
-                <span class="p-menu__subtitle">Menu</span>
-                <h2 class="p-menu__title">身体が喜ぶ、旬の味覚。</h2>
+<section class="l-section p-menu" id="menu">
+    <div class="l-container">
+        <div class="p-menu__inner">
+            <div class="p-menu__header">
+                <div class="p-menu__heading">
+                    <span class="p-menu__subtitle">Menu</span>
+                    <h2 class="p-menu__title">お料理</h2>
+                </div>
+                <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__link">
+                    VIEW ALL MENU
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
             </div>
 
-            <a href="<?php echo esc_url(home_url('/menu/')); ?>" class="p-menu__link c-link-arrow">
-                VIEW ALL MENU
-                <span class="material-symbols-outlined">arrow_forward</span>
-            </a>
+            <div class="p-menu__list">
+                <?php
+                // TOPページには「おすすめ（is_recommended）」がついたメニューを優先的に3件表示する例
+                $args = [
+                    'post_type' => 'menu',
+                    'posts_per_page' => 3,
+                    'meta_key' => 'is_recommended',
+                    'orderby' => 'meta_value_num',
+                    'order' => 'DESC',
+                ];
+                $menu_query = new WP_Query($args);
+                if ($menu_query->have_posts()) :
+                    while ($menu_query->have_posts()) : $menu_query->the_post();
+                        $price = get_field('price');
+                        $sub_name = get_field('sub_name');
+                ?>
+                        <article class="p-menu__item">
+                            <div class="p-menu__img-wrapper">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <?php the_post_thumbnail('full', ['class' => 'p-menu__img']); ?>
+                                <?php else : ?>
+                                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/placeholder-menu.jpg" alt="" class="p-menu__img">
+                                <?php endif; ?>
+                            </div>
+                            <div class="p-menu__info">
+                                <h3 class="p-menu__name">
+                                    <?php the_title(); ?>
+                                    <?php if ($sub_name) : ?>
+                                        <span class="u-block u-fs-12 u-fw-400"><?php echo esc_html($sub_name); ?></span>
+                                    <?php endif; ?>
+                                </h3>
+                                <p class="p-menu__price">
+                                    <?php echo $price ? '¥' . number_format($price) : 'ASK'; ?>
+                                </p>
+                            </div>
+                        </article>
+                    <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                    ?>
+                    <p>現在メニューを準備中です。</p>
+                <?php endif; ?>
+            </div>
         </div>
-
-        <ul class="p-menu__list">
-
-            <li class="p-menu__item">
-                <div class="p-menu__img-wrapper">
-                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/nappa_plate.jpg')); ?>" alt="nappaごはんプレート" class="p-menu__img" loading="lazy">
-                </div>
-                <div class="p-menu__info">
-                    <h3 class="p-menu__name">nappaごはんプレート</h3>
-                    <div class="p-menu__desc-top">
-                        <span class="p-menu__tag">玄米と有機野菜</span>を中心とした、日替わりのおかずプレート。
-                    </div>
-                    <p class="p-menu__desc">契約農家直送の旬野菜をたっぷり使用。素材の味を活かした、心身ともに満たされる看板メニューです。</p>
-                    <span class="p-menu__price">&yen;1,480</span>
-                </div>
-            </li>
-
-            <li class="p-menu__item">
-                <div class="p-menu__img-wrapper">
-                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/cheesecake.jpg')); ?>" alt="季節ごとのチーズケーキ" class="p-menu__img" loading="lazy">
-                </div>
-                <div class="p-menu__info">
-                    <h3 class="p-menu__name">季節ごとのチーズケーキ</h3>
-                    <div class="p-menu__desc-top">
-                        濃厚ながらも甘さ控えめ。旬のフルーツを添えた自家製スイーツ。
-                    </div>
-                    <p class="p-menu__desc">厳選したチーズを使用し、しっとり焼き上げました。季節によって変化するフレーバーをお楽しみください。</p>
-                    <span class="p-menu__price">&yen;700 〜</span>
-                </div>
-            </li>
-
-            <li class="p-menu__item">
-                <div class="p-menu__img-wrapper">
-                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/coffee.jpg')); ?>" alt="ハンドドリップコーヒー" class="p-menu__img" loading="lazy">
-                </div>
-                <div class="p-menu__info">
-                    <h3 class="p-menu__name">ハンドドリップコーヒー</h3>
-                    <div class="p-menu__desc-top">
-                        一杯ずつ丁寧に。香り高い、至福のひとときを。
-                    </div>
-                    <p class="p-menu__desc">豆の個性を最大限に引き出すため、注文を受けてから挽き、丁寧にハンドドリップで淹れています。</p>
-                    <span class="p-menu__price">&yen;600 〜</span>
-                </div>
-            </li>
-
-        </ul>
     </div>
 </section>

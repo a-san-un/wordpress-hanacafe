@@ -25,7 +25,7 @@ AIメンターおよび開発者は、コードを記述・修正する際、必
 * **WAI-ARIA**: ドロワーメニュー等の開閉時、JSを用いて `aria-expanded` と `aria-hidden` の状態（true/false）を視覚的な動きと完全に連動させる。
 
 ### ⑤ WordPress 最新標準への準拠
-* **アセット読み込み**: `functions.php` の `wp_enqueue_script` では、WordPress 6.3+ の配列引数（`'strategy' => 'defer'`）を使用し、レンダリングブロックを回避する。
+* **アセット読み込み**: `functions.php` の `wp_enqueue_script` では、WordPress 6.9+ の配列引数（`'strategy' => 'defer'`）を使用し、レンダリングブロックを回避する。
 * **エスケープ処理**: `esc_url()`, `esc_html()`, `esc_attr()` を出力直前で必ず使用する。
 
 ---

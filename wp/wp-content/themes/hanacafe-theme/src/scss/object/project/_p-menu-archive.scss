@@ -1,0 +1,26 @@
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
+
+/* ============================================
+Project: Menu Archive (p-menu-archive)
+============================================ */
+.p-menu-archive {
+    // カテゴリーごとの区切りを明示
+    border-bottom: 1px solid v.$c-border;
+    
+    &:last-of-type {
+        border-bottom: none;
+    }
+
+    // TOPページと共通のコンポーネントを継承
+    .p-menu__list {
+        margin-top: m.vw-clamp(32, 48);
+    }
+}
+
+// ユーティリティ（必要に応じて）
+.u-mt-40 { margin-top: 40px; }
+.u-mt-8 { margin-top: 8px; }
+.u-block { display: block; }
+.u-fs-12 { font-size: 12px; }
+.u-fw-400 { font-weight: 400; }
