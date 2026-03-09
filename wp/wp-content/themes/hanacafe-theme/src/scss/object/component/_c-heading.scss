@@ -1,0 +1,34 @@
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
+
+/* ===============================================
+   Component: Heading
+   * 役割: サイト全体のセクション見出しの「見た目」を統一
+   * 構造: .c-heading > (.c-heading__sub + .c-heading__main)
+=============================================== */
+
+.c-heading {
+  display: flex;
+  flex-direction: column;
+  // gap（上下の間隔）はデザインに合わせ適宜調整
+  gap: m.vw-clamp(4, 8); 
+
+  // ① 英語サブタイトル (Menu, About & Seat など)
+  &__sub {
+    color: v.$c-main; // ★オレンジから深緑へ修正
+    font-family: v.$f-en;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase; // 小文字で入力しても大文字になる設定
+  }
+
+  // ② 日本語メインタイトル (身体が喜ぶ... など)
+  &__main {
+    color: v.$c-main;
+    font-family: v.$f-serif;
+    font-size: m.vw-clamp(24, 32);
+    font-weight: 700;
+    line-height: 1.4;
+  }
+}

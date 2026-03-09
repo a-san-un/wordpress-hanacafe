@@ -1,13 +1,11 @@
 <?php
 
 /**
- * About & Seats Section
+ * About & Seats Section (Refactored)
  */
 
-// 空席状況のACFフィールドは「現在のページ(Home)」にあるため、現在のIDを取得
 $home_id = get_the_ID();
 
-// 座席データとACFフィールド名のマッピング
 $seat_configs = [
     [
         'title'      => '一人の時間を愉しむ',
@@ -35,34 +33,32 @@ $seat_configs = [
 
 <section id="about" class="p-about l-container l-section">
     <div class="p-about__header">
-        <span class="p-about__label">About & Seats</span>
-        <h2 class="p-about__title">物語が動き出す、呼吸する空間。</h2>
+        <div class="p-about__heading c-heading">
+            <span class="c-heading__sub">About & Seats</span>
+            <h2 class="c-heading__main">物語が動き出す、呼吸する空間。</h2>
+        </div>
+
         <div class="p-about__text">
-            <p>築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、玄米や有機野菜を中心とした体に優しいお料理をご用意しております。シーンに合わせて選べる3つの空間で、心地よいひとときをお過ごしください。</p>
+            <p>
+                築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、玄米や有機野菜を中心とした体に優しいお料理をご用意しております。シーンに合わせて選べる3つの空間で、心地よいひとときをお過ごしください。
+            </p>
         </div>
     </div>
 
-    <div class="p-about__grid u-grid">
-        <?php
-        foreach ($seat_configs as $config) :
-            // ACFの値を取得（ok / few / full）
-            $status_slug = get_field($config['field_name'], $home_id);
+    <div class="p-about__grid">
+        <?php foreach ($seat_configs as $config) : ?>
+            <?php
+            $status = get_field($config['field_name'], $home_id);
+            $badge_label = '空席あり';
+            $badge_modifier = 'is-success';
+            $icon = 'radio_button_unchecked';
 
-            // 取得したスラッグに基づいてクラス名、ラベル、アイコンを判定
-            $badge_modifier = 'is-full';
-            $badge_label    = '× 満席';
-            $icon           = 'block';
-
-            if ($status_slug === 'ok') {
-                $badge_modifier = 'is-success';
-                $badge_label    = '◯ 空席あり';
-                $icon           = 'check_circle';
-            } elseif ($status_slug === 'few') {
+            if ($status === 'busy') {
+                $badge_label = '残りわずか';
                 $badge_modifier = 'is-alert';
-                $badge_label    = '△ 残りわずか';
-                $icon           = 'warning';
+                $icon = 'change_history';
             }
-        ?>
+            ?>
             <article class="p-seat-card">
                 <figure class="p-seat-card__img-box">
                     <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/' . $config['img'])); ?>" alt="<?php echo esc_attr($config['title']); ?>" class="p-seat-card__img">

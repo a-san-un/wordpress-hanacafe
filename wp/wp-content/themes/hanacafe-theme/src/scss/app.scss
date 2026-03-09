@@ -15,15 +15,16 @@
 // Layout - 共通レイアウト
 // ==========================================================================
 @use "layout/l-container";
-@use "layout/l-section"; // ★ ここを追加（共通の余白管理）
+@use "layout/l-section";
 @use "layout/header";
 @use "layout/footer";
 
 // ==========================================================================
 // Object - Component（再利用可能な最小単位）
 // ==========================================================================
-@use "object/component/button";
+@use "object/component/c-button";  // ★修正: ファイル名統一ルールに準拠
 @use "object/component/c-badge";
+@use "object/component/c-heading"; // ★新規追加: 共通見出しコンポーネント
 
 // ==========================================================================
 // Object - Project（特定のセクション）

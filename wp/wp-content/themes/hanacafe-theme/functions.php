@@ -85,3 +85,42 @@ add_action('pre_get_posts', 'hanacafe_pre_get_posts');
  * 4. セキュリティ/最適化
  */
 remove_action('wp_head', 'wp_generator');
+
+/**
+ * ===================================================
+ * 1. トップページ用：Menu投稿取得関数
+ * ===================================================
+ * 目的: トップページに表示するメニューをACFのポストオブジェクトから取得。
+ * 未選択の場合は、自動的に最新1件を取得するフォールバック機能付き。
+ * * @param string $field_name ACFのフィールド名（例: 'top_menu_food'）
+ * @param string $term_slug  タクソノミースラッグ（例: 'food'）
+ * @return WP_Post|null      投稿オブジェクト、存在しない場合は null
+ */
+function get_hanacafe_top_menu_post($field_name, $term_slug) {
+
+    // [ステップ1] ACFのポストオブジェクト（固定ページID: トップページ）からデータを取得
+    // ※今回はトップページで実行される前提なので、get_field() でそのまま取れます。
+    $post_obj = get_field($field_name);
+
+    // [ステップ2] ACFで選択されていれば、そのままそのオブジェクトを返す（第1優先）
+    if ($post_obj) {
+        return $post_obj;
+    }
+
+    // [ステップ3] ACFが未選択の場合、バックアップとして最新の1件を取得する（第2優先）
+    $args = [
+        'post_type'      => 'menu',         // カスタム投稿「menu」を指定
+        'posts_per_page' => 1,              // 1件だけ取得
+        'tax_query'      => [               // タクソノミー（カテゴリー）での絞り込み
+            [
+                'taxonomy' => 'menu_category',
+                'field'    => 'slug',
+                'terms'    => $term_slug,
+            ]
+        ],
+    ];
+    $query = new WP_Query($args);
+
+    // [ステップ4] 取得できた場合はその1件目の投稿オブジェクトを返し、無ければ null を返す
+    return $query->have_posts() ? $query->posts[0] : null;
+}

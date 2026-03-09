@@ -14,8 +14,8 @@
 	top: 20px;
 	right: 20px;
 	padding: 4px 12px;
-	background-color: rgba(v.$c-white, 0.9); // 修正: 変数使用
-	border-radius: v.$radius-round;          // 修正: 変数使用
+	background-color: rgba(v.$c-white, 0.9);
+	border-radius: v.$radius-round;
 	white-space: nowrap;
 	font-size: 11px;
 	font-weight: 700;
@@ -38,18 +38,30 @@
 	position: absolute;
 	bottom: 20px;
 	left: 20px;
-	padding: 6px 12px;
-	background-color: rgba(v.$c-white, 0.9); // 修正: 変数使用
-	border-radius: v.$radius-s;              // 修正: 変数使用
-	border: 1px solid rgba(v.$c-main, 0.2);  // 修正: 変数使用
+	padding: 6px 16px;
+	background-color: rgba(v.$c-white, 0.9);
+	border-radius: v.$radius-s;
 	color: v.$c-main;
-	font-size: 10px;
+	font-family: v.$f-en;
+	font-size: 12px;
 	font-weight: 700;
-	white-space: nowrap;
 	z-index: 2;
+}
 
-	.material-symbols-outlined {
-		font-size: 14px;
-		line-height: 1;
-	}
+/* ★新規追加: おすすめバッジ（角丸：左上） */
+.c-badge-recommend {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	padding: 4px 12px;
+	background-color: v.$c-accent; // オレンジ色で目を引くように
+	color: v.$c-white;
+	border-radius: 4px; // 少し丸みを持たせたタグ型
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	z-index: 2;
 }

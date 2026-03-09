@@ -1,0 +1,1 @@
+{"version":3,"sources":["c-heading.css","../../src/scss/global/_mixins.scss","../../src/scss/object/component/c-heading.scss","../../src/scss/global/_variables.scss"],"names":[],"mappings":"AAAA,gBAAgB;ACEhB;;;iDAAA;ACCA;;;;iDAAA;AAMA;EACE,cCJa;EDKb,iDCWQ;EDVR,oEAAA;EACA,gBAAA;EACA,gBAAA;EACA,sBAAA;AFEF","file":"c-heading.css"}

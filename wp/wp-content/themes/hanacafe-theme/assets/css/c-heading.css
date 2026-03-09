@@ -1,0 +1,18 @@
+@charset "UTF-8";
+/* ===============================================
+   Global: Mixins & Functions
+   * 役割: サイト全体で使い回す計算・記述の定義
+=============================================== */
+/* ===============================================
+   Component: Heading
+   * 役割: サイト全体のセクションタイトル（見出し）
+   * 使用例: <h2 class="c-heading">身体が喜ぶ...</h2>
+=============================================== */
+.c-heading {
+  color: #2E4D07;
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: clamp(24px, calc(16.3664122137px + 2.0356234097vw), 32px);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}/*# sourceMappingURL=c-heading.css.map */

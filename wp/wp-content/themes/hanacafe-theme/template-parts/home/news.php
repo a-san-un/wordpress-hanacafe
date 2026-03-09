@@ -1,8 +1,8 @@
 <section id="news" class="p-news l-section">
     <div class="l-container">
-        <div class="p-news__header">
-            <span class="p-news__subtitle">News</span>
-            <h2 class="p-news__title">大切なお知らせ</h2>
+        <div class="p-news__header c-heading">
+            <span class="c-heading__sub">News</span>
+            <h2 class="c-heading__main">大切なお知らせ</h2>
         </div>
 
         <div class="p-news__list">

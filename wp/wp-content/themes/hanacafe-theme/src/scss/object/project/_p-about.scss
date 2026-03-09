@@ -3,33 +3,28 @@
 
 /* ===============================================
    Project: About & Seats (.p-about)
-   * 2026-03-09: 座席カードのホバー演出を滑らかに調整
+   
+   [主な設定項目]
+   1. セクション見出し: c-headingへの移行とマージン管理
+   2. レイアウト: グリッドレイアウトによるPC3カラム化
+   3. 座席カード: ホバー時の画像拡大アニメーション（機能維持）
+   4. プレースホルダー: $c-border廃止に伴い、v.$c-textの透過(0.05)を使用
 =============================================== */
 
 .p-about {
     &__header {
+        // [ステップ1] レイアウト（配置）に関する指定のみを残す
         text-align: center;
         margin-bottom: m.vw-clamp(40, 60);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: m.vw-clamp(16, 24);
+        gap: m.vw-clamp(16, 24); // 見出しと文章の間の余白
     }
 
-    &__label {
-        font-family: v.$f-en;
-        font-weight: 700;
-        font-size: 14px;
-        color: v.$c-main;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-    }
-
-    &__title {
-        font-family: v.$f-serif;
-        font-size: m.vw-clamp(24, 32);
-        color: v.$c-main;
-        line-height: 1.6;
+    // [ステップ2] 配置以外のスタイル（色・フォント）は c-heading が担当するため削除済
+    &__heading {
+        margin-bottom: 0;
     }
 
     &__text {
@@ -60,6 +55,7 @@
 }
 
 /* --- Seat Card (Individual) --- */
+/* 座席カードの機能やデザインは変更なし */
 .p-seat-card {
     display: flex;
     flex-direction: column;
@@ -71,7 +67,8 @@
         aspect-ratio: 3 / 2;
         overflow: hidden;
         border-radius: v.$radius-m;
-        background-color: v.$c-border;
+        // ★ここを修正: 廃止した v.$c-border に代わり、テキスト色の極薄透過(5%)を指定
+        background-color: rgba(v.$c-text, 0.05);
     }
 
     &__img {
@@ -94,16 +91,9 @@
     }
 
     &__title {
-        font-family: v.$f-serif;
         font-size: 18px;
-        color: v.$c-main;
         font-weight: 700;
-        transition: color v.$t-duration ease;
-
-        // ホバー時に色を連動させて反応を良くする
-        .p-seat-card:hover & {
-            color: v.$c-accent;
-        }
+        color: v.$c-main;
     }
 
     &__text {

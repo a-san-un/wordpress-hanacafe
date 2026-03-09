@@ -1,38 +1,38 @@
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
-/* ============================================
-Project: News (p-news)
-============================================ */
+/* ==========================================================================
+   Project: News (p-news)
+   
+   [主な設定項目]
+   1. セクション基本設定: 背景色(v.$c-white)の指定
+   2. ヘッダー構造: c-headingコンポーネントへの移行と中央揃えレイアウトの維持
+   3. リストレイアウト: グリッドによるレスポンシブ3カラム構成
+   4. もっと見るリンク(more-link): 文字間隔(letter-spacing)を広げた上品なボタン演出
+   5. ニュースカード: ホバー時の画像拡大＆タイトル色のメインカラーへの遷移
+   6. プレースホルダー: $c-border廃止に伴い、rgba(v.$c-text, 0.05)による極薄背景を採用
+   ========================================================================== */
+
 .p-news {
+    // [1. セクション基本設定] 白背景
     background-color: v.$c-white;
 
+    /* -------------------------------------------
+       [2. ヘッダー構造]
+       ------------------------------------------- */
     &__header {
         text-align: center;
         margin-bottom: m.vw-clamp(40, 80);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px;
+        // c-heading が display: flex; flex-direction: column; を持っているため、
+        // 垂直軸の中央揃えのみをここで指定して、デザインカンプ通りのレイアウトを維持
+        align-items: center; 
     }
 
-    &__subtitle {
-        display: block;
-        font-family: v.$f-sans;
-        font-size: 14px;
-        font-weight: 400;
-        color: v.$c-main;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-    }
+    /* 以前の __subtitle, __title の個別スタイルは c-heading へ統合されたため削除しました */
 
-    &__title {
-        font-family: v.$f-serif;
-        font-size: m.vw-clamp(24, 30);
-        color: v.$c-main;
-        font-weight: 400;
-    }
-
+    /* -------------------------------------------
+       [3. リストレイアウト]
+       ------------------------------------------- */
     &__list {
         display: grid;
         gap: m.vw-clamp(32, 48);
@@ -47,16 +47,20 @@ Project: News (p-news)
         text-align: center;
     }
 
-    &__more-link {
+    /* -------------------------------------------
+       [4. もっと見るリンク(more-link)]
+       ------------------------------------------- */
+&__more-link {
         display: inline-block;
         color: v.$c-main;
-        border-bottom: 1px solid v.$c-main;
-        padding-bottom: 8px;
         font-size: 12px;
         font-family: v.$f-sans;
         letter-spacing: 0.3em;
+        text-indent: 0.3em; // ★ここがプロのひと手間！右側の字間余白とバランスを取る
         text-transform: uppercase;
         text-decoration: none;
+        border-bottom: 1px solid v.$c-main; // ★下線を復活
+        padding-bottom: 4px; // ★文字と線の間に少し抜け感を作る
         transition: opacity v.$t-duration ease;
 
         &:hover {
@@ -70,7 +74,9 @@ Project: News (p-news)
     }
 }
 
-/* --- News Card --- */
+/* ==========================================================================
+   News Card (個別の記事カード)
+   ========================================================================== */
 .p-news-card {
     &__link {
         display: flex;
@@ -78,6 +84,7 @@ Project: News (p-news)
         gap: 24px;
         text-decoration: none;
 
+        // [5. ニュースカード] ホバーアクション
         &:hover {
             .p-news-card__img {
                 transform: scale(1.05);
@@ -93,7 +100,8 @@ Project: News (p-news)
         aspect-ratio: 370 / 210;
         border-radius: 2px;
         overflow: hidden;
-        background-color: v.$c-border;
+        // [6. プレースホルダー] 廃止した v.$c-border に代わり、テキスト色の極薄透過(5%)を指定
+        background-color: rgba(v.$c-text, 0.05);
     }
 
     &__img {
@@ -111,18 +119,33 @@ Project: News (p-news)
         gap: 12px;
     }
 
+    &__meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
     &__date {
-        font-family: v.$f-sans;
-        font-size: 11px;
-        color: v.$c-text-light;
-        letter-spacing: 0.1em;
+        font-family: v.$f-en;
+        font-size: 12px;
+        color: v.$c-text-gray;
+    }
+
+    &__cat {
+        font-size: 10px;
+        color: v.$c-main;
+        border: 1px solid v.$c-main;
+        padding: 2px 8px;
+        border-radius: 2px;
+        background-color: v.$c-white;
+        text-transform: uppercase;
     }
 
     &__title {
-        font-family: v.$f-serif;
-        font-size: 16px;
-        line-height: 1.625;
+        font-size: 15px;
+        line-height: 1.6;
         color: v.$c-text;
+        font-weight: 400;
         transition: color v.$t-duration ease;
     }
 }

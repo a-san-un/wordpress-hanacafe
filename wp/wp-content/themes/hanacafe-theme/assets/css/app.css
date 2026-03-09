@@ -425,19 +425,58 @@ button {
   position: absolute;
   bottom: 20px;
   left: 20px;
-  padding: 6px 12px;
+  padding: 6px 16px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 4px;
-  border: 1px solid rgba(46, 77, 7, 0.2);
   color: #2E4D07;
-  font-size: 10px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 12px;
   font-weight: 700;
-  white-space: nowrap;
   z-index: 2;
 }
-.c-badge-feature .material-symbols-outlined {
+
+/* ★新規追加: おすすめバッジ（角丸：左上） */
+.c-badge-recommend {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 4px 12px;
+  background-color: #F29159;
+  color: #FFFFFF;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  z-index: 2;
+}
+
+/* ===============================================
+   Component: Heading
+   * 役割: サイト全体のセクション見出しの「見た目」を統一
+   * 構造: .c-heading > (.c-heading__sub + .c-heading__main)
+=============================================== */
+.c-heading {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(4px, calc(0.1832061069px + 1.0178117048vw), 8px);
+}
+.c-heading__sub {
+  color: #2E4D07;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 14px;
-  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.c-heading__main {
+  color: #2E4D07;
+  font-family: "Montserrat", "Noto Serif JP", serif;
+  font-size: clamp(24px, calc(16.3664122137px + 2.0356234097vw), 32px);
+  font-weight: 700;
+  line-height: 1.4;
 }
 
 .p-hero {
@@ -553,7 +592,12 @@ button {
 
 /* ===============================================
    Project: About & Seats (.p-about)
-   * 2026-03-09: 座席カードのホバー演出を滑らかに調整
+
+   [主な設定項目]
+   1. セクション見出し: c-headingへの移行とマージン管理
+   2. レイアウト: グリッドレイアウトによるPC3カラム化
+   3. 座席カード: ホバー時の画像拡大アニメーション（機能維持）
+   4. プレースホルダー: $c-border廃止に伴い、v.$c-textの透過(0.05)を使用
 =============================================== */
 .p-about__header {
   text-align: center;
@@ -563,19 +607,8 @@ button {
   align-items: center;
   gap: clamp(16px, calc(8.3664122137px + 2.0356234097vw), 24px);
 }
-.p-about__label {
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  color: #2E4D07;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-}
-.p-about__title {
-  font-family: "Montserrat", "Noto Serif JP", serif;
-  font-size: clamp(24px, calc(16.3664122137px + 2.0356234097vw), 32px);
-  color: #2E4D07;
-  line-height: 1.6;
+.p-about__heading {
+  margin-bottom: 0;
 }
 .p-about__text {
   max-width: 600px;
@@ -602,6 +635,7 @@ button {
 }
 
 /* --- Seat Card (Individual) --- */
+/* 座席カードの機能やデザインは変更なし */
 .p-seat-card {
   display: flex;
   flex-direction: column;
@@ -613,7 +647,7 @@ button {
   aspect-ratio: 3/2;
   overflow: hidden;
   border-radius: 8px;
-  background-color: #F5F5F4;
+  background-color: rgba(87, 83, 78, 0.05);
 }
 .p-seat-card__img {
   width: 100%;
@@ -632,14 +666,9 @@ button {
   gap: 8px;
 }
 .p-seat-card__title {
-  font-family: "Montserrat", "Noto Serif JP", serif;
   font-size: 18px;
-  color: #2E4D07;
   font-weight: 700;
-  transition: color 0.3s ease;
-}
-.p-seat-card:hover .p-seat-card__title {
-  color: #F29159;
+  color: #2E4D07;
 }
 .p-seat-card__text {
   font-size: 14px;
@@ -702,13 +731,22 @@ button {
 
 /* ==========================================================================
    Project: Menu (p-menu)
-   1. 基本レイアウト（ヘッダー・リストの骨組み）
-   2. 共通リンクパーツ（右上の VIEW ALL MENU 用：横並び）
-   3. メニューカード詳細（3カラム内の中身：縦並び）
+
+   [主な設定項目]
+   1. セクション基本設定: 背景色(#FFFFFF)の固定、セクション間の交互配置対応
+   2. ヘッダー構造: レスポンシブFlexbox、c-headingコンポーネントとの整合性維持
+   3. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による透過線を採用
+   4. VIEW ALL リンク: アイコンの垂直中央揃え、ホバー時のアクセントカラー遷移
+   5. グリッドレイアウト: 1カラム(SP) / 3カラム(PC) のレスポンス設計
+   6. メニューカード(Item): 縦並びFlex構造、カード全体の高さ統一(height: 100%)
+   7. 画像エリア(Wrapper): アスペクト比固定(4:5)、ホバー時の拡大演出(scale)
+   8. 情報エリア(Info): タイトル・サブ・説明文・価格の階層、3行制限(line-clamp)
+   9. 準備中状態(Preparing): COMING SOONオーバーレイ、文字色の減光処理
    ========================================================================== */
 .p-menu {
+  background-color: #FFFFFF;
   /* -------------------------------------------
-     1. 基本レイアウト
+     [2. ヘッダー構造 & 3. 境界線ルール]
      ------------------------------------------- */
 }
 .p-menu__header {
@@ -716,7 +754,7 @@ button {
   flex-direction: column;
   gap: 24px;
   padding-bottom: clamp(24px, calc(8.7328244275px + 4.0712468193vw), 40px);
-  border-bottom: 1px solid #F5F5F4;
+  border-bottom: 1px solid rgba(87, 83, 78, 0.1);
 }
 @media screen and (min-width: 768px) {
   .p-menu__header {
@@ -724,6 +762,39 @@ button {
     justify-content: space-between;
     align-items: flex-end;
   }
+}
+.p-menu__heading {
+  margin-bottom: 0;
+}
+.p-menu {
+  /* -------------------------------------------
+     [4. VIEW ALL リンク]
+     ------------------------------------------- */
+}
+.p-menu__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #57534E;
+  transition: color 0.3s ease;
+}
+.p-menu__view-all .material-symbols-outlined {
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.p-menu__view-all:hover {
+  color: #F29159;
+}
+.p-menu__view-all:hover .material-symbols-outlined {
+  color: #F29159;
+}
+.p-menu {
+  /* -------------------------------------------
+     [5. グリッドレイアウト]
+     ------------------------------------------- */
 }
 .p-menu__list {
   display: grid;
@@ -739,40 +810,32 @@ button {
 }
 .p-menu {
   /* -------------------------------------------
-     2. 共通リンクパーツ（ヘッダー右上のリンク）
-     ------------------------------------------- */
-}
-.p-menu__link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #F29159;
-  font-size: 14px;
-  font-weight: 500;
-  text-decoration: none;
-  flex-direction: row;
-  white-space: nowrap;
-  transition: opacity 0.3s ease;
-}
-.p-menu__link:hover {
-  opacity: 0.7;
-}
-.p-menu__link .material-symbols-outlined {
-  font-size: 18px;
-}
-.p-menu {
-  /* -------------------------------------------
-     3. メニューカード詳細（3カラムの中身）
+     [6. メニューカード(Item)]
      ------------------------------------------- */
 }
 .p-menu__item {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .p-menu__item .p-menu__link {
+  display: flex;
   flex-direction: column;
   align-items: stretch;
   width: 100%;
+  height: 100%;
   white-space: normal;
+}
+.p-menu__item.is-preparing .p-menu__name {
+  color: #A8A29E;
+}
+.p-menu__item.is-preparing .p-menu__desc {
+  color: #A8A29E;
+}
+.p-menu {
+  /* -------------------------------------------
+     [7. 画像エリア(Wrapper)]
+     ------------------------------------------- */
 }
 .p-menu__img-wrapper {
   position: relative;
@@ -781,12 +844,6 @@ button {
   border-radius: 4px;
   width: 100%;
 }
-.p-menu__img-wrapper .c-badge {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  z-index: 2;
-}
 .p-menu__img {
   width: 100%;
   height: 100%;
@@ -794,8 +851,30 @@ button {
      object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
 }
-.p-menu__item:hover .p-menu__img {
+a:hover .p-menu__img {
   transform: scale(1.05);
+}
+.p-menu__preparing-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: clamp(20px, calc(16.1832061069px + 1.0178117048vw), 24px);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  z-index: 3;
+}
+.p-menu {
+  /* -------------------------------------------
+     [8. 情報エリア(Info)]
+     ------------------------------------------- */
 }
 .p-menu__info {
   padding-top: 20px;
@@ -807,167 +886,158 @@ button {
   color: #2E4D07;
   font-size: clamp(18px, calc(16.0916030534px + 0.5089058524vw), 20px);
   font-weight: 700;
-  margin-bottom: 4px;
 }
 .p-menu__sub {
-  display: block;
-  color: #2E4D07;
-  font-size: 12px;
-  margin-bottom: 16px;
+  color: #F29159;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  margin-top: 4px;
 }
 .p-menu__desc {
-  color: #78716C;
-  font-size: clamp(13px, calc(12.0458015267px + 0.2544529262vw), 14px);
+  color: #57534E;
+  font-size: 14px;
   line-height: 1.8;
-  margin-bottom: 20px;
+  margin-top: 12px;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
   line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .p-menu__price {
-  margin-top: auto;
-  color: #2E4D07;
-  font-size: 20px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-weight: 600;
-}
-.p-menu__price::before {
-  content: "¥";
-  font-size: 0.8em;
-  margin-right: 2px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2E4D07;
+  margin-top: 16px;
 }
 
-/* ============================================
+/* ==========================================================================
    Project: Access (p-access)
-   * 2026-03-09: 地図画像とボタンのホバー演出を強化
-============================================ */
+
+   [主な設定項目]
+   1. セクション基本設定: 背景色(v.$c-base)の指定、セクション交互配置ルールの適用
+   2. 全体レイアウト: PC版でのInfo(左)とMap(右)の垂直中央・並列配置
+   3. 見出しエリア: c-headingコンポーネントとの連携、Project側のマージン管理
+   4. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による上品な区切り線を採用
+   5. 店舗情報リスト(dl): dt/dd構造による情報の整理、上部/下部ラインによる視認性確保
+   6. 交通・路線バッジ: SSOT変数からブランドカラーを適用（東急: v.$c-main / JR: v.$c-text-gray）
+   7. アクションエリア: カプセル型ボタン(予約導線)、Dart Sassによる最新のホバー演出
+   8. 地図エリア(Map): アスペクト比固定(810:673)、ホバー時の画像拡大とボタン出現の連動
+   ========================================================================== */
 .p-access {
   background-color: #F5F2E8;
 }
 .p-access__inner {
   display: flex;
   flex-direction: column;
-  gap: clamp(64px, calc(33.465648855px + 8.1424936387vw), 96px);
+  gap: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
 }
 @media screen and (min-width: 768px) {
   .p-access__inner {
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
   }
 }
 .p-access__info {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
+  flex: 1;
 }
 @media screen and (min-width: 768px) {
   .p-access__info {
-    flex: 1;
+    max-width: 500px;
   }
 }
-.p-access__subtitle {
-  color: #2E4D07;
-  font-size: 14px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.4em;
+.p-access__header {
+  margin-bottom: clamp(32px, calc(24.3664122137px + 2.0356234097vw), 40px);
 }
-.p-access__title {
-  color: #2E4D07;
-  font-size: clamp(24px, calc(20.1832061069px + 1.0178117048vw), 28px);
-  font-family: "Montserrat", "Noto Serif JP", serif;
-  font-weight: 400;
-  margin-top: 8px;
+.p-access {
+  /* -------------------------------------------
+     [4. 境界線ルール & 5. 店舗情報リスト(dl)]
+     ------------------------------------------- */
 }
 .p-access__list {
   display: flex;
   flex-direction: column;
+  border-top: 1px solid rgba(87, 83, 78, 0.1);
 }
 .p-access__row {
   display: flex;
-  flex-direction: column;
-  padding: 24px 0;
-  border-bottom: 1px solid #F5F5F4;
-  gap: 12px;
-}
-@media screen and (min-width: 768px) {
-  .p-access__row {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 24px;
-  }
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(87, 83, 78, 0.1);
 }
 .p-access__row--split {
-  flex-direction: row;
-  gap: 24px;
-}
-@media screen and (min-width: 768px) {
-  .p-access__row--split {
-    gap: 48px;
-  }
-}
-.p-access__row--no-border {
-  border-bottom: none;
+  display: flex;
+  gap: 20px;
 }
 .p-access__col {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
   flex: 1;
 }
 .p-access__label {
+  width: 80px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-weight: 700;
+  font-size: 14px;
   color: #2E4D07;
-  font-size: 15px;
-  letter-spacing: 0.1em;
-}
-@media screen and (min-width: 768px) {
-  .p-access__label {
-    width: 80px;
-    flex-shrink: 0;
-  }
+  flex-shrink: 0;
 }
 .p-access__detail {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex: 1;
-}
-.p-access__transport-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 .p-access__text {
-  color: #57534E;
+  font-size: 14px;
   line-height: 1.6;
-  font-size: 15px;
+  color: #57534E;
+}
+@media screen and (min-width: 768px) {
+  .p-access__text {
+    font-size: 15px;
+  }
 }
 .p-access__text--large {
   font-size: 18px;
+  font-weight: 700;
+  color: #2E4D07;
+}
+.p-access__text a {
+  transition: color 0.3s;
+}
+.p-access__text a:hover {
+  color: #F29159;
+}
+.p-access__time-number {
+  color: #2E4D07;
+  font-size: 1.2em;
+  font-weight: 700;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-weight: 500;
+  margin: 0 2px;
 }
 .p-access__note {
-  font-size: 13px;
+  font-size: 12px;
   color: #A8A29E;
-  line-height: 1.6;
-  margin-top: 4px;
+  margin-top: 2px;
+}
+.p-access {
+  /* -------------------------------------------
+     [6. 交通・路線バッジ]
+     ------------------------------------------- */
+}
+.p-access__transport-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .p-access__badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 20px;
-  border-radius: 2px;
-  color: #FFFFFF;
+  padding: 2px 6px;
   font-size: 10px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  color: #FFFFFF;
+  border-radius: 2px;
+  min-width: 42px;
+  text-align: center;
 }
 .p-access__badge--tokyu {
   background-color: #2E4D07;
@@ -975,85 +1045,117 @@ button {
 .p-access__badge--jr {
   background-color: #78716C;
 }
+.p-access {
+  /* -------------------------------------------
+     [7. アクションエリア(予約ボタン)]
+     ------------------------------------------- */
+}
 .p-access__action {
-  margin-top: 16px;
+  margin-top: 32px;
 }
 .p-access__btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  width: 100%;
+  padding: 16px;
   background-color: #F29159;
   color: #FFFFFF;
-  padding: 16px 32px;
   border-radius: 50px;
-  text-decoration: none;
-  font-weight: 600;
-  width: -moz-fit-content;
-  width: fit-content;
-  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  font-weight: 700;
+  transition: 0.3s;
+}
+@media screen and (min-width: 768px) {
+  .p-access__btn {
+    width: auto;
+    min-width: 240px;
+  }
 }
 .p-access__btn:hover {
   opacity: 0.9;
   transform: translateY(-2px);
   background-color: rgb(239.5960893855, 124.6592178771, 58.3039106145);
 }
+.p-access {
+  /* -------------------------------------------
+     [8. 地図エリア(Map)]
+     ------------------------------------------- */
+}
 .p-access__map {
-  width: 100%;
+  flex: 1;
 }
 @media screen and (min-width: 768px) {
   .p-access__map {
-    flex: 1;
+    max-width: 580px;
   }
 }
 .p-access__map-link {
   display: block;
-  width: 100%;
-  border-radius: 8px;
+  position: relative;
   overflow: hidden;
-  background-color: #F5F5F4;
+  border-radius: 8px;
+  aspect-ratio: 810/673;
 }
-.p-access__map img {
-  width: 100%;
-  height: auto;
-  vertical-align: bottom;
-  aspect-ratio: 4/3;
-  -o-object-fit: cover;
-     object-fit: cover;
-  transition: transform 0.6s ease-out;
-  will-change: transform;
-}
-.p-access__map-link:hover .p-access__map img {
+.p-access__map-link:hover .p-access__map-img {
   transform: scale(1.05);
 }
+.p-access__map-link:hover .p-access__map-overlay {
+  opacity: 1;
+}
+.p-access__map-img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: 0.6s ease-out;
+}
+.p-access__map-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(46, 77, 7, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+.p-access__map-btn {
+  padding: 12px 24px;
+  background-color: #FFFFFF;
+  color: #2E4D07;
+  font-weight: 700;
+  border-radius: 50px;
+  font-size: 14px;
+}
 
-/* ============================================
-Project: News (p-news)
-============================================ */
+/* ==========================================================================
+   Project: News (p-news)
+
+   [主な設定項目]
+   1. セクション基本設定: 背景色(v.$c-white)の指定
+   2. ヘッダー構造: c-headingコンポーネントへの移行と中央揃えレイアウトの維持
+   3. リストレイアウト: グリッドによるレスポンシブ3カラム構成
+   4. もっと見るリンク(more-link): 文字間隔(letter-spacing)を広げた上品なボタン演出
+   5. ニュースカード: ホバー時の画像拡大＆タイトル色のメインカラーへの遷移
+   6. プレースホルダー: $c-border廃止に伴い、rgba(v.$c-text, 0.05)による極薄背景を採用
+   ========================================================================== */
 .p-news {
   background-color: #FFFFFF;
+  /* -------------------------------------------
+     [2. ヘッダー構造]
+     ------------------------------------------- */
 }
 .p-news__header {
   text-align: center;
   margin-bottom: clamp(40px, calc(1.8320610687px + 10.1781170483vw), 80px);
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 24px;
 }
-.p-news__subtitle {
-  display: block;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #2E4D07;
-  letter-spacing: 0.4em;
-  text-transform: uppercase;
-}
-.p-news__title {
-  font-family: "Montserrat", "Noto Serif JP", serif;
-  font-size: clamp(24px, calc(18.2748091603px + 1.5267175573vw), 30px);
-  color: #2E4D07;
-  font-weight: 400;
+.p-news {
+  /* 以前の __subtitle, __title の個別スタイルは c-heading へ統合されたため削除しました */
+  /* -------------------------------------------
+     [3. リストレイアウト]
+     ------------------------------------------- */
 }
 .p-news__list {
   display: grid;
@@ -1068,16 +1170,22 @@ Project: News (p-news)
 .p-news__footer {
   text-align: center;
 }
+.p-news {
+  /* -------------------------------------------
+     [4. もっと見るリンク(more-link)]
+     ------------------------------------------- */
+}
 .p-news__more-link {
   display: inline-block;
   color: #2E4D07;
-  border-bottom: 1px solid #2E4D07;
-  padding-bottom: 8px;
   font-size: 12px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   letter-spacing: 0.3em;
+  text-indent: 0.3em;
   text-transform: uppercase;
   text-decoration: none;
+  border-bottom: 1px solid #2E4D07;
+  padding-bottom: 4px;
   transition: opacity 0.3s ease;
 }
 .p-news__more-link:hover {
@@ -1088,7 +1196,9 @@ Project: News (p-news)
   color: #78716C;
 }
 
-/* --- News Card --- */
+/* ==========================================================================
+   News Card (個別の記事カード)
+   ========================================================================== */
 .p-news-card__link {
   display: flex;
   flex-direction: column;
@@ -1106,7 +1216,7 @@ Project: News (p-news)
   aspect-ratio: 370/210;
   border-radius: 2px;
   overflow: hidden;
-  background-color: #F5F5F4;
+  background-color: rgba(87, 83, 78, 0.05);
 }
 .p-news-card__img {
   width: 100%;
@@ -1121,16 +1231,29 @@ Project: News (p-news)
   flex-direction: column;
   gap: 12px;
 }
+.p-news-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 .p-news-card__date {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 11px;
-  color: #A8A29E;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  color: #78716C;
+}
+.p-news-card__cat {
+  font-size: 10px;
+  color: #2E4D07;
+  border: 1px solid #2E4D07;
+  padding: 2px 8px;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  text-transform: uppercase;
 }
 .p-news-card__title {
-  font-family: "Montserrat", "Noto Serif JP", serif;
-  font-size: 16px;
-  line-height: 1.625;
+  font-size: 15px;
+  line-height: 1.6;
   color: #57534E;
+  font-weight: 400;
   transition: color 0.3s ease;
 }/*# sourceMappingURL=app.css.map */

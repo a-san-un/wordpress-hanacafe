@@ -3,21 +3,33 @@
 
 /* ==========================================================================
    Project: Menu (p-menu)
-   1. 基本レイアウト（ヘッダー・リストの骨組み）
-   2. 共通リンクパーツ（右上の VIEW ALL MENU 用：横並び）
-   3. メニューカード詳細（3カラム内の中身：縦並び）
+   
+   [主な設定項目]
+   1. セクション基本設定: 背景色(#FFFFFF)の固定、セクション間の交互配置対応
+   2. ヘッダー構造: レスポンシブFlexbox、c-headingコンポーネントとの整合性維持
+   3. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による透過線を採用
+   4. VIEW ALL リンク: アイコンの垂直中央揃え、ホバー時のアクセントカラー遷移
+   5. グリッドレイアウト: 1カラム(SP) / 3カラム(PC) のレスポンス設計
+   6. メニューカード(Item): 縦並びFlex構造、カード全体の高さ統一(height: 100%)
+   7. 画像エリア(Wrapper): アスペクト比固定(4:5)、ホバー時の拡大演出(scale)
+   8. 情報エリア(Info): タイトル・サブ・説明文・価格の階層、3行制限(line-clamp)
+   9. 準備中状態(Preparing): COMING SOONオーバーレイ、文字色の減光処理
    ========================================================================== */
 
 .p-menu {
+  // [1. セクション基本設定]
+  background-color: v.$c-white; 
+
   /* -------------------------------------------
-     1. 基本レイアウト
+     [2. ヘッダー構造 & 3. 境界線ルール]
      ------------------------------------------- */
   &__header {
     display: flex;
     flex-direction: column;
     gap: 24px;
     padding-bottom: m.vw-clamp(24, 40);
-    border-bottom: 1px solid v.$c-border;
+    // ★ここを修正: $c-border を rgba(v.$c-text, 0.1) に変更
+    border-bottom: 1px solid rgba(v.$c-text, 0.1); 
 
     @include m.mq {
       flex-direction: row;
@@ -26,71 +38,84 @@
     }
   }
 
+  &__heading {
+    margin-bottom: 0; // c-heading側で余白を管理するため
+  }
+
+  /* -------------------------------------------
+     [4. VIEW ALL リンク]
+     ------------------------------------------- */
+  &__view-all {
+    display: inline-flex;
+    align-items: center; // 垂直中央揃え
+    gap: 8px;
+    font-family: v.$f-en;
+    font-size: 14px;
+    font-weight: 700;
+    color: v.$c-text;
+    transition: color 0.3s ease;
+
+    .material-symbols-outlined {
+      font-size: 18px;
+      transition: color 0.3s ease;
+    }
+
+    &:hover {
+      color: v.$c-accent;
+      .material-symbols-outlined {
+        color: v.$c-accent;
+      }
+    }
+  }
+
+  /* -------------------------------------------
+     [5. グリッドレイアウト]
+     ------------------------------------------- */
   &__list {
     display: grid;
-    grid-template-columns: 1fr; // SPは1列
+    grid-template-columns: 1fr;
     gap: m.vw-clamp(48, 64);
     margin-top: m.vw-clamp(40, 56);
-    width: 100%; // 親の幅を超えないように固定
+    width: 100%;
 
     @include m.mq {
-      // PC：親要素（l-container）の幅を3等分する
       grid-template-columns: repeat(3, minmax(0, 1fr)); 
     }
   }
 
   /* -------------------------------------------
-     2. 共通リンクパーツ（ヘッダー右上のリンク）
+     [6. メニューカード(Item)]
      ------------------------------------------- */
-  &__link {
-    display: flex;       // inline-flexからflexに変更し制御しやすく
-    align-items: center;
-    gap: 8px;
-    color: v.$c-accent;
-    font-size: 14px;
-    font-weight: 500;
-    text-decoration: none;
-    flex-direction: row; // ★横並び（テキストの横に矢印）
-    white-space: nowrap; // ★矢印が次の行に行かないように固定
-    transition: opacity 0.3s ease;
-
-    &:hover {
-      opacity: 0.7;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    
+    .p-menu__link {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      height: 100%;
+      white-space: normal;
     }
 
-    .material-symbols-outlined {
-      font-size: 18px;
+    // [9. 準備中状態(Preparing)]
+    &.is-preparing {
+      .p-menu__name { color: v.$c-text-light; }
+      .p-menu__desc { color: v.$c-text-light; }
     }
   }
 
   /* -------------------------------------------
-     3. メニューカード詳細（3カラムの中身）
+     [7. 画像エリア(Wrapper)]
      ------------------------------------------- */
-  &__item {
-    width: 100%; // カラムの幅いっぱいに広げる
-    
-    // カード内のリンクだけ「縦並び」に上書き
-    .p-menu__link {
-      flex-direction: column; // ★縦並び（写真の下に文字）
-      align-items: stretch;   // ★中身を横いっぱいに広げる
-      width: 100%;           // ★カラム幅に固定
-      white-space: normal;    // カード内は改行を許可
-    }
-  }
-
   &__img-wrapper {
     position: relative;
     overflow: hidden;
     aspect-ratio: 4 / 5;
     border-radius: v.$radius-s;
-    width: 100%; // 画像がはみ出さないように固定
-
-    .c-badge {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      z-index: 2;
-    }
+    width: 100%;
   }
 
   &__img {
@@ -99,11 +124,32 @@
     object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
 
-    .p-menu__item:hover & {
+    a:hover & {
       transform: scale(1.05);
     }
   }
 
+  &__preparing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(v.$c-black, 0.6);
+    color: v.$c-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: v.$f-en;
+    font-size: m.vw-clamp(20, 24);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    z-index: 3;
+  }
+
+  /* -------------------------------------------
+     [8. 情報エリア(Info)]
+     ------------------------------------------- */
   &__info {
     padding-top: 20px;
     display: flex;
@@ -115,40 +161,32 @@
     color: v.$c-main;
     font-size: m.vw-clamp(18, 20);
     font-weight: 700;
-    margin-bottom: 4px;
   }
 
   &__sub {
-    display: block;
-    color: v.$c-main;
-    font-size: 12px;
-    margin-bottom: 16px;
+    color: v.$c-accent;
+    font-family: v.$f-en;
+    font-size: 14px;
+    margin-top: 4px;
   }
 
   &__desc {
-    color: v.$c-text-gray;
-    font-size: m.vw-clamp(13, 14);
+    color: v.$c-text;
+    font-size: 14px;
     line-height: 1.8;
-    margin-bottom: 20px;
-    
+    margin-top: 12px;
     display: -webkit-box;
+    -webkit-line-clamp: 3; // 旧ブラウザ互換
+    line-clamp: 3;         // 標準仕様
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
     overflow: hidden;
   }
 
   &__price {
-    margin-top: auto;
+    font-family: v.$f-en;
+    font-size: 16px;
+    font-weight: 700;
     color: v.$c-main;
-    font-size: 20px;
-    font-family: v.$f-sans;
-    font-weight: 600;
-    
-    &::before {
-      content: "¥";
-      font-size: 0.8em;
-      margin-right: 2px;
-    }
+    margin-top: 16px;
   }
 }

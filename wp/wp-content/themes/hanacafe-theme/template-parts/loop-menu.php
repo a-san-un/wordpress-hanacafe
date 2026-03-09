@@ -13,7 +13,7 @@
     <a href="<?php the_permalink(); ?>" class="p-menu__link">
         <div class="p-menu__img-wrapper">
             <?php if (get_field('is_recommended')): ?>
-                <span class="c-badge">RECOMMEND</span>
+                <span class="c-badge-recommend">おすすめ</span>
             <?php endif; ?>
 
             <?php if (has_post_thumbnail()): ?>
@@ -37,12 +37,9 @@
                 ?>
             </div>
 
-            <p class="p-menu__price">
-                <?php
-                $price = get_field('price');
-                echo is_numeric($price) ? number_format($price) : '---';
-                ?>
-            </p>
+            <?php if ($price = get_field('price')): ?>
+                <p class="p-menu__price">¥<?php echo number_format($price); ?></p>
+            <?php endif; ?>
         </div>
     </a>
 </article>

@@ -1,207 +1,238 @@
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
+@use "sass:color"; // color.scale 使用のために必須
 
-/* ============================================
+/* ==========================================================================
    Project: Access (p-access)
-   * 2026-03-09: 地図画像とボタンのホバー演出を強化
-============================================ */
+   
+   [主な設定項目]
+   1. セクション基本設定: 背景色(v.$c-base)の指定、セクション交互配置ルールの適用
+   2. 全体レイアウト: PC版でのInfo(左)とMap(右)の垂直中央・並列配置
+   3. 見出しエリア: c-headingコンポーネントとの連携、Project側のマージン管理
+   4. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による上品な区切り線を採用
+   5. 店舗情報リスト(dl): dt/dd構造による情報の整理、上部/下部ラインによる視認性確保
+   6. 交通・路線バッジ: SSOT変数からブランドカラーを適用（東急: v.$c-main / JR: v.$c-text-gray）
+   7. アクションエリア: カプセル型ボタン(予約導線)、Dart Sassによる最新のホバー演出
+   8. 地図エリア(Map): アスペクト比固定(810:673)、ホバー時の画像拡大とボタン出現の連動
+   ========================================================================== */
+
 .p-access {
-    background-color: v.$c-base;
+  // [1. セクション基本設定] セクションごとの交互配置ルールに従い生成色を設定
+  background-color: v.$c-base;
 
-    &__inner {
-        display: flex;
-        flex-direction: column;
-        gap: m.vw-clamp(64, 96);
+  &__inner {
+    // [2. 全体レイアウト] スマホは縦、PCは横並び
+    display: flex;
+    flex-direction: column;
+    gap: m.vw-clamp(40, 60);
 
-        @include m.mq {
-            flex-direction: row; 
-            align-items: center; 
-        }
+    @include m.mq {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    @include m.mq {
+      max-width: 500px;
+    }
+  }
+
+  &__header {
+    // [3. 見出しエリア]
+    margin-bottom: m.vw-clamp(32, 40);
+  }
+
+  /* -------------------------------------------
+     [4. 境界線ルール & 5. 店舗情報リスト(dl)]
+     ------------------------------------------- */
+  &__list {
+    display: flex;
+    flex-direction: column;
+    // リスト全体の上部のライン（$c-text の10%透過）
+    border-top: 1px solid rgba(v.$c-text, 0.1); 
+  }
+
+  &__row {
+    display: flex;
+    padding: 16px 0;
+    // 各情報のボトムライン（$c-text の10%透過）
+    border-bottom: 1px solid rgba(v.$c-text, 0.1); 
+
+    &--split {
+      display: flex;
+      gap: 20px;
+    }
+  }
+
+  &__col {
+    flex: 1;
+  }
+
+  &__label {
+    width: 80px;
+    font-family: v.$f-en;
+    font-weight: 700;
+    font-size: 14px;
+    color: v.$c-main;
+    flex-shrink: 0;
+  }
+
+  &__detail {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: v.$c-text;
+
+    @include m.mq {
+      font-size: 15px;
     }
 
-    &__info {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-
-        @include m.mq {
-            flex: 1; 
-        }
+    &--large {
+      font-size: 18px;
+      font-weight: 700;
+      color: v.$c-main;
     }
 
-    &__subtitle {
-        color: v.$c-main;
-        font-size: 14px;
-        font-family: v.$f-sans;
-        text-transform: uppercase;
-        letter-spacing: 0.4em;
+    a {
+      transition: color 0.3s;
+      &:hover { color: v.$c-accent; }
+    }
+  }
+
+  // ★数字だけを強調する専用クラス
+  &__time-number {
+    color: v.$c-main; // 緑色
+    font-size: 1.2em; // 周りの文字より少し大きく
+    font-weight: 700;
+    font-family: v.$f-en; // 数字を美しく見せる英語フォント
+    margin: 0 2px; // 前後の文字と少し隙間を空ける
+  }
+
+  &__note {
+    font-size: 12px;
+    color: v.$c-text-light;
+    margin-top: 2px;
+  }
+
+  /* -------------------------------------------
+     [6. 交通・路線バッジ]
+     ------------------------------------------- */
+  &__transport-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__badge {
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: v.$c-white;
+    border-radius: 2px;
+    min-width: 42px;
+    text-align: center;
+
+    // マジックナンバーを排除し、SSOT変数から色を指定
+    &--tokyu {
+      background-color: v.$c-main; // 東急カラーをメインの緑で表現
+    }
+    &--jr {
+      background-color: v.$c-text-gray; // JRカラーを中間色グレーで表現
+    }
+  }
+
+  /* -------------------------------------------
+     [7. アクションエリア(予約ボタン)]
+     ------------------------------------------- */
+  &__action {
+    margin-top: 32px;
+  }
+
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px;
+    background-color: v.$c-accent;
+    color: v.$c-white;
+    border-radius: v.$radius-round;
+    font-weight: 700;
+    transition: 0.3s;
+
+    @include m.mq {
+      width: auto;
+      min-width: 240px;
     }
 
-    &__title {
-        color: v.$c-main;
-        font-size: m.vw-clamp(24, 28);
-        font-family: v.$f-serif;
-        font-weight: 400;
-        margin-top: 8px;
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      background-color: color.scale(v.$c-accent, $lightness: -10%);
     }
+  }
 
-    &__list {
-        display: flex;
-        flex-direction: column;
+  /* -------------------------------------------
+     [8. 地図エリア(Map)]
+     ------------------------------------------- */
+  &__map {
+    flex: 1;
+    @include m.mq {
+      max-width: 580px;
     }
+  }
 
-    &__row {
-        display: flex;
-        flex-direction: column;
-        padding: 24px 0;
-        border-bottom: 1px solid v.$c-border;
-        gap: 12px;
+  &__map-link {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: v.$radius-m;
+    aspect-ratio: 810 / 673;
 
-        @include m.mq {
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 24px;
-        }
-
-        &--split {
-            flex-direction: row;
-            gap: 24px;
-
-            @include m.mq {
-                gap: 48px;
-            }
-        }
-
-        &--no-border {
-            border-bottom: none;
-        }
+    &:hover {
+      .p-access__map-img {
+        transform: scale(1.05);
+      }
+      .p-access__map-overlay {
+        opacity: 1;
+      }
     }
+  }
 
-    &__col {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        flex: 1;
-    }
+  &__map-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.6s ease-out;
+  }
 
-    &__label {
-        font-family: v.$f-en;
-        font-weight: 700;
-        color: v.$c-main;
-        font-size: 15px;
-        letter-spacing: 0.1em;
+  &__map-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(v.$c-main, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+  }
 
-        @include m.mq {
-            width: 80px; 
-            flex-shrink: 0;
-        }
-    }
-
-    &__detail {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        flex: 1;
-    }
-
-    &__transport-item {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-    }
-
-    &__text {
-        color: v.$c-text;
-        line-height: 1.6;
-        font-size: 15px;
-
-        &--large {
-            font-size: 18px;
-            font-family: v.$f-sans;
-            font-weight: 500;
-        }
-    }
-
-    &__note {
-        font-size: 13px;
-        color: v.$c-text-light;
-        line-height: 1.6;
-        margin-top: 4px;
-    }
-
-    &__badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 42px;
-        height: 20px;
-        border-radius: 2px;
-        color: v.$c-white;
-        font-size: 10px;
-        font-family: v.$f-sans;
-
-        &--tokyu { background-color: v.$c-main; }
-        &--jr { background-color: v.$c-text-gray; }
-    }
-
-    &__action {
-        margin-top: 16px;
-    }
-
-    &__btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: v.$c-accent;
-        color: v.$c-white;
-        padding: 16px 32px;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
-        width: fit-content;
-        // UI操作なので v.$t-duration (0.3s) を維持しつつ transform でわずかに動かす
-        transition: 
-            background-color v.$t-duration ease,
-            transform v.$t-duration ease,
-            opacity v.$t-duration ease;
-
-        &:hover {
-            opacity: 0.9;
-            transform: translateY(-2px); // わずかに浮かせてクリック感を強調
-            background-color: scale-color(v.$c-accent, $lightness: -10%);
-        }
-    }
-
-    &__map {
-        width: 100%;
-        
-        @include m.mq {
-            flex: 1;
-        }
-    }
-
-    &__map-link {
-        display: block;
-        width: 100%;
-        border-radius: v.$radius-m;
-        overflow: hidden;
-        background-color: v.$c-border;
-        // transition は直下の img に任せる
-    }
-
-    &__map img {
-        width: 100%;
-        height: auto;
-        vertical-align: bottom;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
-        // 他の画像アセットと統一
-        transition: transform 0.6s ease-out;
-        will-change: transform;
-
-        .p-access__map-link:hover & {
-            transform: scale(1.05);
-        }
-    }
+  &__map-btn {
+    padding: 12px 24px;
+    background-color: v.$c-white;
+    color: v.$c-main;
+    font-weight: 700;
+    border-radius: v.$radius-round;
+    font-size: 14px;
+  }
 }

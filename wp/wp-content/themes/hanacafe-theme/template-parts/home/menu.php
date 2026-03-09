@@ -1,81 +1,55 @@
 <?php
 
 /**
- * Home: Menu Section
- * [並び順] 左:FOOD / 中:DRINK / 右:DESSERT
- * [抽出条件] 各カテゴリーで 'is_top' にチェックが入っているものを優先表示
+ * Home: Menu Section (Refactored v2.0)
  */
 
-// カテゴリースラッグの定義（管理画面のスラッグと一致させてください）
-$menu_categories = [
-    'food'    => 'food',
-    'drink'   => 'drink',
-    'dessert' => 'dessert'
+$menu_slots = [
+    'food'    => get_hanacafe_top_menu_post('top_menu_food', 'food'),
+    'drink'   => get_hanacafe_top_menu_post('top_menu_drink', 'drink'),
+    'dessert' => get_hanacafe_top_menu_post('top_menu_dessert', 'dessert'),
 ];
-
-$top_posts = [];
-
-foreach ($menu_categories as $key => $slug) {
-    $args = [
-        'post_type'      => 'menu',
-        'posts_per_page' => 1,
-        'tax_query'      => [
-            [
-                'taxonomy' => 'menu_category',
-                'field'    => 'slug',
-                'terms'    => $slug,
-            ],
-        ],
-        // 'is_top' が '1' のものを最優先で取得
-        'meta_query'     => [
-            [
-                'key'   => 'is_top',
-                'value' => '1',
-                'compare' => '='
-            ]
-        ]
-    ];
-
-    $query = new WP_Query($args);
-
-    // もし 'is_top' にチェックが入っているものがなければ、最新の1件をバックアップとして取得
-    if (!$query->have_posts()) {
-        unset($args['meta_query']); // meta_queryを解除して再検索
-        $query = new WP_Query($args);
-    }
-
-    if ($query->have_posts()) {
-        $top_posts[] = $query->posts[0];
-    }
-    wp_reset_postdata();
-}
 ?>
 
 <section class="l-section p-menu" id="menu">
     <div class="l-container">
         <div class="p-menu__inner">
+
             <div class="p-menu__header">
-                <div class="p-menu__heading">
-                    <span class="p-menu__subtitle">Menu</span>
-                    <h2 class="p-menu__title">身体が喜ぶ、旬の味覚</h2>
+                <div class="p-menu__heading c-heading">
+                    <span class="c-heading__sub">Menu</span>
+                    <h2 class="c-heading__main">身体が喜ぶ、旬の味覚</h2>
                 </div>
-                <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__link">
+                <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__view-all">
                     VIEW ALL MENU
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
             </div>
 
             <div class="p-menu__list">
-                <?php
-                if (!empty($top_posts)) :
-                    foreach ($top_posts as $post) : setup_postdata($post);
-                        // 写真 -> タイトル -> サブタイトル -> 本文 -> 値段 の順で出力
+                <?php foreach ($menu_slots as $type => $post_obj) : ?>
+                    <?php if ($post_obj) : ?>
+                        <?php
+                        $post = $post_obj;
+                        setup_postdata($post);
                         get_template_part('template-parts/loop', 'menu');
-                    endforeach;
-                    wp_reset_postdata();
-                endif;
-                ?>
+                        ?>
+                    <?php else : ?>
+                        <article class="p-menu__item is-preparing">
+                            <div class="p-menu__img-wrapper">
+                                <div class="p-menu__preparing-overlay">COMING SOON</div>
+                                <img src="https://placehold.co/600x750/E5E5E5/A8A29E?text=Photo+Preparing" alt="準備中" class="p-menu__img">
+                            </div>
+                            <div class="p-menu__info">
+                                <h3 class="p-menu__name"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>
+                                <p class="p-menu__desc">ただいま新しいメニューを準備しております。公開まで今しばらくお待ちください。</p>
+                            </div>
+                        </article>
+                    <?php endif; ?>
+                <?php endforeach;
+                wp_reset_postdata(); ?>
             </div>
+
         </div>
     </div>
 </section>
