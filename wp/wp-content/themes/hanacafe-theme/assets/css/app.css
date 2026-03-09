@@ -68,11 +68,18 @@ button {
 /* ===============================================
    Layout: Section (.l-section)
    * 役割: 各セクションの上下共通の余白管理（DRY原則）
-   * 根拠: 各_p-*.scssに散らばっていたpaddingを一元管理
+   * アニメーション: Intersection Observer と連動したフェードイン
 =============================================== */
 .l-section {
   padding-top: clamp(60px, calc(21.8320610687px + 10.1781170483vw), 100px);
   padding-bottom: clamp(60px, calc(21.8320610687px + 10.1781170483vw), 100px);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+.l-section.is-inview {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .p-header {
@@ -460,6 +467,13 @@ button {
      object-fit: cover;
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 1.5s ease-out, transform 2s ease-out;
+}
+.p-hero.is-start .p-hero__img img {
+  opacity: 1;
+  transform: scale(1);
 }
 .p-hero__img::after {
   content: "";
@@ -471,6 +485,11 @@ button {
   background: linear-gradient(rgba(245, 242, 232, 0.1), rgba(46, 77, 7, 0.4));
   mix-blend-mode: multiply;
   z-index: 1;
+  opacity: 0;
+  transition: opacity 1.5s ease-out;
+}
+.p-hero.is-start .p-hero__img::after {
+  opacity: 1;
 }
 .p-hero__content {
   position: absolute;
@@ -494,31 +513,47 @@ button {
   color: #FFFFFF;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
+.p-hero__title-en, .p-hero__title-jp {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
 .p-hero__title-en {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 48px;
   font-weight: 700;
   line-height: 1.1;
+  transition-delay: 0.8s;
 }
 @media screen and (min-width: 768px) {
   .p-hero__title-en {
     font-size: 80px;
   }
 }
+.p-hero.is-start .p-hero__title-en {
+  opacity: 1;
+  transform: translateY(0);
+}
 .p-hero__title-jp {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.15em;
   margin-top: 16px;
+  transition-delay: 1s;
 }
 @media screen and (min-width: 768px) {
   .p-hero__title-jp {
     font-size: 20px;
   }
 }
+.p-hero.is-start .p-hero__title-jp {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ===============================================
    Project: About & Seats (.p-about)
+   * 2026-03-09: 座席カードのホバー演出を滑らかに調整
 =============================================== */
 .p-about__header {
   text-align: center;
@@ -571,19 +606,22 @@ button {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  cursor: pointer;
 }
 .p-seat-card__img-box {
   position: relative;
   aspect-ratio: 3/2;
   overflow: hidden;
   border-radius: 8px;
+  background-color: #F5F5F4;
 }
 .p-seat-card__img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: transform 0.3s;
+  transition: transform 0.6s ease-out;
+  will-change: transform;
 }
 .p-seat-card:hover .p-seat-card__img {
   transform: scale(1.05);
@@ -598,6 +636,10 @@ button {
   font-size: 18px;
   color: #2E4D07;
   font-weight: 700;
+  transition: color 0.3s ease;
+}
+.p-seat-card:hover .p-seat-card__title {
+  color: #F29159;
 }
 .p-seat-card__text {
   font-size: 14px;
@@ -608,10 +650,19 @@ button {
 /* ============================================
    Project: Page (p-page)
    * 役割: 下層ページ（固定ページ等）の共通スタイル
+   * 2026-03-09: ページ全体へのフェードイン演出とホバーの洗練を追加
 ============================================ */
 .p-page {
   padding-top: clamp(120px, calc(81.8320610687px + 10.1781170483vw), 160px);
   padding-bottom: clamp(80px, calc(41.8320610687px + 10.1781170483vw), 120px);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+.p-page.is-inview {
+  opacity: 1;
+  transform: translateY(0);
 }
 .p-page__header {
   text-align: center;
@@ -641,7 +692,8 @@ button {
   color: #57534E;
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.3s, transform 0.3s;
+  transition: color 0.3s ease, transform 0.3s ease;
+  will-change: transform;
 }
 .p-page__back-link:hover {
   color: #F29159;
@@ -650,6 +702,7 @@ button {
 
 /* ============================================
 Project: Menu (p-menu)
+* 2026-03-09: ホバー演出を「安らぎ」コンセプトに合わせて滑らかに調整
 ============================================ */
 .p-menu {
   background-color: #FFFFFF;
@@ -707,9 +760,6 @@ Project: Menu (p-menu)
 .p-menu__link .material-symbols-outlined {
   font-size: 18px;
 }
-.p-menu {
-  /* リストのグリッド設定 */
-}
 .p-menu__list {
   display: grid;
   grid-template-columns: 1fr;
@@ -724,19 +774,22 @@ Project: Menu (p-menu)
   display: flex;
   flex-direction: column;
   gap: clamp(16px, calc(8.3664122137px + 2.0356234097vw), 24px);
+  cursor: pointer;
 }
 .p-menu__img-wrapper {
   position: relative;
   overflow: hidden;
   border-radius: 4px;
   aspect-ratio: 4/5;
+  background-color: #F5F5F4;
 }
 .p-menu__img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.6s ease-out;
+  will-change: transform;
 }
 .p-menu__item:hover .p-menu__img {
   transform: scale(1.05);
@@ -751,6 +804,10 @@ Project: Menu (p-menu)
   font-size: clamp(18px, calc(16.0916030534px + 0.5089058524vw), 20px);
   font-weight: 500;
   line-height: 1.4;
+  transition: color 0.3s ease;
+}
+.p-menu__item:hover .p-menu__name {
+  color: #F29159;
 }
 .p-menu__desc-top {
   color: #78716C;
@@ -775,6 +832,7 @@ Project: Menu (p-menu)
 
 /* ============================================
    Project: Access (p-access)
+   * 2026-03-09: 地図画像とボタンのホバー演出を強化
 ============================================ */
 .p-access {
   background-color: #F5F2E8;
@@ -923,10 +981,12 @@ Project: Menu (p-menu)
   font-weight: 600;
   width: -moz-fit-content;
   width: fit-content;
-  transition: opacity 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
 }
 .p-access__btn:hover {
-  opacity: 0.7;
+  opacity: 0.9;
+  transform: translateY(-2px);
+  background-color: rgb(239.5960893855, 124.6592178771, 58.3039106145);
 }
 .p-access__map {
   width: 100%;
@@ -941,10 +1001,7 @@ Project: Menu (p-menu)
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
-  transition: opacity 0.3s;
-}
-.p-access__map-link:hover {
-  opacity: 0.8;
+  background-color: #F5F5F4;
 }
 .p-access__map img {
   width: 100%;
@@ -953,6 +1010,11 @@ Project: Menu (p-menu)
   aspect-ratio: 4/3;
   -o-object-fit: cover;
      object-fit: cover;
+  transition: transform 0.6s ease-out;
+  will-change: transform;
+}
+.p-access__map-link:hover .p-access__map img {
+  transform: scale(1.05);
 }
 
 /* ============================================
@@ -1007,7 +1069,7 @@ Project: News (p-news)
   letter-spacing: 0.3em;
   text-transform: uppercase;
   text-decoration: none;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
 }
 .p-news__more-link:hover {
   opacity: 0.7;
@@ -1042,7 +1104,8 @@ Project: News (p-news)
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
-  transition: transform 0.3s;
+  transition: transform 0.6s ease-out;
+  will-change: transform;
 }
 .p-news-card__body {
   display: flex;
@@ -1060,5 +1123,5 @@ Project: News (p-news)
   font-size: 16px;
   line-height: 1.625;
   color: #57534E;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
 }/*# sourceMappingURL=app.css.map */

@@ -3,103 +3,112 @@
 
 /* ===============================================
    Project: About & Seats (.p-about)
+   * 2026-03-09: 座席カードのホバー演出を滑らかに調整
 =============================================== */
 
 .p-about {
-	// padding-top/bottom は .l-section に任せるため削除
+    &__header {
+        text-align: center;
+        margin-bottom: m.vw-clamp(40, 60);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: m.vw-clamp(16, 24);
+    }
 
-	&__header {
-		text-align: center;
-		margin-bottom: m.vw-clamp(40, 60); // 滑らかに可変
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: m.vw-clamp(16, 24); // 滑らかに可変
-	}
+    &__label {
+        font-family: v.$f-en;
+        font-weight: 700;
+        font-size: 14px;
+        color: v.$c-main;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+    }
 
-	&__label {
-		font-family: v.$f-en;
-		font-weight: 700;
-		font-size: 14px;
-		color: v.$c-main;
-		letter-spacing: 0.4em;
-		text-transform: uppercase;
-	}
+    &__title {
+        font-family: v.$f-serif;
+        font-size: m.vw-clamp(24, 32);
+        color: v.$c-main;
+        line-height: 1.6;
+    }
 
-	&__title {
-		font-family: v.$f-serif;
-		font-size: m.vw-clamp(24, 32); // 滑らかに可変
-		color: v.$c-main;
-		line-height: 1.6;
-	}
+    &__text {
+        max-width: 600px;
+        font-size: 15px;
+        line-height: 1.8;
+        color: v.$c-text;
 
-	&__text {
-		max-width: 600px;
-		font-size: 15px;
-		line-height: 1.8;
-		color: v.$c-text;
+        p + p {
+            margin-top: 1em;
+        }
+    }
 
-		p + p {
-			margin-top: 1em;
-		}
-	}
+    &__grid {
+        display: grid;
+        gap: m.vw-clamp(32, 48);
+        margin-bottom: m.vw-clamp(48, 60);
 
-	&__grid {
-		display: grid;
-		gap: m.vw-clamp(32, 48); // 滑らかに可変
-		margin-bottom: m.vw-clamp(48, 60); // 滑らかに可変
+        @include m.mq {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 
-		@include m.mq {
-			grid-template-columns: repeat(3, 1fr);
-		}
-	}
-
-	&__footer {
-		display: flex;
-		justify-content: center;
-	}
+    &__footer {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 /* --- Seat Card (Individual) --- */
 .p-seat-card {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    cursor: pointer;
 
-	&__img-box {
-		position: relative; 
-		aspect-ratio: 3 / 2;
-		overflow: hidden;
-		border-radius: v.$radius-m;
-	}
+    &__img-box {
+        position: relative; 
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        border-radius: v.$radius-m;
+        background-color: v.$c-border;
+    }
 
-	&__img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform v.$t-duration;
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // プロ品質の統一設定: 0.6s / ease-out
+        transition: transform 0.6s ease-out;
+        will-change: transform;
 
-		.p-seat-card:hover & {
-			transform: scale(1.05);
-		}
-	}
+        .p-seat-card:hover & {
+            transform: scale(1.05);
+        }
+    }
 
-	&__body {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-	&__title {
-		font-family: v.$f-serif;
-		font-size: 18px;
-		color: v.$c-main;
-		font-weight: 700;
-	}
+    &__title {
+        font-family: v.$f-serif;
+        font-size: 18px;
+        color: v.$c-main;
+        font-weight: 700;
+        transition: color v.$t-duration ease;
 
-	&__text {
-		font-size: 14px;
-		line-height: 1.6;
-		color: v.$c-text;
-	}
+        // ホバー時に色を連動させて反応を良くする
+        .p-seat-card:hover & {
+            color: v.$c-accent;
+        }
+    }
+
+    &__text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: v.$c-text;
+    }
 }

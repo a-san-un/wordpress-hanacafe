@@ -5,123 +5,124 @@
 Project: News (p-news)
 ============================================ */
 .p-news {
-	// padding は .l-section に任せるため削除
-	background-color: v.$c-white;
+    background-color: v.$c-white;
 
-	&__header {
-		text-align: center;
-		margin-bottom: m.vw-clamp(40, 80); // 滑らかに可変
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 24px;
-	}
+    &__header {
+        text-align: center;
+        margin-bottom: m.vw-clamp(40, 80);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
 
-	&__subtitle {
-		display: block;
-		font-family: v.$f-sans;
-		font-size: 14px;
-		font-weight: 400;
-		color: v.$c-main;
-		letter-spacing: 0.4em;
-		text-transform: uppercase;
-	}
+    &__subtitle {
+        display: block;
+        font-family: v.$f-sans;
+        font-size: 14px;
+        font-weight: 400;
+        color: v.$c-main;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+    }
 
-	&__title {
-		font-family: v.$f-serif;
-		font-size: m.vw-clamp(24, 30); // 滑らかに可変
-		color: v.$c-main;
-		font-weight: 400;
-	}
+    &__title {
+        font-family: v.$f-serif;
+        font-size: m.vw-clamp(24, 30);
+        color: v.$c-main;
+        font-weight: 400;
+    }
 
-	&__list {
-		display: grid;
-		gap: m.vw-clamp(32, 48); // 滑らかに可変
-		margin-bottom: 60px;
+    &__list {
+        display: grid;
+        gap: m.vw-clamp(32, 48);
+        margin-bottom: 60px;
 
-		@include m.mq {
-			grid-template-columns: repeat(3, 1fr); // PCで3カラム
-		}
-	}
+        @include m.mq {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
 
-	&__footer {
-		text-align: center;
-	}
+    &__footer {
+        text-align: center;
+    }
 
-	&__more-link {
-		display: inline-block;
-		color: v.$c-main;
-		border-bottom: 1px solid v.$c-main;
-		padding-bottom: 8px;
-		font-size: 12px;
-		font-family: v.$f-sans;
-		letter-spacing: 0.3em;
-		text-transform: uppercase;
-		text-decoration: none;
-		transition: opacity v.$t-duration;
+    &__more-link {
+        display: inline-block;
+        color: v.$c-main;
+        border-bottom: 1px solid v.$c-main;
+        padding-bottom: 8px;
+        font-size: 12px;
+        font-family: v.$f-sans;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: opacity v.$t-duration ease;
 
-		&:hover {
-			opacity: 0.7;
-		}
-	}
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 
-	&__empty {
-		text-align: center;
-		color: v.$c-text-gray;
-	}
+    &__empty {
+        text-align: center;
+        color: v.$c-text-gray;
+    }
 }
 
 /* --- News Card --- */
 .p-news-card {
-	&__link {
-		display: flex;
-		flex-direction: column;
-		gap: 24px;
-		text-decoration: none;
+    &__link {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        text-decoration: none;
 
-		&:hover {
-			.p-news-card__img {
-				transform: scale(1.05); // ホバー時に画像をわずかに拡大
-			}
-			.p-news-card__title {
-				color: v.$c-main;
-			}
-		}
-	}
+        &:hover {
+            .p-news-card__img {
+                transform: scale(1.05);
+            }
+            .p-news-card__title {
+                color: v.$c-main;
+            }
+        }
+    }
 
-	&__img-box {
-		position: relative;
-		aspect-ratio: 370 / 210; // ★ エンジニアの判断でキリの良い数値に調整
-		border-radius: 2px;
-		overflow: hidden;
-		background-color: v.$c-border;
-	}
+    &__img-box {
+        position: relative;
+        aspect-ratio: 370 / 210;
+        border-radius: 2px;
+        overflow: hidden;
+        background-color: v.$c-border;
+    }
 
-	&__img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform v.$t-duration;
-	}
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        // メニューと同様に 0.6s / ease-out で質感を統一
+        transition: transform 0.6s ease-out;
+        will-change: transform;
+    }
 
-	&__body {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-	}
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 
-	&__date {
-		font-family: v.$f-sans;
-		font-size: 11px;
-		color: v.$c-text-light;
-		letter-spacing: 0.1em;
-	}
+    &__date {
+        font-family: v.$f-sans;
+        font-size: 11px;
+        color: v.$c-text-light;
+        letter-spacing: 0.1em;
+    }
 
-	&__title {
-		font-family: v.$f-serif;
-		font-size: 16px;
-		line-height: 1.625;
-		color: v.$c-text;
-		transition: color v.$t-duration;
-	}
+    &__title {
+        font-family: v.$f-serif;
+        font-size: 16px;
+        line-height: 1.625;
+        color: v.$c-text;
+        transition: color v.$t-duration ease;
+    }
 }

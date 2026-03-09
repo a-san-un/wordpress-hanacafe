@@ -3,15 +3,15 @@
 
 /* ============================================
    Project: Access (p-access)
+   * 2026-03-09: 地図画像とボタンのホバー演出を強化
 ============================================ */
 .p-access {
     background-color: v.$c-base;
-    // padding は .l-section に任せるため削除
 
     &__inner {
         display: flex;
         flex-direction: column;
-        gap: m.vw-clamp(64, 96); // 余白を滑らかに可変
+        gap: m.vw-clamp(64, 96);
 
         @include m.mq {
             flex-direction: row; 
@@ -39,7 +39,7 @@
 
     &__title {
         color: v.$c-main;
-        font-size: m.vw-clamp(24, 28); // 滑らかに可変
+        font-size: m.vw-clamp(24, 28);
         font-family: v.$f-serif;
         font-weight: 400;
         margin-top: 8px;
@@ -160,10 +160,16 @@
         text-decoration: none;
         font-weight: 600;
         width: fit-content;
-        transition: opacity v.$t-duration ease;
+        // UI操作なので v.$t-duration (0.3s) を維持しつつ transform でわずかに動かす
+        transition: 
+            background-color v.$t-duration ease,
+            transform v.$t-duration ease,
+            opacity v.$t-duration ease;
 
         &:hover {
-            opacity: 0.7;
+            opacity: 0.9;
+            transform: translateY(-2px); // わずかに浮かせてクリック感を強調
+            background-color: scale-color(v.$c-accent, $lightness: -10%);
         }
     }
 
@@ -180,11 +186,8 @@
         width: 100%;
         border-radius: v.$radius-m;
         overflow: hidden;
-        transition: opacity v.$t-duration;
-
-        &:hover {
-            opacity: 0.8;
-        }
+        background-color: v.$c-border;
+        // transition は直下の img に任せる
     }
 
     &__map img {
@@ -193,5 +196,12 @@
         vertical-align: bottom;
         aspect-ratio: 4 / 3;
         object-fit: cover;
+        // 他の画像アセットと統一
+        transition: transform 0.6s ease-out;
+        will-change: transform;
+
+        .p-access__map-link:hover & {
+            transform: scale(1.05);
+        }
     }
 }

@@ -6,95 +6,133 @@ $z-filter: 1;
 $z-content: 2;
 
 .p-hero {
-	height: 70vh;
-	min-height: 500px;
-	position: relative;
-	overflow: hidden;
+    height: 70vh;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
 
-	@include m.mq {
-		height: 100vh;
-	}
+    @include m.mq {
+        height: 100vh;
+    }
 
-	&__inner {
-		width: 100%;
-		height: 100%;
-	}
+    &__inner {
+        width: 100%;
+        height: 100%;
+    }
 
-	&__img {
-		width: 100%;
-		height: 100%;
-		background-color: v.$c-main;
+    &__img {
+        width: 100%;
+        height: 100%;
+        background-color: v.$c-main;
 
-		img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			object-position: 50% 35%; 
-		}
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 35%;
+            // --- アニメーション初期状態 ---
+            opacity: 0;
+            transform: scale(1.05);
+            transition: 
+                opacity 1.5s ease-out,
+                transform 2.0s ease-out;
 
-		&::after {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(
-				rgba(v.$c-base, 0.1),
-				rgba(v.$c-main, 0.4)
-			);
-			mix-blend-mode: multiply;
-			// 修正: ローカルz-index変数を使用
-			z-index: $z-filter;
-		}
-	}
+            // JSの .is-start と連動
+            .p-hero.is-start & {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-	&__content {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		width: 100%;
-		transform: translateY(-50%);
-		// 修正: ローカルz-index変数を使用
-		z-index: $z-content;
-	}
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(v.$c-base, 0.1),
+                rgba(v.$c-main, 0.4)
+            );
+            mix-blend-mode: multiply;
+            z-index: $z-filter;
+            // フィルターも画像に合わせてフェードイン
+            opacity: 0;
+            transition: opacity 1.5s ease-out;
 
-	&__title-box {
-		width: fit-content;
-		margin-left: auto;
-		margin-right: auto;
-	}
+            .p-hero.is-start & {
+                opacity: 1;
+            }
+        }
+    }
 
-	&__title {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-		text-align: left;
-		// 修正: $c-white 変数を使用
-		color: v.$c-white;
-		// 修正: $c-black 変数を使用
-		text-shadow: 0 2px 10px rgba(v.$c-black, 0.4);
+    &__content {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        transform: translateY(-50%);
+        z-index: $z-content;
+    }
 
-		&-en {
-			font-family: v.$f-en;
-			font-size: 48px;
-			font-weight: 700;
-			line-height: 1.1;
+    &__title-box {
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-			@include m.mq {
-				font-size: 80px;
-			}
-		}
+    &__title {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        text-align: left;
+        color: v.$c-white;
+        text-shadow: 0 2px 10px rgba(v.$c-black, 0.4);
 
-		&-jp {
-			font-size: 16px;
-			font-weight: 700;
-			letter-spacing: 0.15em;
-			margin-top: 16px;
+        // --- タイトル共通のアニメーション初期設定 ---
+        &-en, &-jp {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 
+                opacity 1s ease-out,
+                transform 1s ease-out;
+        }
 
-			@include m.mq {
-				font-size: 20px;
-			}
-		}
-	}
+        &-en {
+            font-family: v.$f-en;
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.1;
+            // 画像が表示され始めた後に発火（0.8sディレイ）
+            transition-delay: 0.8s;
+
+            @include m.mq {
+                font-size: 80px;
+            }
+
+            .p-hero.is-start & {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        &-jp {
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-top: 16px;
+            // 英文の少し後に発火（1.0sディレイ）
+            transition-delay: 1s;
+
+            @include m.mq {
+                font-size: 20px;
+            }
+
+            .p-hero.is-start & {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
 }

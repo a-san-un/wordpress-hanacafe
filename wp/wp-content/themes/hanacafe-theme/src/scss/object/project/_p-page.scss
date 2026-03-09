@@ -4,50 +4,69 @@
 /* ============================================
    Project: Page (p-page)
    * 役割: 下層ページ（固定ページ等）の共通スタイル
+   * 2026-03-09: ページ全体へのフェードイン演出とホバーの洗練を追加
 ============================================ */
 .p-page {
-	// 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
-	padding-top: m.vw-clamp(120, 160);
-	padding-bottom: m.vw-clamp(80, 120);
+    // 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
+    padding-top: m.vw-clamp(120, 160);
+    padding-bottom: m.vw-clamp(80, 120);
 
-	&__header {
-		text-align: center;
-		margin-bottom: m.vw-clamp(40, 60); // 滑らかに可変
-	}
+    // --- アニメーション初期状態 ---
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 
+        opacity 0.8s ease-out,
+        transform 0.8s ease-out;
+    will-change: opacity, transform;
 
-	&__title {
-		font-size: m.vw-clamp(24, 32); // 滑らかに可変
-		font-weight: 700;
-		color: v.$c-main;
-		margin-bottom: 8px;
-	}
+    // --- Inview時の状態（JSのIntersection Observerで制御） ---
+    &.is-inview {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-	&__content {
-		line-height: 2;
-		color: v.$c-text;
-		
-		p {
-			margin-bottom: 24px;
-		}
-	}
+    &__header {
+        text-align: center;
+        margin-bottom: m.vw-clamp(40, 60);
+    }
 
-	&__footer {
-		margin-top: m.vw-clamp(40, 60); // 滑らかに可変
-		text-align: center;
-	}
+    &__title {
+        font-size: m.vw-clamp(24, 32);
+        font-weight: 700;
+        color: v.$c-main;
+        margin-bottom: 8px;
+    }
 
-	&__back-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 8px;
-		color: v.$c-text;
-		font-weight: 700;
-		text-decoration: none;
-		transition: color v.$t-duration, transform v.$t-duration;
+    &__content {
+        line-height: 2;
+        color: v.$c-text;
+        
+        p {
+            margin-bottom: 24px;
+        }
+    }
 
-		&:hover {
-			color: v.$c-accent;
-			transform: translateX(-4px);
-		}
-	}
+    &__footer {
+        margin-top: m.vw-clamp(40, 60);
+        text-align: center;
+    }
+
+    &__back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: v.$c-text;
+        font-weight: 700;
+        text-decoration: none;
+        // ホバー演出の洗練
+        transition: 
+            color v.$t-duration ease, 
+            transform v.$t-duration ease;
+        will-change: transform;
+
+        &:hover {
+            color: v.$c-accent;
+            transform: translateX(-4px);
+        }
+    }
 }
