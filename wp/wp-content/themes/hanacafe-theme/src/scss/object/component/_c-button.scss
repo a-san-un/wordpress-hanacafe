@@ -1,3 +1,9 @@
+/**
+ * Component: Button
+ * [設計意図]
+ * 1. サイト全体の「カプセル型ボタン」の共通定義
+ * 2. 黄金律に基づき、数値は全て variables.scss ($v) から参照
+ */
 @use "../../global/variables" as v;
 
 .c-btn-capsule {
@@ -7,16 +13,17 @@
   background-color: v.$c-accent;
   color: v.$c-white;
   padding: 16px 40px;
-  border-radius: 50px;
+  border-radius: v.$radius-round; // マジックナンバー排除
   font-family: v.$f-en;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.2em;
-  transition: 0.3s;
+  transition: v.$t-duration;     // サイト共通のアニメーション速度を適用
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  text-decoration: none;
 
   &:hover {
     opacity: 0.8;
-    transform: translateY(-1px);
+    transform: translateY(-1px); // 軽微な浮き上がりでクリック感を演出
   }
 }

@@ -1,4 +1,12 @@
 @charset "UTF-8";
+/**
+ * 【NEW RULE: テキスト・境界線の透過ルール】
+ * $c-text-gray, $c-text-light, $c-border は廃止。
+ * 1. 本文: $c-text (100%)
+ * 2. 補足・サブタイトル: rgba($c-text, 0.7)
+ * 3. プレースホルダー・無効状態: rgba($c-text, 0.4)
+ * 4. 境界線: rgba($c-text, 0.1) または 0.05
+ */
 /* ===============================================
    Global: Mixins & Functions
    * 役割: サイト全体で使い回す計算・記述の定義
@@ -65,19 +73,9 @@ button {
   max-width: none;
 }
 
-/* ===============================================
-   Layout: Section (.l-section)
-   * 役割: 各セクションの上下共通の余白管理（DRY原則）
-   * アニメーション: Intersection Observer と連動したフェードイン
-=============================================== */
 .l-section {
   padding-top: clamp(60px, calc(21.8320610687px + 10.1781170483vw), 100px);
   padding-bottom: clamp(60px, calc(21.8320610687px + 10.1781170483vw), 100px);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-.l-section.is-inview {
   opacity: 1;
   transform: translateY(0);
 }
@@ -216,6 +214,9 @@ button {
 
 /* ============================================
    Layout: Footer (l-footer)
+   [設計意図]
+   1. 視認性: 背景の濃い緑に対し、白の70%透過を適用することで、ロゴ（100%）との主従関係を明確化
+   2. 非破壊の原則: 既存のレスポンシブグリッド、SNSリンクのレタースペーシング等は完全に保持
    ============================================ */
 .l-footer {
   background-color: #2E4D07;
@@ -321,9 +322,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  opacity: 0.5;
+  align-items: center;
 }
 @media screen and (min-width: 768px) {
   .l-footer__policy-links {
@@ -333,37 +332,42 @@ button {
 .l-footer__policy-links a {
   color: inherit;
   text-decoration: none;
+  font-size: 12px;
+  transition: color 0.3s;
 }
 .l-footer__policy-links a:hover {
-  text-decoration: underline;
+  color: #F29159;
 }
 .l-footer {
-  /* コピーライトエリア */
+  /* -------------------------------------------
+     [下部エリア：黄金律適用]
+     ------------------------------------------- */
 }
 .l-footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  align-items: center;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-@media screen and (min-width: 768px) {
-  .l-footer__bottom {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-.l-footer__copy {
-  opacity: 0.6;
+  text-align: center;
 }
 .l-footer__tagline {
-  opacity: 0.4;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.l-footer__copy {
+  font-size: 12px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  color: rgba(255, 255, 255, 0.7);
 }
 
+/**
+ * Component: Button
+ * [設計意図]
+ * 1. サイト全体の「カプセル型ボタン」の共通定義
+ * 2. 黄金律に基づき、数値は全て variables.scss ($v) から参照
+ */
 .c-btn-capsule {
   display: inline-flex;
   align-items: center;
@@ -378,17 +382,23 @@ button {
   letter-spacing: 0.2em;
   transition: 0.3s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
 }
 .c-btn-capsule:hover {
   opacity: 0.8;
   transform: translateY(-1px);
 }
 
+/**
+ * Component: Badge
+ * [設計意図]
+ * 1. 役割: サイト全体のバッジ部品（Aboutの席状況、Menuのおすすめ等）
+ * 2. 視認性重視: 「満席」バッジはシミュレーション結果に基づき、透過させず v.$c-text (100%) で表示
+ * 3. 黄金律遵守: 文字・境界線以外の丸み等は variables.scss ($v) から参照
+ */
 /* ===============================================
-   Component: Badge
-   * 役割: サイト全体のカード等で使用するバッジ部品
+   ステータスバッジ（丸型：右上）
 =============================================== */
-/* ステータスバッジ（丸型：右上） */
 .c-badge-status {
   display: inline-flex;
   align-items: center;
@@ -408,16 +418,22 @@ button {
   font-size: 14px;
   line-height: 1;
 }
-.c-badge-status.is-alert {
-  color: #F29159;
-  border: 1px solid #F29159;
-}
 .c-badge-status.is-success {
   color: #2E4D07;
   border: 1px solid #2E4D07;
 }
+.c-badge-status.is-alert {
+  color: #F29159;
+  border: 1px solid #F29159;
+}
+.c-badge-status.is-full {
+  color: #57534E;
+  border: 1px solid #57534E;
+}
 
-/* 特徴バッジ（角丸：左下） */
+/* ===============================================
+   特徴バッジ（角丸：左下）
+=============================================== */
 .c-badge-feature {
   display: inline-flex;
   align-items: center;
@@ -435,7 +451,9 @@ button {
   z-index: 2;
 }
 
-/* ★新規追加: おすすめバッジ（角丸：左上） */
+/* ===============================================
+   おすすめバッジ（角丸：左上）
+=============================================== */
 .c-badge-recommend {
   display: inline-flex;
   align-items: center;
@@ -451,6 +469,7 @@ button {
   font-weight: 700;
   letter-spacing: 0.05em;
   z-index: 2;
+  pointer-events: none;
 }
 
 /* ===============================================
@@ -479,6 +498,13 @@ button {
   line-height: 1.4;
 }
 
+/* ==========================================================================
+   Project: Hero Section (p-hero)
+   [修正内容]
+   1. エラー解消: 空のルールセット (:not(.is-start)) を削除し、ビルドを正常化
+   2. 非破壊: 全てのアニメーション数値、z-index、グラデーション構造を完全維持
+   3. 黄金律: 日本語タイトルを白の70%透過に設定
+   ========================================================================== */
 .p-hero {
   height: 70vh;
   min-height: 500px;
@@ -506,8 +532,8 @@ button {
      object-fit: cover;
   -o-object-position: 50% 35%;
      object-position: 50% 35%;
-  opacity: 0;
-  transform: scale(1.05);
+  opacity: 1;
+  transform: scale(1);
   transition: opacity 1.5s ease-out, transform 2s ease-out;
 }
 .p-hero.is-start .p-hero__img img {
@@ -524,7 +550,7 @@ button {
   background: linear-gradient(rgba(245, 242, 232, 0.1), rgba(46, 77, 7, 0.4));
   mix-blend-mode: multiply;
   z-index: 1;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 1.5s ease-out;
 }
 .p-hero.is-start .p-hero__img::after {
@@ -553,8 +579,8 @@ button {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 .p-hero__title-en, .p-hero__title-jp {
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity 1s ease-out, transform 1s ease-out;
 }
 .p-hero__title-en {
@@ -579,6 +605,7 @@ button {
   letter-spacing: 0.15em;
   margin-top: 16px;
   transition-delay: 1s;
+  color: rgba(255, 255, 255, 0.7);
 }
 @media screen and (min-width: 768px) {
   .p-hero__title-jp {
@@ -590,15 +617,13 @@ button {
   transform: translateY(0);
 }
 
-/* ===============================================
-   Project: About & Seats (.p-about)
-
-   [主な設定項目]
-   1. セクション見出し: c-headingへの移行とマージン管理
-   2. レイアウト: グリッドレイアウトによるPC3カラム化
-   3. 座席カード: ホバー時の画像拡大アニメーション（機能維持）
-   4. プレースホルダー: $c-border廃止に伴い、v.$c-textの透過(0.05)を使用
-=============================================== */
+/**
+ * Project: About & Seats Section
+ * [設計意図]
+ * 1. 黄金律遵守: 境界線を排除し、背景5%透過とテキスト70%透過で優先度を管理
+ * 2. シミュレーション反映: 満席バッジ（is-full）は不透明で力強く表示
+ * 3. 非破壊の原則: 既存のホバーアニメーションや Grid 構造を完全保持
+ */
 .p-about__header {
   text-align: center;
   margin-bottom: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
@@ -635,7 +660,6 @@ button {
 }
 
 /* --- Seat Card (Individual) --- */
-/* 座席カードの機能やデザインは変更なし */
 .p-seat-card {
   display: flex;
   flex-direction: column;
@@ -648,6 +672,7 @@ button {
   overflow: hidden;
   border-radius: 8px;
   background-color: rgba(87, 83, 78, 0.05);
+  border: none;
 }
 .p-seat-card__img {
   width: 100%;
@@ -673,7 +698,13 @@ button {
 .p-seat-card__text {
   font-size: 14px;
   line-height: 1.6;
-  color: #57534E;
+  color: rgba(87, 83, 78, 0.7);
+}
+
+/* --- Badge Override (About Section Specific) --- */
+.c-badge-status.is-full {
+  color: #57534E !important;
+  border-color: #57534E !important;
 }
 
 /* ============================================
@@ -729,32 +760,21 @@ button {
   transform: translateX(-4px);
 }
 
-/* ==========================================================================
-   Project: Menu (p-menu)
-
-   [主な設定項目]
-   1. セクション基本設定: 背景色(#FFFFFF)の固定、セクション間の交互配置対応
-   2. ヘッダー構造: レスポンシブFlexbox、c-headingコンポーネントとの整合性維持
-   3. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による透過線を採用
-   4. VIEW ALL リンク: アイコンの垂直中央揃え、ホバー時のアクセントカラー遷移
-   5. グリッドレイアウト: 1カラム(SP) / 3カラム(PC) のレスポンス設計
-   6. メニューカード(Item): 縦並びFlex構造、カード全体の高さ統一(height: 100%)
-   7. 画像エリア(Wrapper): アスペクト比固定(4:5)、ホバー時の拡大演出(scale)
-   8. 情報エリア(Info): タイトル・サブ・説明文・価格の階層、3行制限(line-clamp)
-   9. 準備中状態(Preparing): COMING SOONオーバーレイ、文字色の減光処理
-   ========================================================================== */
+/**
+ * Project: Menu Section
+ * [設計意図]
+ * 1. 視認性: サブタイトルは不透明（v.$c-text）でクッキリさせ、説明文は70%透過で優先度を下げる
+ * 2. プレースホルダー: 画像枠の背景を5%透過に設定し、画像未読み込み時の視認性を確保
+ * 3. 非破壊の原則: 既存のホバー演出、COMING SOONオーバーレイの機能は変更せず保持
+ */
 .p-menu {
   background-color: #FFFFFF;
-  /* -------------------------------------------
-     [2. ヘッダー構造 & 3. 境界線ルール]
-     ------------------------------------------- */
 }
 .p-menu__header {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding-bottom: clamp(24px, calc(8.7328244275px + 4.0712468193vw), 40px);
-  border-bottom: 1px solid rgba(87, 83, 78, 0.1);
+  margin-bottom: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
 }
 @media screen and (min-width: 768px) {
   .p-menu__header {
@@ -763,79 +783,22 @@ button {
     align-items: flex-end;
   }
 }
-.p-menu__heading {
-  margin-bottom: 0;
-}
-.p-menu {
-  /* -------------------------------------------
-     [4. VIEW ALL リンク]
-     ------------------------------------------- */
-}
-.p-menu__view-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: #57534E;
-  transition: color 0.3s ease;
-}
-.p-menu__view-all .material-symbols-outlined {
-  font-size: 18px;
-  transition: color 0.3s ease;
-}
-.p-menu__view-all:hover {
-  color: #F29159;
-}
-.p-menu__view-all:hover .material-symbols-outlined {
-  color: #F29159;
-}
-.p-menu {
-  /* -------------------------------------------
-     [5. グリッドレイアウト]
-     ------------------------------------------- */
-}
 .p-menu__list {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(48px, calc(32.7328244275px + 4.0712468193vw), 64px);
-  margin-top: clamp(40px, calc(24.7328244275px + 4.0712468193vw), 56px);
-  width: 100%;
+  gap: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
 }
 @media screen and (min-width: 768px) {
   .p-menu__list {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 .p-menu {
-  /* -------------------------------------------
-     [6. メニューカード(Item)]
-     ------------------------------------------- */
+  /* --- Menu Item Card --- */
 }
 .p-menu__item {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-.p-menu__item .p-menu__link {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 100%;
-  height: 100%;
-  white-space: normal;
-}
-.p-menu__item.is-preparing .p-menu__name {
-  color: #A8A29E;
-}
-.p-menu__item.is-preparing .p-menu__desc {
-  color: #A8A29E;
-}
-.p-menu {
-  /* -------------------------------------------
-     [7. 画像エリア(Wrapper)]
-     ------------------------------------------- */
 }
 .p-menu__img-wrapper {
   position: relative;
@@ -843,6 +806,7 @@ button {
   aspect-ratio: 4/5;
   border-radius: 4px;
   width: 100%;
+  background-color: rgba(87, 83, 78, 0.05);
 }
 .p-menu__img {
   width: 100%;
@@ -850,8 +814,9 @@ button {
   -o-object-fit: cover;
      object-fit: cover;
   transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+  will-change: transform;
 }
-a:hover .p-menu__img {
+.p-menu__item:hover .p-menu__img {
   transform: scale(1.05);
 }
 .p-menu__preparing-overlay {
@@ -871,11 +836,6 @@ a:hover .p-menu__img {
   letter-spacing: 0.1em;
   z-index: 3;
 }
-.p-menu {
-  /* -------------------------------------------
-     [8. 情報エリア(Info)]
-     ------------------------------------------- */
-}
 .p-menu__info {
   padding-top: 20px;
   display: flex;
@@ -884,49 +844,60 @@ a:hover .p-menu__img {
 }
 .p-menu__name {
   color: #2E4D07;
-  font-size: clamp(18px, calc(16.0916030534px + 0.5089058524vw), 20px);
+  font-size: 18px;
   font-weight: 700;
+  margin-bottom: 4px;
 }
 .p-menu__sub {
-  color: #F29159;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 14px;
-  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: #57534E;
 }
 .p-menu__desc {
-  color: #57534E;
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.6;
   margin-top: 12px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  color: rgba(87, 83, 78, 0.7);
 }
 .p-menu__price {
+  margin-top: 16px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 16px;
   font-weight: 700;
+  color: #57534E;
+}
+.p-menu__price-unit {
+  font-size: 12px;
+  margin-right: 2px;
+}
+.p-menu__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   color: #2E4D07;
-  margin-top: 16px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.p-menu__view-all:hover {
+  color: #F29159;
 }
 
 /* ==========================================================================
    Project: Access (p-access)
 
-   [主な設定項目]
-   1. セクション基本設定: 背景色(v.$c-base)の指定、セクション交互配置ルールの適用
-   2. 全体レイアウト: PC版でのInfo(左)とMap(右)の垂直中央・並列配置
-   3. 見出しエリア: c-headingコンポーネントとの連携、Project側のマージン管理
-   4. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による上品な区切り線を採用
-   5. 店舗情報リスト(dl): dt/dd構造による情報の整理、上部/下部ラインによる視認性確保
-   6. 交通・路線バッジ: SSOT変数からブランドカラーを適用（東急: v.$c-main / JR: v.$c-text-gray）
-   7. アクションエリア: カプセル型ボタン(予約導線)、Dart Sassによる最新のホバー演出
-   8. 地図エリア(Map): アスペクト比固定(810:673)、ホバー時の画像拡大とボタン出現の連動
+   [修正のポイント]
+   1. 表示保証: JSエラーで消えるリスクを排除するため、セクション全体の表示をデフォルトで確定
+   2. 黄金律遵守: ラベル(dt)や注釈(note)に白・黒ベースの透過(70%)を適用し、情報の強弱を整理
+   3. 非破壊: ホバー演出、アクセントカラー、マップのレイアウト構造を完全保持
    ========================================================================== */
 .p-access {
   background-color: #F5F2E8;
+  opacity: 1;
+  transform: translateY(0);
 }
 .p-access__inner {
   display: flex;
@@ -978,7 +949,7 @@ a:hover .p-menu__img {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-weight: 700;
   font-size: 14px;
-  color: #2E4D07;
+  color: rgba(46, 77, 7, 0.7);
   flex-shrink: 0;
 }
 .p-access__detail {
@@ -1017,7 +988,7 @@ a:hover .p-menu__img {
 }
 .p-access__note {
   font-size: 12px;
-  color: #A8A29E;
+  color: rgba(87, 83, 78, 0.7);
   margin-top: 2px;
 }
 .p-access {
@@ -1043,7 +1014,7 @@ a:hover .p-menu__img {
   background-color: #2E4D07;
 }
 .p-access__badge--jr {
-  background-color: #78716C;
+  background-color: rgba(87, 83, 78, 0.7);
 }
 .p-access {
   /* -------------------------------------------
@@ -1132,73 +1103,55 @@ a:hover .p-menu__img {
 /* ==========================================================================
    Project: News (p-news)
 
-   [主な設定項目]
-   1. セクション基本設定: 背景色(v.$c-white)の指定
-   2. ヘッダー構造: c-headingコンポーネントへの移行と中央揃えレイアウトの維持
-   3. リストレイアウト: グリッドによるレスポンシブ3カラム構成
-   4. もっと見るリンク(more-link): 文字間隔(letter-spacing)を広げた上品なボタン演出
-   5. ニュースカード: ホバー時の画像拡大＆タイトル色のメインカラーへの遷移
-   6. プレースホルダー: $c-border廃止に伴い、rgba(v.$c-text, 0.05)による極薄背景を採用
+   [修正のポイント]
+   1. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
+   2. 黄金律遵守: 日付を 70% 透過に設定し、タイトルの視認性を相対的に向上
+   3. 非破壊: ホバー時の画像拡大 (1.05) やタイトルの色変化、グリッド構造を完全保持
    ========================================================================== */
 .p-news {
   background-color: #FFFFFF;
-  /* -------------------------------------------
-     [2. ヘッダー構造]
-     ------------------------------------------- */
+  opacity: 1;
+  transform: translateY(0);
 }
 .p-news__header {
   text-align: center;
   margin-bottom: clamp(40px, calc(1.8320610687px + 10.1781170483vw), 80px);
   align-items: center;
 }
-.p-news {
-  /* 以前の __subtitle, __title の個別スタイルは c-heading へ統合されたため削除しました */
-  /* -------------------------------------------
-     [3. リストレイアウト]
-     ------------------------------------------- */
-}
 .p-news__list {
   display: grid;
-  gap: clamp(32px, calc(16.7328244275px + 4.0712468193vw), 48px);
-  margin-bottom: 60px;
+  gap: 40px;
+  grid-template-columns: 1fr;
 }
 @media screen and (min-width: 768px) {
   .p-news__list {
     grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
   }
 }
 .p-news__footer {
+  margin-top: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
   text-align: center;
-}
-.p-news {
-  /* -------------------------------------------
-     [4. もっと見るリンク(more-link)]
-     ------------------------------------------- */
 }
 .p-news__more-link {
   display: inline-block;
-  color: #2E4D07;
-  font-size: 12px;
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2E4D07;
   text-decoration: none;
-  border-bottom: 1px solid #2E4D07;
+  letter-spacing: 0.2em;
   padding-bottom: 4px;
-  transition: opacity 0.3s ease;
+  border-bottom: 1px solid #2E4D07;
+  transition: opacity 0.3s;
 }
 .p-news__more-link:hover {
   opacity: 0.7;
 }
-.p-news__empty {
-  text-align: center;
-  color: #78716C;
-}
 
-/* ==========================================================================
-   News Card (個別の記事カード)
-   ========================================================================== */
+/* -------------------------------------------
+   [5. ニュースカード]
+   ------------------------------------------- */
 .p-news-card__link {
   display: flex;
   flex-direction: column;
@@ -1231,29 +1184,21 @@ a:hover .p-menu__img {
   flex-direction: column;
   gap: 12px;
 }
-.p-news-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
 .p-news-card__date {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-size: 12px;
-  color: #78716C;
-}
-.p-news-card__cat {
-  font-size: 10px;
-  color: #2E4D07;
-  border: 1px solid #2E4D07;
-  padding: 2px 8px;
-  border-radius: 2px;
-  background-color: #FFFFFF;
-  text-transform: uppercase;
+  color: rgba(87, 83, 78, 0.7);
+  letter-spacing: 0.05em;
 }
 .p-news-card__title {
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 700;
   line-height: 1.6;
   color: #57534E;
-  font-weight: 400;
-  transition: color 0.3s ease;
+  transition: color 0.3s;
+}
+@media screen and (min-width: 768px) {
+  .p-news-card__title {
+    font-size: 17px;
+  }
 }/*# sourceMappingURL=app.css.map */

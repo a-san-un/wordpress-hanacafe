@@ -1,67 +1,83 @@
+/**
+ * Component: Badge
+ * [設計意図]
+ * 1. 役割: サイト全体のバッジ部品（Aboutの席状況、Menuのおすすめ等）
+ * 2. 視認性重視: 「満席」バッジはシミュレーション結果に基づき、透過させず v.$c-text (100%) で表示
+ * 3. 黄金律遵守: 文字・境界線以外の丸み等は variables.scss ($v) から参照
+ */
 @use "../../global/variables" as v;
 
 /* ===============================================
-   Component: Badge
-   * 役割: サイト全体のカード等で使用するバッジ部品
+   ステータスバッジ（丸型：右上）
 =============================================== */
-
-/* ステータスバッジ（丸型：右上） */
 .c-badge-status {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	padding: 4px 12px;
-	background-color: rgba(v.$c-white, 0.9);
-	border-radius: v.$radius-round;
-	white-space: nowrap;
-	font-size: 11px;
-	font-weight: 700;
-	z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 4px 12px;
+  background-color: rgba(v.$c-white, 0.9);
+  border-radius: v.$radius-round;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 700;
+  z-index: 2;
 
-	.material-symbols-outlined {
-		font-size: 14px;
-		line-height: 1;
-	}
-	
-	&.is-alert { color: v.$c-accent; border: 1px solid v.$c-accent; }
-	&.is-success { color: v.$c-main; border: 1px solid v.$c-main; }
+  .material-symbols-outlined {
+    font-size: 14px;
+    line-height: 1;
+  }
+  
+  // 状態に応じたカラー（about.phpのロジックと連動）
+  &.is-success { color: v.$c-main; border: 1px solid v.$c-main; }
+  &.is-alert { color: v.$c-accent; border: 1px solid v.$c-accent; }
+  
+  // ★シミュレーション反映：満席は透過させず、はっきり表示
+  &.is-full { 
+    color: v.$c-text; 
+    border: 1px solid v.$c-text; 
+  } 
 }
 
-/* 特徴バッジ（角丸：左下） */
+/* ===============================================
+   特徴バッジ（角丸：左下）
+=============================================== */
 .c-badge-feature {
-	display: inline-flex;
-	align-items: center;
-	gap: 6px;
-	position: absolute;
-	bottom: 20px;
-	left: 20px;
-	padding: 6px 16px;
-	background-color: rgba(v.$c-white, 0.9);
-	border-radius: v.$radius-s;
-	color: v.$c-main;
-	font-family: v.$f-en;
-	font-size: 12px;
-	font-weight: 700;
-	z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 6px 16px;
+  background-color: rgba(v.$c-white, 0.9);
+  border-radius: v.$radius-s;
+  color: v.$c-main;
+  font-family: v.$f-en;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 2;
 }
 
-/* ★新規追加: おすすめバッジ（角丸：左上） */
+/* ===============================================
+   おすすめバッジ（角丸：左上）
+=============================================== */
 .c-badge-recommend {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	position: absolute;
-	top: 15px;
-	left: 15px;
-	padding: 4px 12px;
-	background-color: v.$c-accent; // オレンジ色で目を引くように
-	color: v.$c-white;
-	border-radius: 4px; // 少し丸みを持たせたタグ型
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 0.05em;
-	z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  padding: 4px 12px;
+  background-color: v.$c-accent;
+  color: v.$c-white;
+  border-radius: v.$radius-s; // マジックナンバー排除
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  z-index: 2;
+  pointer-events: none;
 }

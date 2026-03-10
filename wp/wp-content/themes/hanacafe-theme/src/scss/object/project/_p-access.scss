@@ -5,23 +5,21 @@
 /* ==========================================================================
    Project: Access (p-access)
    
-   [主な設定項目]
-   1. セクション基本設定: 背景色(v.$c-base)の指定、セクション交互配置ルールの適用
-   2. 全体レイアウト: PC版でのInfo(左)とMap(右)の垂直中央・並列配置
-   3. 見出しエリア: c-headingコンポーネントとの連携、Project側のマージン管理
-   4. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による上品な区切り線を採用
-   5. 店舗情報リスト(dl): dt/dd構造による情報の整理、上部/下部ラインによる視認性確保
-   6. 交通・路線バッジ: SSOT変数からブランドカラーを適用（東急: v.$c-main / JR: v.$c-text-gray）
-   7. アクションエリア: カプセル型ボタン(予約導線)、Dart Sassによる最新のホバー演出
-   8. 地図エリア(Map): アスペクト比固定(810:673)、ホバー時の画像拡大とボタン出現の連動
+   [修正のポイント]
+   1. 表示保証: JSエラーで消えるリスクを排除するため、セクション全体の表示をデフォルトで確定
+   2. 黄金律遵守: ラベル(dt)や注釈(note)に白・黒ベースの透過(70%)を適用し、情報の強弱を整理
+   3. 非破壊: ホバー演出、アクセントカラー、マップのレイアウト構造を完全保持
    ========================================================================== */
 
 .p-access {
-  // [1. セクション基本設定] セクションごとの交互配置ルールに従い生成色を設定
+  // セクションごとの交互配置ルール
   background-color: v.$c-base;
+  
+  // --- JSが動かなくても表示されるよう保証（非破壊・安定化） ---
+  opacity: 1;
+  transform: translateY(0);
 
   &__inner {
-    // [2. 全体レイアウト] スマホは縦、PCは横並び
     display: flex;
     flex-direction: column;
     gap: m.vw-clamp(40, 60);
@@ -41,7 +39,6 @@
   }
 
   &__header {
-    // [3. 見出しエリア]
     margin-bottom: m.vw-clamp(32, 40);
   }
 
@@ -58,7 +55,6 @@
   &__row {
     display: flex;
     padding: 16px 0;
-    // 各情報のボトムライン（$c-text の10%透過）
     border-bottom: 1px solid rgba(v.$c-text, 0.1); 
 
     &--split {
@@ -76,7 +72,8 @@
     font-family: v.$f-en;
     font-weight: 700;
     font-size: 14px;
-    color: v.$c-main;
+    // ★黄金律適用: メイン色に対して70%透過で奥行きを出す
+    color: rgba(v.$c-main, 0.7);
     flex-shrink: 0;
   }
 
@@ -108,18 +105,19 @@
     }
   }
 
-  // ★数字だけを強調する専用クラス
+  // ★数字だけを強調する専用クラス（破壊せず維持）
   &__time-number {
-    color: v.$c-main; // 緑色
-    font-size: 1.2em; // 周りの文字より少し大きく
+    color: v.$c-main;
+    font-size: 1.2em;
     font-weight: 700;
-    font-family: v.$f-en; // 数字を美しく見せる英語フォント
-    margin: 0 2px; // 前後の文字と少し隙間を空ける
+    font-family: v.$f-en;
+    margin: 0 2px;
   }
 
   &__note {
     font-size: 12px;
-    color: v.$c-text-light;
+    // ★黄金律適用: テキストカラーを70%透過にして補足情報であることを示す
+    color: rgba(v.$c-text, 0.7);
     margin-top: 2px;
   }
 
@@ -141,12 +139,12 @@
     min-width: 42px;
     text-align: center;
 
-    // マジックナンバーを排除し、SSOT変数から色を指定
     &--tokyu {
-      background-color: v.$c-main; // 東急カラーをメインの緑で表現
+      background-color: v.$c-main;
     }
     &--jr {
-      background-color: v.$c-text-gray; // JRカラーを中間色グレーで表現
+      // ★黄金律適用: JRバッジ背景をテキスト色の70%透過に（洗練されたグレー）
+      background-color: rgba(v.$c-text, 0.7);
     }
   }
 
@@ -219,6 +217,7 @@
   &__map-overlay {
     position: absolute;
     inset: 0;
+    // ★黄金律適用: オーバーレイをメインカラーの40%透過に
     background-color: rgba(v.$c-main, 0.4);
     display: flex;
     align-items: center;

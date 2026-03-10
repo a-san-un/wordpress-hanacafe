@@ -1,28 +1,23 @@
+/**
+ * Project: About & Seats Section
+ * [設計意図]
+ * 1. 黄金律遵守: 境界線を排除し、背景5%透過とテキスト70%透過で優先度を管理
+ * 2. シミュレーション反映: 満席バッジ（is-full）は不透明で力強く表示
+ * 3. 非破壊の原則: 既存のホバーアニメーションや Grid 構造を完全保持
+ */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
-/* ===============================================
-   Project: About & Seats (.p-about)
-   
-   [主な設定項目]
-   1. セクション見出し: c-headingへの移行とマージン管理
-   2. レイアウト: グリッドレイアウトによるPC3カラム化
-   3. 座席カード: ホバー時の画像拡大アニメーション（機能維持）
-   4. プレースホルダー: $c-border廃止に伴い、v.$c-textの透過(0.05)を使用
-=============================================== */
-
 .p-about {
     &__header {
-        // [ステップ1] レイアウト（配置）に関する指定のみを残す
         text-align: center;
         margin-bottom: m.vw-clamp(40, 60);
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: m.vw-clamp(16, 24); // 見出しと文章の間の余白
+        gap: m.vw-clamp(16, 24);
     }
 
-    // [ステップ2] 配置以外のスタイル（色・フォント）は c-heading が担当するため削除済
     &__heading {
         margin-bottom: 0;
     }
@@ -55,7 +50,6 @@
 }
 
 /* --- Seat Card (Individual) --- */
-/* 座席カードの機能やデザインは変更なし */
 .p-seat-card {
     display: flex;
     flex-direction: column;
@@ -67,15 +61,15 @@
         aspect-ratio: 3 / 2;
         overflow: hidden;
         border-radius: v.$radius-m;
-        // ★ここを修正: 廃止した v.$c-border に代わり、テキスト色の極薄透過(5%)を指定
+        // ★修正点：境界線をなくし、背景色の極薄透過(5%)のみ適用
         background-color: rgba(v.$c-text, 0.05);
+        border: none; 
     }
 
     &__img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        // プロ品質の統一設定: 0.6s / ease-out
         transition: transform 0.6s ease-out;
         will-change: transform;
 
@@ -99,6 +93,16 @@
     &__text {
         font-size: 14px;
         line-height: 1.6;
-        color: v.$c-text;
+        // ★修正点：テキストを70%透過に設定して馴染ませる
+        color: rgba(v.$c-text, 0.7);
+    }
+}
+
+/* --- Badge Override (About Section Specific) --- */
+.c-badge-status {
+    &.is-full {
+        // ★修正点：満席バッジはシミュレーション通り不透明で表示
+        color: v.$c-text !important;
+        border-color: v.$c-text !important;
     }
 }

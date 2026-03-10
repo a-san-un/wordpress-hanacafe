@@ -4,79 +4,62 @@
 /* ==========================================================================
    Project: News (p-news)
    
-   [主な設定項目]
-   1. セクション基本設定: 背景色(v.$c-white)の指定
-   2. ヘッダー構造: c-headingコンポーネントへの移行と中央揃えレイアウトの維持
-   3. リストレイアウト: グリッドによるレスポンシブ3カラム構成
-   4. もっと見るリンク(more-link): 文字間隔(letter-spacing)を広げた上品なボタン演出
-   5. ニュースカード: ホバー時の画像拡大＆タイトル色のメインカラーへの遷移
-   6. プレースホルダー: $c-border廃止に伴い、rgba(v.$c-text, 0.05)による極薄背景を採用
+   [修正のポイント]
+   1. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
+   2. 黄金律遵守: 日付を 70% 透過に設定し、タイトルの視認性を相対的に向上
+   3. 非破壊: ホバー時の画像拡大 (1.05) やタイトルの色変化、グリッド構造を完全保持
    ========================================================================== */
 
 .p-news {
-    // [1. セクション基本設定] 白背景
     background-color: v.$c-white;
+    
+    // --- [非破壊・安定化] JSを待たずに表示を確定させる ---
+    opacity: 1;
+    transform: translateY(0);
 
-    /* -------------------------------------------
-       [2. ヘッダー構造]
-       ------------------------------------------- */
     &__header {
         text-align: center;
         margin-bottom: m.vw-clamp(40, 80);
-        // c-heading が display: flex; flex-direction: column; を持っているため、
-        // 垂直軸の中央揃えのみをここで指定して、デザインカンプ通りのレイアウトを維持
         align-items: center; 
     }
 
-    /* 以前の __subtitle, __title の個別スタイルは c-heading へ統合されたため削除しました */
-
-    /* -------------------------------------------
-       [3. リストレイアウト]
-       ------------------------------------------- */
     &__list {
         display: grid;
-        gap: m.vw-clamp(32, 48);
-        margin-bottom: 60px;
+        gap: 40px;
+        grid-template-columns: 1fr;
 
         @include m.mq {
             grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
         }
     }
 
     &__footer {
+        margin-top: m.vw-clamp(40, 60);
         text-align: center;
     }
 
-    /* -------------------------------------------
-       [4. もっと見るリンク(more-link)]
-       ------------------------------------------- */
-&__more-link {
+    &__more-link {
         display: inline-block;
+        font-family: v.$f-en;
+        font-size: 14px;
+        font-weight: 700;
         color: v.$c-main;
-        font-size: 12px;
-        font-family: v.$f-sans;
-        letter-spacing: 0.3em;
-        text-indent: 0.3em; // ★ここがプロのひと手間！右側の字間余白とバランスを取る
-        text-transform: uppercase;
         text-decoration: none;
-        border-bottom: 1px solid v.$c-main; // ★下線を復活
-        padding-bottom: 4px; // ★文字と線の間に少し抜け感を作る
-        transition: opacity v.$t-duration ease;
+        letter-spacing: 0.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid v.$c-main;
+        transition: opacity 0.3s;
 
         &:hover {
             opacity: 0.7;
         }
     }
-
-    &__empty {
-        text-align: center;
-        color: v.$c-text-gray;
-    }
 }
 
-/* ==========================================================================
-   News Card (個別の記事カード)
-   ========================================================================== */
+/* -------------------------------------------
+   [5. ニュースカード]
+   ------------------------------------------- */
 .p-news-card {
     &__link {
         display: flex;
@@ -84,7 +67,6 @@
         gap: 24px;
         text-decoration: none;
 
-        // [5. ニュースカード] ホバーアクション
         &:hover {
             .p-news-card__img {
                 transform: scale(1.05);
@@ -100,7 +82,7 @@
         aspect-ratio: 370 / 210;
         border-radius: 2px;
         overflow: hidden;
-        // [6. プレースホルダー] 廃止した v.$c-border に代わり、テキスト色の極薄透過(5%)を指定
+        // [6. プレースホルダー] テキスト色の 5% 透過を指定
         background-color: rgba(v.$c-text, 0.05);
     }
 
@@ -108,7 +90,6 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        // メニューと同様に 0.6s / ease-out で質感を統一
         transition: transform 0.6s ease-out;
         will-change: transform;
     }
@@ -119,33 +100,23 @@
         gap: 12px;
     }
 
-    &__meta {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-    }
-
     &__date {
         font-family: v.$f-en;
         font-size: 12px;
-        color: v.$c-text-gray;
-    }
-
-    &__cat {
-        font-size: 10px;
-        color: v.$c-main;
-        border: 1px solid v.$c-main;
-        padding: 2px 8px;
-        border-radius: 2px;
-        background-color: v.$c-white;
-        text-transform: uppercase;
+        // ★黄金律適用: 日付を 70% 透過に設定
+        color: rgba(v.$c-text, 0.7);
+        letter-spacing: 0.05em;
     }
 
     &__title {
-        font-size: 15px;
+        font-size: 16px;
+        font-weight: 700;
         line-height: 1.6;
         color: v.$c-text;
-        font-weight: 400;
-        transition: color v.$t-duration ease;
+        transition: color 0.3s;
+
+        @include m.mq {
+            font-size: 17px;
+        }
     }
 }

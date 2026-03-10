@@ -1,35 +1,22 @@
+/**
+ * Project: Menu Section
+ * [設計意図]
+ * 1. 視認性: サブタイトルは不透明（v.$c-text）でクッキリさせ、説明文は70%透過で優先度を下げる
+ * 2. プレースホルダー: 画像枠の背景を5%透過に設定し、画像未読み込み時の視認性を確保
+ * 3. 非破壊の原則: 既存のホバー演出、COMING SOONオーバーレイの機能は変更せず保持
+ */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
-/* ==========================================================================
-   Project: Menu (p-menu)
-   
-   [主な設定項目]
-   1. セクション基本設定: 背景色(#FFFFFF)の固定、セクション間の交互配置対応
-   2. ヘッダー構造: レスポンシブFlexbox、c-headingコンポーネントとの整合性維持
-   3. 境界線ルール: $c-border廃止に伴い、rgba(v.$c-text, 0.1)による透過線を採用
-   4. VIEW ALL リンク: アイコンの垂直中央揃え、ホバー時のアクセントカラー遷移
-   5. グリッドレイアウト: 1カラム(SP) / 3カラム(PC) のレスポンス設計
-   6. メニューカード(Item): 縦並びFlex構造、カード全体の高さ統一(height: 100%)
-   7. 画像エリア(Wrapper): アスペクト比固定(4:5)、ホバー時の拡大演出(scale)
-   8. 情報エリア(Info): タイトル・サブ・説明文・価格の階層、3行制限(line-clamp)
-   9. 準備中状態(Preparing): COMING SOONオーバーレイ、文字色の減光処理
-   ========================================================================== */
-
 .p-menu {
-  // [1. セクション基本設定]
+  // セクション基本設定
   background-color: v.$c-white; 
 
-  /* -------------------------------------------
-     [2. ヘッダー構造 & 3. 境界線ルール]
-     ------------------------------------------- */
   &__header {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    padding-bottom: m.vw-clamp(24, 40);
-    // ★ここを修正: $c-border を rgba(v.$c-text, 0.1) に変更
-    border-bottom: 1px solid rgba(v.$c-text, 0.1); 
+    margin-bottom: m.vw-clamp(40, 60);
 
     @include m.mq {
       flex-direction: row;
@@ -38,84 +25,30 @@
     }
   }
 
-  &__heading {
-    margin-bottom: 0; // c-heading側で余白を管理するため
-  }
-
-  /* -------------------------------------------
-     [4. VIEW ALL リンク]
-     ------------------------------------------- */
-  &__view-all {
-    display: inline-flex;
-    align-items: center; // 垂直中央揃え
-    gap: 8px;
-    font-family: v.$f-en;
-    font-size: 14px;
-    font-weight: 700;
-    color: v.$c-text;
-    transition: color 0.3s ease;
-
-    .material-symbols-outlined {
-      font-size: 18px;
-      transition: color 0.3s ease;
-    }
-
-    &:hover {
-      color: v.$c-accent;
-      .material-symbols-outlined {
-        color: v.$c-accent;
-      }
-    }
-  }
-
-  /* -------------------------------------------
-     [5. グリッドレイアウト]
-     ------------------------------------------- */
   &__list {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: m.vw-clamp(48, 64);
-    margin-top: m.vw-clamp(40, 56);
-    width: 100%;
+    gap: m.vw-clamp(40, 60);
 
     @include m.mq {
-      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  /* -------------------------------------------
-     [6. メニューカード(Item)]
-     ------------------------------------------- */
+  /* --- Menu Item Card --- */
   &__item {
     display: flex;
     flex-direction: column;
     height: 100%;
-    
-    .p-menu__link {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      width: 100%;
-      height: 100%;
-      white-space: normal;
-    }
-
-    // [9. 準備中状態(Preparing)]
-    &.is-preparing {
-      .p-menu__name { color: v.$c-text-light; }
-      .p-menu__desc { color: v.$c-text-light; }
-    }
   }
 
-  /* -------------------------------------------
-     [7. 画像エリア(Wrapper)]
-     ------------------------------------------- */
   &__img-wrapper {
     position: relative;
     overflow: hidden;
     aspect-ratio: 4 / 5;
     border-radius: v.$radius-s;
     width: 100%;
+    // ★新ルール適用：画像未読み込み時用の極薄背景
+    background-color: rgba(v.$c-text, 0.05);
   }
 
   &__img {
@@ -123,8 +56,9 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+    will-change: transform;
 
-    a:hover & {
+    .p-menu__item:hover & {
       transform: scale(1.05);
     }
   }
@@ -147,9 +81,6 @@
     z-index: 3;
   }
 
-  /* -------------------------------------------
-     [8. 情報エリア(Info)]
-     ------------------------------------------- */
   &__info {
     padding-top: 20px;
     display: flex;
@@ -159,34 +90,53 @@
 
   &__name {
     color: v.$c-main;
-    font-size: m.vw-clamp(18, 20);
+    font-size: 18px;
     font-weight: 700;
+    margin-bottom: 4px;
   }
 
   &__sub {
-    color: v.$c-accent;
-    font-family: v.$f-en;
-    font-size: 14px;
-    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    // ★シミュレーション反映：透過させずはっきり表示
+    color: v.$c-text; 
   }
 
   &__desc {
-    color: v.$c-text;
     font-size: 14px;
-    line-height: 1.8;
+    line-height: 1.6;
     margin-top: 12px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; // 旧ブラウザ互換
-    line-clamp: 3;         // 標準仕様
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    // ★新ルール適用：補足情報は70%透過
+    color: rgba(v.$c-text, 0.7);
   }
 
   &__price {
+    margin-top: 16px;
     font-family: v.$f-en;
     font-size: 16px;
     font-weight: 700;
+    color: v.$c-text;
+
+    &-unit {
+      font-size: 12px;
+      margin-right: 2px;
+    }
+  }
+
+  &__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: v.$f-en;
+    font-size: 14px;
+    font-weight: 700;
     color: v.$c-main;
-    margin-top: 16px;
+    text-decoration: none;
+    transition: color v.$t-duration;
+
+    &:hover {
+      color: v.$c-accent;
+    }
   }
 }

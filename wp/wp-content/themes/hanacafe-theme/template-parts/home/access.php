@@ -1,7 +1,11 @@
 <?php
 
 /**
- * Template part for displaying the access section.
+ * Home: Access Section
+ * [設計意図]
+ * 1. 構造化: dt/ddによる定義リストを用いて、住所・交通・営業時間を論理的にマークアップ
+ * 2. 視認性: 黄金律に基づき、ラベルを70%透過に設定し（SCSS）、情報の主従を明確化
+ * 3. ユーザビリティ: 地図画像全体をリンク化し、外部マップアプリへの遷移を容易にする
  */
 ?>
 <section id="access" class="p-access l-section">
@@ -80,6 +84,5 @@
                 </div>
             </a>
         </div>
-
     </div>
 </section>

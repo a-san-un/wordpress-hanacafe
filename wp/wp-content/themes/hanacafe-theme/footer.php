@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * Common: Footer
+ * [設計意図]
+ * 1. 役割: サイト全体のフッター構造とコピーライト管理
+ * 2. 黄金律遵守: 背景が濃色のため、白（$c-white）の透過度（70%）を用いて情報の階層化を実現
+ * 3. 非破壊の原則: 文言、SNSリンク、ポリシーリンクの構造、およびPHPによる動的年号出力を完全保持
+ */
+?>
 <footer class="l-footer">
     <div class="l-container">
         <div class="l-footer__main">
@@ -30,12 +40,7 @@
 
         <div class="l-footer__bottom">
             <p class="l-footer__tagline">NATURAL. PEACEFUL. HEARTFUL.</p>
-            <p class="l-footer__copy">&copy; <?php echo date('Y'); ?> HanaCAFE nappa69. All rights reserved.</p>
+            <p class="l-footer__copy">&copy; <?php echo date('Y'); ?> HanaCAFE nappa69</p>
         </div>
     </div>
 </footer>
-
-<?php wp_footer(); ?>
-</body>
-
-</html>

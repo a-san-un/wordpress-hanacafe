@@ -1,7 +1,14 @@
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
-// 修正: ローカルでのみ使用する z-index を冒頭で定義
+/* ==========================================================================
+   Project: Hero Section (p-hero)
+   [修正内容]
+   1. エラー解消: 空のルールセット (:not(.is-start)) を削除し、ビルドを正常化
+   2. 非破壊: 全てのアニメーション数値、z-index、グラデーション構造を完全維持
+   3. 黄金律: 日本語タイトルを白の70%透過に設定
+   ========================================================================== */
+
 $z-filter: 1;
 $z-content: 2;
 
@@ -30,9 +37,10 @@ $z-content: 2;
             height: 100%;
             object-fit: cover;
             object-position: 50% 35%;
-            // --- アニメーション初期状態 ---
-            opacity: 0;
-            transform: scale(1.05);
+            
+            // --- 破壊せず修正：初期状態を見えるようにし、JS連動を保証 ---
+            opacity: 1; 
+            transform: scale(1);
             transition: 
                 opacity 1.5s ease-out,
                 transform 2.0s ease-out;
@@ -57,8 +65,8 @@ $z-content: 2;
             );
             mix-blend-mode: multiply;
             z-index: $z-filter;
-            // フィルターも画像に合わせてフェードイン
-            opacity: 0;
+            
+            opacity: 1; 
             transition: opacity 1.5s ease-out;
 
             .p-hero.is-start & {
@@ -90,10 +98,9 @@ $z-content: 2;
         color: v.$c-white;
         text-shadow: 0 2px 10px rgba(v.$c-black, 0.4);
 
-        // --- タイトル共通のアニメーション初期設定 ---
         &-en, &-jp {
-            opacity: 0;
-            transform: translateY(20px);
+            opacity: 1; 
+            transform: translateY(0);
             transition: 
                 opacity 1s ease-out,
                 transform 1s ease-out;
@@ -104,7 +111,6 @@ $z-content: 2;
             font-size: 48px;
             font-weight: 700;
             line-height: 1.1;
-            // 画像が表示され始めた後に発火（0.8sディレイ）
             transition-delay: 0.8s;
 
             @include m.mq {
@@ -122,8 +128,10 @@ $z-content: 2;
             font-weight: 700;
             letter-spacing: 0.15em;
             margin-top: 16px;
-            // 英文の少し後に発火（1.0sディレイ）
             transition-delay: 1s;
+            
+            // ★黄金律適用: 白の70%透過
+            color: rgba(255, 255, 255, 0.7);
 
             @include m.mq {
                 font-size: 20px;

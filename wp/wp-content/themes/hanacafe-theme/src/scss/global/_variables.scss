@@ -8,14 +8,18 @@ $c-main:       #2E4D07; // 濃い緑（メインブランドカラー）
 $c-accent:     #F29159; // オレンジ（アクセント・リンク色）
 $c-base:       #F5F2E8; // 生成色（背景ベース）
 $c-sub:        #EB4E34; // 赤（警告・強調用）
-$c-text:       #57534E; // 基本テキスト色（濃いグレー）
+$c-text:       #57534E; // 基本テキスト色（すべての文字・境界線の王様）
 $c-white:      #FFFFFF; // 白
 $c-black:      #000000; // 黒
-// $c-border は廃止（rgba(v.$c-text, 0.1) 等で代用）
 
-// --- Text Colors ---
-$c-text-gray:  #78716C; // 中間色グレー（Figma: stone-500）
-$c-text-light: #A8A29E; // 薄いグレー（Figma: stone-400）
+/**
+ * 【NEW RULE: テキスト・境界線の透過ルール】
+ * $c-text-gray, $c-text-light, $c-border は廃止。
+ * 1. 本文: $c-text (100%)
+ * 2. 補足・サブタイトル: rgba($c-text, 0.7)
+ * 3. プレースホルダー・無効状態: rgba($c-text, 0.4)
+ * 4. 境界線: rgba($c-text, 0.1) または 0.05
+ */
 
 // --- Typography ---
 $f-en:    "Montserrat", "Noto Sans JP", sans-serif;
@@ -23,7 +27,6 @@ $f-serif: "Montserrat", "Noto Serif JP", serif;
 $f-sans:  "Montserrat", "Noto Sans JP", sans-serif;
 
 // --- Z-index (Global) ---
-// 重なり順のSSOT管理。マジックナンバーを排除。
 $z-header: 100;
 
 // --- Assets ---

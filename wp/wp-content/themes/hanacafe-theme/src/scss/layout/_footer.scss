@@ -3,6 +3,9 @@
 
 /* ============================================
    Layout: Footer (l-footer)
+   [設計意図]
+   1. 視認性: 背景の濃い緑に対し、白の70%透過を適用することで、ロゴ（100%）との主従関係を明確化
+   2. 非破壊の原則: 既存のレスポンシブグリッド、SNSリンクのレタースペーシング等は完全に保持
    ============================================ */
 .l-footer {
 	background-color: v.$c-main;
@@ -107,9 +110,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
-		font-size: 11px;
-		letter-spacing: 0.1em;
-		opacity: 0.5;
+		align-items: center;
 
 		@include m.mq {
 			align-items: flex-end;
@@ -118,36 +119,38 @@
 		a {
 			color: inherit;
 			text-decoration: none;
-			
+			font-size: 12px;
+			transition: color v.$t-duration;
+
 			&:hover {
-				text-decoration: underline;
+				color: v.$c-accent;
 			}
 		}
 	}
 
-	/* コピーライトエリア */
+	/* -------------------------------------------
+	   [下部エリア：黄金律適用]
+	   ------------------------------------------- */
 	&__bottom {
 		border-top: 1px solid rgba(v.$c-white, 0.1);
 		padding-top: 40px;
-		display: flex;
-		flex-direction: column;
-		gap: 16px;
-		align-items: center;
-		font-size: 10px;
-		letter-spacing: 0.2em;
-		text-transform: uppercase;
-
-		@include m.mq {
-			flex-direction: row;
-			justify-content: space-between;
-		}
-	}
-
-	&__copy {
-		opacity: 0.6;
+		text-align: center;
 	}
 
 	&__tagline {
-		opacity: 0.4;
+		font-family: v.$f-en;
+		font-size: 14px;
+		font-weight: 700;
+		letter-spacing: 0.3em;
+		margin-bottom: 16px;
+		// ★新ルール適用：白の70%透過
+		color: rgba(v.$c-white, 0.7);
+	}
+
+	&__copy {
+		font-size: 12px;
+		font-family: v.$f-en;
+		// ★新ルール適用：白の70%透過
+		color: rgba(v.$c-white, 0.7);
 	}
 }
