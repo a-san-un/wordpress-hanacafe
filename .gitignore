@@ -34,7 +34,10 @@
 /wp/wp-content/fonts
 
 # Uploads
-/wp/wp-content/uploads/
+/wp/wp-content/**/uploads/
+/wp/wp-content/**/upgrade/
+/wp/wp-content/themes/**/assets/css/
+/wp/wp-content/themes/**/assets/images/
 
 # Log files
 *.log
