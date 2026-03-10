@@ -1,54 +1,52 @@
-<section id="news" class="p-news l-section">
+<?php
+
+/**
+ * Home: Menu Section
+ * [修正内容] 
+ * 構造をシンプルにし、l-container の直下に直接 header と list を配置。
+ */
+$menu_slots = [
+    'food'    => get_hanacafe_top_menu_post('top_menu_food', 'food'),
+    'drink'   => get_hanacafe_top_menu_post('top_menu_drink', 'drink'),
+    'dessert' => get_hanacafe_top_menu_post('top_menu_dessert', 'dessert'),
+];
+?>
+
+<section class="l-section p-menu" id="menu">
     <div class="l-container">
-        <div class="p-news__header c-heading">
-            <span class="c-heading__sub">News</span>
-            <h2 class="c-heading__main">大切なお知らせ</h2>
-        </div>
-
-        <div class="p-news__list">
-            <?php
-            $args = array(
-                'post_type'      => 'post',
-                'posts_per_page' => 3,
-            );
-            $news_query = new WP_Query($args);
-
-            if ($news_query->have_posts()) :
-                while ($news_query->have_posts()) : $news_query->the_post();
-            ?>
-                    <article class="p-news-card">
-                        <a href="<?php the_permalink(); ?>" class="p-news-card__link">
-                            <div class="p-news-card__img-box">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php the_post_thumbnail('medium', array('class' => 'p-news-card__img')); ?>
-                                <?php else : ?>
-                                    <img src="https://placehold.co/370x210" alt="No Image" class="p-news-card__img">
-                                <?php endif; ?>
-                            </div>
-
-                            <div class="p-news-card__body">
-                                <time class="p-news-card__date" datetime="<?php echo get_the_date('c'); ?>">
-                                    <?php echo get_the_date('Y.m.d'); ?>
-                                </time>
-                                <h3 class="p-news-card__title">
-                                    <?php the_title(); ?>
-                                </h3>
-                            </div>
-                        </a>
-                    </article>
-                <?php
-                endwhile;
-                wp_reset_postdata();
-            else :
-                ?>
-                <p class="p-news__empty">現在、新しいお知らせはありません。</p>
-            <?php endif; ?>
-        </div>
-
-        <div class="p-news__footer">
-            <a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>" class="p-news__more-link">
-                READ MORE NEWS
+        <div class="p-menu__header">
+            <div class="p-menu__heading c-heading">
+                <span class="c-heading__sub">Menu</span>
+                <h2 class="c-heading__main">身体が喜ぶ、旬の味覚</h2>
+            </div>
+            <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__view-all">
+                VIEW ALL MENU
+                <span class="material-symbols-outlined">arrow_forward</span>
             </a>
+        </div>
+
+        <div class="p-menu__list">
+            <?php foreach ($menu_slots as $type => $post_obj) : ?>
+                <?php if ($post_obj) : ?>
+                    <?php
+                    $post = $post_obj;
+                    setup_postdata($post);
+                    get_template_part('template-parts/loop', 'menu');
+                    ?>
+                <?php else : ?>
+                    <article class="p-menu__item is-preparing">
+                        <div class="p-menu__img-wrapper">
+                            <div class="p-menu__preparing-overlay">COMING SOON</div>
+                            <img src="https://placehold.co/600x750/E5E5E5/A8A29E?text=Photo+Preparing" alt="準備中" class="p-menu__img">
+                        </div>
+                        <div class="p-menu__info">
+                            <h3 class="p-menu__name"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>
+                            <p class="p-menu__desc">ただいま新しいメニューを準備しております。公開まで今しばらくお待ちください。</p>
+                        </div>
+                    </article>
+                <?php endif; ?>
+            <?php endforeach;
+            wp_reset_postdata(); ?>
         </div>
     </div>
 </section>

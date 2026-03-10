@@ -6,8 +6,10 @@
    Project: Access (p-access)
    
    [修正のポイント]
-   1. 表示保証: JSエラーで消えるリスクを排除するため、セクション全体の表示をデフォルトで確定
-   2. 黄金律遵守: ラベル(dt)や注釈(note)に白・黒ベースの透過(70%)を適用し、情報の強弱を整理
+   1. コンソール確定値同期: 
+      - ラベル・注釈・JRバッジ: rgba(87, 83, 78, 0.7) ※$c-textベース
+      - 区切り線: rgba(87, 83, 78, 0.1)
+   2. 表示保証: セクション全体の表示をデフォルトで確定 (opacity: 1)
    3. 非破壊: ホバー演出、アクセントカラー、マップのレイアウト構造を完全保持
    ========================================================================== */
 
@@ -48,13 +50,14 @@
   &__list {
     display: flex;
     flex-direction: column;
-    // リスト全体の上部のライン（$c-text の10%透過）
+    // コンソール確定値同期：10%透過
     border-top: 1px solid rgba(v.$c-text, 0.1); 
   }
 
   &__row {
     display: flex;
     padding: 16px 0;
+    // コンソール確定値同期：10%透過
     border-bottom: 1px solid rgba(v.$c-text, 0.1); 
 
     &--split {
@@ -72,8 +75,8 @@
     font-family: v.$f-en;
     font-weight: 700;
     font-size: 14px;
-    // ★黄金律適用: メイン色に対して70%透過で奥行きを出す
-    color: rgba(v.$c-main, 0.7);
+    // 修正：コンソール確定値同期（$c-textベースの70%透過）
+    color: rgba(v.$c-text, 0.7);
     flex-shrink: 0;
   }
 
@@ -116,7 +119,7 @@
 
   &__note {
     font-size: 12px;
-    // ★黄金律適用: テキストカラーを70%透過にして補足情報であることを示す
+    // 修正：コンソール確定値同期（70%透過）
     color: rgba(v.$c-text, 0.7);
     margin-top: 2px;
   }
@@ -143,8 +146,9 @@
       background-color: v.$c-main;
     }
     &--jr {
-      // ★黄金律適用: JRバッジ背景をテキスト色の70%透過に（洗練されたグレー）
+      // 修正：コンソール確定値同期（背景70%透過、文字色白）
       background-color: rgba(v.$c-text, 0.7);
+      color: v.$c-white;
     }
   }
 

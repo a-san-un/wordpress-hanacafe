@@ -5,8 +5,10 @@
    Project: News (p-news)
    
    [修正のポイント]
-   1. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
-   2. 黄金律遵守: 日付を 70% 透過に設定し、タイトルの視認性を相対的に向上
+   1. コンソール確定値同期: 
+      - 画像ボックス (&__img-box): background-color を transparent に設定
+      - 日付 (&__date): rgba(87, 83, 78, 0.7) ※v.$c-textベースの70%透過
+   2. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
    3. 非破壊: ホバー時の画像拡大 (1.05) やタイトルの色変化、グリッド構造を完全保持
    ========================================================================== */
 
@@ -82,14 +84,16 @@
         aspect-ratio: 370 / 210;
         border-radius: 2px;
         overflow: hidden;
-        // [6. プレースホルダー] テキスト色の 5% 透過を指定
-        background-color: rgba(v.$c-text, 0.05);
+        // ★コンソール確定値同期: 代替画像があるため背景色なし
+        background-color: transparent;
     }
 
     &__img {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        // 表示保証
+        opacity: 1;
         transition: transform 0.6s ease-out;
         will-change: transform;
     }
@@ -103,7 +107,7 @@
     &__date {
         font-family: v.$f-en;
         font-size: 12px;
-        // ★黄金律適用: 日付を 70% 透過に設定
+        // 黄金律適用: 日付を 70% 透過に設定（rgba(87, 83, 78, 0.7) と同等）
         color: rgba(v.$c-text, 0.7);
         letter-spacing: 0.05em;
     }

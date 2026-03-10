@@ -215,13 +215,16 @@ button {
 /* ============================================
    Layout: Footer (l-footer)
    [設計意図]
-   1. 視認性: 背景の濃い緑に対し、白の70%透過を適用することで、ロゴ（100%）との主従関係を明確化
-   2. 非破壊の原則: 既存のレスポンシブグリッド、SNSリンクのレタースペーシング等は完全に保持
+   1. 透過黄金律: 背景の濃色（$c-main）に対し、白の 70% 透過を適用。
+      ロゴ（100%）以外の情報を一律 0.7 にすることで、情報の主従関係を整理。
+   2. 表示保証: opacity の初期状態は 1 を維持し、JSの実行に関わらず表示。
+   3. 非破壊の原則: 既存のグリッドレイアウトおよびSNSリンクの字間設定を保持。
    ============================================ */
 .l-footer {
   background-color: #2E4D07;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   padding: 80px 0 40px;
+  opacity: 1;
 }
 @media screen and (min-width: 768px) {
   .l-footer {
@@ -259,7 +262,7 @@ button {
   }
 }
 .l-footer {
-  /* 店舗情報 */
+  /* 連絡先情報 */
 }
 .l-footer__info-list {
   display: flex;
@@ -277,14 +280,18 @@ button {
   align-items: flex-start;
   gap: 12px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.7);
 }
 .l-footer__info-item a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.3s;
+}
+.l-footer__info-item a:hover {
+  color: #F29159;
 }
 .l-footer__info-item .material-symbols-outlined {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 18px;
   margin-top: 4px;
 }
@@ -333,32 +340,24 @@ button {
   color: inherit;
   text-decoration: none;
   font-size: 12px;
+  letter-spacing: 0.05em;
   transition: color 0.3s;
 }
 .l-footer__policy-links a:hover {
   color: #F29159;
 }
 .l-footer {
-  /* -------------------------------------------
-     [下部エリア：黄金律適用]
-     ------------------------------------------- */
+  /* コピーライトエリア */
 }
 .l-footer__bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 40px;
   text-align: center;
 }
-.l-footer__tagline {
+.l-footer__copyright {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  margin-bottom: 16px;
-  color: rgba(255, 255, 255, 0.7);
-}
-.l-footer__copy {
-  font-size: 12px;
-  font-family: "Montserrat", "Noto Sans JP", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -620,10 +619,15 @@ button {
 /**
  * Project: About & Seats Section
  * [設計意図]
- * 1. 黄金律遵守: 境界線を排除し、背景5%透過とテキスト70%透過で優先度を管理
- * 2. シミュレーション反映: 満席バッジ（is-full）は不透明で力強く表示
- * 3. 非破壊の原則: 既存のホバーアニメーションや Grid 構造を完全保持
+ * 1. 黄金律遵守: 境界線を排除し、背景5%透過（0.05）とテキスト70%透過（0.7）で優先度を管理。
+ * 2. コンソール同期: 満席バッジ（is-full）はシミュレーション通り不透明（100%）で力強く表示。
+ * 3. 表示保証: JSの成否に関わらず表示されるよう opacity: 1 を明示。
+ * 4. 非破壊の原則: 既存のホバーアニメーションや Grid 構造を完全保持。
  */
+.p-about {
+  opacity: 1;
+  transform: translateY(0);
+}
 .p-about__header {
   text-align: center;
   margin-bottom: clamp(40px, calc(20.9160305344px + 5.0890585242vw), 60px);
@@ -679,6 +683,7 @@ button {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  opacity: 1;
   transition: transform 0.6s ease-out;
   will-change: transform;
 }
@@ -766,9 +771,11 @@ button {
  * 1. 視認性: サブタイトルは不透明（v.$c-text）でクッキリさせ、説明文は70%透過で優先度を下げる
  * 2. プレースホルダー: 画像枠の背景を5%透過に設定し、画像未読み込み時の視認性を確保
  * 3. 非破壊の原則: 既存のホバー演出、COMING SOONオーバーレイの機能は変更せず保持
+ * 4. 表示保証: opacity: 1 を明示し、JSの成否に関わらず表示を担保
  */
 .p-menu {
   background-color: #FFFFFF;
+  opacity: 1;
 }
 .p-menu__header {
   display: flex;
@@ -813,6 +820,7 @@ button {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  opacity: 1;
   transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   will-change: transform;
 }
@@ -890,8 +898,10 @@ button {
    Project: Access (p-access)
 
    [修正のポイント]
-   1. 表示保証: JSエラーで消えるリスクを排除するため、セクション全体の表示をデフォルトで確定
-   2. 黄金律遵守: ラベル(dt)や注釈(note)に白・黒ベースの透過(70%)を適用し、情報の強弱を整理
+   1. コンソール確定値同期: 
+      - ラベル・注釈・JRバッジ: rgba(87, 83, 78, 0.7) ※$c-textベース
+      - 区切り線: rgba(87, 83, 78, 0.1)
+   2. 表示保証: セクション全体の表示をデフォルトで確定 (opacity: 1)
    3. 非破壊: ホバー演出、アクセントカラー、マップのレイアウト構造を完全保持
    ========================================================================== */
 .p-access {
@@ -949,7 +959,7 @@ button {
   font-family: "Montserrat", "Noto Sans JP", sans-serif;
   font-weight: 700;
   font-size: 14px;
-  color: rgba(46, 77, 7, 0.7);
+  color: rgba(87, 83, 78, 0.7);
   flex-shrink: 0;
 }
 .p-access__detail {
@@ -1015,6 +1025,7 @@ button {
 }
 .p-access__badge--jr {
   background-color: rgba(87, 83, 78, 0.7);
+  color: #FFFFFF;
 }
 .p-access {
   /* -------------------------------------------
@@ -1104,8 +1115,10 @@ button {
    Project: News (p-news)
 
    [修正のポイント]
-   1. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
-   2. 黄金律遵守: 日付を 70% 透過に設定し、タイトルの視認性を相対的に向上
+   1. コンソール確定値同期: 
+      - 画像ボックス (&__img-box): background-color を transparent に設定
+      - 日付 (&__date): rgba(87, 83, 78, 0.7) ※v.$c-textベースの70%透過
+   2. 表示保証: JSエラー対策として、デフォルトで opacity: 1 / transform: none を設定
    3. 非破壊: ホバー時の画像拡大 (1.05) やタイトルの色変化、グリッド構造を完全保持
    ========================================================================== */
 .p-news {
@@ -1169,13 +1182,14 @@ button {
   aspect-ratio: 370/210;
   border-radius: 2px;
   overflow: hidden;
-  background-color: rgba(87, 83, 78, 0.05);
+  background-color: transparent;
 }
 .p-news-card__img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  opacity: 1;
   transition: transform 0.6s ease-out;
   will-change: transform;
 }

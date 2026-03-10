@@ -4,6 +4,7 @@
  * 1. 視認性: サブタイトルは不透明（v.$c-text）でクッキリさせ、説明文は70%透過で優先度を下げる
  * 2. プレースホルダー: 画像枠の背景を5%透過に設定し、画像未読み込み時の視認性を確保
  * 3. 非破壊の原則: 既存のホバー演出、COMING SOONオーバーレイの機能は変更せず保持
+ * 4. 表示保証: opacity: 1 を明示し、JSの成否に関わらず表示を担保
  */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
@@ -11,6 +12,7 @@
 .p-menu {
   // セクション基本設定
   background-color: v.$c-white; 
+  opacity: 1; // 表示保証
 
   &__header {
     display: flex;
@@ -47,7 +49,7 @@
     aspect-ratio: 4 / 5;
     border-radius: v.$radius-s;
     width: 100%;
-    // ★新ルール適用：画像未読み込み時用の極薄背景
+    // コンソール確定値：画像未読み込み時用の極薄背景 (5%透過)
     background-color: rgba(v.$c-text, 0.05);
   }
 
@@ -55,6 +57,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 1;
     transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
     will-change: transform;
 
@@ -99,7 +102,7 @@
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.05em;
-    // ★シミュレーション反映：透過させずはっきり表示
+    // コンソール確定値：透過させずはっきり表示 (100%)
     color: v.$c-text; 
   }
 
@@ -107,7 +110,7 @@
     font-size: 14px;
     line-height: 1.6;
     margin-top: 12px;
-    // ★新ルール適用：補足情報は70%透過
+    // コンソール確定値：補足情報は70%透過
     color: rgba(v.$c-text, 0.7);
   }
 
