@@ -4,26 +4,28 @@
  * 1. サイト全体の「カプセル型ボタン」の共通定義
  * 2. 黄金律に基づき、数値は全て variables.scss ($v) から参照
  */
-@use "../../global/variables" as v;
+
+@use "../../global/variables" as v; // 変数（カラー・フォント・radius・transition等）を名前空間 v でインポート
+
 
 .c-btn-capsule {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: v.$c-accent;
-  color: v.$c-white;
-  padding: 16px 40px;
-  border-radius: v.$radius-round; // マジックナンバー排除
-  font-family: v.$f-en;
+  align-items: center;     // 垂直中央揃え（アイコン併用時も崩れない）
+  justify-content: center; // 水平中央揃え
+  background-color: v.$c-accent; // アクセントカラーで存在感を強調
+  color: v.$c-white;             // 背景（アクセントカラー）との対比で白テキスト
+  padding: 16px 40px;            // 縦: 16px、横: 40px の余裕ある内側余白
+  border-radius: v.$radius-round; // マジックナンバー排除: 完全な丸形（カプセル型）を変数から参照
+  font-family: v.$f-en;    // 英語用フォント（CTAテキストの統一感）
   font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  transition: v.$t-duration;     // サイト共通のアニメーション速度を適用
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-  text-decoration: none;
+  font-weight: 700;        // 太字でクリッカブルな印象を強調
+  letter-spacing: 0.2em;   // 字間を広めに設定（英語大文字の視認性向上）
+  transition: v.$t-duration;     // サイト共通のアニメーション速度を適用（hover演出に影響）
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); // 薄い影でボタンをわずかに浮かせて立体感を出す
+  text-decoration: none;   // <a>タグ使用時のデフォルト下線を非表示
 
   &:hover {
-    opacity: 0.8;
+    opacity: 0.8;                // ホバー時: 20%暗くしてフィードバックを表現
     transform: translateY(-1px); // 軽微な浮き上がりでクリック感を演出
   }
 }

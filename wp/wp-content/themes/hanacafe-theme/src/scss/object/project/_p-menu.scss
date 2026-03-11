@@ -6,140 +6,153 @@
  * 3. 非破壊の原則: 既存のホバー演出、COMING SOONオーバーレイの機能は変更せず保持
  * 4. 表示保証: opacity: 1 を明示し、JSの成否に関わらず表示を担保
  */
-@use "../../global/variables" as v;
-@use "../../global/mixins" as m;
+
+@use "../../global/variables" as v; // 変数（カラー・フォント・radius等）を名前空間 v でインポート
+@use "../../global/mixins" as m;    // カスタムmixin（vw-clamp・mq等）を名前空間 m でインポート
+
 
 .p-menu {
-  // セクション基本設定
-  background-color: v.$c-white; 
-  opacity: 1; // 表示保証
+  background-color: v.$c-white; // セクション背景を白に固定
+  opacity: 1;                   // [表示保証] JS無効時もコンテンツが確実に表示される
+
 
   &__header {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    margin-bottom: m.vw-clamp(40, 60);
+    flex-direction: column;       // モバイル: タイトルと「すべて見る」リンクを縦並び
+    gap: 24px;                    // タイトルと「すべて見る」リンクの間隔
+    margin-bottom: m.vw-clamp(40, 60); // ヘッダーとカードリストの間隔（40px〜60px でクランプ）
 
     @include m.mq {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: row;            // PC: タイトルと「すべて見る」リンクを横並び
+      justify-content: space-between; // 両端に配置
+      align-items: flex-end;          // ベースラインを下揃えに
     }
   }
+
 
   &__list {
     display: grid;
-    gap: m.vw-clamp(40, 60);
+    gap: m.vw-clamp(40, 60); // カード間の余白（40px〜60px でクランプ）
 
     @include m.mq {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 1fr); // PC: 3カラム均等レイアウト
     }
   }
+
 
   /* --- Menu Item Card --- */
   &__item {
     display: flex;
-    flex-direction: column;
-    height: 100%;
+    flex-direction: column; // カード内要素（画像・情報）を縦積みに
+    height: 100%;           // カード高さをグリッドセルいっぱいに伸ばす（高さ揃え）
   }
+
 
   &__img-wrapper {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4 / 5;
-    border-radius: v.$radius-s;
-    width: 100%;
+    position: relative;              // __preparing-overlay の absolute 配置の基準
+    overflow: hidden;                // ホバー時のズームアニメーションがはみ出さないようにクリップ
+    aspect-ratio: 4 / 5;            // 縦長比率に固定（料理写真の構図に最適）
+    border-radius: v.$radius-s;     // 角丸（variables.scss の小サイズ radius を適用）
+    width: 100%;                     // 親要素の幅に追従
     // コンソール確定値：画像未読み込み時用の極薄背景 (5%透過)
-    background-color: rgba(v.$c-text, 0.05);
+    background-color: rgba(v.$c-text, 0.05); // 画像ロード前のフォールバック背景（ほぼ透明）
   }
 
+
   &__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 1;
-    transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
-    will-change: transform;
+    width: 100%;                     // 画像コンテナ全体を覆う
+    height: 100%;                    // 画像コンテナ全体を覆う
+    object-fit: cover;               // アスペクト比を維持しつつトリミング
+    opacity: 1;                      // [表示保証] デフォルトで完全表示
+    transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1); // ホバー時のズームを滑らかなイージングで演出
+    will-change: transform;          // ブラウザにtransformの変化を事前通知し、GPUレイヤーに昇格させてパフォーマンス最適化
 
     .p-menu__item:hover & {
-      transform: scale(1.05);
+      transform: scale(1.05); // ホバー時: 5%ズームインでインタラクティブなフィードバック
     }
   }
 
+
   &__preparing-overlay {
-    position: absolute;
+    position: absolute;                      // __img-wrapper 基準で画像全体に重ねる
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(v.$c-black, 0.6);
-    color: v.$c-white;
+    background-color: rgba(v.$c-black, 0.6); // 黒60%の半透明オーバーレイ（画像を暗くして文字を際立たせる）
+    color: v.$c-white;                        // "COMING SOON" テキストを白で表示
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: v.$f-en;
-    font-size: m.vw-clamp(20, 24);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    z-index: 3;
+    align-items: center;     // 垂直中央揃え
+    justify-content: center; // 水平中央揃え
+    font-family: v.$f-en;                     // 英語用フォント
+    font-size: m.vw-clamp(20, 24);            // 20px〜24px でクランプ
+    font-weight: 700;                         // 太字
+    letter-spacing: 0.1em;                    // 字間を広めに（英語大文字の視認性向上）
+    z-index: 3;                               // 画像・その他要素より前面に配置
   }
+
 
   &__info {
-    padding-top: 20px;
+    padding-top: 20px;       // 画像との間隔
     display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    flex-direction: column;  // 名前・サブ・説明・価格を縦積みに
+    flex-grow: 1;            // カード内で余白を埋めて高さを揃える（価格の位置を下端に固定）
   }
 
+
   &__name {
-    color: v.$c-main;
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 4px;
+    color: v.$c-main;    // メインカラーでメニュー名を強調
+    font-size: 18px;     // メニュー名のサイズ
+    font-weight: 700;    // 太字
+    margin-bottom: 4px;  // サブタイトルとの間隔
   }
+
 
   &__sub {
     font-size: 13px;
     font-weight: 500;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05em; // 字間をわずかに広げて読みやすく
     // コンソール確定値：透過させずはっきり表示 (100%)
-    color: v.$c-text; 
+    color: v.$c-text; // 不透明（100%）でサブタイトルをクッキリ表示
   }
+
 
   &__desc {
     font-size: 14px;
-    line-height: 1.6;
-    margin-top: 12px;
+    line-height: 1.6;  // 読みやすい行間
+    margin-top: 12px;  // サブタイトルとの間隔
     // コンソール確定値：補足情報は70%透過
-    color: rgba(v.$c-text, 0.7);
+    color: rgba(v.$c-text, 0.7); // 70%透過で説明文の優先度を視覚的に下げる
   }
 
+
   &__price {
-    margin-top: 16px;
-    font-family: v.$f-en;
+    margin-top: 16px;        // 説明文との間隔
+    font-family: v.$f-en;    // 英語用フォント（数字の見栄えを統一）
     font-size: 16px;
-    font-weight: 700;
-    color: v.$c-text;
+    font-weight: 700;        // 価格を太字で強調
+    color: v.$c-text;        // テキストカラー（メインカラーと差別化）
 
     &-unit {
-      font-size: 12px;
-      margin-right: 2px;
+      font-size: 12px;      // 通貨単位（¥等）は価格より小さく
+      margin-right: 2px;    // 単位と数字の間隔
     }
   }
 
+
   &__view-all {
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: v.$f-en;
+    align-items: center;     // アイコンとテキストを垂直中央揃え
+    gap: 8px;                // アイコンとテキストの間隔
+    font-family: v.$f-en;    // 英語用フォント
     font-size: 14px;
     font-weight: 700;
-    color: v.$c-main;
-    text-decoration: none;
-    transition: color v.$t-duration;
+    color: v.$c-main;        // メインカラー（ヘッダー内でブランドカラーを使用）
+    text-decoration: none;   // デフォルトの下線を非表示
+    transition: color v.$t-duration; // ホバー時のカラー変化をアニメーション
 
     &:hover {
-      color: v.$c-accent;
+      color: v.$c-accent; // ホバー時: アクセントカラーに変化
     }
   }
 }
