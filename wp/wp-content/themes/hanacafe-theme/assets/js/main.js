@@ -6,6 +6,7 @@
  * - A11Y対応ドロワーロジックの維持
  */
 jQuery(function ($) {
+	console.log('✅ main.js が正常に読み込まれ、実行されています！'); // ←これを追加
 	const $hamburger = $('.js-hamburger');
 	const $drawer = $('.js-drawer');
 	const $body = $('body');
