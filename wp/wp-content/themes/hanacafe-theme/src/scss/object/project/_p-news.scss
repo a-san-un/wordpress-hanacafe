@@ -39,22 +39,10 @@
     &__footer {
         margin-top: m.vw-clamp(40, 60);
         text-align: center;
-    }
 
-    &__more-link {
-        display: inline-block;
-        font-family: v.$f-en;
-        font-size: 14px;
-        font-weight: 700;
-        color: v.$c-main;
-        text-decoration: none;
-        letter-spacing: 0.2em;
-        padding-bottom: 4px;
-        border-bottom: 1px solid v.$c-main;
-        transition: opacity 0.3s;
-
-        &:hover {
-            opacity: 0.7;
+        // リンクボタンの配置
+        .c-btn-capsule {
+            margin: 0 auto;
         }
     }
 }
@@ -107,9 +95,8 @@
     &__date {
         font-family: v.$f-en;
         font-size: 12px;
-        // 黄金律適用: 日付を 70% 透過に設定（rgba(87, 83, 78, 0.7) と同等）
+        // 黄金律適用: 日付を 70% 透過
         color: rgba(v.$c-text, 0.7);
-        letter-spacing: 0.05em;
     }
 
     &__title {
@@ -118,9 +105,5 @@
         line-height: 1.6;
         color: v.$c-text;
         transition: color 0.3s;
-
-        @include m.mq {
-            font-size: 17px;
-        }
     }
 }

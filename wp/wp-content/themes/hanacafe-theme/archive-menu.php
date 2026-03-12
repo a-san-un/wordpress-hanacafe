@@ -1,7 +1,16 @@
-<?php get_header(); ?>
+<?php
+
+/**
+ * Template Name: Menu Archive (メニュー一覧)
+ * [制作意図]
+ * 1. 順序の動的制御: スラッグ指定(food, drink, dessert)により、環境を問わず意図した順番で表示。
+ * 2. 階層構造: get_term_link() によるタクソノミーページへの導線を確保。
+ * 3. 表示保証: l-section を排除し、p-page__header との余白衝突（100px+）を解消。
+ */
+get_header(); ?>
 
 <main class="l-main">
-    <section class="p-page js-animate">
+    <section class="p-page">
         <div class="l-container">
             <div class="p-page__header">
                 <p class="p-page__subtitle">MENU</p>
@@ -10,69 +19,53 @@
 
             <div class="p-page__content">
                 <?php
+                // [方法B] スラッグから動的にIDを取得し、表示順を固定する
+                $target_slugs = ['food', 'drink', 'dessert'];
+                $ordered_ids = [];
+
+                foreach ($target_slugs as $slug) {
+                    $term = get_term_by('slug', $slug, 'menu_category');
+                    if ($term && !is_wp_error($term)) {
+                        $ordered_ids[] = $term->term_id;
+                    }
+                }
+
                 $terms = get_terms([
-                    'taxonomy' => 'menu_category',
+                    'taxonomy'   => 'menu_category',
                     'hide_empty' => true,
+                    'include'    => $ordered_ids,
+                    'orderby'    => 'include', // 指定したスラッグの順番通りに並べる
                 ]);
 
-                if (!empty($terms)) :
+                if (!empty($terms) && !is_wp_error($terms)) :
                     foreach ($terms as $term) :
                 ?>
-                        <section class="l-section p-menu-archive" id="menu-<?php echo esc_attr($term->slug); ?>">
+                        <section class="p-menu-archive" id="menu-<?php echo esc_attr($term->slug); ?>">
                             <div class="p-menu__header">
-                                <div class="p-menu__heading">
-                                    <span class="p-menu__subtitle"><?php echo esc_html(strtoupper($term->slug)); ?></span>
-                                    <h2 class="p-menu__title"><?php echo esc_html($term->name); ?></h2>
-                                </div>
+                                <a href="<?php echo esc_url(get_term_link($term)); ?>" class="p-menu__heading-link">
+                                    <div class="p-menu__heading">
+                                        <span class="p-menu__subtitle"><?php echo esc_html(strtoupper($term->slug)); ?></span>
+                                        <h2 class="p-menu__title"><?php echo esc_html($term->name); ?></h2>
+                                    </div>
+                                </a>
                             </div>
 
-                            <div class="p-menu__list u-mt-40">
+                            <div class="p-menu__list">
                                 <?php
                                 $args = [
-                                    'post_type' => 'menu',
-                                    'posts_per_page' => -1, // 全件表示
-                                    'tax_query' => [
-                                        [
-                                            'taxonomy' => 'menu_category',
-                                            'field'    => 'slug',
-                                            'terms'    => $term->slug,
-                                        ],
-                                    ],
+                                    'post_type'      => 'menu',
+                                    'posts_per_page' => -1,
+                                    'tax_query'      => [[
+                                        'taxonomy' => 'menu_category',
+                                        'field'    => 'slug',
+                                        'terms'    => $term->slug,
+                                    ]],
                                 ];
                                 $menu_query = new WP_Query($args);
+
                                 if ($menu_query->have_posts()) :
                                     while ($menu_query->have_posts()) : $menu_query->the_post();
-                                        $price = get_field('price');
-                                        $sub_name = get_field('sub_name');
-                                        $is_recommended = get_field('is_recommended');
-                                ?>
-                                        <article class="p-menu__item">
-                                            <div class="p-menu__img-wrapper">
-                                                <?php if ($is_recommended) : ?>
-                                                    <span class="c-badge c-badge--recommend">RECOMMEND</span>
-                                                <?php endif; ?>
-                                                <?php if (has_post_thumbnail()) : ?>
-                                                    <?php the_post_thumbnail('full', ['class' => 'p-menu__img']); ?>
-                                                <?php else : ?>
-                                                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/placeholder-menu.jpg" alt="" class="p-menu__img">
-                                                <?php endif; ?>
-                                            </div>
-                                            <div class="p-menu__info">
-                                                <h3 class="p-menu__name">
-                                                    <?php the_title(); ?>
-                                                    <?php if ($sub_name) : ?>
-                                                        <span class="u-block u-fs-12 u-fw-400"><?php echo esc_html($sub_name); ?></span>
-                                                    <?php endif; ?>
-                                                </h3>
-                                                <div class="p-menu__desc u-mt-8">
-                                                    <?php the_content(); ?>
-                                                </div>
-                                                <p class="p-menu__price">
-                                                    <?php echo $price ? '¥' . number_format($price) : 'ASK'; ?>
-                                                </p>
-                                            </div>
-                                        </article>
-                                <?php
+                                        get_template_part('template-parts/loop', 'menu');
                                     endwhile;
                                     wp_reset_postdata();
                                 endif;
@@ -95,6 +88,4 @@
     </section>
 </main>
 
-<?php get_header(); // ※footerの誤記防止：通常はget_footer()ですがここではfooterを呼びます 
-?>
 <?php get_footer(); ?>

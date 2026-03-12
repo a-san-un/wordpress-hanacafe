@@ -21,11 +21,18 @@
   font-weight: 700;        // 太字でクリッカブルな印象を強調
   letter-spacing: 0.2em;   // 字間を広めに設定（英語大文字の視認性向上）
   transition: v.$t-duration;     // サイト共通のアニメーション速度を適用（hover演出に影響）
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05); // 薄い影でボタンをわずかに浮かせて立体感を出す
-  text-decoration: none;   // <a>タグ使用時のデフォルト下線を非表示
+  box-shadow: 0 4px 12px rgba(v.$c-black, 0.1); // 黄金律 0.1: 影の主張を抑える
 
+  // ホバーアクション：透過黄金律 0.7 を適用しつつ浮遊感を演出
   &:hover {
-    opacity: 0.8;                // ホバー時: 20%暗くしてフィードバックを表現
-    transform: translateY(-1px); // 軽微な浮き上がりでクリック感を演出
+    opacity: 0.7;                // 透過黄金律 0.7
+    transform: translateY(-2px); // わずかに浮かせる
+    box-shadow: 0 6px 16px rgba(v.$c-black, 0.15); // 影を少し強めて浮遊感を強調
+  }
+
+  // アイコン（Google Fonts等）が含まれる場合の調整
+  .material-symbols-outlined {
+    font-size: 18px;
+    margin-left: 8px;
   }
 }

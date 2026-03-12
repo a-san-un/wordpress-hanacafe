@@ -34,39 +34,24 @@
     }
   }
 
-  /* ロゴ部分 */
+  // ロゴ部分
   &__logo-text {
-    color: v.$c-white;
-    font-family: v.$f-serif;
-    font-size: 28px;
-    line-height: 1.2;
+    color: v.$c-white; // 黄金律: ロゴは 100% (透過なし)
+    font-family: v.$f-en;
+    font-size: 24px;
+    font-weight: 700;
     letter-spacing: 0.1em;
-    margin-bottom: 24px;
-
-    @include m.mq {
-      font-size: 32px;
-    }
+    display: inline-block;
   }
 
-  /* 連絡先情報 */
-  &__info-list {
+  // ナビゲーション
+  &__nav {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    align-items: center;
-
-    @include m.mq {
-      align-items: flex-start;
-    }
-  }
-
-  &__info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 14px;
-    // 黄金律: 補足情報の透過（70%）
-    color: rgba(v.$c-white, 0.7); 
+    font-family: v.$f-en;
+    font-weight: 500;
+    letter-spacing: 0.1em;
 
     a {
       color: inherit;
@@ -86,7 +71,7 @@
     }
   }
 
-  /* SNS・ポリシーリンク */
+  // SNS・ポリシーリンク
   &__nav-group {
     display: flex;
     flex-direction: column;
@@ -131,27 +116,18 @@
       color: inherit;
       text-decoration: none;
       font-size: 12px;
-      letter-spacing: 0.05em;
       transition: color v.$t-duration;
-
+      
       &:hover {
         color: v.$c-accent;
       }
     }
   }
 
-  /* コピーライトエリア */
-  &__bottom {
-    border-top: 1px solid rgba(v.$c-white, 0.1); // 黄金律: 境界線（10%）
-    padding-top: 40px;
-    text-align: center;
-  }
-
   &__copyright {
+    text-align: center;
     font-family: v.$f-en;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    // 黄金律: 補足情報の透過（70%）
-    color: rgba(v.$c-white, 0.7); 
+    font-size: 11px;
+    letter-spacing: 0.05em;
   }
 }

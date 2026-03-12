@@ -3,9 +3,9 @@
 /**
  * Menu Card Component
  * [設計意図]
- * 1. 順番厳守: 写真 -> タイトル -> サブタイトル -> 本文 -> 値段
- * 2. .p-menu__img-wrapper 内でバッジと画像を分離（画像のみ拡大）
- * 3. 価格の日本円整形 (number_format)
+ * 1. 順番厳守: 写真 -> タイトル -> サブタイトル -> 本文 -> 値段 の視覚構造を固定。
+ * 2. 画像表示保証: has_post_thumbnail() による条件分岐と、no-image.jpg へのフォールバック。
+ * 3. ACF連携: おすすめバッジ(is_recommended)およびサブタイトル(sub_name)の動的出力。
  */
 ?>
 
@@ -24,7 +24,7 @@
                 <!-- アイキャッチ画像が設定されている場合: large サイズで出力 -->
                 <?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
             <?php else: ?>
-                <!-- アイキャッチ未設定の場合: テーマ内のデフォルト no-image にフォールバック -->
+                <!-- アイキャッチ未設定の場合: テーマ内の no-image にフォールバック（表示保証） -->
                 <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/common/no-image.jpg')); ?>" alt="" class="p-menu__img">
             <?php endif; ?>
 
@@ -52,7 +52,7 @@
                 <span class="p-menu__price-unit">¥</span>
                 <?php
                 $price = get_field('price'); // ACF: 価格フィールドを取得
-                echo $price ? number_format($price) : '---'; // 取得できた場合は3桁区切り、未設定は「---」を表示
+                echo $price ? number_format((int)$price) : '---'; // int キャストで数値を保証し、3桁区切り整形。未設定は「---」を表示
                 ?>
             </p>
 
