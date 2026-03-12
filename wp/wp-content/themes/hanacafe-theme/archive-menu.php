@@ -60,6 +60,23 @@ get_header(); ?>
                                         'field'    => 'slug',
                                         'terms'    => $term->slug,
                                     ]],
+                                    // [実装] おすすめを最優先にするソートロジック
+                                    'meta_query' => [
+                                        'relation' => 'OR',
+                                        [
+                                            'key'     => 'is_recommended',
+                                            'compare' => 'EXISTS',
+                                        ],
+                                        [
+                                            'key'     => 'is_recommended',
+                                            'compare' => 'NOT EXISTS',
+                                        ],
+                                    ],
+                                    'orderby' => [
+                                        'meta_value_num' => 'DESC', // 1(おすすめ)を先に表示
+                                        'date'           => 'DESC', // 次いで新しい順
+                                    ],
+                                    'meta_key' => 'is_recommended',
                                 ];
                                 $menu_query = new WP_Query($args);
 
