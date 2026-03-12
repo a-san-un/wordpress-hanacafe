@@ -1,87 +1,160 @@
 /**
- * Object: Project - Single Menu
- *
- * 制作意図:
- * メニュー詳細の「没入感」と「清潔感」の両立。
- * FLOCSSに基づき、共通パーツ（c-heading等）を活用しつつ個別ページの余白を最適化。
- *
- * 透過黄金律（Transparency Golden Rule）:
- * 1.0 : カテゴリー、料理名、英語サブ名（最優先の識別情報）
- * 0.7 : 料理説明文（読みやすさと空気感の両立）
- * 0.1 : 価格表示上の境界線（繊細なセパレーター）
- * 0.05: 画像影、プレースホルダー背景（存在感の微調整）
- *
- * 表示保証（Anti-Blackout）:
- * 初期状態 opacity: 1。JSの成否に関わらず「看板」としての機能を損なわない。
+ * Object: Project - Single Menu (CSS Grid Edition)
+ * [設計意図]
+ * 1. 構造化レイアウト: Flexbox ではなく CSS Grid を採用し、1fr 単位での完全な 50/50 分割を実現。
+ * 2. 透過黄金律: 補足情報（説明文・スペック表）は 0.7、境界線は 0.1 を適用。
+ * 3. 品格の維持: 50% 分割でも画像が威圧感を与えないよう、配置を align-start に制御。
  */
-
-@use "../../global/variables" as v; // 変数（カラー・フォント・radius等）を名前空間 v でインポート
-@use "../../global/mixins" as m;    // カスタムmixin（vw-clamp・mq等）を名前空間 m でインポート
-
+@use "../../global/variables" as v;
+@use "../../global/mixins" as m;
 
 .p-single-menu {
-    padding: m.vw-clamp(60, 100) 0; // 上下余白: 60px〜100px でクランプ（左右は l-container に委ねる）
-    background-color: v.$c-white;   // セクション背景を白に固定
-    opacity: 1;                     // [表示保証] JS無効時もコンテンツが確実に表示される
+    padding: m.vw-clamp(60, 100) 0;
+    background-color: v.$c-white;
+    opacity: 1;
 
     &__header {
-        margin-bottom: m.vw-clamp(40, 60); // ヘッダーとコンテンツの間隔（40px〜60px でクランプ）
-        // p-menu__header のスタイル（Flexbox）が適用されるため、ここでは個別調整のみ
+        margin-bottom: m.vw-clamp(40, 60);
     }
 
     &__inner {
-        display: flex;
-        flex-direction: column; // モバイル: 画像とテキストを縦積み
-        gap: 32px;              // 画像とテキストエリアの間隔（モバイル）
+        // [設計] モバイルは 1カラム、PCは 2カラムのグリッド
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
 
         @include m.mq {
-            flex-direction: row;      // PC: 画像とテキストを横並び（左右2カラム）
-            align-items: flex-start;  // 上揃え（テキストが短くても画像に追従しない）
-            gap: 60px;                // 画像とテキストエリアの間隔（PC）
+            // [正解] 1fr ずつを割り当てることで、力技ではない「正確な半分」を定義
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 60px;
+            align-items: start; // 画像が縦に間延びするのを防ぐ
         }
     }
 
+    &__visual {
+        // グリッドセル内で中央寄せし、最大幅を制限することで「デカすぎ」を回避
+        width: 100%;
+        max-width: 520px;
+        justify-self: center;
+    }
+
     &__img-wrapper {
-        flex: 1; // 画像エリアを利用可能スペースの半分に伸長（__content と均等分割）
+        position: relative; // おすすめバッジの基準
         img {
-            width: 100%;                              // コンテナ幅いっぱいに広げる
-            height: auto;                             // アスペクト比を維持
-            border-radius: 8px;                       // 角丸でやわらかい印象に
-            box-shadow: 0 4px 20px rgba(v.$c-text, 0.05); // 黄金律 0.05: 極薄の影で浮遊感を演出
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: v.$radius-m;
+            box-shadow: 0 4px 20px rgba(v.$c-text, 0.05); // 黄金律 0.05
         }
     }
 
     &__content {
-        flex: 1; // テキストエリアを利用可能スペースの半分に伸長（__img-wrapper と均等分割）
+        // 右側のテキストエリア
     }
 
     &__sub {
-        display: block;      // <span>等のインライン要素をブロック化して独立した行に配置
+        display: block;
         font-size: 14px;
         color: v.$c-text;
-        opacity: 1.0;        // 黄金律 1.0: サブ名は識別情報のため完全表示
-        margin-bottom: 20px; // タイトルとの間隔
+        margin-bottom: 20px;
         font-weight: 500;
+        line-height: 1.6;
     }
 
     &__desc {
         font-size: 16px;
-        line-height: 1.8;    // 読みやすい行間（長文の説明文を考慮）
+        line-height: 1.8;
         color: v.$c-text;
-        opacity: 0.7;        // 黄金律 0.7: 補足情報として優先度を下げ、空気感を演出
-        margin-bottom: 32px; // 説明文と価格エリアの間隔
+        margin-bottom: 32px;
+        opacity: 0.7; // 補足情報 0.7
     }
 
     &__price {
-        font-family: v.$f-serif;                          // セリフ体で価格を上品に表示
-        font-size: 28px;                                  // 価格を大きく表示して訴求力を高める
-        color: v.$c-main;                                 // メインカラーで価格を強調
-        border-top: 1px solid rgba(v.$c-text, 0.1);      // 黄金律 0.1: 繊細なセパレーターで説明文と分離
-        padding-top: 24px;                                // 境界線と価格テキストの間隔
+        font-family: v.$f-serif; // 価格の品格（正史）
+        font-size: 28px;
+        font-weight: 700;
+        color: v.$c-main;
+        border-top: 1px solid rgba(v.$c-text, 0.1); // 境界線 0.1
+        padding-top: 24px;
+        margin-bottom: 40px;
 
         &-unit {
-            font-size: 18px;     // 通貨単位（¥）を価格数字より小さく表示
-            margin-right: 4px;   // 単位と数字の間隔
+            font-size: 18px;    // 約65%（正史）
+            margin-right: 4px;  // 固定余白（正史）
+            font-weight: 500;
         }
+    }
+
+    &__specs {
+        opacity: 0.7;
+    }
+
+    &__spec-item {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px dotted rgba(v.$c-text, 0.1);
+        
+        dt {
+            width: 110px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        dd {
+            flex: 1;
+            font-size: 14px;
+        }
+    }
+
+    &__nav {
+        margin-top: 80px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(v.$c-text, 0.1);
+
+        &-inner {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: v.$c-text;
+            transition: opacity 0.3s;
+
+            &:hover {
+                opacity: 0.7;
+            }
+
+            .nav-text {
+                font-size: 13px;
+                font-weight: 700;
+            }
+        }
+    }
+}
+
+// 関連メニュー
+.p-menu-related {
+    background-color: rgba(v.$c-main, 0.05); // 黄金律 0.05
+    padding: 80px 0;
+    
+    &__header {
+        text-align: center;
+        margin-bottom: 48px;
+    }
+
+    &__title {
+        font-family: v.$f-en;
+        font-size: 32px;
+        letter-spacing: 0.1em;
+        margin-bottom: 12px;
+    }
+
+    &__subtitle {
+        font-size: 14px;
+        opacity: 0.7;
     }
 }
