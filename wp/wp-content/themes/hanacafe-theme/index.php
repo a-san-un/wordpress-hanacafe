@@ -9,8 +9,8 @@
 get_header(); ?>
 
 <main id="primary" class="site-main">
-    <section style="padding-top: 160px; padding-bottom: 160px;">
-        <div class="container">
+    <section class="l-section">
+        <div class="l-container">
             <?php
             if (have_posts()) {
                 while (have_posts()) {
@@ -18,7 +18,8 @@ get_header(); ?>
                     the_content();
                 }
             } else {
-                echo '<p style="text-align: center;">記事が見つかりませんでした。</p>';
+                // style属性を消し、必要なら共通のユーティリティクラス（u-text-center等）を当てる
+                echo '<p class="u-text-center">記事が見つかりませんでした。</p>';
             }
             ?>
         </div>
