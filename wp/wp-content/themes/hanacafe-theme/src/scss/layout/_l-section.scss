@@ -1,34 +1,31 @@
-@use "../global/variables" as v; // 変数（カラー・イージング等）を名前空間 v でインポート
-@use "../global/mixins" as m;    // カスタムmixin（vw-clamp等）を名前空間 m でインポート
+@use "../global/variables" as v;
+@use "../global/mixins" as m;
 
 /**
  * Layout: Section (_l-section.scss)
  * [設計意図]
- * 1. 表示保証（Anti-Blackout）: デフォルトを opacity: 1 とし、JS無効環境での不具合を排除。
+ * 1. 表示保証（Anti-Blackout）: デフォルトを opacity: 1 とし、JS無効・遅延環境での消失を排除。
  * 2. 演出の分離: .js-enabled時のみ初期状態を透過させ、main.jsの.is-inview付与でフェードインさせる。
  * 3. 黄金律: 既存の余白計算（vw-clamp）を完全に保持。
  */
 
 .l-section {
-  padding-top: m.vw-clamp(60, 100);    // 上余白: ビューポート幅に応じて 60px〜100px でクランプ
-  padding-bottom: m.vw-clamp(60, 100); // 下余白: 同上
+  padding-top: m.vw-clamp(60, 100);
+  padding-bottom: m.vw-clamp(60, 100);
 
-  // --- 第7の黄金律：表示保証（デフォルトは見える状態） ---
-  opacity: 1;              // [Anti-Blackout] JS未読込・無効時はこの値が維持され、コンテンツが確実に表示される
-  transform: translateY(0); // [Anti-Blackout] 同上。オフセットなしの初期位置
+  // --- 第7の黄金律：表示保証（Anti-Blackout） ---
+  opacity: 1;
+  transform: translateY(0);
 
-  // --- JSが有効な場合のみ、演出用の初期状態へ上書き ---
-  .js-enabled & {          // header.php のインラインスクリプトで <html> に付与されるクラスと連動
-    opacity: 0;              // アニメーション開始時は非表示
-    transform: translateY(30px); // アニメーション開始時は 30px 下にオフセット
-    transition:
-      opacity   1.2s v.$t-duration, // フェードイン: 1.2s ＋ variables.scss のイージング
-      transform 1.2s v.$t-duration; // スライドアップ: 同上
+  // JSが有効な場合のみ、演出用の「隠し」状態を適用（Intersection Observer待機用）
+  .js-enabled & {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
 
-    // 画面内に入った時の挙動
-    &.is-inview {          // main.js が IntersectionObserver で .is-inview を付与したタイミングで発火
-      opacity: 1;            // フェードイン完了（完全表示）
-      transform: translateY(0); // スライドアップ完了（元の位置に戻る）
-    }
+  &.is-inview {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

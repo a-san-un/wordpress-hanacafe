@@ -1,18 +1,36 @@
 /**
  * HanaCAFE nappa69 Main JS
- * * 2026-03-09: 
- * - Intersection Observer によるセクションフェードイン実装（.l-section, .p-page 対応）
- * - Heroセクションのロード時アニメーション実装
+ * * 2026-03-13: 
+ * - スクロール連動ヘッダー（.is-scrolled）の実装を追加
+ * - 表示保証（Anti-Blackout）のため、監視対象から .p-page を除外
+ * - Intersection Observer によるセクション（.l-section）フェードイン実装
+ * - Heroセクションのトリガークラス名を SSOT(is-start) に再統合
  * - A11Y対応ドロワーロジックの維持
  */
 jQuery(function ($) {
-	console.log('✅ main.js が正常に読み込まれ、実行されています！'); // ←これを追加
+	console.log('✅ main.js が正常に読み込まれ、実行されています！');
+
+	const $header = $('.js-header');
 	const $hamburger = $('.js-hamburger');
 	const $drawer = $('.js-drawer');
 	const $body = $('body');
 	const $hero = $('.p-hero');
-	// 監視対象をセクションと下層ページ全体に拡張
-	const $animateTargets = $('.l-section, .p-page');
+	// 監視対象を個別のセクション（.l-section）に限定
+	// ※親コンテナ（.p-page）を監視すると、SP版で判定が不安定になり表示が消えるリスクがあるため除外
+	const $animateTargets = $('.l-section');
+
+	/**
+	 * 0. スクロール連動ヘッダー (Food Science準拠)
+	 * [設計意図] ページが1pxでも動いたらヘッダーの質感を変化させ、
+	 * ユーザーに「隠れ家に入っていく」ような視覚的変化を促す。
+	 */
+	$(window).on('scroll', function () {
+		if ($(this).scrollTop() > 0) {
+			$header.addClass('is-scrolled');
+		} else {
+			$header.removeClass('is-scrolled');
+		}
+	});
 
 	/**
 	 * 1. ハンバーガーメニュー開閉（A11Y対応）
@@ -42,7 +60,7 @@ jQuery(function ($) {
 
 	/**
 	 * 2. Intersection Observer によるフェードイン
-	 * スクロールに合わせて各要素を下から浮上させる
+	 * スクロールに合わせて各要素（.l-section）を下から浮上させる
 	 */
 	const observerOptions = {
 		root: null,
@@ -50,28 +68,26 @@ jQuery(function ($) {
 		threshold: 0.1
 	};
 
-	const sectionObserver = new IntersectionObserver((entries, observer) => {
+	const sectionObserver = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
 			if (entry.isIntersecting) {
-				// 画面内に入ったらクラス付与
 				entry.target.classList.add('is-inview');
-				// 一度発火したら監視を解除（パフォーマンス最適化）
-				observer.unobserve(entry.target);
+				sectionObserver.unobserve(entry.target); // 一度表示されたら監視終了
 			}
 		});
 	}, observerOptions);
 
-	// 全ての対象要素を監視
 	$animateTargets.each(function () {
 		sectionObserver.observe(this);
 	});
 
 	/**
-	 * 3. Heroセクションのロード演出
-	 * 画像とタイトルの連動アニメーション用トリガー
+	 * 3. ヒーローセクションの初期アニメーション
+	 * [修正点] _p-hero.scss の定義に合わせ is-start を付与
 	 */
-	$(window).on('load', function () {
-		// ページ全体の読み込み完了後に実行
-		$hero.addClass('is-start');
-	});
+	if ($hero.length) {
+		$(window).on('load', function () {
+			$hero.addClass('is-start');
+		});
+	}
 });

@@ -4,26 +4,20 @@
 /* ============================================
    Project: Page (p-page)
    * 役割: 下層ページ（固定ページ等）の共通スタイル
-   * 2026-03-09: ページ全体へのフェードイン演出とホバーの洗練を追加
+   * [最終修正] 第7の黄金律（表示保証）に基づき、親コンテナの演出を廃止。
+   * SP版での Blackout を防ぎ、確実に情報を届ける設計に統合。
 ============================================ */
 .p-page {
     // 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
     padding-top: m.vw-clamp(120, 160);
     padding-bottom: m.vw-clamp(80, 120);
 
-    // --- アニメーション初期状態 ---
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 
-        opacity 0.8s ease-out,
-        transform 0.8s ease-out;
-    will-change: opacity, transform;
-
-    // --- Inview時の状態（JSのIntersection Observerで制御） ---
-    &.is-inview {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    // --- 第7の黄金律：表示保証（Anti-Blackout） ---
+    // 親コンテナ全体の透明化はSP版での不具合（Intersection Observerの空振り）の原因となるため
+    // 不透明（1.0）を常に維持する。
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
 
     &__header {
         text-align: center;
@@ -37,6 +31,17 @@
         margin-bottom: 8px;
     }
 
+    &__subtitle {
+        display: block;
+        font-family: v.$f-en;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.2em;
+        color: v.$c-main;
+        margin-bottom: 4px;
+        opacity: 0.7; // 補足情報の黄金律
+    }
+
     &__content {
         line-height: 2;
         color: v.$c-text;
@@ -47,7 +52,7 @@
     }
 
     &__footer {
-        margin-top: m.vw-clamp(40, 60);
+        margin-top: m.vw-clamp(60, 80);
         text-align: center;
     }
 
@@ -56,17 +61,17 @@
         align-items: center;
         gap: 8px;
         color: v.$c-text;
-        font-weight: 700;
         text-decoration: none;
-        // ホバー演出の洗練
-        transition: 
-            color v.$t-duration ease, 
-            transform v.$t-duration ease;
-        will-change: transform;
+        font-size: 14px;
+        font-weight: 700;
+        transition: opacity v.$t-duration;
 
         &:hover {
-            color: v.$c-accent;
-            transform: translateX(-4px);
+            opacity: 0.7; // 黄金律: 透過0.7
+        }
+
+        .material-symbols-outlined {
+            font-size: 20px;
         }
     }
 }

@@ -1,13 +1,29 @@
 @use "../global/variables" as v;
 @use "../global/mixins" as m;
 
+/* ==========================================================================
+   Layout: Header & Drawer (_header.scss)
+   [設計意図]
+   1. 表示保証: JS無効時でもヘッダーが見えるよう初期背景を0.95透過で設定。
+   2. スクロール連動: .is-scrolled 付与時に背景色と境界線（0.1透過）を変化。
+   3. ドロワー復元: 消失していたスマホナビの隠し設定を再定義。
+   ========================================================================== */
+
 .p-header {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	z-index: v.$z-header;
-	background-color: rgba(v.$c-base, 0.95);
+	background-color: rgba(v.$c-base, 0.95); // 初期状態
+	transition: background-color v.$t-duration, border-color v.$t-duration;
+	border-bottom: 1px solid transparent;
+
+	// スクロール時の変化 (Food Science準拠)
+	&.is-scrolled {
+		background-color: v.$c-white;
+		border-bottom: 1px solid rgba(v.$c-text, 0.1); // 透過黄金律 0.1
+	}
 	
 	.admin-bar & {
 		top: 46px;
@@ -71,7 +87,6 @@
 			letter-spacing: 0.1em;
 			color: v.$c-text;
 			text-decoration: none;
-			// 修正: トランジション時間の共通化
 			transition: color v.$t-duration;
 
 			&:hover {
@@ -104,17 +119,18 @@
 
 		&:focus-visible {
 			outline: 2px solid v.$c-main;
+			outline-offset: 4px;
 		}
 	}
 }
 
+/* --- Drawer Menu --- */
 .p-drawer {
 	position: fixed;
 	inset: 0;
 	background-color: v.$c-base;
 	z-index: v.$z-header - 1;
-	transform: translateX(100%);
-	// 修正: トランジションの共通化（※スライドは少し遅めにしたい等があれば別途定義も可）
+	transform: translateX(100%); // 初期状態は右側に隠す
 	transition: transform 0.4s ease;
 	display: flex;
 	align-items: center;
