@@ -4,6 +4,7 @@
  * 1. 構造化レイアウト: Flexbox ではなく CSS Grid を採用し、1fr 単位での完全な 50/50 分割を実現。
  * 2. 透過黄金律: 補足情報（説明文・スペック表）は 0.7、境界線は 0.1 を適用。
  * 3. 品格の維持: 50% 分割でも画像が威圧感を与えないよう、配置を align-start に制御。
+ * 4. レスポンシブ細部調整: スペック表のスマホStack化により、極小デバイスでの可読性を保証。
  */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
@@ -32,84 +33,93 @@
     }
 
     &__visual {
-        // グリッドセル内で中央寄せし、最大幅を制限することで「デカすぎ」を回避
-        width: 100%;
-        max-width: 520px;
-        justify-self: center;
-    }
-
-    &__img-wrapper {
-        position: relative; // おすすめバッジの基準
         img {
             width: 100%;
             height: auto;
-            display: block;
-            border-radius: v.$radius-m;
-            box-shadow: 0 4px 20px rgba(v.$c-text, 0.05); // 黄金律 0.05
+            object-fit: cover;
+            border-radius: 4px; // わずかな角丸で安らぎを演出
+            // 威圧感排除のための最大幅制限（SSOT v2.5 準拠）
+            max-width: 520px;
         }
     }
-
-    &__content {
-        // 右側のテキストエリア
-    }
-
-    &__sub {
-        display: block;
+    
+    &__subtitle {
         font-size: 14px;
         color: v.$c-text;
-        margin-bottom: 20px;
-        font-weight: 500;
-        line-height: 1.6;
+        opacity: 0.7; // [透過黄金律 0.7]
+        margin-bottom: 8px;
+        display: block;
     }
 
-    &__desc {
-        font-size: 16px;
-        line-height: 1.8;
-        color: v.$c-text;
-        margin-bottom: 32px;
-        opacity: 0.7; // 補足情報 0.7
+    &__title {
+        font-size: m.vw-clamp(24, 32);
+        margin-bottom: 16px;
+        line-height: 1.4;
     }
 
     &__price {
-        font-family: v.$f-serif; // 価格の品格（正史）
-        font-size: 28px;
-        font-weight: 700;
-        color: v.$c-main;
-        border-top: 1px solid rgba(v.$c-text, 0.1); // 境界線 0.1
-        padding-top: 24px;
-        margin-bottom: 40px;
+        font-family: v.$f-serif; // [価格の正史] Serif体
+        display: flex;
+        align-items: baseline;
+        margin-bottom: 24px;
+        color: v.$c-text;
 
-        &-unit {
-            font-size: 18px;    // 約65%（正史）
-            margin-right: 4px;  // 固定余白（正史）
+        .currency {
+            font-size: 18px;    // [価格の正史] 記号 18px
+            margin-right: 4px;  // [価格의正史] 固定余白 4px
             font-weight: 500;
+        }
+        .number {
+            font-size: 28px;    // [価格の正史] 数値 28px
+            font-weight: 600;
         }
     }
 
+    &__desc {
+        font-size: 15px;
+        line-height: 1.8;
+        opacity: 0.7; // [透過黄金律 0.7]
+        margin-bottom: 32px;
+    }
+
     &__specs {
+        // スペック表全体への透過黄金律（0.7）は親で一括制御
         opacity: 0.7;
     }
 
     &__spec-item {
         display: flex;
+        flex-direction: column; // [方針1] デフォルト（スマホ）は縦並びで可読性を優先
+        gap: 4px; // 項目名と内容の距離を微調整
         padding: 12px 0;
-        border-bottom: 1px dotted rgba(v.$c-text, 0.1);
+        border-bottom: 1px dotted rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
         
         dt {
-            width: 110px;
+            width: auto;
             font-weight: 700;
             font-size: 13px;
         }
         dd {
-            flex: 1;
             font-size: 14px;
+            margin-left: 0;
+        }
+
+        @include m.mq {
+            flex-direction: row; // [方針1] PC版は横並びに戻す
+            gap: 0;
+            dt {
+                width: 110px; // PC版は固定幅で整列
+            }
+            dd {
+                flex: 1;
+            }
         }
     }
 
     &__nav {
         margin-top: 80px;
         padding-top: 40px;
-        border-top: 1px solid rgba(v.$c-text, 0.1);
+        border-top: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
 
         &-inner {
             display: flex;
@@ -125,36 +135,14 @@
             transition: opacity 0.3s;
 
             &:hover {
-                opacity: 0.7;
+                opacity: 0.7; // ホバー時のみ 0.7 へ（A11Yと品格の両立）
             }
 
             .nav-text {
                 font-size: 13px;
                 font-weight: 700;
+                opacity: 0.7; // [透過黄金律 0.7] 本文より一歩引いた佇まいに
             }
         }
-    }
-}
-
-// 関連メニュー
-.p-menu-related {
-    background-color: rgba(v.$c-main, 0.05); // 黄金律 0.05
-    padding: 80px 0;
-    
-    &__header {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    &__title {
-        font-family: v.$f-en;
-        font-size: 32px;
-        letter-spacing: 0.1em;
-        margin-bottom: 12px;
-    }
-
-    &__subtitle {
-        font-size: 14px;
-        opacity: 0.7;
     }
 }

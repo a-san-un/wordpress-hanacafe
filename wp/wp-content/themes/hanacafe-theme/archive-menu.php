@@ -5,7 +5,7 @@
  * [制作意図]
  * 1. 順序の動的制御: スラッグ指定(food, drink, dessert)により、環境を問わず意図した順番で表示。
  * 2. 階層構造: get_term_link() によるタクソノミーページへの導線を確保。
- * 3. 表示保証: l-section を排除し、p-page__header との余白衝突（100px+）を解消。
+ * 3. 黄金律(ソート): おすすめ(is_recommended)を最優先しつつ、未設定の商品も消さずに表示。
  */
 get_header(); ?>
 
@@ -34,36 +34,39 @@ get_header(); ?>
                     'taxonomy'   => 'menu_category',
                     'hide_empty' => true,
                     'include'    => $ordered_ids,
-                    'orderby'    => 'include', // 指定したスラッグの順番通りに並べる
+                    'orderby'    => 'include', // スラッグ指定順(Food -> Drink -> Dessert)を守る
                 ]);
 
                 if (!empty($terms) && !is_wp_error($terms)) :
                     foreach ($terms as $term) :
+                        $term_id = $term->term_id;
                 ?>
-                        <section class="p-menu-archive" id="menu-<?php echo esc_attr($term->slug); ?>">
-                            <div class="p-menu__header">
-                                <a href="<?php echo esc_url(get_term_link($term)); ?>" class="p-menu__heading-link">
-                                    <div class="p-menu__heading">
-                                        <span class="p-menu__subtitle"><?php echo esc_html(strtoupper($term->slug)); ?></span>
-                                        <h2 class="p-menu__title"><?php echo esc_html($term->name); ?></h2>
-                                    </div>
-                                </a>
-                            </div>
+                        <section class="p-menu-archive l-section">
+                            <header class="p-menu__header">
+                                <div class="p-menu__heading c-heading">
+                                    <span class="c-heading__sub"><?php echo esc_html(strtoupper($term->slug)); ?></span>
+                                    <h2 class="c-heading__main"><?php echo esc_html($term->name); ?></h2>
+                                </div>
+                            </header>
 
                             <div class="p-menu__list">
                                 <?php
                                 $args = [
                                     'post_type'      => 'menu',
                                     'posts_per_page' => -1,
-                                    'tax_query'      => [[
-                                        'taxonomy' => 'menu_category',
-                                        'field'    => 'slug',
-                                        'terms'    => $term->slug,
-                                    ]],
-                                    // [実装] おすすめを最優先にするソートロジック
+                                    'tax_query'      => [
+                                        [
+                                            'taxonomy' => 'menu_category',
+                                            'field'    => 'term_id',
+                                            'terms'    => $term_id,
+                                        ],
+                                    ],
+                                    // [設計意図] おすすめフラグ(is_recommended)の有無でソート。
+                                    // トップレベルの meta_key を排除し、meta_query の名前付き句(recommend_clause)を
+                                    // 用いることで、一度も設定されていない投稿（NULL）の消失を防ぐ。
                                     'meta_query' => [
                                         'relation' => 'OR',
-                                        [
+                                        'recommend_clause' => [
                                             'key'     => 'is_recommended',
                                             'compare' => 'EXISTS',
                                         ],
@@ -73,10 +76,9 @@ get_header(); ?>
                                         ],
                                     ],
                                     'orderby' => [
-                                        'meta_value_num' => 'DESC', // 1(おすすめ)を先に表示
-                                        'date'           => 'DESC', // 次いで新しい順
+                                        'recommend_clause' => 'DESC', // 1(おすすめ)を先に表示
+                                        'date'             => 'DESC', // 次いで新しい順
                                     ],
-                                    'meta_key' => 'is_recommended',
                                 ];
                                 $menu_query = new WP_Query($args);
 
