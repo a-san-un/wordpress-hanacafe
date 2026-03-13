@@ -30,7 +30,7 @@
         }
     }
 
-    /* --- メイン画像セクション --- */
+    // メイン画像セクション 
     &__img-wrapper {
         position: relative;
         width: 100%;
@@ -50,7 +50,7 @@
         background-color: rgba(v.$c-text, 0.05); // [透過黄金律 0.05]
     }
 
-    /* --- テキスト情報セクション --- */
+    // テキスト情報セクション
     &__title {
         font-size: m.vw-clamp(24, 32);
         font-weight: 700;
@@ -147,7 +147,7 @@
         }
     }
 
-    /* [SP版限定] カードを横並びの「スマートなリスト型」へ強制変換 */
+    // [SP版限定] カードを横並びの「スマートなリスト型」へ強制変換
     @media screen and (max-width: 767px) {
         .p-menu__item {
             .p-menu__link {
