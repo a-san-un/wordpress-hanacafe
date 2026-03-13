@@ -47,7 +47,7 @@
         </div>
 
         <div class="p-news__footer">
-            <a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>" class="p-news__more-link">
+            <a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>" class="c-btn-capsule">
                 READ MORE NEWS
             </a>
         </div>

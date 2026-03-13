@@ -1,10 +1,10 @@
 /**
  * Object: Project - Single Menu (CSS Grid Edition)
- * [設計意図]
- * 1. 構造化レイアウト: Flexbox ではなく CSS Grid を採用し、1fr 単位での完全な 50/50 分割を実現。
- * 2. 透過黄金律: 補足情報（説明文・スペック表）は 0.7、境界線は 0.1 を適用。
- * 3. 品格の維持: 50% 分割でも画像が威圧感を与えないよう、配置を align-start に制御。
- * 4. レスポンシブ細部調整: スペック表のスマホStack化により、極小デバイスでの可読性を保証。
+ * [最終ポリッシュ - 完全適合版]
+ * 1. メイン画像: 角丸（8px）を維持しつつ、SP幅100%を適用。
+ * 2. 関連メニュー（p-menu-related）: 正確なクラス構造に対してスタイルを定義し、SP版リスト化を完全動作させる。
+ * 3. [戦略的例外] キャッチコピー（sub）を日本語フォント(sans)・不透明(1)へ変更。
+ * 4. [構造変更] ナビゲーション（__nav）用のスタイルを削除。
  */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
@@ -19,129 +19,178 @@
     }
 
     &__inner {
-        // [設計] モバイルは 1カラム、PCは 2カラムのグリッド
         display: grid;
         grid-template-columns: 1fr;
         gap: 32px;
 
         @include m.mq {
-            // [正解] 1fr ずつを割り当てることで、力技ではない「正確な半分」を定義
             grid-template-columns: repeat(2, 1fr);
             column-gap: 60px;
-            align-items: start; // 画像が縦に間延びするのを防ぐ
+            align-items: start;
         }
     }
 
-    &__visual {
-        img {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 4px; // わずかな角丸で安らぎを演出
-            // 威圧感排除のための最大幅制限（SSOT v2.5 準拠）
-            max-width: 520px;
+    /* --- メイン画像セクション --- */
+    &__img-wrapper {
+        position: relative;
+        width: 100%;
+        margin: 0 auto;
+
+        @include m.mq {
+            max-width: 480px; 
         }
     }
-    
-    &__subtitle {
-        font-size: 14px;
-        color: v.$c-text;
-        opacity: 0.7; // [透過黄金律 0.7]
-        margin-bottom: 8px;
-        display: block;
+
+    &__img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
+        border-radius: 8px; // 優しい角丸
+        background-color: rgba(v.$c-text, 0.05); // [透過黄金律 0.05]
     }
 
+    /* --- テキスト情報セクション --- */
     &__title {
         font-size: m.vw-clamp(24, 32);
+        font-weight: 700;
+        color: v.$c-main;
+        margin-bottom: 8px;
+    }
+
+    &__sub {
+        display: block;
+        font-family: v.$f-sans; // [戦略的例外] 日本語キャッチコピーの可読性を優先
+        font-size: 14px;
+        color: v.$c-text;
         margin-bottom: 16px;
-        line-height: 1.4;
+        opacity: 1; // [戦略的例外] 主役級の字幕として不透明化
     }
 
     &__price {
-        font-family: v.$f-serif; // [価格の正史] Serif体
-        display: flex;
-        align-items: baseline;
+        font-family: v.$f-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: v.$c-main;
         margin-bottom: 24px;
-        color: v.$c-text;
+        border-bottom: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
+        padding-bottom: 16px;
 
-        .currency {
-            font-size: 18px;    // [価格の正史] 記号 18px
-            margin-right: 4px;  // [価格의正史] 固定余白 4px
-            font-weight: 500;
-        }
-        .number {
-            font-size: 28px;    // [価格の正史] 数値 28px
-            font-weight: 600;
+        &-unit {
+            font-size: 18px;
+            margin-right: 4px;
         }
     }
 
     &__desc {
-        font-size: 15px;
         line-height: 1.8;
-        opacity: 0.7; // [透過黄金律 0.7]
+        color: v.$c-text;
+        opacity: 0.7; 
         margin-bottom: 32px;
     }
 
     &__specs {
-        // スペック表全体への透過黄金律（0.7）は親で一括制御
         opacity: 0.7;
     }
 
     &__spec-item {
         display: flex;
-        flex-direction: column; // [方針1] デフォルト（スマホ）は縦並びで可読性を優先
-        gap: 4px; // 項目名と内容の距離を微調整
+        flex-direction: column;
+        gap: 4px;
         padding: 12px 0;
-        border-bottom: 1px dotted rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
+        border-bottom: 1px dotted rgba(v.$c-text, 0.1); 
         
-        dt {
-            width: auto;
-            font-weight: 700;
-            font-size: 13px;
-        }
-        dd {
-            font-size: 14px;
-            margin-left: 0;
-        }
+        dt { font-weight: 700; font-size: 13px; }
+        dd { font-size: 14px; margin-left: 0; }
 
         @include m.mq {
-            flex-direction: row; // [方針1] PC版は横並びに戻す
-            gap: 0;
-            dt {
-                width: 110px; // PC版は固定幅で整列
-            }
-            dd {
-                flex: 1;
-            }
+            flex-direction: row;
+            dt { width: 110px; }
+            dd { flex: 1; }
+        }
+    }
+}
+
+/* =========================================================
+   関連メニュー（おすすめ）セクション
+   [独立ブロック] p-single-menu の外側に配置されるため別途定義
+========================================================= */
+.p-menu-related {
+    &__header {
+        text-align: center;
+        margin-bottom: m.vw-clamp(32, 48);
+    }
+
+    &__title {
+        font-family: v.$f-en;
+        font-size: 24px;
+        font-weight: 700;
+        color: v.$c-main;
+        margin-bottom: 8px;
+        letter-spacing: 0.1em;
+    }
+
+    &__subtitle {
+        font-size: 14px;
+        color: v.$c-text;
+        opacity: 0.7; // 補足情報の黄金律
+    }
+
+    .p-menu__list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px; // SP版はリストとして詰める
+
+        @include m.mq {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
         }
     }
 
-    &__nav {
-        margin-top: 80px;
-        padding-top: 40px;
-        border-top: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
-
-        &-inner {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        &-link {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: v.$c-text;
-            transition: opacity 0.3s;
-
-            &:hover {
-                opacity: 0.7; // ホバー時のみ 0.7 へ（A11Yと品格の両立）
+    /* [SP版限定] カードを横並びの「スマートなリスト型」へ強制変換 */
+    @media screen and (max-width: 767px) {
+        .p-menu__item {
+            .p-menu__link {
+                display: flex; // 横並び
+                gap: 16px;
+                align-items: center;
+            }
+            
+            .p-menu__img-wrapper {
+                flex: 0 0 100px; // 画像を100pxに固定
+                aspect-ratio: 1 / 1; // 正方形に
+                margin-bottom: 0;
+                
+                .p-menu__img {
+                    border-radius: 4px; // 小さな角丸
+                }
+                
+                .c-badge-recommend {
+                    display: none; // リスト内ではバッジを隠してスッキリさせる
+                }
             }
 
-            .nav-text {
-                font-size: 13px;
-                font-weight: 700;
-                opacity: 0.7; // [透過黄金律 0.7] 本文より一歩引いた佇まいに
+            .p-menu__info {
+                flex: 1;
+                padding: 0;
+                text-align: left;
+            }
+
+            .p-menu__desc {
+                display: none; // 説明文は不要
+            }
+
+            .p-menu__name {
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+            
+            .p-menu__price {
+                margin-top: 4px;
+                font-size: 16px; // 少し小さくして脇役感を
+                margin-bottom: 0;
+                border: none;
+                padding-bottom: 0;
             }
         }
     }

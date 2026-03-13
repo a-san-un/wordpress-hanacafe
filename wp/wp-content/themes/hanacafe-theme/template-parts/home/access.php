@@ -65,7 +65,7 @@
             </dl>
 
             <div class="p-access__action">
-                <a href="<?php echo esc_url(home_url('/reservation/')); ?>" class="p-access__btn">
+                <a href="#" class="p-access__btn">
                     <span class="material-symbols-outlined">calendar_month</span>
                     お席の確認
                 </a>

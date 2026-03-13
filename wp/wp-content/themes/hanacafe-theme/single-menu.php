@@ -91,28 +91,6 @@ get_header(); ?>
                         </div>
                     </div>
 
-                    <nav class="p-single-menu__nav">
-                        <div class="p-single-menu__nav-inner">
-                            <?php
-                            $prev_post = get_previous_post(true, '', 'menu_category');
-                            if ($prev_post) : ?>
-                                <a href="<?php echo esc_url(get_permalink($prev_post)); ?>" class="p-single-menu__nav-link p-single-menu__nav-link--prev">
-                                    <span class="material-symbols-outlined">arrow_back</span>
-                                    <span class="nav-text"><?php echo esc_html(get_the_title($prev_post)); ?></span>
-                                </a>
-                            <?php endif; ?>
-
-                            <?php
-                            $next_post = get_next_post(true, '', 'menu_category');
-                            if ($next_post) : ?>
-                                <a href="<?php echo esc_url(get_permalink($next_post)); ?>" class="p-single-menu__nav-link p-single-menu__nav-link--next">
-                                    <span class="nav-text"><?php echo esc_html(get_the_title($next_post)); ?></span>
-                                    <span class="material-symbols-outlined">arrow_forward</span>
-                                </a>
-                            <?php endif; ?>
-                        </div>
-                    </nav>
-
                 </div>
             </article>
 
