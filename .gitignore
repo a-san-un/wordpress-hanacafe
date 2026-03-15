@@ -62,11 +62,11 @@
 
 # General
 .DS_Store
+Icon?
 __MACOSX/
 .AppleDouble
 .LSOverride
-Icon[
-]
+
 
 # Thumbnails
 ._*
@@ -93,3 +93,4 @@ Temporary Items
 .repo-to-text-settings.yaml
 GEMINI.md
 /archive/
+.aiexclude
