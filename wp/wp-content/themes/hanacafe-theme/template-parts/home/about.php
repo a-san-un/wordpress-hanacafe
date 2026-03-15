@@ -1,94 +1,87 @@
 <?php
 
 /**
- * About & Seats Section
+ * About & Seats Section (プランB：システム分離 × プランC：セマンティック版)
  * [設計意図]
- * 1. ACFスラッグ(ok/few/full)への完全対応
- * 2. 状態に応じたバッジの「クラス名・アイコン・ラベル」の動的生成
- * 3. セキュリティ強化（出力時のエスケープ処理徹底）
+ * 1. 管理分離: スラッグ 'about-seats' の専用ページで店舗情報を一括管理（プランB）。
+ * 2. 非破壊: Repeaterを使わず、役割名（counter等）に基づいた個別フィールドをループ処理（プランC）。
+ * 3. 表示保証: 席の「名称」が未入力のスロットは出力自体をスキップし、不完全なカードを表示させない。
+ * 4. 黄金律: 補足テキスト（text_...）に透過 0.7 を適用。
  */
 
-// フロントページ以外の表示も考慮し、現在のページIDを取得
-$home_id = get_the_ID();
-
-/**
- * 席種の設定データ
- * メンテナンス性を高めるため、ループ外で配列として定義
- */
-$seat_configs = [
-    [
-        'title'      => '一人の時間を愉しむ',
-        'text'       => '読書や作業に最適な窓際席。自分だけの静かなリズムを。',
-        'img'        => 'counter.jpg',
-        'field_name' => 'status_counter', // ACFフィールド名
-        'is_pet'     => false
-    ],
-    [
-        'title'      => '大切な人と寛ぐ',
-        'text'       => 'ゆったりとしたソファ席。美味しいお料理を囲みながら。',
-        'img'        => 'table.jpg',
-        'field_name' => 'status_table',   // ACFフィールド名
-        'is_pet'     => false
-    ],
-    [
-        'title'      => '自然の風を感じる',
-        'text'       => '四季を肌で感じる縁側席。ペットと一緒にリフレッシュ。',
-        'img'        => 'terrace.jpg',
-        'field_name' => 'status_terrace', // ACFフィールド名
-        'is_pet'     => true
-    ],
-];
+// スラッグ名から専用固定ページのIDを特定（環境に依存しない動的解決）
+$about_page = get_page_by_path('about-seats');
+$about_id = $about_page ? $about_page->ID : 0;
 ?>
 
 <section id="about" class="p-about l-container l-section">
     <div class="p-about__header">
         <div class="p-about__heading c-heading">
             <span class="c-heading__sub">About & Seats</span>
-            <h2 class="c-heading__main">物語が動き出す、呼吸する空間。</h2>
+            <h2 class="c-heading__main"><?php echo esc_html(get_field('about_section_title', $about_id) ?: '物語が動き出す、呼吸する空間。'); ?></h2>
         </div>
         <div class="p-about__text">
-            <p>築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、玄米や有機野菜を中心とした体に優しいお料理をご用意しております。シーンに合わせて選べる3つの空間で、心地よいひとときをお過ごしください。</p>
+            <p><?php echo nl2br(esc_html(get_field('about_section_text', $about_id) ?: '築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、心地よいひとときをお過ごしください。')); ?></p>
         </div>
     </div>
 
     <div class="p-about__grid">
-        <?php foreach ($seat_configs as $config) : ?>
-            <?php
+        <?php
+        /**
+         * 席種ごとのスロット定義（ACFフィールド名の接尾辞と対応）
+         */
+        $slots = ['counter', 'table', 'terrace'];
+
+        foreach ($slots as $slug) :
+            // 各種データの取得（役割名に基づいた動的解決）
+            $title  = get_field("title_{$slug}", $about_id);
+
+            // 【表示保証】名称がないスロットは出力スキップ（Blackout防止）
+            if (!$title) continue;
+
+            $status = get_field("status_{$slug}", $about_id) ?: 'ok';
+            $text   = get_field("text_{$slug}", $about_id);
+            $image  = get_field("img_{$slug}", $about_id);
+
+            // 特定の席（テラス等）に紐付く個別フラグの取得
+            $is_pet = get_field("is_pet_{$slug}", $about_id);
+
             /**
              * バッジの状態判定ロジック
-             * ACFの戻り値（スラッグ）を基準に、表示内容を分岐させる
              */
-            $status = get_field($config['field_name'], $home_id) ?: 'ok';
-
-            // デフォルト設定：◯ 空席あり
             $badge_label = '◯ 空席あり';
-            $badge_modifier = 'is-success'; // _c-badge.scss で定義した緑色
+            $badge_modifier = 'is-success';
             $icon = 'check_circle';
 
             if ($status === 'few') {
-                // △ 残りわずか
                 $badge_label = '△ 残りわずか';
-                $badge_modifier = 'is-alert';   // _c-badge.scss で定義したオレンジ色
+                $badge_modifier = 'is-alert';
                 $icon = 'warning';
             } elseif ($status === 'full') {
-                // ✕ 満席
                 $badge_label = '✕ 満席';
-                $badge_modifier = 'is-full';    // 満席用のクラス
+                $badge_modifier = 'is-full';
                 $icon = 'block';
             }
-            ?>
+
+            /**
+             * 画像の取得とフォールバック
+             * largeサイズを優先し、なければテーマ内デフォルト画像を表示
+             */
+            $img_src = (is_array($image) && !empty($image['sizes']['large'])) ? $image['sizes']['large'] : get_theme_file_uri("/assets/images/{$slug}.jpg");
+        ?>
             <article class="p-seat-card">
                 <figure class="p-seat-card__img-box">
-                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/images/' . $config['img'])); ?>"
-                        alt="<?php echo esc_attr($config['title']); ?>"
-                        class="p-seat-card__img">
+                    <img src="<?php echo esc_url($img_src); ?>"
+                        alt="<?php echo esc_attr($title); ?>"
+                        class="p-seat-card__img"
+                        loading="lazy">
 
                     <div class="c-badge-status <?php echo esc_attr($badge_modifier); ?>">
                         <span class="material-symbols-outlined"><?php echo esc_html($icon); ?></span>
                         <span class="c-badge-status__text"><?php echo esc_html($badge_label); ?></span>
                     </div>
 
-                    <?php if ($config['is_pet']) : ?>
+                    <?php if ($is_pet) : ?>
                         <div class="c-badge-feature">
                             <span class="material-symbols-outlined">pets</span>
                             <span class="c-badge-feature__text">Pet Friendly</span>
@@ -96,8 +89,8 @@ $seat_configs = [
                     <?php endif; ?>
                 </figure>
                 <div class="p-seat-card__body">
-                    <h3 class="p-seat-card__title"><?php echo esc_html($config['title']); ?></h3>
-                    <p class="p-seat-card__text"><?php echo esc_html($config['text']); ?></p>
+                    <h3 class="p-seat-card__title"><?php echo esc_html($title); ?></h3>
+                    <p class="p-seat-card__text"><?php echo nl2br(esc_html($text)); ?></p>
                 </div>
             </article>
         <?php endforeach; ?>
