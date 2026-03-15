@@ -3,7 +3,7 @@
 /**
  * HanaCAFE nappa69 Functions and Definitions
  * * 役割: テーマの機能拡張、外部ファイルの読み込み制御（SSOT）
- * * 更新日: 2026-03-09 - メニューアーカイブの表示件数制御を追加
+ * * 更新日: 2026-03-15 - グローバルナビBEMクラス注入フィルターを追加
  */
 
 /**
@@ -66,17 +66,14 @@ add_action('wp_enqueue_scripts', 'hanacafe_enqueue_scripts');
 /**
  * 3. クエリのカスタマイズ（表示件数制御）
  * * メニュー一覧（archive-menu）ではページネーションを行わず全件表示にする。
- * * 根拠: カフェのメニュー表として、途中でページが分かれるUXを避けるため。
  */
 function hanacafe_pre_get_posts($query) {
-    // 管理画面やメインクエリ以外には干渉しない
     if (is_admin() || ! $query->is_main_query()) {
         return;
     }
 
-    // カスタム投稿タイプ 'menu' のアーカイブページの場合
     if ($query->is_post_type_archive('menu')) {
-        $query->set('posts_per_page', -1); // 全件取得
+        $query->set('posts_per_page', -1);
     }
 }
 add_action('pre_get_posts', 'hanacafe_pre_get_posts');
@@ -87,31 +84,19 @@ add_action('pre_get_posts', 'hanacafe_pre_get_posts');
 remove_action('wp_head', 'wp_generator');
 
 /**
- * ===================================================
- * 1. トップページ用：Menu投稿取得関数
- * ===================================================
- * 目的: トップページに表示するメニューをACFのポストオブジェクトから取得。
+ * トップページ用：Menu投稿取得関数
  * 未選択の場合は、自動的に最新1件を取得するフォールバック機能付き。
- * * @param string $field_name ACFのフィールド名（例: 'top_menu_food'）
- * @param string $term_slug  タクソノミースラッグ（例: 'food'）
- * @return WP_Post|null      投稿オブジェクト、存在しない場合は null
  */
 function get_hanacafe_top_menu_post($field_name, $term_slug) {
-
-    // [ステップ1] ACFのポストオブジェクト（固定ページID: トップページ）からデータを取得
-    // ※今回はトップページで実行される前提なので、get_field() でそのまま取れます。
     $post_obj = get_field($field_name);
-
-    // [ステップ2] ACFで選択されていれば、そのままそのオブジェクトを返す（第1優先）
     if ($post_obj) {
         return $post_obj;
     }
 
-    // [ステップ3] ACFが未選択の場合、バックアップとして最新の1件を取得する（第2優先）
     $args = [
-        'post_type'      => 'menu',         // カスタム投稿「menu」を指定
-        'posts_per_page' => 1,              // 1件だけ取得
-        'tax_query'      => [               // タクソノミー（カテゴリー）での絞り込み
+        'post_type'      => 'menu',
+        'posts_per_page' => 1,
+        'tax_query'      => [
             [
                 'taxonomy' => 'menu_category',
                 'field'    => 'slug',
@@ -120,7 +105,37 @@ function get_hanacafe_top_menu_post($field_name, $term_slug) {
         ],
     ];
     $query = new WP_Query($args);
-
-    // [ステップ4] 取得できた場合はその1件目の投稿オブジェクトを返し、無ければ null を返す
-    return $query->have_posts() ? $query->posts[0] : null;
+    return $query->have_posts() ? $query->posts : null;
 }
+/**
+ * 5. メニューにBEMクラスを強制注入するフィルター (非破壊規約準拠)
+ */
+add_filter('nav_menu_css_class', function ($classes, $item, $args) {
+    if ($args->theme_location === 'global-nav') {
+        $classes[] = 'p-header__nav-item';
+    } elseif ($args->theme_location === 'drawer-nav') {
+        $classes[] = 'p-drawer__item';
+    }
+    return $classes;
+}, 10, 3);
+
+add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+    if ($args->theme_location === 'global-nav') {
+        $atts['class'] = 'p-header__nav-link';
+    } elseif ($args->theme_location === 'drawer-nav') {
+        $atts['class'] = 'p-drawer__link';
+    }
+    return $atts;
+}, 10, 3);
+
+/**
+ * 6. カスタムリンクのルート相対パスを動的に解決する (サブディレクトリ・移設対策)
+ * [設計意図] 管理画面で /# で始まる相対パスが設定された場合、出力時に自動で
+ * home_url() を付与し、環境に依存しない絶対パスへ変換する [3, 4]。
+ */
+add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+    if (isset($atts['href']) && strpos($atts['href'], '/#') === 0) {
+        $atts['href'] = home_url($atts['href']);
+    }
+    return $atts;
+}, 20, 3);
