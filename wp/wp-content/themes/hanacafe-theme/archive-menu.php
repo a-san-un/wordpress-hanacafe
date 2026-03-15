@@ -3,9 +3,9 @@
 /**
  * Template Name: Menu Archive (メニュー一覧)
  * [修正意図]
- * 1. 表示保証: 重大なバグ（表示消失）を避けるため l-section を排除し、即時表示。
- * 2. 導線強化: カテゴリー見出しを get_term_link() でラップし、回遊性を向上。
- * 3. 堅牢性: カテゴリーが見つからない、または商品がない場合も「沈黙」せずメッセージを表示。
+ * 1. 規約準拠: インラインスタイルを物理削除し、BEMクラスへ移行。
+ * 2. 透過黄金律: 警告・準備中メッセージに 0.7 を適用（SCSS側で制御）。
+ * 3. 堅牢性: カテゴリーが見つからない場合も沈黙せず、専用クラスで警告を表示。
  */
 get_header(); ?>
 
@@ -19,7 +19,6 @@ get_header(); ?>
 
             <div class="p-page__content">
                 <?php
-                // スラッグから動的にIDを取得し、表示順を固定する
                 $target_slugs = ['food', 'drink', 'dessert'];
                 $ordered_ids = [];
 
@@ -32,12 +31,12 @@ get_header(); ?>
 
                 // [表示保証] ターム設定ミスがある場合に警告を表示
                 if (empty($ordered_ids)) {
-                    echo '<p class="u-text-center" style="padding: 100px 0; opacity: 0.7;">メニューカテゴリー（food, drink, dessert）が見つかりません。<br>管理画面のスラッグ設定を確認してください。</p>';
+                    echo '<p class="p-menu-archive-alert">メニューカテゴリー（food, drink, dessert）が見つかりません。<br>管理画面のスラッグ設定を確認してください。</p>';
                 }
 
                 $terms = get_terms([
                     'taxonomy'   => 'menu_category',
-                    'hide_empty' => false, // 準備中のカテゴリーも枠だけは表示
+                    'hide_empty' => false,
                     'include'    => $ordered_ids,
                     'orderby'    => 'include',
                 ]);
@@ -75,8 +74,8 @@ get_header(); ?>
                                         ],
                                     ],
                                     'orderby' => [
-                                        'recommend_clause' => 'DESC', // 1(おすすめ)を先に表示
-                                        'date'             => 'DESC', // 次いで新しい順
+                                        'recommend_clause' => 'DESC',
+                                        'date'             => 'DESC',
                                     ],
                                 ];
                                 $menu_query = new WP_Query($args);
@@ -87,7 +86,7 @@ get_header(); ?>
                                     endwhile;
                                     wp_reset_postdata();
                                 else :
-                                    echo '<p style="padding: 20px; opacity: 0.7;">現在、' . esc_html($term->name) . 'の準備をしております。</p>';
+                                    echo '<p class="p-menu-archive__empty">現在、' . esc_html($term->name) . 'の準備をしております。</p>';
                                 endif;
                                 ?>
                             </div>
@@ -99,7 +98,7 @@ get_header(); ?>
             </div>
 
             <div class="p-page__footer">
-                <a href="<?php echo esc_url(home_url('/')); ?>\" class="p-page__back-link">
+                <a href="<?php echo esc_url(home_url('/')); ?>" class="p-page__back-link">
                     <span class="material-symbols-outlined">arrow_back</span>
                     TOPへ戻る
                 </a>

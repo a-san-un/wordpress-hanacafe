@@ -1,63 +1,74 @@
 /**
  * Project: Menu Archive (p-menu-archive)
  * [最終ポリッシュ - 完全版]
- * 1. 余白の強化: PC版でのセクション間の呼吸を 140px へ増量し、情報の視認性を向上。
- * 2. PC版の溜まり: 最初のカテゴリー上部にPC限定の余白を加え、ヘッダーとの衝突を解消。
- * 3. 透過黄金律: 境界線に 0.1 を適用し、デザインの統一感を維持。
- * 4. 警告解消: emptyRules 対策としてグリッド構造を明示的に復元。
+ * 1. 余白の強化: PC版でのセクション間の呼吸を 140px へ増量。
+ * 2. 表示保証: opacity: 1 を明示。
+ * 3. 透過黄金律: 境界線に 0.1、補足テキスト（準備中・警告）に 0.7 を適用。
+ * 4. クリンネス: 規約違反のインラインスタイルを排除するためのBEMクラスを定義。
  */
 @use "../../global/variables" as v;
 @use "../../global/mixins" as m;
 
 .p-menu-archive {
-  opacity: 1;
-  
-  // [方針] セクション間の「外部の呼吸」を vw-clamp で定義
-  // 最大値を 140px に引き上げ、スクロール時の情報の区切りを明確化
-  padding-block: m.vw-clamp(60, 140); 
-  border-bottom: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
-  
-  &:first-of-type {
-    // スマホではタイトル余白との合算を避けるため 0
-    padding-block-start: 0; 
+	opacity: 1;
 
-    @include m.mq {
-      // PC版では画面が広いため、タイトルとの間に適度な「溜まり」を設ける
-      padding-block-start: m.vw-clamp(0, 40);
-    }
-  }
+	// セクション間の「外部の呼吸」を vw-clamp で定義
+	padding-block: m.vw-clamp(60, 140);
+	border-bottom: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
 
-  &:last-of-type {
-    border-bottom: none;
-  }
+	&:first-of-type {
+		padding-block-start: 0;
 
-  // カテゴリー見出し
-  &__header {
-    margin-bottom: m.vw-clamp(32, 48);
-    text-align: center;
-  }
+		@include m.mq {
+			padding-block-start: m.vw-clamp(0, 40);
+		}
+	}
 
-  // カテゴリーリンク
-  &__heading-link {
-    text-decoration: none;
-    display: inline-block;
-    transition: opacity v.$t-duration;
+	&:last-of-type {
+		border-bottom: none;
+	}
 
-    &:hover {
-      opacity: 0.7; // 黄金律: 透過0.7
-    }
-  }
+	// カテゴリー見出し
+	&__header {
+		margin-bottom: m.vw-clamp(32, 48);
+		text-align: center;
+	}
 
-  // 料理リスト（CSS Grid構造）
-  &__list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
+	// カテゴリーリンク
+	&__heading-link {
+		text-decoration: none;
+		display: inline-block;
+		transition: opacity v.$t-duration;
 
-    @include m.mq {
-      // PC版では品格を保つため 2カラム ＋ 十分な溝（Gutters）を確保
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px 60px;
-    }
-  }
+		&:hover {
+			opacity: 0.7; // [透過黄金律 0.7]
+		}
+	}
+
+	// 料理リスト（CSS Grid構造）
+	&__list {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 32px;
+
+		@include m.mq {
+			grid-template-columns: repeat(2, 1fr); // メニュー詳細は repeat(2, 1fr)
+			gap: 40px 60px;
+		}
+	}
+
+	// 準備中メッセージ（透過黄金律：補足情報 0.7）
+	&__empty {
+		padding: 20px;
+		text-align: center;
+		color: rgba(v.$c-text, 0.7);
+	}
+}
+
+// 設定ミス警告（透過黄金律：補足情報 0.7）
+.p-menu-archive-alert {
+	padding: 100px 0;
+	text-align: center;
+	color: rgba(v.$c-text, 0.7);
+	line-height: 1.6;
 }
