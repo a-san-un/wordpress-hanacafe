@@ -18,11 +18,21 @@
 					"slug": "en"
 				},
 				{
+					"fontFamily": "\"Montserrat\", \"Noto Sans JP\", sans-serif",
+					"name": "Montserrat / Noto Sans JP (Body)",
+					"slug": "sans"
+				},
+				{
 					"fontFamily": "\"Noto Serif JP\", serif",
 					"name": "Noto Serif JP (Headings)",
 					"slug": "serif"
 				}
 			]
+		}
+	},
+	"styles": {
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--sans)"
 		}
 	}
 }
