@@ -7,6 +7,7 @@
 // 1. デフォルト値の準備
 $hero_img_url = get_template_directory_uri() . '/assets/images/hero.jpg';
 $hero_title_jp = '木漏れ日と、手作りの温もり。';
+$hero_alt = 'HanaCAFE nappa69 メインビジュアル';
 
 // 2. データの取得 (WP_Query)
 $args = [
@@ -26,6 +27,11 @@ if ($the_query->have_posts()) {
         }
         // 投稿タイトルを日本語タイトルとして使用
         $hero_title_jp = get_the_title();
+
+        // アクセシビリティ対応: alt属性の動的設定（タイトルがあれば上書き）
+        if (get_the_title()) {
+            $hero_alt = get_the_title();
+        }
     }
     wp_reset_postdata();
 }
@@ -34,7 +40,7 @@ if ($the_query->have_posts()) {
 <section class="p-hero u-alignfull">
     <div class="p-hero__inner">
         <div class="p-hero__img">
-            <img src="<?php echo esc_url($hero_img_url); ?>" alt="HanaCAFE nappa69">
+            <img src="<?php echo esc_url($hero_img_url); ?>" alt="<?php echo esc_attr($hero_alt); ?>">
         </div>
 
         <div class="p-hero__content">

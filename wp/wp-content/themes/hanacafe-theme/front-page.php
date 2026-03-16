@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main class="l-main">
     <?php get_template_part('template-parts/home/hero'); ?>
     <?php get_template_part('template-parts/home/about'); ?>
     <?php get_template_part('template-parts/home/menu'); ?>

@@ -8,7 +8,7 @@
 
 get_header(); ?>
 
-<main id="primary" class="site-main">
+<main class="l-main">
     <section class="l-section">
         <div class="l-container">
             <?php

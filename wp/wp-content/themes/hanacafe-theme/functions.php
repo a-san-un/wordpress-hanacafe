@@ -139,3 +139,24 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     }
     return $atts;
 }, 20, 3);
+
+/**
+ * 7. カスタム投稿タイプ：メインビジュアルの登録
+ * [設計意図]
+ * 1. 役割: 管理画面からMVの画像とキャッチコピー(タイトル)を編集可能にする
+ * 2. supports: title(alt用), thumbnail(画像用), page-attributes(順序用)を有効化
+ */
+function hc_register_main_visual() {
+    $args = [
+        'label'               => 'メインビジュアル',
+        'public'              => true,
+        'has_archive'         => false,
+        'menu_position'       => 5,
+        'menu_icon'           => 'dashicons-format-image',
+        'show_in_rest'        => true, // ブロックエディタを有効化
+        'supports'            => ['title', 'thumbnail', 'page-attributes'],
+        'hierarchical'        => false,
+    ];
+    register_post_type('main-visual', $args);
+}
+add_action('init', 'hc_register_main_visual');
