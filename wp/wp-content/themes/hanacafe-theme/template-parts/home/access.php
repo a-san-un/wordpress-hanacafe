@@ -3,12 +3,12 @@
 /**
  * Home: Access Section (完全CMS化版)
  * [設計意図]
- * 1. システム分離: 店舗情報は固定ページ 'access' で一括管理。
+ * 1. システム分離: 店舗情報は固定ページ 'access-info' で一括管理。
  * 2. UX最適化: URL未入力時でも画像は表示させ、レイアウト崩れを防ぐ。
  * 3. 柔軟な画像管理: オーナーが画像をアップすれば差し替わり、なければデフォルトを表示。
  */
 
-$access_page = get_page_by_path('access');
+$access_page = get_page_by_path('access-info');
 $access_id = $access_page ? $access_page->ID : 0;
 ?>
 <section id="access" class="p-access l-section">

@@ -44,6 +44,33 @@
     display: inline-block;
   }
 
+  // 店舗情報リスト
+  &__info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__info-item {
+    display: flex;
+    align-items: center;
+    justify-content: center; // SP版は中央揃え
+    gap: 8px;
+    font-size: 14px;
+
+    @include m.mq {
+      justify-content: flex-start; // PC版は左揃え
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+      color: rgba(v.$c-white, 0.7); // 黄金律
+    }
+  }
+
   // ナビゲーション
   &__nav {
     display: flex;
