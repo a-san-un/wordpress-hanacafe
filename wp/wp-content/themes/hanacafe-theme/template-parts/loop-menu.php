@@ -17,12 +17,11 @@
                 <span class="c-badge-recommend">RECOMMEND</span>
             <?php endif; ?>
 
-            <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
-            <?php else : ?>
-                <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/img/common/noimage.png" alt="" class="p-menu__img">
-            <?php endif; ?>
-        </div>
+            			<?php if (has_post_thumbnail()) : ?>
+            				<?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
+            			<?php else : ?>
+            				<img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="<?php the_title_attribute(); ?> の代替画像" class="p-menu__img">
+            			<?php endif; ?>        </div>
 
         <div class="p-menu__info">
             <div class="p-menu__titles">

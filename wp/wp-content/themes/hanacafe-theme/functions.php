@@ -211,3 +211,18 @@ function hc_register_main_visual() {
     register_post_type('main-visual', $args);
 }
 add_action('init', 'hc_register_main_visual');
+
+
+/**
+ * 8. オリジナル画像のAlt属性自動補完
+ * [設計意図] 運用者が代替テキストの入力を忘れた場合でも、自動で記事タイトルを補完する。
+ */
+add_filter('post_thumbnail_html', function($html, $post_id) {
+    // alt属性が空（alt="" または alt=''）かどうかを正規表現でチェック
+    if (preg_match('/alt=(["\'])\1/', $html)) {
+        $title = esc_attr(get_the_title($post_id));
+        // 空のalt属性を記事タイトルで置換（最初に一致したもの1つだけ）
+        $html = preg_replace('/alt=(["\'])\1/', 'alt="' . $title . '"', $html, 1);
+    }
+    return $html;
+}, 20, 2);

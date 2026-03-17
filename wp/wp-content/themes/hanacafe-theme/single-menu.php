@@ -49,7 +49,7 @@ get_header(); ?>
                                 elseif (has_post_thumbnail()) :
                                     the_post_thumbnail('large', array('class' => 'p-single-menu__img'));
                                 else :
-                                    echo '<div class="p-single-menu__no-img"></div>';
+                                    echo '<img src="' . get_hanacafe_default_image_url('menu-info') . '" alt="' . the_title_attribute(['echo' => false]) . ' の代替画像" class="p-single-menu__img">';
                                 endif;
                                 ?>
                             </div>
