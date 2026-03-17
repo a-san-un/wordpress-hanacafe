@@ -97,6 +97,22 @@ get_header(); ?>
     <?php endwhile;
     endif; ?>
 
+    <?php
+    $term_id = ($terms && !is_wp_error($terms)) ? $terms[0]->term_id : 0;
+    $related_query = new WP_Query([
+        'post_type' => 'menu',
+        'posts_per_page' => 3,
+        'post__not_in' => [get_the_ID()],
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'tax_query' => [[
+            'taxonomy' => 'menu_category',
+            'field' => 'term_id',
+            'terms' => $term_id,
+        ]],
+    ]);
+
+    if ($related_query->have_posts()) : ?>
     <section class="l-section p-menu-related">
         <div class="l-container">
             <div class="p-menu-related__header">
@@ -105,28 +121,17 @@ get_header(); ?>
             </div>
             <div class="p-menu__list">
                 <?php
-                $term_id = ($terms && !is_wp_error($terms)) ? $terms[0]->term_id : 0;
-                $related_query = new WP_Query([
-                    'post_type' => 'menu',
-                    'posts_per_page' => 3,
-                    'post__not_in' => [get_the_ID()],
-                    'orderby' => 'rand',
-                    'tax_query' => [[
-                        'taxonomy' => 'menu_category',
-                        'field' => 'term_id',
-                        'terms' => $term_id,
-                    ]],
-                ]);
-                if ($related_query->have_posts()) :
                     while ($related_query->have_posts()) : $related_query->the_post();
                         get_template_part('template-parts/loop', 'menu');
                     endwhile;
-                    wp_reset_postdata();
-                endif;
                 ?>
             </div>
         </div>
     </section>
+    <?php
+        wp_reset_postdata();
+    endif;
+    ?>
 </main>
 
 <?php get_footer(); ?>
