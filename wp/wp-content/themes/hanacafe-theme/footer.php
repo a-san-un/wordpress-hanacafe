@@ -9,9 +9,8 @@
  * 4. SSOTの徹底: 店舗情報ページ(access-info)をマスターとし、そこから住所・SNS情報を取得。DRY原則を遵守。
  */
 
-// 店舗情報ページ（スラッグ: access-info）のIDを取得
-$access_page = get_page_by_path('access-info');
-$access_id   = $access_page ? $access_page->ID : 0;
+// [fix 2-1]
+$access_id = get_hanacafe_master_page_id('access-info') ?: 0;
 
 // 住所・電話番号の取得 (Accessセクションと共通のフィールドを使用)
 $shop_address = get_field('shop_address', $access_id) ?: '神奈川県川崎市中原区新丸子東1-983-1';

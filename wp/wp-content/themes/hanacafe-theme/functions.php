@@ -116,6 +116,7 @@ function get_hanacafe_default_image_url($slug = 'common-info') {
     return esc_url(get_theme_file_uri('/assets/images/coming-soon.jpg'));
 }
 
+// [fix 2-3] フォールバック画像（Anti-Blackout用）優先度10
 /**
  * アイキャッチ画像がない場合にグローバルデフォルト画像を表示するフィルター
  */
@@ -175,29 +176,47 @@ add_filter('nav_menu_css_class', function ($classes, $item, $args) {
     return $classes;
 }, 10, 3);
 
+// [fix 2-2]
+/**
+ * メニューナビゲーションのリンク属性をカスタマイズ
+ * - theme_location に応じてクラスを設定
+ * - ルート相対パス（/#で始まる）を動的に解決
+ */
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+    // theme_location に応じてクラスを設定
     if ($args->theme_location === 'global-nav') {
         $atts['class'] = 'p-header__nav-link';
     } elseif ($args->theme_location === 'drawer-nav') {
         $atts['class'] = 'p-drawer__link';
     }
-    return $atts;
-}, 10, 3);
 
-/**
- * 6. カスタムリンクのルート相対パスを動的に解決する
- */
-add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
+    // ルート相対パス（/#で始まる）を動的に解決
     if (isset($atts['href']) && strpos($atts['href'], '/#') === 0) {
         $atts['href'] = home_url($atts['href']);
     }
+
     return $atts;
-}, 20, 3);
+}, 10, 3);
+
+// [fix 2-3] alt自動補完 優先度20（上記フォールバック後に実行）
+/**
+ * オリジナル画像のAlt属性自動補完
+ * [設計意図] 運用者が代替テキストの入力を忘れた場合でも、自動で記事タイトルを補完する。
+ */
+add_filter('post_thumbnail_html', function ($html, $post_id) {
+    // alt属性が空（alt="" または alt=''）かどうかを正規表現でチェック
+    if (preg_match('/alt=(["\'])\1/', $html)) {
+        $title = esc_attr(get_the_title($post_id));
+        // 空のalt属性を記事タイトルで置換（最初に一致したもの1つだけ）
+        $html = preg_replace('/alt=(["\'])\1/', 'alt="' . $title . '"', $html, 1);
+    }
+    return $html;
+}, 20, 2);
 
 /**
- * 7. カスタム投稿タイプ：メインビジュアルの登録
+ * 6. カスタム投稿タイプ：メインビジュアルの登録
  */
-function hc_register_main_visual() {
+function hanacafe_register_main_visual() {
     $args = [
         'label'               => 'メインビジュアル',
         'public'              => true,
@@ -210,19 +229,4 @@ function hc_register_main_visual() {
     ];
     register_post_type('main-visual', $args);
 }
-add_action('init', 'hc_register_main_visual');
-
-
-/**
- * 8. オリジナル画像のAlt属性自動補完
- * [設計意図] 運用者が代替テキストの入力を忘れた場合でも、自動で記事タイトルを補完する。
- */
-add_filter('post_thumbnail_html', function($html, $post_id) {
-    // alt属性が空（alt="" または alt=''）かどうかを正規表現でチェック
-    if (preg_match('/alt=(["\'])\1/', $html)) {
-        $title = esc_attr(get_the_title($post_id));
-        // 空のalt属性を記事タイトルで置換（最初に一致したもの1つだけ）
-        $html = preg_replace('/alt=(["\'])\1/', 'alt="' . $title . '"', $html, 1);
-    }
-    return $html;
-}, 20, 2);
+add_action('init', 'hanacafe_register_main_visual');

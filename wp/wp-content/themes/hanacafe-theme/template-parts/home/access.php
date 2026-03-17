@@ -8,8 +8,8 @@
  * 3. 柔軟な画像管理: オーナーが画像をアップすれば差し替わり、なければデフォルトを表示。
  */
 
-$access_page = get_page_by_path('access-info');
-$access_id = $access_page ? $access_page->ID : 0;
+// [fix 2-1]
+$access_id = get_hanacafe_master_page_id('access-info') ?: 0;
 ?>
 <section id="access" class="p-access l-section">
   <div class="p-access__inner l-container">
