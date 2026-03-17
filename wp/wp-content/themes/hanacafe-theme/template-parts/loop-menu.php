@@ -26,7 +26,8 @@
 
         <div class="p-menu__info">
             <div class="p-menu__titles">
-                <h3 class="p-menu__name"><?php the_title(); ?></h3>
+                <h3 class="p-menu__name"><?php // [fix 1-4]
+                                            echo esc_html(get_the_title()); ?></h3>
                 <?php if ($sub_name = get_field('sub_name')) : ?>
                     <p class="p-menu__sub"><?php echo esc_html($sub_name); ?></p>
                 <?php endif; ?>
@@ -40,7 +41,8 @@
                 <span class="p-menu__price-unit">¥</span>
                 <?php
                 $price = get_field('price');
-                echo $price ? number_format((int)$price) : '---';
+                // [fix 1-3]
+                echo esc_html($price ? number_format((int)$price) : '---');
                 ?>
             </p>
         </div>

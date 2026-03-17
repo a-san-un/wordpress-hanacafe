@@ -25,7 +25,8 @@ get_header(); ?>
                     <header class="p-single-menu__header p-menu__header">
                         <div class="p-menu__heading c-heading">
                             <span class="c-heading__sub"><?php echo esc_html($category_display); ?></span>
-                            <h1 class="c-heading__main"><?php the_title(); ?></h1>
+                            <h1 class="c-heading__main"><?php // [fix 1-4]
+                                                        echo esc_html(get_the_title()); ?></h1>
                         </div>
                         <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__view-all">
                             VIEW ALL MENU
@@ -49,7 +50,9 @@ get_header(); ?>
                                 elseif (has_post_thumbnail()) :
                                     the_post_thumbnail('large', array('class' => 'p-single-menu__img'));
                                 else :
-                                    echo '<img src="' . get_hanacafe_default_image_url('menu-info') . '" alt="' . the_title_attribute(['echo' => false]) . ' の代替画像" class="p-single-menu__img">';
+                                    // [fix 1-5]
+                                    $alt = esc_attr(get_the_title() . ' の代替画像');
+                                    echo '<img src="' . esc_url(get_hanacafe_default_image_url('menu-info')) . '" alt="' . $alt . '" class="p-single-menu__img">';
                                 endif;
                                 ?>
                             </div>
@@ -113,21 +116,21 @@ get_header(); ?>
     ]);
 
     if ($related_query->have_posts()) : ?>
-    <section class="l-section p-menu-related">
-        <div class="l-container">
-            <div class="p-menu-related__header">
-                <h2 class="p-menu-related__title">RECOMMEND</h2>
-                <p class="p-menu-related__subtitle">こちらのメニューもいかがですか？</p>
-            </div>
-            <div class="p-menu__list">
-                <?php
+        <section class="l-section p-menu-related">
+            <div class="l-container">
+                <div class="p-menu-related__header">
+                    <h2 class="p-menu-related__title">RECOMMEND</h2>
+                    <p class="p-menu-related__subtitle">こちらのメニューもいかがですか？</p>
+                </div>
+                <div class="p-menu__list">
+                    <?php
                     while ($related_query->have_posts()) : $related_query->the_post();
                         get_template_part('template-parts/loop', 'menu');
                     endwhile;
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
     <?php
         wp_reset_postdata();
     endif;

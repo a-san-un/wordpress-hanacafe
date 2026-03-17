@@ -31,7 +31,8 @@
                                     <?php echo get_the_date('Y.m.d'); ?>
                                 </time>
                                 <h3 class="p-news-card__title">
-                                    <?php the_title(); ?>
+                                    <?php // [fix 1-4]
+                                    echo esc_html(get_the_title()); ?>
                                 </h3>
                             </div>
                         </a>
