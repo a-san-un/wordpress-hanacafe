@@ -25,7 +25,7 @@ get_header(); ?>
 
             <div class="p-page__footer">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="p-page__back-link">
-                    <span class="material-symbols-outlined">arrow_back_ios</span>
+                    <span class="material-symbols-outlined">arrow_back</span>
                     TOPページへ戻る
                 </a>
             </div>

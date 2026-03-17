@@ -17,11 +17,12 @@
                 <span class="c-badge-recommend">RECOMMEND</span>
             <?php endif; ?>
 
-            			<?php if (has_post_thumbnail()) : ?>
-            				<?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
-            			<?php else : ?>
-            				<img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="<?php the_title_attribute(); ?> の代替画像" class="p-menu__img">
-            			<?php endif; ?>        </div>
+            <?php if (has_post_thumbnail()) : ?>
+                <?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
+            <?php else : ?>
+                <img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="<?php the_title_attribute(); ?> の代替画像" class="p-menu__img">
+            <?php endif; ?>
+        </div>
 
         <div class="p-menu__info">
             <div class="p-menu__titles">
@@ -32,10 +33,7 @@
             </div>
 
             <div class="p-menu__desc">
-                <?php
-                $content = get_the_content();
-                echo wp_trim_words(strip_shortcodes($content), 40, '...');
-                ?>
+                <?php the_excerpt(); ?>
             </div>
 
             <p class="p-menu__price">

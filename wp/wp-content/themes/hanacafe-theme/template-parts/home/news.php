@@ -10,7 +10,6 @@
             $args = array(
                 'post_type'      => 'post',
                 'posts_per_page' => 3,
-                // 'category_name'  => 'lunch', // 特定のカテゴリーに絞る場合はコメントを解除
             );
             $news_query = new WP_Query($args);
 
