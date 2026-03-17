@@ -23,7 +23,7 @@
                                 <?php if (has_post_thumbnail()) : ?>
                                     <?php the_post_thumbnail('medium', array('class' => 'p-news-card__img')); ?>
                                 <?php else : ?>
-                                    <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/common/no-image.jpg')); ?>" alt="No Image" class="p-news-card__img">
+                                    <img src="<?php echo get_hanacafe_default_image_url('news-info'); ?>" alt="<?php echo esc_attr(get_the_title() . ' の代替画像'); ?>" class="p-news-card__img">
                                 <?php endif; ?>
                             </div>
 

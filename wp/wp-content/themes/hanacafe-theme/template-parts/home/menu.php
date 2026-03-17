@@ -52,7 +52,7 @@ $menu_slots = [
                 <?php else : ?>
                     <article class="p-menu__item is-preparing">
                         <div class="p-menu__img-wrapper">
-                            <img src="<?php echo esc_url(get_theme_file_uri('/assets/img/common/no-image.jpg')); ?>" alt="準備中" class="p-menu__img">
+                            <img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="準備中" class="p-menu__img">
                         </div>
                         <div class="p-menu__info">
                             <h3 class="p-menu__name"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>

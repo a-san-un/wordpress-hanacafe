@@ -3,7 +3,7 @@
 /**
  * HanaCAFE nappa69 Functions and Definitions
  * * 役割: テーマの機能拡張、外部ファイルの読み込み制御（SSOT）
- * * 更新日: 2026-03-15 - グローバルナビBEMクラス注入フィルターを追加
+ * * 更新日: 2026-03-17 - ACFフィールド名の一致と表示保証クラスの追加
  */
 
 /**
@@ -84,11 +84,66 @@ add_action('pre_get_posts', 'hanacafe_pre_get_posts');
 remove_action('wp_head', 'wp_generator');
 
 /**
+ * スラッグから固定ページIDを取得するヘルパー関数
+ */
+function get_hanacafe_master_page_id($slug) {
+    $page = get_page_by_path($slug);
+    return $page ? $page->ID : false;
+}
+
+/**
+ * デフォルト画像を取得する関数 (CMS連動)
+ * [SSOT] フィールド名を site_default_image に統一
+ */
+function get_hanacafe_default_image_url($slug = 'common-info') {
+    $page_id = get_hanacafe_master_page_id($slug);
+
+    // ACF設定名 'site_default_image' と完全に一致させる
+    $img_val = $page_id ? get_field('site_default_image', $page_id) : '';
+    $img_url = '';
+
+    if (is_array($img_val) && isset($img_val['url'])) {
+        $img_url = $img_val['url'];
+    } elseif (is_string($img_val)) {
+        $img_url = $img_val;
+    }
+
+    if ($img_url) {
+        return esc_url($img_url);
+    }
+
+    // 最終防衛ライン
+    return esc_url(get_theme_file_uri('/assets/images/coming-soon.jpg'));
+}
+
+/**
+ * アイキャッチ画像がない場合にグローバルデフォルト画像を表示するフィルター
+ */
+function hanacafe_fallback_thumbnail_html($html, $post_id, $post_thumbnail_id, $size, $attr) {
+    if (empty($html) && ! is_admin()) {
+        $default_img_url = get_hanacafe_default_image_url();
+        $alt_text = esc_attr(get_the_title($post_id) . ' の代替画像');
+
+        // フィルター経由であることを示す p-common-placeholder を追加
+        $base_class = isset($attr['class']) ? $attr['class'] : 'wp-post-image';
+        $class = $base_class . ' p-common-placeholder';
+
+        $html = sprintf(
+            '<img src="%s" alt="%s" class="%s" />',
+            $default_img_url,
+            $alt_text,
+            esc_attr($class)
+        );
+    }
+    return $html;
+}
+add_filter('post_thumbnail_html', 'hanacafe_fallback_thumbnail_html', 10, 5);
+
+/**
  * トップページ用：Menu投稿取得関数
- * 未選択の場合は、自動的に最新1件を取得するフォールバック機能付き。
  */
 function get_hanacafe_top_menu_post($field_name, $term_slug) {
-    $post_obj = get_field($field_name);
+    $post_obj = get_field($field_name, get_hanacafe_master_page_id('menu-info'));
     if ($post_obj) {
         return $post_obj;
     }
@@ -107,8 +162,9 @@ function get_hanacafe_top_menu_post($field_name, $term_slug) {
     $query = new WP_Query($args);
     return $query->have_posts() ? $query->posts : null;
 }
+
 /**
- * 5. メニューにBEMクラスを強制注入するフィルター (非破壊規約準拠)
+ * 5. メニューにBEMクラスを強制注入するフィルター
  */
 add_filter('nav_menu_css_class', function ($classes, $item, $args) {
     if ($args->theme_location === 'global-nav') {
@@ -129,9 +185,7 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
 }, 10, 3);
 
 /**
- * 6. カスタムリンクのルート相対パスを動的に解決する (サブディレクトリ・移設対策)
- * [設計意図] 管理画面で /# で始まる相対パスが設定された場合、出力時に自動で
- * home_url() を付与し、環境に依存しない絶対パスへ変換する [3, 4]。
+ * 6. カスタムリンクのルート相対パスを動的に解決する
  */
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
     if (isset($atts['href']) && strpos($atts['href'], '/#') === 0) {
@@ -142,9 +196,6 @@ add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
 
 /**
  * 7. カスタム投稿タイプ：メインビジュアルの登録
- * [設計意図]
- * 1. 役割: 管理画面からMVの画像とキャッチコピー(タイトル)を編集可能にする
- * 2. supports: title(alt用), thumbnail(画像用), page-attributes(順序用)を有効化
  */
 function hc_register_main_visual() {
     $args = [
@@ -153,7 +204,7 @@ function hc_register_main_visual() {
         'has_archive'         => false,
         'menu_position'       => 5,
         'menu_icon'           => 'dashicons-format-image',
-        'show_in_rest'        => true, // ブロックエディタを有効化
+        'show_in_rest'        => true,
         'supports'            => ['title', 'thumbnail', 'page-attributes'],
         'hierarchical'        => false,
     ];
