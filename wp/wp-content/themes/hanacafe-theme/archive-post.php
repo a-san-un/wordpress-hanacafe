@@ -21,30 +21,30 @@ get_header(); ?>
             <div class="p-page__content">
                 <?php if (have_posts()) : ?>
 
-                    <div class="p-news-archive__grid">
+                    <div class="p-news__list">
                         <?php while (have_posts()) : the_post(); ?>
-                            <article <?php post_class('p-news-archive__item'); ?>>
-                                <a href="<?php the_permalink(); ?>" class="p-news-archive__link">
+                            <article <?php post_class('p-news-card'); ?>>
+                                <a href="<?php the_permalink(); ?>" class="p-news-card__link">
 
-                                    <div class="p-news-archive__img-wrapper">
+                                    <div class="p-news-card__img-box">
                                         <?php if (has_post_thumbnail()) : ?>
-                                            <?php the_post_thumbnail('medium', ['class' => 'p-news-archive__img']); ?>
+                                            <?php the_post_thumbnail('medium', ['class' => 'p-news-card__img']); ?>
                                         <?php else : ?>
                                             <img
                                                 src="<?php echo get_hanacafe_default_image_url('news-info'); ?>"
                                                 alt="<?php echo esc_attr(get_the_title() . ' の代替画像'); ?>"
-                                                class="p-news-archive__img">
+                                                class="p-news-card__img">
                                         <?php endif; ?>
                                     </div>
 
-                                    <div class="p-news-archive__body">
-                                        <time class="p-news-archive__date" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
+                                    <div class="p-news-card__body">
+                                        <time class="p-news-card__date" datetime="<?php echo esc_attr(get_the_date('c')); ?>">
                                             <?php echo esc_html(get_the_date('Y.m.d')); ?>
                                         </time>
-                                        <h2 class="p-news-archive__title">
+                                        <h2 class="p-news-card__title">
                                             <?php echo esc_html(get_the_title()); ?>
                                         </h2>
-                                        <div class="p-news-archive__excerpt">
+                                        <div class="p-news-card__excerpt">
                                             <?php echo wp_kses_post(get_the_excerpt()); ?>
                                         </div>
                                     </div>
