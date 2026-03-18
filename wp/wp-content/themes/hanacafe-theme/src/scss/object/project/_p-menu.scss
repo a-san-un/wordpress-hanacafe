@@ -68,7 +68,7 @@
     overflow: hidden;
     aspect-ratio: 4 / 5;
     background-color: rgba(v.$c-text, 0.05); 
-    border-radius: 4px;
+    border-radius: v.$radius-s;
   }
 
   &__img {

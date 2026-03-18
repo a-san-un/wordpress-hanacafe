@@ -70,7 +70,7 @@
     &__img-box {
         position: relative;
         aspect-ratio: 370 / 210;
-        border-radius: 2px;
+        border-radius: v.$radius-s;
         overflow: hidden;
         // ★コンソール確定値同期: 代替画像があるため背景色なし
         background-color: transparent;
