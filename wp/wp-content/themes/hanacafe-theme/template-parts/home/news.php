@@ -47,7 +47,7 @@
         </div>
 
         <div class="p-news__footer">
-            <a href="<?php echo esc_url(get_post_type_archive_link('post')); ?>" class="c-btn-capsule">
+            <a href="<?php echo esc_url(get_hanacafe_news_page_url()); ?>" class="c-btn-capsule">
                 READ MORE NEWS
             </a>
         </div>

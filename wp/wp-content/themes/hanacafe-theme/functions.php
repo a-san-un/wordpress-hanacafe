@@ -230,3 +230,30 @@ function hanacafe_register_main_visual() {
     register_post_type('main-visual', $args);
 }
 add_action('init', 'hanacafe_register_main_visual');
+
+/**
+ * 7. 投稿ページ（ニュース一覧）に archive-post.php を適用
+ * [設計意図] archive-post.php はWordPressのテンプレート階層で自動認識されないため、
+ * template_include フィルターで明示的に割り当てる。
+ */
+function hanacafe_posts_page_template($template) {
+    if (is_home()) {
+        $new_template = locate_template('archive-post.php');
+        if ($new_template) {
+            return $new_template;
+        }
+    }
+    return $template;
+}
+add_filter('template_include', 'hanacafe_posts_page_template');
+
+/**
+ * ニュース一覧ページ（投稿ページ）のURLを返すヘルパー
+ */
+function get_hanacafe_news_page_url() {
+    $page_for_posts = get_option('page_for_posts');
+    if ($page_for_posts) {
+        return get_permalink($page_for_posts);
+    }
+    return home_url('/news/');
+}
