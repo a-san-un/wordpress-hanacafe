@@ -24,14 +24,8 @@
 		background-color: v.$c-white;
 		border-bottom: 1px solid rgba(v.$c-text, 0.1); // 透過黄金律 0.1
 	}
-	
-	.admin-bar & {
-		top: 46px;
-		
-		@include m.mq {
-			top: 32px;
-		}
-	}
+
+	@include m.admin-bar-top();
 
 	&__inner {
 		display: flex;
@@ -129,7 +123,7 @@
 	position: fixed;
 	inset: 0;
 	background-color: v.$c-base;
-	z-index: v.$z-header - 1;
+	z-index: v.$z-header + 1;
 	transform: translateX(100%); // 初期状態は右側に隠す
 	transition: transform 0.4s ease;
 	display: flex;
@@ -138,6 +132,29 @@
 
 	@include m.mq {
 		display: none;
+	}
+
+	&__close {
+		position: fixed;
+		top: 16px;
+		right: 16px;
+		@include m.admin-bar-top(16px);
+		display: flex;
+		align-items: center;
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: v.$c-main;
+		padding: 8px;
+
+		.material-symbols-outlined {
+			font-size: 32px;
+		}
+
+		&:focus-visible {
+			outline: 2px solid v.$c-main;
+			outline-offset: 4px;
+		}
 	}
 
 	&.is-active {

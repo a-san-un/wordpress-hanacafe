@@ -73,6 +73,9 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
     <!-- ドロワーメニュー（モバイル用オーバーレイナビ） -->
     <div class="p-drawer js-drawer" id="drawer-menu" aria-hidden="true">
         <div class="p-drawer__inner">
+            <button class="p-drawer__close js-drawer-close" aria-label="メニューを閉じる">
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+            </button>
             <nav class="p-drawer__nav" aria-label="モバイル用ナビゲーション">
                 <?php
                 wp_nav_menu([

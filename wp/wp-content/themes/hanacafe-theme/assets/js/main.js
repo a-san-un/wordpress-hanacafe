@@ -16,6 +16,7 @@ jQuery(function ($) {
 	// 監視対象を個別のセクション（.l-section）に限定
 	// ※親コンテナ（.p-page）を監視すると、SP版で判定が不安定になり表示が消えるリスクがあるため除外
 	const $animateTargets = $(".l-section");
+	const $drawerClose = $(".js-drawer-close");
 
 	/**
 	 * 0. スクロール連動ヘッダー (Food Science準拠)
@@ -59,6 +60,46 @@ jQuery(function ($) {
 		$drawer.attr("aria-hidden", "true");
 		$drawer.removeClass("is-active");
 		$body.css("overflow", "");
+	});
+
+	/* 閉じるボタンクリックでドロワーを閉じる */
+	$drawerClose.on("click", function () {
+		$hamburger.attr("aria-expanded", "false");
+		$drawer.attr("aria-hidden", "true");
+		$drawer.removeClass("is-active");
+		$body.css("overflow", "");
+		$hamburger.trigger("focus");
+	});
+
+	/* Escキーでドロワーを閉じる */
+	$(document).on("keydown", function (e) {
+		if (e.key === "Escape" && $drawer.hasClass("is-active")) {
+			$hamburger.attr("aria-expanded", "false");
+			$drawer.attr("aria-hidden", "true");
+			$drawer.removeClass("is-active");
+			$body.css("overflow", "");
+			$hamburger.trigger("focus");
+		}
+	});
+
+	/* フォーカストラップ：ドロワー開放中はTab/Shift+Tabをドロワー内に閉じ込める */
+	$drawer.on("keydown", function (e) {
+		if (e.key !== "Tab") return;
+		const focusable = $drawer.find("a, button, [tabindex]:not([tabindex='-1'])").filter(":visible").toArray();
+		if (focusable.length === 0) return;
+		const first = focusable[0];
+		const last = focusable[focusable.length - 1];
+		if (e.shiftKey) {
+			if (document.activeElement === first) {
+				e.preventDefault();
+				last.focus();
+			}
+		} else {
+			if (document.activeElement === last) {
+				e.preventDefault();
+				first.focus();
+			}
+		}
 	});
 
 	/**

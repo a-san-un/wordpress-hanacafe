@@ -35,6 +35,16 @@ add_action('after_setup_theme', 'hanacafe_setup');
  * 2. アセット（CSS/JS）の読み込み
  */
 function hanacafe_enqueue_scripts() {
+    // --- Google Fonts preconnect（接続の先行確立）---
+    wp_enqueue_style('hanacafe-fonts-preconnect-1', 'https://fonts.googleapis.com', [], null);
+    wp_enqueue_style('hanacafe-fonts-preconnect-2', 'https://fonts.gstatic.com', [], null);
+    add_filter('style_loader_tag', function ($html, $handle) {
+        if (in_array($handle, ['hanacafe-fonts-preconnect-1', 'hanacafe-fonts-preconnect-2'], true)) {
+            $html = str_replace("rel='stylesheet'", "rel='preconnect' crossorigin", $html);
+        }
+        return $html;
+    }, 10, 2);
+
     // --- Google Fonts & Icons ---
     $fonts_url = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap';
     wp_enqueue_style('hanacafe-fonts', $fonts_url, [], null);

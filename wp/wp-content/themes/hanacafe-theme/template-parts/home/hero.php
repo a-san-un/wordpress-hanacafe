@@ -40,7 +40,11 @@ if ($the_query->have_posts()) {
 <section class="p-hero u-alignfull">
     <div class="p-hero__inner">
         <div class="p-hero__img">
-            <img src="<?php echo esc_url($hero_img_url); ?>" alt="<?php echo esc_attr($hero_alt); ?>">
+            <img
+                src="<?php echo esc_url($hero_img_url); ?>"
+                alt="<?php echo esc_attr($hero_alt); ?>"
+                fetchpriority="high"
+                loading="eager">
         </div>
 
         <div class="p-hero__content">

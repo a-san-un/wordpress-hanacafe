@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "variables" as v;
 
 /* ===============================================
    Global: Mixins & Functions
@@ -26,4 +27,16 @@
 	@media screen and (min-width: 768px) {
 		@content;
 	}
+}
+
+// WordPress管理バー表示時の top オフセットを付与
+// 使い方: @include m.admin-bar-top(); / @include m.admin-bar-top(16px);
+@mixin admin-bar-top($base-top: 0px) {
+  .admin-bar & {
+    top: calc(#{$base-top} + #{v.$wp-admin-bar-mobile});
+
+    @include mq {
+      top: calc(#{$base-top} + #{v.$wp-admin-bar-desktop});
+    }
+  }
 }
