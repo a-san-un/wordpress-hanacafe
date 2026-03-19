@@ -97,7 +97,9 @@ get_header(); ?>
                 </div>
             </article>
 
-    <?php endwhile;
+    <?php
+            $current_post_id = get_the_ID();
+        endwhile;
     endif; ?>
 
     <?php
@@ -105,7 +107,7 @@ get_header(); ?>
     $related_query = new WP_Query([
         'post_type' => 'menu',
         'posts_per_page' => 3,
-        'post__not_in' => [get_the_ID()],
+        'post__not_in' => [$current_post_id],
         'orderby' => 'date',
         'order' => 'DESC',
         'tax_query' => [[

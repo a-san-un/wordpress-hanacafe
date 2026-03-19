@@ -59,14 +59,14 @@ $privacy_url = get_privacy_policy_url() ?: '#';
 
                 <!-- SNSリンク: target="_blank" + rel="noopener" でセキュリティ確保（タブナビング対策） -->
                 <div class="l-footer__sns-links">
-                    <a href="<?php echo esc_url($insta_url); ?>" target="_blank" rel="noopener">INSTAGRAM</a>
-                    <a href="<?php echo esc_url($fb_url); ?>" target="_blank" rel="noopener">FACEBOOK</a>
+                    <a href="<?php echo esc_url($insta_url); ?>" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+                    <a href="<?php echo esc_url($fb_url); ?>" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
                 </div>
 
                 <!-- ポリシーリンク: 法的必須ページへの導線 -->
                 <div class="l-footer__policy-links">
                     <a href="<?php echo esc_url($privacy_url); ?>">プライバシーポリシー</a>
-                    <a href="#">特定商取引法に基づく表記</a>
+                    <a href="#" aria-disabled="true" tabindex="-1">特定商取引法に基づく表記</a>
                 </div>
 
             </div>
