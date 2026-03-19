@@ -38,6 +38,7 @@
 /wp/wp-content/**/upgrade/
 /wp/wp-content/themes/**/assets/css/
 /wp/wp-content/themes/**/assets/images/
+/wp/wp-content/themes/**/node_modules/
 
 # Log files
 *.log
