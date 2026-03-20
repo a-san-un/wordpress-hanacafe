@@ -96,7 +96,7 @@
         font-family: v.$f-en;
         font-size: 12px;
         // 黄金律適用: 日付を 70% 透過
-        color: rgba(v.$c-text, 0.7);
+        color: v.$c-text-sub;
     }
 
     &__title {
@@ -110,7 +110,7 @@
     &__excerpt {
         font-size: 14px;
         line-height: 1.8;
-        color: rgba(v.$c-text, 0.7);
+        color: v.$c-text-sub;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;

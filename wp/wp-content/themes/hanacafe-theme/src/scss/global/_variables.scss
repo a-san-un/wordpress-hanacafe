@@ -22,6 +22,11 @@ $c-border-subtle:    rgba($c-text, 0.05); // 背景・極細境界線
 $c-white-overlay:    rgba($c-white, 0.9); // 白オーバーレイ（強）
 $c-white-mid:        rgba($c-white, 0.6); // 白オーバーレイ（中）
 $c-white-dim:        rgba($c-white, 0.3); // 白オーバーレイ（弱）
+$c-white-sub:        rgba($c-white, 0.7); // 白サブテキスト・補足（黄金律0.7）
+// $c-black ベース
+$c-black-overlay:    rgba($c-black, 0.4); // テキストシャドウ・暗色オーバーレイ
+// $c-main ベース
+$c-main-overlay:     rgba($c-main, 0.4);  // メインカラーオーバーレイ（マップ等）
 
 /**
  * 【NEW RULE: テキスト・境界線の透過ルール】（変数化済み → 下記変数を使用）

@@ -79,7 +79,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
         gap: 8px;               // 英語タイトルと日本語サブタイトルの間隔
         text-align: left;       // テキストを左揃え
         color: v.$c-white;      // テキストカラーをホワイトに（背景画像との対比）
-        text-shadow: 0 2px 10px rgba(v.$c-black, 0.4); // 可読性向上のための影（背景が明るい場合の保険）
+        text-shadow: 0 2px 10px v.$c-black-overlay; // 可読性向上のための影（背景が明るい場合の保険）
 
         &-en, &-jp {
             // --- デフォルト表示保証 ---
@@ -119,7 +119,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
             letter-spacing: 0.15em;  // 日本語の可読性向上のため字間を広めに
             margin-top: 16px;        // 英語タイトルとの追加余白（gap: 8px に加算）
             // 黄金律: 補足情報の透過(0.7)
-            color: rgba(v.$c-white, 0.7); // 英語タイトルより少し薄くして視覚的な階層を作る
+            color: v.$c-white-sub; // 英語タイトルより少し薄くして視覚的な階層を作る
             transition-delay: 1.2s;  // 英語タイトル（0.8s）より後に登場させる時差演出
 
             // --- JS有効時のみの隠し設定 ---
