@@ -31,6 +31,33 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
         width: 100%;              // 親要素いっぱいに広げる
         height: 100%;             // 親の高さを継承
         background-color: v.$c-main; // 画像ロード前のフォールバック背景色
+        position: relative; // ← 追加：疑似要素の基準
+
+    // 1層目：乗算フィルター（深緑 20%）
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-color: rgba(v.$c-main, 0.2);
+        mix-blend-mode: multiply;
+        z-index: $z-filter;
+        pointer-events: none;
+    }
+
+    // 2層目：縦グラデーション（透明→深緑20%→透明）
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            transparent 0%,
+            rgba(v.$c-main, 0.2) 50%,
+            transparent 100%
+        );
+        z-index: $z-filter;
+        pointer-events: none;
+    }
 
         img {
             width: 100%;              // 親コンテナ全体を覆う
@@ -46,7 +73,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
                 transform 2.0s ease-out; // ズームアウト: 2.0s でゆっくり等倍に戻る
 
             // --- JS有効時のみの読み込み演出 ---
-            .js-enabled .p-hero:not(.is-start) & { // .is-start が付く前（ロード待機中）の初期状態
+            .js-enabled body .p-hero:not(.is-start) & { // .is-start が付く前（ロード待機中）の初期状態
                 opacity: 0;            // 画像を非表示で待機
                 transform: scale(1.05); // わずかにズームインした状態で待機（ケン・バーンズ効果の起点）
             }
@@ -102,7 +129,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
             }
 
             // --- JS有効時のみの隠し設定 ---
-            .js-enabled .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
+            .js-enabled body .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
                 opacity: 0;               // 非表示で待機
                 transform: translateY(20px); // 20px 下からスライドアップさせる起点
             }
@@ -123,7 +150,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
             transition-delay: 1.2s;  // 英語タイトル（0.8s）より後に登場させる時差演出
 
             // --- JS有効時のみの隠し設定 ---
-            .js-enabled .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
+            .js-enabled body .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
                 opacity: 0;               // 非表示で待機
                 transform: translateY(15px); // 15px 下からスライドアップさせる起点（英語の20pxより控えめ）
             }

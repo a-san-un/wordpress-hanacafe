@@ -1,269 +1,158 @@
 <?php
 
 /**
- * HanaCAFE nappa69 Functions and Definitions
- * * 役割: テーマの機能拡張、外部ファイルの読み込み制御（SSOT）
- * * 更新日: 2026-03-17 - ACFフィールド名の一致と表示保証クラスの追加
+ * HanaCAFE Theme Functions
+ * WordPress 6.9 / ACF / CPTUI
  */
 
-/**
- * 1. テーマの基本セットアップ
- */
-if (!function_exists('hanacafe_setup')) {
-    function hanacafe_setup() {
-        add_theme_support('title-tag');
-        add_theme_support('post-thumbnails');
-        add_theme_support('html5', [
-            'search-form',
-            'comment-form',
-            'comment-list',
-            'gallery',
-            'caption',
-            'style',
-            'script'
-        ]);
+// ============================================================
+// 1. テーマセットアップ
+// ============================================================
+add_action('after_setup_theme', function () {
+    add_theme_support('title-tag');
+    add_theme_support('post-thumbnails');
+    add_theme_support('html5', ['search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script']);
+    register_nav_menus([
+        'global-nav' => 'グローバルナビゲーション',
+        'drawer-nav' => 'ドロワーナビゲーション',
+    ]);
+});
 
-        register_nav_menus([
-            'global-nav' => 'グローバルナビゲーション',
-            'drawer-nav' => 'ドロワーナビゲーション',
-        ]);
-    }
-}
-add_action('after_setup_theme', 'hanacafe_setup');
+// ============================================================
+// 2. アセット読み込み
+// ============================================================
 
-/**
- * 2. アセット（CSS/JS）の読み込み
- */
-function hanacafe_enqueue_scripts() {
-    // --- Google Fonts preconnect（接続の先行確立）---
+// Google Fonts preconnect タグ変換（グローバルで1回だけ登録）
+add_filter('style_loader_tag', function ($html, $handle) {
+    $preconnects = ['hanacafe-fonts-preconnect-1', 'hanacafe-fonts-preconnect-2'];
+    return in_array($handle, $preconnects, true)
+        ? str_replace("rel='stylesheet'", "rel='preconnect' crossorigin", $html)
+        : $html;
+}, 10, 2);
+
+add_action('wp_enqueue_scripts', function () {
+    $dir = get_template_directory();
+    $uri = get_template_directory_uri();
+
     wp_enqueue_style('hanacafe-fonts-preconnect-1', 'https://fonts.googleapis.com', [], null);
     wp_enqueue_style('hanacafe-fonts-preconnect-2', 'https://fonts.gstatic.com', [], null);
-    add_filter('style_loader_tag', function ($html, $handle) {
-        if (in_array($handle, ['hanacafe-fonts-preconnect-1', 'hanacafe-fonts-preconnect-2'], true)) {
-            $html = str_replace("rel='stylesheet'", "rel='preconnect' crossorigin", $html);
-        }
-        return $html;
-    }, 10, 2);
-
-    // --- Google Fonts & Icons ---
-    $fonts_url = 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap';
-    wp_enqueue_style('hanacafe-fonts', $fonts_url, [], null);
-
-    // --- メインCSS (app.css) ---
-    $app_css_path = '/assets/css/app.css';
+    wp_enqueue_style(
+        'hanacafe-fonts',
+        'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap',
+        [],
+        null
+    );
     wp_enqueue_style(
         'hanacafe-app-style',
-        get_template_directory_uri() . $app_css_path,
+        $uri . '/assets/css/app.css',
         ['hanacafe-fonts'],
-        filemtime(get_template_directory() . $app_css_path)
+        filemtime($dir . '/assets/css/app.css')
     );
-
-    // --- メインJavaScript (main.js) ---
-    $main_js_path = '/assets/js/main.js';
     wp_enqueue_script(
         'hanacafe-main-js',
-        get_template_directory_uri() . $main_js_path,
+        $uri . '/assets/js/main.js',
         ['jquery'],
-        filemtime(get_template_directory() . $main_js_path),
-        [
-            'strategy'  => 'defer',
-            'in_footer' => true,
-        ]
+        filemtime($dir . '/assets/js/main.js'),
+        ['strategy' => 'defer', 'in_footer' => true]
     );
-}
-add_action('wp_enqueue_scripts', 'hanacafe_enqueue_scripts');
+});
 
-/**
- * 3. クエリのカスタマイズ（表示件数制御）
- * * メニュー一覧（archive-menu）ではページネーションを行わず全件表示にする。
- */
-function hanacafe_pre_get_posts($query) {
-    if (is_admin() || ! $query->is_main_query()) {
-        return;
-    }
-
-    if ($query->is_post_type_archive('menu')) {
+// ============================================================
+// 3. クエリ・テンプレート制御
+// ============================================================
+add_action('pre_get_posts', function ($query) {
+    if (!is_admin() && $query->is_main_query() && $query->is_post_type_archive('menu')) {
         $query->set('posts_per_page', -1);
     }
-}
-add_action('pre_get_posts', 'hanacafe_pre_get_posts');
+});
 
-/**
- * 4. セキュリティ/最適化
- */
-remove_action('wp_head', 'wp_generator');
+add_filter('template_include', function ($template) {
+    return is_home() && ($t = locate_template('archive-post.php')) ? $t : $template;
+});
 
-/**
- * スラッグから固定ページIDを取得するヘルパー関数
- */
+// ============================================================
+// 4. ヘルパー関数（テンプレートから呼び出す／複数箇所で使用）
+// ============================================================
+
+/** スラッグから固定ページIDを取得 */
 function get_hanacafe_master_page_id($slug) {
     $page = get_page_by_path($slug);
     return $page ? $page->ID : false;
 }
 
-/**
- * デフォルト画像を取得する関数 (CMS連動)
- * [SSOT] フィールド名を site_default_image に統一
- */
+/** ACF連動デフォルト画像URL（フォールバック付き） */
 function get_hanacafe_default_image_url($slug = 'common-info') {
-    $page_id = get_hanacafe_master_page_id($slug);
-
-    // ACF設定名 'site_default_image' と完全に一致させる
-    $img_val = $page_id ? get_field('site_default_image', $page_id) : '';
-    $img_url = '';
-
-    if (is_array($img_val) && isset($img_val['url'])) {
-        $img_url = $img_val['url'];
-    } elseif (is_string($img_val)) {
-        $img_url = $img_val;
-    }
-
-    if ($img_url) {
-        return esc_url($img_url);
-    }
-
-    // 最終防衛ライン
-    return esc_url(get_theme_file_uri('/assets/images/coming-soon.jpg'));
+    $img_val = ($id = get_hanacafe_master_page_id($slug)) ? get_field('site_default_image', $id) : '';
+    $url = is_array($img_val) ? ($img_val['url'] ?? '') : (is_string($img_val) ? $img_val : '');
+    return esc_url($url ?: get_theme_file_uri('/assets/images/coming-soon.jpg'));
 }
 
-// [fix 2-3] フォールバック画像（Anti-Blackout用）優先度10
-/**
- * アイキャッチ画像がない場合にグローバルデフォルト画像を表示するフィルター
- */
+/** ニュース一覧ページURL */
+function get_hanacafe_news_page_url() {
+    $id = get_option('page_for_posts');
+    return $id ? get_permalink($id) : home_url('/news/');
+}
+
+/** トップページ用メニュー投稿取得（menu.php から呼び出し） */
+function get_hanacafe_top_menu_post($field_name, $term_slug) {
+    $post_obj = get_field($field_name, get_hanacafe_master_page_id('menu-info'));
+    if ($post_obj) return $post_obj;
+
+    $query = new WP_Query([
+        'post_type'      => 'menu',
+        'posts_per_page' => 1,
+        'tax_query'      => [[
+            'taxonomy' => 'menu_category',
+            'field'    => 'slug',
+            'terms'    => $term_slug,
+        ]],
+    ]);
+    return $query->have_posts() ? $query->posts[0] : null;
+}
+
+// ============================================================
+// 5. 画像フォールバック & Alt補完
+// ============================================================
+
+/** アイキャッチ未設定時にデフォルト画像を表示（優先度10・引数5個必須） */
 function hanacafe_fallback_thumbnail_html($html, $post_id, $post_thumbnail_id, $size, $attr) {
-    if (empty($html) && ! is_admin()) {
-        $default_img_url = get_hanacafe_default_image_url();
-        $alt_text = esc_attr(get_the_title($post_id) . ' の代替画像');
-
-        // フィルター経由であることを示す p-common-placeholder を追加
-        $base_class = isset($attr['class']) ? $attr['class'] : 'wp-post-image';
-        $class = $base_class . ' p-common-placeholder';
-
-        $html = sprintf(
-            '<img src="%s" alt="%s" class="%s" />',
-            $default_img_url,
-            $alt_text,
-            esc_attr($class)
-        );
-    }
-    return $html;
+    if (!empty($html) || is_admin()) return $html;
+    $class = esc_attr((isset($attr['class']) ? $attr['class'] : 'wp-post-image') . ' p-common-placeholder');
+    return sprintf(
+        '<img src="%s" alt="%s" class="%s" />',
+        get_hanacafe_default_image_url(),
+        esc_attr(get_the_title($post_id) . ' の代替画像'),
+        $class
+    );
 }
 add_filter('post_thumbnail_html', 'hanacafe_fallback_thumbnail_html', 10, 5);
 
-/**
- * トップページ用：Menu投稿取得関数
- */
-function get_hanacafe_top_menu_post($field_name, $term_slug) {
-    $post_obj = get_field($field_name, get_hanacafe_master_page_id('menu-info'));
-    if ($post_obj) {
-        return $post_obj;
-    }
+/** Alt属性が空の場合に記事タイトルで補完（優先度20） */
+add_filter('post_thumbnail_html', function ($html, $post_id) {
+    return preg_match('/alt=(["\'])\1/', $html)
+        ? preg_replace('/alt=(["\'])\1/', 'alt="' . esc_attr(get_the_title($post_id)) . '"', $html, 1)
+        : $html;
+}, 20, 2);
 
-    $args = [
-        'post_type'      => 'menu',
-        'posts_per_page' => 1,
-        'tax_query'      => [
-            [
-                'taxonomy' => 'menu_category',
-                'field'    => 'slug',
-                'terms'    => $term_slug,
-            ]
-        ],
-    ];
-    $query = new WP_Query($args);
-    return $query->have_posts() ? $query->posts : null;
-}
-
-/**
- * 5. メニューにBEMクラスを強制注入するフィルター
- */
+// ============================================================
+// 6. ナビゲーション BEM クラス / リンク属性
+// ============================================================
 add_filter('nav_menu_css_class', function ($classes, $item, $args) {
-    if ($args->theme_location === 'global-nav') {
-        $classes[] = 'p-header__nav-item';
-    } elseif ($args->theme_location === 'drawer-nav') {
-        $classes[] = 'p-drawer__item';
-    }
+    if ($args->theme_location === 'global-nav') $classes[] = 'p-header__nav-item';
+    elseif ($args->theme_location === 'drawer-nav') $classes[] = 'p-drawer__item';
     return $classes;
 }, 10, 3);
 
-// [fix 2-2]
-/**
- * メニューナビゲーションのリンク属性をカスタマイズ
- * - theme_location に応じてクラスを設定
- * - ルート相対パス（/#で始まる）を動的に解決
- */
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
-    // theme_location に応じてクラスを設定
-    if ($args->theme_location === 'global-nav') {
-        $atts['class'] = 'p-header__nav-link';
-    } elseif ($args->theme_location === 'drawer-nav') {
-        $atts['class'] = 'p-drawer__link';
-    }
-
-    // ルート相対パス（/#で始まる）を動的に解決
-    if (isset($atts['href']) && strpos($atts['href'], '/#') === 0) {
+    if ($args->theme_location === 'global-nav')     $atts['class'] = 'p-header__nav-link';
+    elseif ($args->theme_location === 'drawer-nav') $atts['class'] = 'p-drawer__link';
+    if (isset($atts['href']) && str_starts_with($atts['href'], '/#')) {
         $atts['href'] = home_url($atts['href']);
     }
-
     return $atts;
 }, 10, 3);
 
-// [fix 2-3] alt自動補完 優先度20（上記フォールバック後に実行）
-/**
- * オリジナル画像のAlt属性自動補完
- * [設計意図] 運用者が代替テキストの入力を忘れた場合でも、自動で記事タイトルを補完する。
- */
-add_filter('post_thumbnail_html', function ($html, $post_id) {
-    // alt属性が空（alt="" または alt=''）かどうかを正規表現でチェック
-    if (preg_match('/alt=(["\'])\1/', $html)) {
-        $title = esc_attr(get_the_title($post_id));
-        // 空のalt属性を記事タイトルで置換（最初に一致したもの1つだけ）
-        $html = preg_replace('/alt=(["\'])\1/', 'alt="' . $title . '"', $html, 1);
-    }
-    return $html;
-}, 20, 2);
-
-/**
- * 6. カスタム投稿タイプ：メインビジュアルの登録
- */
-function hanacafe_register_main_visual() {
-    $args = [
-        'label'               => 'メインビジュアル',
-        'public'              => true,
-        'has_archive'         => false,
-        'menu_position'       => 5,
-        'menu_icon'           => 'dashicons-format-image',
-        'show_in_rest'        => true,
-        'supports'            => ['title', 'thumbnail', 'page-attributes'],
-        'hierarchical'        => false,
-    ];
-    register_post_type('main-visual', $args);
-}
-add_action('init', 'hanacafe_register_main_visual');
-
-/**
- * 7. 投稿ページ（ニュース一覧）に archive-post.php を適用
- * [設計意図] archive-post.php はWordPressのテンプレート階層で自動認識されないため、
- * template_include フィルターで明示的に割り当てる。
- */
-function hanacafe_posts_page_template($template) {
-    if (is_home()) {
-        $new_template = locate_template('archive-post.php');
-        if ($new_template) {
-            return $new_template;
-        }
-    }
-    return $template;
-}
-add_filter('template_include', 'hanacafe_posts_page_template');
-
-/**
- * ニュース一覧ページ（投稿ページ）のURLを返すヘルパー
- */
-function get_hanacafe_news_page_url() {
-    $page_for_posts = get_option('page_for_posts');
-    if ($page_for_posts) {
-        return get_permalink($page_for_posts);
-    }
-    return home_url('/news/');
-}
+// ============================================================
+// 7. セキュリティ最適化
+// ============================================================
+remove_action('wp_head', 'wp_generator');
