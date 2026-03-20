@@ -95,3 +95,6 @@ Temporary Items
 GEMINI.md
 /docs/archive/
 .aiexclude
+
+# Serena MCP local data
+.serena/
