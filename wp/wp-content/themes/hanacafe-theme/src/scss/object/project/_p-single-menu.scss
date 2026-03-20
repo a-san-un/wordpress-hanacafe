@@ -2,7 +2,7 @@
  * Object: Project - Single Menu (CSS Grid Edition)
  * [最終ポリッシュ - 完全適合版]
  * 1. メイン画像: 角丸（8px）を維持しつつ、SP幅100%を適用。
- * 2. 関連メニュー（p-menu-related）: 正確なクラス構造に対してスタイルを定義し、SP版リスト化を完全動作させる。
+ * 2. 関連メニュー（p-menu-related）: _p-menu.scss のデフォルトを継承。説明文非表示・gap流動化のみ上書き。
  * 3. [戦略的例外] キャッチコピー（sub）を日本語フォント(sans)・不透明(1)へ変更。
  * 4. [構造変更] ナビゲーション（__nav）用のスタイルを削除。
  */
@@ -46,16 +46,8 @@
         height: auto;
         aspect-ratio: 3 / 2;
         object-fit: cover;
-        border-radius: 8px; // 優しい角丸
+        border-radius: v.$radius-m; // 優しい角丸
         background-color: rgba(v.$c-text, 0.05); // [透過黄金律 0.05]
-    }
-
-    // テキスト情報セクション
-    &__title {
-        font-size: m.vw-clamp(24, 32);
-        font-weight: 700;
-        color: v.$c-main;
-        margin-bottom: 8px;
     }
 
     &__sub {
@@ -139,7 +131,7 @@
     .p-menu__list {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 16px; // SP版はリストとして詰める
+        gap: m.vw-clamp(24, 40); // SP〜PCで滑らかにスケール
 
         @include m.mq {
             grid-template-columns: repeat(3, 1fr);
@@ -147,51 +139,8 @@
         }
     }
 
-    // [SP版限定] カードを横並びの「スマートなリスト型」へ強制変換
-    @media screen and (max-width: 767px) {
-        .p-menu__item {
-            .p-menu__link {
-                display: flex; // 横並び
-                gap: 16px;
-                align-items: center;
-            }
-            
-            .p-menu__img-wrapper {
-                flex: 0 0 100px; // 画像を100pxに固定
-                aspect-ratio: 1 / 1; // 正方形に
-                margin-bottom: 0;
-                
-                .p-menu__img {
-                    border-radius: 4px; // 小さな角丸
-                }
-                
-                .c-badge-recommend {
-                    display: none; // リスト内ではバッジを隠してスッキリさせる
-                }
-            }
-
-            .p-menu__info {
-                flex: 1;
-                padding: 0;
-                text-align: left;
-            }
-
-            .p-menu__desc {
-                display: none; // 説明文は不要
-            }
-
-            .p-menu__name {
-                font-size: 16px;
-                margin-bottom: 0;
-            }
-            
-            .p-menu__price {
-                margin-top: 4px;
-                font-size: 16px; // 少し小さくして脇役感を
-                margin-bottom: 0;
-                border: none;
-                padding-bottom: 0;
-            }
-        }
+    // 説明文は関連メニューでは非表示
+    .p-menu__desc {
+        display: none;
     }
 }

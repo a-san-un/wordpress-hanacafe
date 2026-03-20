@@ -10,7 +10,8 @@
 get_header(); ?>
 
 <main class="l-main">
-    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+    <?php if (have_posts()) : while (have_posts()) : the_post();
+            $current_post_id = get_the_ID(); ?>
 
             <article id="post-<?php the_ID(); ?>" <?php post_class('p-single-menu'); ?>>
                 <div class="l-container">
@@ -35,27 +36,25 @@ get_header(); ?>
                     </header>
 
                     <div class="p-single-menu__inner">
-                        <div class="p-single-menu__visual">
-                            <div class="p-single-menu__img-wrapper">
-                                <?php if (get_field('is_recommended')) : ?>
-                                    <span class="c-badge-recommend">RECOMMEND</span>
-                                <?php endif; ?>
+                        <div class="p-single-menu__img-wrapper">
+                            <?php if (get_field('is_recommended')) : ?>
+                                <span class="c-badge-recommend">RECOMMEND</span>
+                            <?php endif; ?>
 
-                                <?php
-                                $sub_img_array = get_field('menu_sub_img');
-                                if ($sub_img_array && is_array($sub_img_array)) :
-                                    $img_url = isset($sub_img_array['sizes']['large']) ? $sub_img_array['sizes']['large'] : $sub_img_array['url'];
-                                    $img_alt = !empty($sub_img_array['alt']) ? $sub_img_array['alt'] : get_the_title();
-                                    echo '<img src="' . esc_url($img_url) . '" class="p-single-menu__img" alt="' . esc_attr($img_alt) . '">';
-                                elseif (has_post_thumbnail()) :
-                                    the_post_thumbnail('large', array('class' => 'p-single-menu__img'));
-                                else :
-                                    // [fix 1-5]
-                                    $alt = esc_attr(get_the_title() . ' の代替画像');
-                                    echo '<img src="' . esc_url(get_hanacafe_default_image_url('menu-info')) . '" alt="' . $alt . '" class="p-single-menu__img">';
-                                endif;
-                                ?>
-                            </div>
+                            <?php
+                            $sub_img_array = get_field('menu_sub_img');
+                            if ($sub_img_array && is_array($sub_img_array)) :
+                                $img_url = isset($sub_img_array['sizes']['large']) ? $sub_img_array['sizes']['large'] : $sub_img_array['url'];
+                                $img_alt = !empty($sub_img_array['alt']) ? $sub_img_array['alt'] : get_the_title();
+                                echo '<img src="' . esc_url($img_url) . '" class="p-single-menu__img" alt="' . esc_attr($img_alt) . '">';
+                            elseif (has_post_thumbnail()) :
+                                the_post_thumbnail('large', array('class' => 'p-single-menu__img'));
+                            else :
+                                // [fix 1-5]
+                                $alt = esc_attr(get_the_title() . ' の代替画像');
+                                echo '<img src="' . esc_url(get_hanacafe_default_image_url('menu-info')) . '" alt="' . $alt . '" class="p-single-menu__img">';
+                            endif;
+                            ?>
                         </div>
 
                         <div class="p-single-menu__content">
@@ -63,18 +62,16 @@ get_header(); ?>
                                 <p class="p-single-menu__sub"><?php echo esc_html($sub_name); ?></p>
                             <?php endif; ?>
 
-                            <div class="p-single-menu__body">
-                                <div class="p-single-menu__desc">
-                                    <?php the_content(); ?>
-                                </div>
-
-                                <?php if ($price = get_field('price')) : ?>
-                                    <p class="p-single-menu__price">
-                                        <span class="p-single-menu__price-unit">¥</span>
-                                        <?php echo esc_html(number_format((int)$price)); ?>
-                                    </p>
-                                <?php endif; ?>
+                            <div class="p-single-menu__desc">
+                                <?php the_content(); ?>
                             </div>
+
+                            <?php if ($price = get_field('price')) : ?>
+                                <p class="p-single-menu__price">
+                                    <span class="p-single-menu__price-unit">¥</span>
+                                    <?php echo esc_html(number_format((int)$price)); ?>
+                                </p>
+                            <?php endif; ?>
 
                             <dl class="p-single-menu__specs">
                                 <?php if ($calorie = get_field('calorie')) : ?>
@@ -98,7 +95,6 @@ get_header(); ?>
             </article>
 
     <?php
-            $current_post_id = get_the_ID();
         endwhile;
     endif; ?>
 

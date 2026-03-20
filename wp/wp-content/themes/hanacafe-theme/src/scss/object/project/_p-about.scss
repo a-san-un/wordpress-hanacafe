@@ -105,10 +105,10 @@
 }
 
 /* --- Badge Override (About Section Specific) --- */
-.c-badge-status {
-    &.is-full {
+.p-about {
+    .c-badge-status.is-full {
         // 修正点：満席バッジはシミュレーション通り不透明で力強く表示
-        color: v.$c-text !important;
-        border-color: v.$c-text !important;
+        color: v.$c-text;
+        border-color: v.$c-text;
     }
 }
