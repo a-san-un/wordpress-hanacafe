@@ -91,7 +91,7 @@ $z-content: 2;  // コンテンツ要素のz-index基準値（フィルターよ
         }
 
         &-en {
-            font-family: v.$f-en;  // 英語用フォントファミリー（variables.scss で定義）
+            font-family: v.$f-sans;  // 英語用フォントファミリー（variables.scss で定義）
             font-size: 48px;       // モバイル時の英語タイトルサイズ
             font-weight: 700;      // 太字（インパクト重視）
             line-height: 1.1;      // 行間を詰めてコンパクトに

@@ -1,38 +1,33 @@
 {
-	"version": 3,
-	"settings": {
-		"color": {
-			"palette": [
-				{ "slug": "main", "color": "#2E4D07", "name": "深緑 (Main)" },
-				{ "slug": "accent", "color": "#F29159", "name": "オレンジ (Accent)" },
-				{ "slug": "base", "color": "#F5F2E8", "name": "生成色 (Base)" },
-				{ "slug": "sub", "color": "#EB4E34", "name": "レッド (Sub)" },
-				{ "slug": "text", "color": "#57534E", "name": "グレー (Text)" }
-			]
-		},
-		"typography": {
-			"fontFamilies": [
-				{
-					"fontFamily": "\"Montserrat\", \"Noto Sans JP\", sans-serif",
-					"name": "Montserrat (English/Numbers)",
-					"slug": "en"
-				},
-				{
-					"fontFamily": "\"Montserrat\", \"Noto Sans JP\", sans-serif",
-					"name": "Montserrat / Noto Sans JP (Body)",
-					"slug": "sans"
-				},
-				{
-					"fontFamily": "\"Noto Serif JP\", serif",
-					"name": "Noto Serif JP (Headings)",
-					"slug": "serif"
-				}
-			]
-		}
-	},
-	"styles": {
-		"typography": {
-			"fontFamily": "var(--wp--preset--font-family--sans)"
-		}
-	}
+  "version": 3,
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "main", "color": "#2E4D07", "name": "深緑 (Main)" },
+        { "slug": "accent", "color": "#F29159", "name": "オレンジ (Accent)" },
+        { "slug": "base", "color": "#F5F2E8", "name": "生成色 (Base)" },
+        { "slug": "sub", "color": "#EB4E34", "name": "レッド (Sub)" },
+        { "slug": "text", "color": "#57534E", "name": "グレー (Text)" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "\"Montserrat\", \"Noto Sans JP\", sans-serif",
+          "name": "Montserrat / Noto Sans JP (英数字・本文共通)",
+          "slug": "sans"
+        },
+        {
+          "fontFamily": "\"Noto Serif JP\", serif",
+          "name": "Noto Serif JP (Headings)",
+          "slug": "serif"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "typography": {
+      "fontFamily": "var(--wp--preset--font-family--sans)"
+    }
+  }
 }

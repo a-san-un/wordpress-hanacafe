@@ -70,7 +70,7 @@
 
   &__label {
     width: 80px;
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     font-weight: 700;
     font-size: 14px;
     // 修正：コンソール確定値同期（$c-textベースの70%透過）
@@ -111,7 +111,7 @@
     color: v.$c-main;
     font-size: 1.2em;
     font-weight: 700;
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     margin: 0 2px;
   }
 

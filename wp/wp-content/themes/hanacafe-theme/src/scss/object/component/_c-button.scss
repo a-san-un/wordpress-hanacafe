@@ -16,7 +16,7 @@
   color: v.$c-white;             // 背景（アクセントカラー）との対比で白テキスト
   padding: 16px 40px;            // 縦: 16px、横: 40px の余裕ある内側余白
   border-radius: v.$radius-round; // マジックナンバー排除: 完全な丸形（カプセル型）を変数から参照
-  font-family: v.$f-en;    // 英語用フォント（CTAテキストの統一感）
+  font-family: v.$f-sans;    // 英語用フォント（CTAテキストの統一感）
   font-size: 14px;
   font-weight: 700;        // 太字でクリッカブルな印象を強調
   letter-spacing: 0.2em;   // 字間を広めに設定（英語大文字の視認性向上）

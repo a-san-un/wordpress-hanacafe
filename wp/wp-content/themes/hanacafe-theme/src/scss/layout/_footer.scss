@@ -37,7 +37,7 @@
   // ロゴ部分
   &__logo-text {
     color: v.$c-white; // 黄金律: ロゴは 100% (透過なし)
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -76,7 +76,7 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     font-weight: 500;
     letter-spacing: 0.1em;
 
@@ -113,7 +113,7 @@
   &__sns-links {
     display: flex;
     gap: 32px;
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.4em;
@@ -153,7 +153,7 @@
 
   &__copyright {
     text-align: center;
-    font-family: v.$f-en;
+    font-family: v.$f-sans;
     font-size: 11px;
     letter-spacing: 0.05em;
   }
