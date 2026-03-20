@@ -47,7 +47,7 @@
         aspect-ratio: 3 / 2;
         object-fit: cover;
         border-radius: v.$radius-m; // 優しい角丸
-        background-color: rgba(v.$c-text, 0.05); // [透過黄金律 0.05]
+        background-color: v.$c-border-subtle; // [透過黄金律 0.05]
     }
 
     &__sub {
@@ -65,7 +65,7 @@
         font-weight: 700;
         color: v.$c-main;
         margin-bottom: 24px;
-        border-bottom: 1px solid rgba(v.$c-text, 0.1); // [透過黄金律 0.1]
+        border-bottom: 1px solid v.$c-border; // [透過黄金律 0.1]
         padding-bottom: 16px;
 
         &-unit {
@@ -90,7 +90,7 @@
         flex-direction: column;
         gap: 4px;
         padding: 12px 0;
-        border-bottom: 1px dotted rgba(v.$c-text, 0.1); 
+        border-bottom: 1px dotted v.$c-border;
         
         dt { font-weight: 700; font-size: 13px; }
         dd { font-size: 14px; margin-left: 0; }

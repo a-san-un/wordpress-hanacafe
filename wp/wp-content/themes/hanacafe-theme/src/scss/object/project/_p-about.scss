@@ -67,7 +67,7 @@
         overflow: hidden;
         border-radius: v.$radius-m;
         // 修正点：コンソール確定値同期（背景5%透過のみ、境界線なし）
-        background-color: rgba(v.$c-text, 0.05);
+        background-color: v.$c-border-subtle;
         border: none; 
     }
 
@@ -100,7 +100,7 @@
         font-size: 14px;
         line-height: 1.6;
         // 修正点：コンソール確定値同期（テキストを70%透過に設定）
-        color: rgba(v.$c-text, 0.7);
+        color: v.$c-text-sub;
     }
 }
 
