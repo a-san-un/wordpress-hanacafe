@@ -1,5 +1,8 @@
 /**
  * HanaCAFE nappa69 Main JS
+ * 2026-03-21:
+ * - jQuery -> Vanilla JS 全面書き換え完了（STEP 5-9）
+ * - DOMContentLoaded ラッパーに統一・jQuery依存を完全撤去
  * * 2026-03-13:
  * - スクロール連動ヘッダー（.is-scrolled）の実装を追加
  * - 表示保証（Anti-Blackout）のため、監視対象から .p-page を除外
@@ -7,30 +10,27 @@
  * - Heroセクションのトリガークラス名を SSOT(is-start) に再統合
  * - A11Y対応ドロワーロジックの維持
  */
-jQuery(function ($) {
-	const $header = $(".js-header");
-	const $hamburger = $(".js-hamburger");
-	const $drawer = $(".js-drawer");
-	const $body = $("body");
-	const $hero = $(".p-hero");
+document.addEventListener("DOMContentLoaded", function () {
+	const header = document.querySelector(".js-header");
+	const hamburger = document.querySelector(".js-hamburger");
+	const drawer = document.querySelector(".js-drawer");
+	const drawerClose = document.querySelector(".js-drawer-close");
+	const hero = document.querySelector(".p-hero");
 	// 監視対象を個別のセクション（.l-section）に限定
 	// ※親コンテナ（.p-page）を監視すると、SP版で判定が不安定になり表示が消えるリスクがあるため除外
-	const $animateTargets = $(".l-section");
-	const $drawerClose = $(".js-drawer-close");
-
 	/**
 	 * 0. スクロール連動ヘッダー (Food Science準拠)
 	 * [設計意図] ページが1pxでも動いたらヘッダーの質感を変化させ、
 	 * ユーザーに「隠れ家に入っていく」ような視覚的変化を促す。
 	 */
 	let rafId = null;
-	$(window).on("scroll", function () {
+	window.addEventListener("scroll", function () {
 		if (rafId) return;
 		rafId = requestAnimationFrame(function () {
-			if ($(window).scrollTop() > 0) {
-				$header.addClass("is-scrolled");
+			if (window.scrollY > 0) {
+				header.classList.add("is-scrolled");
 			} else {
-				$header.removeClass("is-scrolled");
+				header.classList.remove("is-scrolled");
 			}
 			rafId = null;
 		});
@@ -39,53 +39,57 @@ jQuery(function ($) {
 	/**
 	 * 1. ハンバーガーメニュー開閉（A11Y対応）
 	 */
-	$hamburger.on("click", function () {
-		const isExpanded = $(this).attr("aria-expanded") === "true";
+	function closeDrawer() {
+		hamburger.setAttribute("aria-expanded", "false");
+		drawer.setAttribute("aria-hidden", "true");
+		drawer.classList.remove("is-active");
+		document.body.style.overflow = "";
+	}
 
-		$(this).attr("aria-expanded", !isExpanded);
-		$drawer.attr("aria-hidden", isExpanded);
-		$drawer.toggleClass("is-active");
+	hamburger.addEventListener("click", function () {
+		const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
+
+		hamburger.setAttribute("aria-expanded", String(!isExpanded));
+		drawer.setAttribute("aria-hidden", String(isExpanded));
+		drawer.classList.toggle("is-active");
 
 		// 背景固定（スクロール抑制）
 		if (!isExpanded) {
-			$body.css("overflow", "hidden");
+			document.body.style.overflow = "hidden";
 		} else {
-			$body.css("overflow", "");
+			document.body.style.overflow = "";
 		}
 	});
 
 	/* メニュー内リンククリックで自動閉鎖 */
-	$drawer.find("a").on("click", function () {
-		$hamburger.attr("aria-expanded", "false");
-		$drawer.attr("aria-hidden", "true");
-		$drawer.removeClass("is-active");
-		$body.css("overflow", "");
+	drawer.querySelectorAll("a").forEach(function (link) {
+		link.addEventListener("click", function () {
+			closeDrawer();
+		});
 	});
 
 	/* 閉じるボタンクリックでドロワーを閉じる */
-	$drawerClose.on("click", function () {
-		$hamburger.attr("aria-expanded", "false");
-		$drawer.attr("aria-hidden", "true");
-		$drawer.removeClass("is-active");
-		$body.css("overflow", "");
-		$hamburger.trigger("focus");
+	drawerClose.addEventListener("click", function () {
+		closeDrawer();
+		hamburger.focus();
 	});
 
 	/* Escキーでドロワーを閉じる */
-	$(document).on("keydown", function (e) {
-		if (e.key === "Escape" && $drawer.hasClass("is-active")) {
-			$hamburger.attr("aria-expanded", "false");
-			$drawer.attr("aria-hidden", "true");
-			$drawer.removeClass("is-active");
-			$body.css("overflow", "");
-			$hamburger.trigger("focus");
+	document.addEventListener("keydown", function (e) {
+		if (e.key === "Escape" && drawer.classList.contains("is-active")) {
+			closeDrawer();
+			hamburger.focus();
 		}
 	});
 
 	/* フォーカストラップ：ドロワー開放中はTab/Shift+Tabをドロワー内に閉じ込める */
-	$drawer.on("keydown", function (e) {
+	drawer.addEventListener("keydown", function (e) {
 		if (e.key !== "Tab") return;
-		const focusable = $drawer.find("a, button, [tabindex]:not([tabindex='-1'])").filter(":visible").toArray();
+		const focusable = Array.from(drawer.querySelectorAll("a, button, [tabindex]:not([tabindex='-1'])")).filter(
+			function (el) {
+				return getComputedStyle(el).display !== "none";
+			}
+		);
 		if (focusable.length === 0) return;
 		const first = focusable[0];
 		const last = focusable[focusable.length - 1];
@@ -121,20 +125,20 @@ jQuery(function ($) {
 		});
 	}, observerOptions);
 
-	$animateTargets.each(function () {
-		sectionObserver.observe(this);
+	document.querySelectorAll(".l-section").forEach(function (el) {
+		sectionObserver.observe(el);
 	});
 
 	/**
 	 * 3. ヒーローセクションの初期アニメーション
 	 * [修正点] _p-hero.scss の定義に合わせ is-start を付与
 	 */
-	if ($hero.length) {
+	if (hero) {
 		if (document.readyState === "complete") {
-			$hero.addClass("is-start");
+			hero.classList.add("is-start");
 		} else {
-			$(window).on("load", function () {
-				$hero.addClass("is-start");
+			window.addEventListener("load", function () {
+				hero.classList.add("is-start");
 			});
 		}
 	}

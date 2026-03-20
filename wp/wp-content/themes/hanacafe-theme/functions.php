@@ -51,7 +51,7 @@ add_action('wp_enqueue_scripts', function () {
     wp_enqueue_script(
         'hanacafe-main-js',
         $uri . '/assets/js/main.js',
-        ['jquery'],
+        [],
         filemtime($dir . '/assets/js/main.js'),
         ['strategy' => 'defer', 'in_footer' => true]
     );
