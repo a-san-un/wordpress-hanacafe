@@ -8,28 +8,25 @@
  * 3. 黄金律: サブタイトルは 1.0、価格は分離構造を継承。
  */
 ?>
+<?php $menu = get_hanacafe_menu_data(); ?>
 <article <?php post_class('p-menu__item'); ?>>
     <a href="<?php the_permalink(); ?>" class="p-menu__link">
         <div class="p-menu__img-wrapper">
             <?php // [実装] おすすめバッジの動的表示（表示保証：SCSS側の relative に依存） 
             ?>
-            <?php if (get_field('is_recommended')) : ?>
+            <?php if ($menu['is_recommended']) : ?>
                 <span class="c-badge-recommend">RECOMMEND</span>
             <?php endif; ?>
 
-            <?php if (has_post_thumbnail()) : ?>
-                <?php the_post_thumbnail('large', ['class' => 'p-menu__img']); ?>
-            <?php else : ?>
-                <img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="<?php the_title_attribute(); ?> の代替画像" class="p-menu__img">
-            <?php endif; ?>
+            <img src="<?php echo $menu['image_url']; ?>" alt="<?php echo $menu['image_alt']; ?>" class="p-menu__img">
         </div>
 
         <div class="p-menu__info">
             <div class="p-menu__titles">
                 <h3 class="p-menu__name"><?php // [fix 1-4]
                                             echo esc_html(get_the_title()); ?></h3>
-                <?php if ($sub_name = get_field('sub_name')) : ?>
-                    <p class="p-menu__sub"><?php echo esc_html($sub_name); ?></p>
+                <?php if ($menu['sub_name']) : ?>
+                    <p class="p-menu__sub"><?php echo $menu['sub_name']; ?></p>
                 <?php endif; ?>
             </div>
 
@@ -37,14 +34,12 @@
                 <?php the_excerpt(); ?>
             </div>
 
-            <p class="p-menu__price">
-                <span class="p-menu__price-unit">¥</span>
-                <?php
-                $price = get_field('price');
-                // [fix 1-3]
-                echo esc_html($price ? number_format((int)$price) : '---');
-                ?>
-            </p>
+            <?php if ($menu['price_display']) : ?>
+                <p class="p-menu__price">
+                    <span class="p-menu__price-unit">¥</span>
+                    <?php echo $menu['price_display']; ?>
+                </p>
+            <?php endif; ?>
         </div>
     </a>
 </article>
