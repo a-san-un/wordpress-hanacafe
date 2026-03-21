@@ -32,24 +32,24 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
 <body <?php body_class(); ?>>
     <?php wp_body_open(); ?>
 
-    <header class="l-header p-header js-header">
+    <header class="l-header js-header">
         <div class="l-container">
-            <div class="p-header__inner">
+            <div class="l-header__inner">
 
                 <!-- ロゴエリア -->
-                <div class="p-header__logo-wrapper">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="p-header__logo">
-                        HanaCAFE <span class="p-header__logo-sub">nappa69</span>
+                <div class="l-header__logo-wrapper">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="l-header__logo">
+                        HanaCAFE <span class="l-header__logo-sub">nappa69</span>
                     </a>
                 </div>
 
                 <!-- PC用ナビゲーション (CMS連動版) -->
-                <nav class="p-header__nav u-desktop" aria-label="PC用ナビゲーション">
+                <nav class="l-header__nav u-desktop" aria-label="PC用ナビゲーション">
                     <?php
                     wp_nav_menu([
                         'theme_location' => 'global-nav',
                         'container'      => false,
-                        'menu_class'     => 'p-header__nav-list',
+                        'menu_class'     => 'l-header__nav-list',
                         'fallback_cb'    => false,
                         'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
                         'depth'          => 1,
@@ -59,7 +59,7 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
 
                 <!-- ハンバーガーボタン（モバイル専用） -->
                 <button
-                    class="p-header__hamburger js-hamburger u-mobile"
+                    class="l-header__hamburger js-hamburger u-mobile"
                     aria-expanded="false"
                     aria-controls="drawer-menu"
                     aria-label="メニューを開く">

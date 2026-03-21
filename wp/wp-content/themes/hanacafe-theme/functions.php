@@ -138,13 +138,13 @@ add_filter('post_thumbnail_html', function ($html, $post_id) {
 // 6. ナビゲーション BEM クラス / リンク属性
 // ============================================================
 add_filter('nav_menu_css_class', function ($classes, $item, $args) {
-    if ($args->theme_location === 'global-nav') $classes[] = 'p-header__nav-item';
+    if ($args->theme_location === 'global-nav') $classes[] = 'l-header__nav-item';
     elseif ($args->theme_location === 'drawer-nav') $classes[] = 'p-drawer__item';
     return $classes;
 }, 10, 3);
 
 add_filter('nav_menu_link_attributes', function ($atts, $item, $args) {
-    if ($args->theme_location === 'global-nav')     $atts['class'] = 'p-header__nav-link';
+    if ($args->theme_location === 'global-nav')     $atts['class'] = 'l-header__nav-link';
     elseif ($args->theme_location === 'drawer-nav') $atts['class'] = 'p-drawer__link';
     if (isset($atts['href']) && str_starts_with($atts['href'], '/#')) {
         $atts['href'] = home_url($atts['href']);
