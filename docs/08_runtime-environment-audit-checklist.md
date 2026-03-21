@@ -44,6 +44,7 @@
 - [ ] post_type menu が登録済み
 - [ ] taxonomy menu_category が登録済み
 - [ ] menu_category に slug food, drink, dessert が存在
+  - スラッグ値は get_hanacafe_menu_categories()（functions.php）で一元管理。カテゴリー追加時は同関数のみ修正すればよい。
 - [ ] menu投稿が最低1件以上存在（トップ・一覧の表示確認用）
 
 ## 3. テーマアセット依存
@@ -109,6 +110,6 @@
 
 ## 7. 監査で見つかった主な前提リスク
 
-- [ ] aboutセクションのみ about-seats のID取得に get_page_by_path 直使用。スラッグ不一致時の表示劣化に注意。
+- [ ] about-seats の ID 解決は get_hanacafe_master_page_id() に統一済み（STEP 6-1 解消）。
 - [ ] CPT登録コードがテーマ内に無いため、プラグイン側停止時に menu 一式が機能停止。
 - [ ] Node系はlint定義のみで、SCSSビルド手順は別管理の可能性があるためリリース手順書と同期確認が必要。

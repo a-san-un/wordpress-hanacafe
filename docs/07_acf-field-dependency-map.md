@@ -30,67 +30,67 @@
 
 - マスター解決: get_hanacafe_master_page_id('access-info')
 - フィールド: shop_address
-- 参照箇所: template-parts/home/access.php, footer.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: footer.phpでは固定住所文字列
 - 影響: Accessセクション、フッター住所
 
 - フィールド: shop_access_note
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 非表示
 - 影響: Access補足文
 
 - フィールド: shop_access_train_1
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 非表示
 - 影響: 交通アクセス行（東急）
 
 - フィールド: shop_access_train_2
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 非表示
 - 影響: 交通アクセス行（JR）
 
 - フィールド: shop_open_hours
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 非表示
 - 影響: 営業時間表示
 
 - フィールド: shop_tel
-- 参照箇所: template-parts/home/access.php, footer.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: footer.phpでは固定電話番号文字列
 - 影響: Telリンク生成、フッター電話
 
 - フィールド: shop_closed
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 非表示
 - 影響: 定休日表示
 
 - フィールド: seat_check_url
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: ボタン非表示
 - 影響: お席確認ボタン
 
 - フィールド: shop_map_image
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: assets/images/map.png
 - 影響: 地図画像表示
 
 - フィールド: shop_map_url
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: 画像のみ表示（リンク化しない）
 - 影響: 外部Map遷移
 
 - フィールド: shop_map_btn_text
-- 参照箇所: template-parts/home/access.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: Google Maps で開く
 - 影響: 地図オーバーレイ文言
 
 - フィールド: shop_sns_instagram
-- 参照箇所: footer.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: #
 - 影響: フッターSNSリンク
 
 - フィールド: shop_sns_facebook
-- 参照箇所: footer.php
+- 参照箇所: functions.php(get_hanacafe_access_data) → template-parts/home/access.php / footer.php
 - フォールバック: #
 - 影響: フッターSNSリンク
 
@@ -112,26 +112,29 @@
 - フォールバック: taxonomy menu_category=dessert の最新1件
 - 影響: トップMenuのDessertカード
 
+> スラッグ値（food / drink / dessert）は STEP 6-5 より
+> `get_hanacafe_menu_categories()`（functions.php）で一元管理。
+
 ### D. about-seats マスター
 
-- マスター解決: get_page_by_path('about-seats')
+- マスター解決: functions.php(get_hanacafe_about_data) → template-parts/home/about.php
 - フィールド: about_section_title
-- 参照箇所: template-parts/home/about.php
+- 参照箇所: functions.php(get_hanacafe_about_data) → template-parts/home/about.php
 - フォールバック: 固定文言
 - 影響: About見出し
 
 - フィールド: about_section_text
-- 参照箇所: template-parts/home/about.php
+- 参照箇所: functions.php(get_hanacafe_about_data) → template-parts/home/about.php
 - フォールバック: 固定文言
 - 影響: About本文
 
-- 動的フィールド群（slots = counter, table, terrace）
-- フィールド: title_counter, title_table, title_terrace
-- フィールド: status_counter, status_table, status_terrace
-- フィールド: text_counter, text_table, text_terrace
-- フィールド: img_counter, img_table, img_terrace
-- フィールド: is_pet_counter, is_pet_table, is_pet_terrace
-- 参照箇所: template-parts/home/about.php
+- 動的フィールド群（slots = counter, table, terrace, private）
+- フィールド: title_counter, title_table, title_terrace, title_private
+- フィールド: status_counter, status_table, status_terrace, status_private
+- フィールド: text_counter, text_table, text_terrace, text_private
+- フィールド: img_counter, img_table, img_terrace, img_private
+- フィールド: is_pet_counter, is_pet_table, is_pet_terrace, is_pet_private
+- 参照箇所: functions.php(get_hanacafe_about_data) → template-parts/home/about.php
 - フォールバック: title未設定はカード出力スキップ。img未設定は assets/images/{slug}.jpg
 - 影響: 席種カード表示、満空バッジ、Pet Friendlyバッジ
 
@@ -187,6 +190,6 @@
 ## 3. 運用上の要注意ポイント
 
 - access-info と common-info は欠損時フォールバックがあるが、リンク系は # になるため公開前確認が必要。
-- about-seats は get_page_by_path('about-seats') 依存で、ページ未作成時はセクション文言の一部だけ表示される可能性がある。
+- about-seats の ID 解決は get_hanacafe_master_page_id() に統一済み（STEP 6-1 解消）。
 - menu-info 未設定でも taxonomy フォールバックが効くが、menu_category の slug（food, drink, dessert）が前提。
 - menu投稿の ACF 入力不足は非表示化で吸収されるが、情報量が減るため運用チェックが必要。
