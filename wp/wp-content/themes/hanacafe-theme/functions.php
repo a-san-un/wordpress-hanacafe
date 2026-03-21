@@ -110,6 +110,102 @@ function get_hanacafe_top_menu_post($field_name, $term_slug) {
     return $query->have_posts() ? $query->posts[0] : null;
 }
 
+/**
+ * About セクション用データ取得
+ * @param string $slug マスターページスラッグ（デフォルト: 'about-seats'）
+ * @return array{
+ *   section_title: string,
+ *   section_text: string,
+ *   seats: array<int, array{
+ *     slug: string,
+ *     title: string,
+ *     text: string,
+ *     status: string,
+ *     badge_label: string,
+ *     badge_modifier: string,
+ *     icon: string,
+ *     image_url: string,
+ *     image_alt: string,
+ *     is_pet: bool,
+ *   }>
+ * }
+ */
+function get_hanacafe_about_data($slug = 'about-seats') {
+    // スラッグ名から専用固定ページのIDを特定（環境に依存しない動的解決）
+    $about_id = get_hanacafe_master_page_id($slug) ?: 0;
+
+    $section_title = get_field('about_section_title', $about_id) ?: '物語が動き出す、呼吸する空間。';
+    $section_text = get_field('about_section_text', $about_id) ?: '築数十年の古民家をリノベーションしたHanaCAFE nappa69。都会の喧騒を忘れ、植物の息吹を感じる空間で、心地よいひとときをお過ごしください。';
+
+    /**
+     * 席種ごとのスロット定義（ACFフィールド名の接尾辞と対応）
+     */
+    $slots = ['terrace', 'counter', 'table', 'private'];
+    $seats = [];
+
+    foreach ($slots as $slot_slug) {
+        // 各種データの取得（役割名に基づいた動的解決）
+        $title = get_field("title_{$slot_slug}", $about_id);
+
+        // 【表示保証】名称がないスロットは出力スキップ（Blackout防止）
+        if (!$title) {
+            continue;
+        }
+
+        $status_field = get_field("status_{$slot_slug}", $about_id);
+        $status = in_array($status_field, ['ok', 'few', 'full'], true) ? $status_field : 'ok';
+        $text = get_field("text_{$slot_slug}", $about_id) ?: '';
+        $image = get_field("img_{$slot_slug}", $about_id);
+
+        // 特定の席（テラス等）に紐付く個別フラグの取得
+        $is_pet = (bool) get_field("is_pet_{$slot_slug}", $about_id);
+
+        /**
+         * バッジの状態判定ロジック
+         */
+        $badge_label = '空席あり';
+        $badge_modifier = 'is-ok';
+        $icon = 'check_circle';
+
+        if ($status === 'few') {
+            $badge_label = '残りわずか';
+            $badge_modifier = 'is-few';
+            $icon = 'error';
+        } elseif ($status === 'full') {
+            $badge_label = '満席';
+            $badge_modifier = 'is-full';
+            $icon = 'cancel';
+        }
+
+        /**
+         * 画像の取得とフォールバック
+         * largeサイズを優先し、なければテーマ内デフォルト画像を表示
+         */
+        $image_url = (is_array($image) && !empty($image['sizes']['large']))
+            ? $image['sizes']['large']
+            : get_theme_file_uri("/assets/images/{$slot_slug}.jpg");
+
+        $seats[] = [
+            'slug' => $slot_slug,
+            'title' => $title,
+            'text' => $text,
+            'status' => $status,
+            'badge_label' => $badge_label,
+            'badge_modifier' => $badge_modifier,
+            'icon' => $icon,
+            'image_url' => $image_url,
+            'image_alt' => $title,
+            'is_pet' => $is_pet,
+        ];
+    }
+
+    return [
+        'section_title' => $section_title,
+        'section_text' => $section_text,
+        'seats' => $seats,
+    ];
+}
+
 // ============================================================
 // 5. 画像フォールバック & Alt補完
 // ============================================================
