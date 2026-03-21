@@ -71,8 +71,13 @@ add_filter('template_include', function ($template) {
 });
 
 // ============================================================
-// 4. ヘルパー関数（テンプレートから呼び出す／複数箇所で使用）
+// 4. ヘルパー関数
 // ============================================================
+
+// ── 4-1. 基盤ユーティリティ ──────────────────────────────────
+// get_hanacafe_master_page_id / get_hanacafe_default_image_url
+// get_hanacafe_news_page_url
+// 他のヘルパーが内部依存するため、このグループを先頭に置く
 
 /** スラッグから固定ページIDを取得 */
 function get_hanacafe_master_page_id($slug) {
@@ -109,6 +114,10 @@ function get_hanacafe_top_menu_post($field_name, $term_slug) {
     ]);
     return $query->have_posts() ? $query->posts[0] : null;
 }
+
+// ── 4-2. トップページ用データ取得 ────────────────────────────
+// get_hanacafe_top_menu_post
+// front-page.php の menu セクションから呼び出される
 
 /**
  * About セクション用データ取得
@@ -205,6 +214,11 @@ function get_hanacafe_about_data($slug = 'about-seats') {
         'seats' => $seats,
     ];
 }
+
+// ── 4-3. セクションデータ取得（バックエンドロジック分離層）────
+// get_hanacafe_about_data / get_hanacafe_access_data
+// get_hanacafe_menu_data
+// STEP 6 で分離したテンプレートデータ取得の責務を担う
 
 /**
  * Access セクション用データ取得
