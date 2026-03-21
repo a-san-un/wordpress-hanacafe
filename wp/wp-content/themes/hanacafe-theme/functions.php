@@ -140,7 +140,7 @@ function get_hanacafe_about_data($slug = 'about-seats') {
     /**
      * 席種ごとのスロット定義（ACFフィールド名の接尾辞と対応）
      */
-    $slots = ['terrace', 'counter', 'table', 'private'];
+    $slots = ['counter', 'table', 'terrace', 'private'];
     $seats = [];
 
     foreach ($slots as $slot_slug) {
