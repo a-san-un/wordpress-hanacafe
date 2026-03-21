@@ -134,3 +134,27 @@
     }
   }
 }
+
+// アーカイブページ カテゴリーセクション
+.p-menu-archive {
+	position: relative;
+
+	// 偶数セクションはパディングを外し、背景を100vwで白ベタ塗り
+	&:nth-child(even) {
+		padding: 0;
+		background-color: transparent;
+
+		&::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 50%;
+			bottom: 0;
+			left: 50%;
+			width: 100vw;
+			margin-left: -50vw;
+			background-color: v.$c-white;
+			z-index: -1;
+		}
+	}
+}
