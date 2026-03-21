@@ -9,20 +9,7 @@
  * 4. SSOTの徹底: 店舗情報ページ(access-info)をマスターとし、そこから住所・SNS情報を取得。DRY原則を遵守。
  */
 
-// [fix 2-1]
-$access_id = get_hanacafe_master_page_id('access-info') ?: 0;
-
-// 住所・電話番号の取得 (Accessセクションと共通のフィールドを使用)
-$shop_address = get_field('shop_address', $access_id) ?: '神奈川県川崎市中原区新丸子東1-983-1';
-$shop_tel     = get_field('shop_tel', $access_id) ?: '044-872-9288';
-
-// SNSリンクの取得 (ACF: shop_sns_instagram / shop_sns_facebook)
-// 未設定時は '#' をフォールバックとして設定し、レイアウト崩れ（Blackout）を防ぐ
-$insta_url = get_field('shop_sns_instagram', $access_id) ?: '#';
-$fb_url    = get_field('shop_sns_facebook', $access_id) ?: '#';
-
-// プライバシーポリシーURLの取得（WP標準設定）
-$privacy_url = get_privacy_policy_url() ?: '#';
+$access = get_hanacafe_access_data();
 ?>
 
 <!-- =============================================
@@ -45,12 +32,12 @@ $privacy_url = get_privacy_policy_url() ?: '#';
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <?php echo esc_html($shop_address); ?>
+                    <?php echo esc_html($access['shop_address']); ?>
                 </li>
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">call</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <a href="tel:<?php echo esc_attr(str_replace('-', '', $shop_tel)); ?>"><?php echo esc_html($shop_tel); ?></a>
+                    <a href="tel:<?php echo esc_attr(str_replace('-', '', $access['shop_tel'])); ?>"><?php echo esc_html($access['shop_tel']); ?></a>
                 </li>
             </ul>
 
@@ -59,13 +46,13 @@ $privacy_url = get_privacy_policy_url() ?: '#';
 
                 <!-- SNSリンク: target="_blank" + rel="noopener" でセキュリティ確保（タブナビング対策） -->
                 <div class="l-footer__sns-links">
-                    <a href="<?php echo esc_url($insta_url); ?>" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-                    <a href="<?php echo esc_url($fb_url); ?>" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
+                    <a href="<?php echo esc_url($access['shop_sns_instagram']); ?>" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+                    <a href="<?php echo esc_url($access['shop_sns_facebook']); ?>" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
                 </div>
 
                 <!-- ポリシーリンク: 法的必須ページへの導線 -->
                 <div class="l-footer__policy-links">
-                    <a href="<?php echo esc_url($privacy_url); ?>">プライバシーポリシー</a>
+                    <a href="<?php echo esc_url($access['privacy_url']); ?>">プライバシーポリシー</a>
                     <a href="#" aria-disabled="true" tabindex="-1">特定商取引法に基づく表記</a>
                 </div>
 

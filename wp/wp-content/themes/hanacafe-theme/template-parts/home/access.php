@@ -8,8 +8,7 @@
  * 3. 柔軟な画像管理: オーナーが画像をアップすれば差し替わり、なければデフォルトを表示。
  */
 
-// [fix 2-1]
-$access_id = get_hanacafe_master_page_id('access-info') ?: 0;
+$access = get_hanacafe_access_data();
 ?>
 <section id="access" class="p-access l-section">
   <div class="p-access__inner l-container">
@@ -23,12 +22,12 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
       <dl class="p-access__list">
         <?php // --- 住所 --- 
         ?>
-        <?php if ($val = get_field('shop_address', $access_id)) : ?>
+        <?php if ($val = $access['shop_address']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Address</dt>
             <dd class="p-access__detail">
               <p class="p-access__text"><?php echo esc_html($val); ?></p>
-              <?php if ($note = get_field('shop_access_note', $access_id)) : ?>
+              <?php if ($note = $access['shop_access_note']) : ?>
                 <p class="p-access__note"><?php echo esc_html($note); ?></p>
               <?php endif; ?>
             </dd>
@@ -37,7 +36,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
 
         <?php // --- 交通アクセス --- 
         ?>
-        <?php if ($train1 = get_field('shop_access_train_1', $access_id)) : ?>
+        <?php if ($train1 = $access['shop_access_train_1']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Access</dt>
             <dd class="p-access__detail">
@@ -45,7 +44,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
                 <span class="p-access__badge p-access__badge--tokyu">東急</span>
                 <span class="p-access__text"><?php echo wp_kses_post($train1); ?></span>
               </div>
-              <?php if ($train2 = get_field('shop_access_train_2', $access_id)) : ?>
+              <?php if ($train2 = $access['shop_access_train_2']) : ?>
                 <div class="p-access__transport-item">
                   <span class="p-access__badge p-access__badge--jr">JR</span>
                   <span class="p-access__text"><?php echo wp_kses_post($train2); ?></span>
@@ -57,7 +56,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
 
         <?php // --- 営業時間 --- 
         ?>
-        <?php if ($hours = get_field('shop_open_hours', $access_id)) : ?>
+        <?php if ($hours = $access['shop_open_hours']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Open</dt>
             <dd class="p-access__detail">
@@ -69,7 +68,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
         <?php // --- 電話・定休日 --- 
         ?>
         <div class="p-access__row p-access__row--split">
-          <?php if ($tel = get_field('shop_tel', $access_id)) : ?>
+          <?php if ($tel = $access['shop_tel']) : ?>
             <div class="p-access__col">
               <dt class="p-access__label">Tel</dt>
               <dd class="p-access__text p-access__text--large">
@@ -80,7 +79,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
             </div>
           <?php endif; ?>
 
-          <?php if ($closed = get_field('shop_closed', $access_id)) : ?>
+          <?php if ($closed = $access['shop_closed']) : ?>
             <div class="p-access__col">
               <dt class="p-access__label">Closed</dt>
               <dd class="p-access__text p-access__text--large">
@@ -93,7 +92,7 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
 
       <?php // --- お席の確認ボタン --- 
       ?>
-      <?php if ($url = get_field('seat_check_url', $access_id)) : ?>
+      <?php if ($url = $access['seat_check_url']) : ?>
         <div class="p-access__action">
           <a href="<?php echo esc_url($url); ?>" class="p-access__btn" target="_blank" rel="noopener">
             <span class="material-symbols-outlined">calendar_month</span>
@@ -108,13 +107,12 @@ $access_id = get_hanacafe_master_page_id('access-info') ?: 0;
     <div class="p-access__map">
       <?php
       // 1. 画像データの取得（堅牢なフォールバック）
-      $map_image = get_field('shop_map_image', $access_id);
-      $map_img_src = (is_array($map_image) && !empty($map_image['url'])) ? $map_image['url'] : get_theme_file_uri('/assets/images/map.png');
-      $map_img_alt = (is_array($map_image) && !empty($map_image['alt'])) ? $map_image['alt'] : 'HanaCAFE nappa69 周辺地図';
+      $map_img_src = $access['shop_map_image_url'];
+      $map_img_alt = $access['shop_map_image_alt'];
 
       // 2. リンクURLとボタン文言の取得
-      $map_url = get_field('shop_map_url', $access_id);
-      $map_btn_text = get_field('shop_map_btn_text', $access_id) ?: 'Google Maps で開く';
+      $map_url = $access['shop_map_url'];
+      $map_btn_text = $access['shop_map_btn_text'];
       ?>
 
       <?php if ($map_url) : ?>
