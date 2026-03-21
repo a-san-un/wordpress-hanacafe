@@ -79,6 +79,11 @@ add_filter('template_include', function ($template) {
 // get_hanacafe_news_page_url
 // 他のヘルパーが内部依存するため、このグループを先頭に置く
 
+/** menu_category の正規スラッグ一覧を返す（順序保証） */
+function get_hanacafe_menu_categories() {
+    return ['food', 'drink', 'dessert'];
+}
+
 /** スラッグから固定ページIDを取得 */
 function get_hanacafe_master_page_id($slug) {
     $page = get_page_by_path($slug);

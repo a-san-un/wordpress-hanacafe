@@ -19,7 +19,7 @@ get_header(); ?>
 
             <div class="p-page__content">
                 <?php
-                $target_slugs = ['food', 'drink', 'dessert'];
+$target_slugs = get_hanacafe_menu_categories();
                 $ordered_ids = [];
 
                 foreach ($target_slugs as $slug) {
