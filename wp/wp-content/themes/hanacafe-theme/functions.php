@@ -241,6 +241,55 @@ function get_hanacafe_access_data(string $slug = 'access-info'): array {
     ];
 }
 
+/**
+ * menu 投稿の ACF 整形済みデータを返す。
+ * single-menu.php / loop-menu.php の共通データ取得層。
+ * 画像優先順位: menu_sub_img > アイキャッチ > デフォルト画像（menu-info）
+ *
+ * @param  int $post_id 対象投稿 ID。0 の場合はカレント投稿を使用。
+ * @return array{
+ *   image_url:      string,   // esc_url 済み
+ *   image_alt:      string,   // esc_attr 済み（alt 空時はタイトルで補完）
+ *   is_recommended: bool,
+ *   sub_name:       string,   // esc_html 済み。未設定時は空文字
+ *   price_raw:      int|null, // 整形前の生値。未設定時は null
+ *   price_display:  string,   // number_format 済み。未設定時は空文字
+ * }
+ */
+function get_hanacafe_menu_data( int $post_id = 0 ): array {
+	if ( 0 === $post_id ) {
+		$post_id = get_the_ID();
+	}
+
+	// ── 画像解決（menu_sub_img > アイキャッチ > デフォルト） ──
+	$sub_img = get_field( 'menu_sub_img', $post_id );
+	if ( $sub_img && is_array( $sub_img ) ) {
+		$image_url = isset( $sub_img['sizes']['large'] ) ? $sub_img['sizes']['large'] : $sub_img['url'];
+		$image_alt = ! empty( $sub_img['alt'] ) ? $sub_img['alt'] : get_the_title( $post_id );
+	} elseif ( has_post_thumbnail( $post_id ) ) {
+		$thumb     = wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), 'large' );
+		$image_url = $thumb ? $thumb[0] : get_hanacafe_default_image_url( 'menu-info' );
+		$image_alt = get_the_title( $post_id );
+	} else {
+		$image_url = get_hanacafe_default_image_url( 'menu-info' );
+		$image_alt = get_the_title( $post_id );
+	}
+
+	// ── 価格整形（空なら null / 空文字で統一） ──
+	$price_raw     = get_field( 'price', $post_id );
+	$price_raw     = $price_raw ? (int) $price_raw : null;
+	$price_display = $price_raw !== null ? number_format( $price_raw ) : '';
+
+	return [
+		'image_url'      => esc_url( $image_url ),
+		'image_alt'      => esc_attr( $image_alt ),
+		'is_recommended' => (bool) get_field( 'is_recommended', $post_id ),
+		'sub_name'       => esc_html( (string) get_field( 'sub_name', $post_id ) ),
+		'price_raw'      => $price_raw,
+		'price_display'  => esc_html( $price_display ),
+	];
+}
+
 // ============================================================
 // 5. 画像フォールバック & Alt補完
 // ============================================================
