@@ -25,7 +25,7 @@ get_header(); ?>
                                 get_template_part("template-parts/menu/loop", "menu");
                           endwhile;
                         else:
-                          echo '<p class="u-text-center">準備中です。</p>';
+                            echo '<p class="p-archive__empty">準備中です。</p>';
                         endif; ?>
                     </div>
                 </section>
