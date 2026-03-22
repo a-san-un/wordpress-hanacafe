@@ -132,17 +132,17 @@ c-card--seat   → ステータスバッジあり
 
 | #    | 優先度 | 対象 | 内容 | 状態 |
 | ---- | ------ | ---- | ---- | ---- |
-| 8.5-A1 | 🔴 高 | `_variables.scss` / `_base.scss` / `theme.json` | フォント変数逆転修正（`$f-heading`/`$f-body` + theme.json スラッグ同期） | 🔲 |
-| 8.5-B1 | 🟡 中 | `app.scss` | 作業ログコメント3件を物理削除 | 🔲 |
-| 8.5-B2 | 🟡 中 | `_c-heading.scss` | 作業ログコメントを物理削除 | 🔲 |
-| 8.5-B3 | 🟡 中 | `_l-header.scss` | コメント内旧ファイル名を修正 | 🔲 |
-| 8.5-B4 | 🟡 中 | `index.php` | 残骸コメントを物理削除 | 🔲 |
-| 8.5-B5 | 🟡 中 | `single-menu.php` | `[fix 1-4]` コメントを物理削除 | 🔲 |
-| 8.5-B6 | 🟡 中 | `eslint.config.js` | `globals.jquery` を物理削除 | 🔲 |
-| 8.5-C1 | 🔴 高 | `template-parts/home/hero.php` | フォールバック画像を `coming-soon.jpg` に修正 | 🔲 |
-| 8.5-C2 | 🔴 高 | `_p-news.scss` | 境界線透過率を `$c-border`（0.1）に修正 | 🔲 |
-| 8.5-D1 | 🟡 中 | `_p-menu.scss` | デッドプロパティ `right: 50%` を物理削除 | 🔲 |
-| 8.5-D2 | 🟡 中 | `_p-page.scss` | `html body` による詳細度引き上げを削除 | 🔲 |
+| 8.5-A1 | 🔴 高 | `_variables.scss` / `_base.scss` / `theme.json` | フォント変数逆転修正（`$f-heading`/`$f-body` + theme.json スラッグ同期） | ✅ |
+| 8.5-B1 | 🟡 中 | `app.scss` | 作業ログコメント3件を物理削除 | ✅ |
+| 8.5-B2 | 🟡 中 | `_c-heading.scss` | 作業ログコメントを物理削除 | ✅ |
+| 8.5-B3 | 🟡 中 | `_l-header.scss` | コメント内旧ファイル名を修正 | ✅ |
+| 8.5-B4 | 🟡 中 | `index.php` | 残骸コメントを物理削除 | ✅ |
+| 8.5-B5 | 🟡 中 | `single-menu.php` | `[fix 1-4]` コメントを物理削除 | ✅ |
+| 8.5-B6 | 🟡 中 | `eslint.config.js` | `globals.jquery` を物理削除 | ✅ |
+| 8.5-C1 | 🔴 高 | `template-parts/home/hero.php` | フォールバック画像を `coming-soon.jpg` に修正 | ✅ |
+| 8.5-C2 | 🔴 高 | `_p-news.scss` | 境界線透過率を `$c-border`（0.1）に修正 | ✅ |
+| 8.5-D1 | 🟡 中 | `_p-menu.scss` | デッドプロパティ `right: 50%` を物理削除 | ✅ |
+| 8.5-D2 | 🟡 中 | `_p-page.scss` | `html body` による詳細度引き上げを削除 | ✅ |
 
 ### STEP 8.5 完了条件
 
@@ -155,7 +155,8 @@ c-card--seat   → ステータスバッジあり
 
 | コミット | 内容 |
 | -------- | ---- |
-| （未実施） | — |
+| c009548 | fix: STEP 8.5 技術的負債クリーニング（11件） |
+| d5dc20a | docs: 技術的負債調査記録を追加 |
 
 ---
 
@@ -190,7 +191,7 @@ c-card--seat   → ステータスバッジあり
 | --------------------------- | ---- | --------- |
 | STEP 7 フォーマット統一     | 6件  | ✅ 完了   |
 | STEP 8 コンポーネント共通化 | 13件 | 🔲 未着手 |
-| STEP 8.5 技術的負債クリーニング | 11件 | 🔲 未着手 |
+| STEP 8.5 技術的負債クリーニング | 11件 | ✅ 完了 |
 | STEP 9 運用マニュアル       | 4件  | 🔲 未着手 |
 
 ---
