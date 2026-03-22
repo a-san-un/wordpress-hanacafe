@@ -1,0 +1,12 @@
+# PHP は Intelephense で整形するため Prettier 対象外
+**/*.php
+
+# WordPress コア・プラグインは対象外
+wp/wp-admin/**
+wp/wp-includes/**
+wp/wp-content/plugins/**
+wp/wp-content/themes/twenty*/**
+
+# ビルド成果物
+wp/wp-content/themes/hanacafe-theme/assets/css/**
+node_modules/**
