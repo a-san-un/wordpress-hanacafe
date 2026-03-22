@@ -93,7 +93,7 @@
   }
 
   &__date {
-    font-family: v.$f-sans;
+    font-family: v.$f-heading;
     font-size: 12px;
     // 黄金律適用: 日付を 70% 透過
     color: v.$c-text-sub;
@@ -129,7 +129,7 @@
       flex-wrap: wrap;
       justify-content: center;
       gap: 8px;
-      font-family: v.$f-sans;
+      font-family: v.$f-heading;
     }
 
     a,

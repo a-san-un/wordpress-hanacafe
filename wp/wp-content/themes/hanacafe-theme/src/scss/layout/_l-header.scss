@@ -41,7 +41,7 @@
   }
 
   &__logo {
-    font-family: v.$f-serif;
+    font-family: v.$f-body;
     font-size: 20px;
     font-weight: 700;
     color: v.$c-main;
@@ -77,7 +77,7 @@
     }
 
     &-link {
-      font-family: v.$f-sans;
+      font-family: v.$f-heading;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.1em;

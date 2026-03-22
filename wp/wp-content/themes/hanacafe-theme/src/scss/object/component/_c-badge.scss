@@ -64,7 +64,7 @@
   background-color: rgba(v.$c-white, 0.9); // 半透明白の背景
   border-radius: v.$radius-s; // 小サイズの角丸（丸型の .c-badge-status と差別化）
   color: v.$c-main; // メインカラーでテキストを表示
-  font-family: v.$f-sans; // 英語用フォント（variables.scss で定義）
+  font-family: v.$f-heading; // 英語用フォント（variables.scss で定義）
   font-size: 12px;
   font-weight: 700; // 太字
   z-index: 2; // 画像より前面に表示

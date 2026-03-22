@@ -52,7 +52,7 @@
 
   &__sub {
     display: block;
-    font-family: v.$f-sans; // [戦略的例外] 日本語キャッチコピーの可読性を優先
+    font-family: v.$f-heading; // [戦略的例外] 日本語キャッチコピーの可読性を優先
     font-size: 14px;
     color: v.$c-text;
     margin-bottom: 16px;
@@ -60,7 +60,7 @@
   }
 
   &__price {
-    font-family: v.$f-serif;
+    font-family: v.$f-body;
     font-size: 28px;
     font-weight: 700;
     color: v.$c-main;
@@ -124,7 +124,7 @@
   }
 
   &__title {
-    font-family: v.$f-sans;
+    font-family: v.$f-heading;
     font-size: 24px;
     font-weight: 700;
     color: v.$c-main;

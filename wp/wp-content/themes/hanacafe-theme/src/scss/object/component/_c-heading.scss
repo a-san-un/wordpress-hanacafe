@@ -16,7 +16,7 @@
   // ① 英語サブタイトル (Menu, About & Seat など)
   &__sub {
     color: v.$c-main; // ★オレンジから深緑へ修正
-    font-family: v.$f-sans;
+    font-family: v.$f-heading;
     font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -26,7 +26,7 @@
   // ② 日本語メインタイトル (身体が喜ぶ... など)
   &__main {
     color: v.$c-main;
-    font-family: v.$f-serif;
+    font-family: v.$f-body;
     font-size: m.vw-clamp(24, 32);
     font-weight: 700;
     line-height: 1.4;
