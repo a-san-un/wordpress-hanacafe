@@ -89,16 +89,21 @@
 // Modifier: menu
 // --------------------------------------------------------------------------
 .c-card--menu {
-  &:hover,
-  .c-card__link:hover {
-    .c-card__media {
-      // hover浮きはカード全体で管理（_p-menu.scss 側で定義）
-    }
+  transition: transform v.$t-duration ease;
+
+  &:hover {
+    transform: translateY(-4px);
   }
 
   .c-card__body {
     border-bottom: 1px solid v.$c-border;
     padding-bottom: 12px;
+  }
+
+  .c-card__price-unit {
+    font-size: 0.75rem;
+    font-weight: 400;
+    margin-left: 2px;
   }
 }
 

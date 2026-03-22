@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Part: Menu Card (loop-menu.php)
  * [制作意図]
@@ -8,36 +9,31 @@
  */
 ?>
 <?php $menu = get_hanacafe_menu_data(); ?>
-<article <?php post_class("p-menu__item"); ?>>
-    <a href="<?php the_permalink(); ?>" class="p-menu__link">
-        <div class="p-menu__img-wrapper">
-            <?php
-// [実装] おすすめバッジの動的表示（表示保証：SCSS側の relative に依存）
-?>
+<article <?php post_class("c-card c-card--menu"); ?>>
+    <a href="<?php the_permalink(); ?>" class="c-card__link">
+        <div class="c-card__media">
             <?php if ($menu["is_recommended"]): ?>
-                <span class="c-badge-recommend">RECOMMEND</span>
+                <div class="c-card__badge">
+                    <span class="c-badge-recommend">RECOMMEND</span>
+                </div>
             <?php endif; ?>
 
-            <img src="<?php echo $menu["image_url"]; ?>" alt="<?php echo $menu["image_alt"]; ?>" class="p-menu__img">
+            <img src="<?php echo $menu["image_url"]; ?>" alt="<?php echo $menu["image_alt"]; ?>" class="c-card__img">
         </div>
 
-        <div class="p-menu__info">
-            <div class="p-menu__titles">
-                <h3 class="p-menu__name"><?php // [fix 1-4]
+        <div class="c-card__body">
+            <h3 class="c-card__title"><?php echo esc_html(get_the_title()); ?></h3>
+            <?php if ($menu["sub_name"]): ?>
+                <p class="c-card__meta"><?php echo $menu["sub_name"]; ?></p>
+            <?php endif; ?>
 
-echo esc_html(get_the_title()); ?></h3>
-                <?php if ($menu["sub_name"]): ?>
-                    <p class="p-menu__sub"><?php echo $menu["sub_name"]; ?></p>
-                <?php endif; ?>
-            </div>
-
-            <div class="p-menu__desc">
+            <div class="c-card__text">
                 <?php the_excerpt(); ?>
             </div>
 
             <?php if ($menu["price_display"]): ?>
-                <p class="p-menu__price">
-                    <span class="p-menu__price-unit">¥</span>
+                <p class="c-card__price">
+                    <span class="c-card__price-unit">¥</span>
                     <?php echo $menu["price_display"]; ?>
                 </p>
             <?php endif; ?>

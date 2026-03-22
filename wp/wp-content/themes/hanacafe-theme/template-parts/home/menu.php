@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Project: HanaCAFE nappa69 - Home Menu Section
  * [制作意図]
@@ -18,9 +19,9 @@
  */
 [$food_slug, $drink_slug, $dessert_slug] = get_hanacafe_menu_categories();
 $menu_slots = [
-  "food" => get_hanacafe_top_menu_post("top_menu_food", $food_slug),
-  "drink" => get_hanacafe_top_menu_post("top_menu_drink", $drink_slug),
-  "dessert" => get_hanacafe_top_menu_post("top_menu_dessert", $dessert_slug),
+    "food" => get_hanacafe_top_menu_post("top_menu_food", $food_slug),
+    "drink" => get_hanacafe_top_menu_post("top_menu_drink", $drink_slug),
+    "dessert" => get_hanacafe_top_menu_post("top_menu_dessert", $dessert_slug),
 ];
 ?>
 
@@ -50,15 +51,15 @@ $menu_slots = [
                     get_template_part("template-parts/menu/loop", "menu");
                     ?>
                 <?php else: ?>
-                    <article class="p-menu__item is-preparing">
-                        <div class="p-menu__img-wrapper">
+                    <article class="c-card c-card--menu is-preparing">
+                        <div class="c-card__media">
                             <img src="<?php echo get_hanacafe_default_image_url(
-                              "menu-info",
-                            ); ?>" alt="準備中" class="p-menu__img">
+                                            "menu-info",
+                                        ); ?>" alt="準備中" class="c-card__img">
                         </div>
-                        <div class="p-menu__info">
-                            <h3 class="p-menu__name"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>
-                            <p class="p-menu__desc">現在メニューを更新しております。公開までお待ちください。</p>
+                        <div class="c-card__body">
+                            <h3 class="c-card__title"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>
+                            <p class="c-card__text">現在メニューを更新しております。公開までお待ちください。</p>
                         </div>
                     </article>
                 <?php endif; ?>
