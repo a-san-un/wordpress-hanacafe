@@ -1,4 +1,4 @@
-# HanaCAFE nappa69 リファクタリングロードマップ Phase 2
+﻿# HanaCAFE nappa69 リファクタリングロードマップ Phase 2
 
 最終更新: 2026-03-22
 
@@ -12,13 +12,13 @@
 
 ## フォーマットルール（確定）
 
-| 対象             | インデント | 括弧スタイル                          | ツール       |
-| ---------------- | ---------- | ------------------------------------- | ------------ |
-| PHP              | スペース2  | K&R（1TBS）                           | Intelephense |
-| JS               | スペース2  | 1TBS                                  | Prettier     |
-| SCSS             | スペース2  | 1TBS                                  | Prettier     |
-| HTML（PHP内）    | タブ       | —                                     | Intelephense |
-| JSON / YAML / MD | スペース2  | —                                     | Prettier     |
+| 対象             | インデント | 括弧スタイル | ツール       |
+| ---------------- | ---------- | ------------ | ------------ |
+| PHP              | スペース2  | K&R（1TBS）  | Intelephense |
+| JS               | スペース2  | 1TBS         | Prettier     |
+| SCSS             | スペース2  | 1TBS         | Prettier     |
+| HTML（PHP内）    | タブ       | —            | Intelephense |
+| JSON / YAML / MD | スペース2  | —            | Prettier     |
 
 ---
 
@@ -45,10 +45,10 @@
 
 ### STEP 7 コミット履歴
 
-| コミット | 内容 |
-| -------- | ---- |
-| c81cf97 | style: インデントをタブ→スペース2に統一・.editorconfig削除 |
-| — | STEP 7-1〜7-6 全完了（フォーマット設定確認・Prettier dry-run 全ファイル準拠済み確認） |
+| コミット | 内容                                                                                  |
+| -------- | ------------------------------------------------------------------------------------- |
+| c81cf97  | style: インデントをタブ→スペース2に統一・.editorconfig削除                            |
+| —        | STEP 7-1〜7-6 全完了（フォーマット設定確認・Prettier dry-run 全ファイル準拠済み確認） |
 
 ---
 
@@ -80,21 +80,21 @@ c-card--seat   → ステータスバッジあり
 | 見出し（h1〜h4） | Montserrat | Noto Sans JP  |
 | 本文・説明文     | Montserrat | Noto Serif JP |
 
-| #   | 優先度 | 対象                         | 内容                                            | 状態 |
-| --- | ------ | ---------------------------- | ----------------------------------------------- | ---- |
-| 8-1 | 🔴 高  | `_variables.scss`            | フォント変数を見出し用・本文用に整理            | 🔲   |
-| 8-2 | 🔴 高  | `_c-card.scss`（新規）       | 共通カードコンポーネント作成                    | 🔲   |
-| 8-3 | 🔴 高  | `loop-menu.php`              | `template-parts/menu/` に移動・呼び出し元を更新 | 🔲   |
-| 8-4 | 🟡 中  | `_p-menu.scss`               | `c-card--menu` modifier に移行・旧ルール削除    | 🔲   |
-| 8-5 | 🟡 中  | `_p-news.scss`               | `c-card--news` modifier に移行・旧ルール削除    | 🔲   |
-| 8-6 | 🟡 中  | `_p-about.scss`              | `c-card--seat` modifier に移行・旧ルール削除    | 🔲   |
-| 8-7 | 🟡 中  | `_c-heading.scss`            | 見出しフォント変数を適用・レベル別スタイル整理  | 🔲   |
-| 8-8 | 🟢 低  | `taxonomy-menu_category.php` | 中身確認・不要なら削除                          | 🔲   |
-| 8-9 | 🟢 低  | `docs/`                      | 連番整理（07→05・08→06 に改番）                 | 🔲   |
-| 8-10 | 🔴 高  | `archive-menu.php`                        | 不正文字（`ï`）バグ修正                                         | 🔲   |
-| 8-11 | 🔴 高  | `_header.scss`                            | `.p-drawer` スタイルを `_p-drawer.scss` として分離              | 🔲   |
-| 8-12 | 🟡 中  | `_header.scss` / `_footer.scss`           | `_l-header.scss` / `_l-footer.scss` にリネーム・`app.scss` import更新 | 🔲   |
-| 8-13 | 🟡 中  | 各SCSSファイル                            | 未定義クラス4件追加（`.p-archive__pagination` 等）             | 🔲   |
+| #    | 優先度 | 対象                            | 内容                                                                  | 状態 |
+| ---- | ------ | ------------------------------- | --------------------------------------------------------------------- | ---- |
+| 8-1  | 🔴 高  | `_variables.scss`               | フォント変数を見出し用・本文用に整理                                  | 🔲   |
+| 8-2  | 🔴 高  | `_c-card.scss`（新規）          | 共通カードコンポーネント作成                                          | 🔲   |
+| 8-3  | 🔴 高  | `loop-menu.php`                 | `template-parts/menu/` に移動・呼び出し元を更新                       | 🔲   |
+| 8-4  | 🟡 中  | `_p-menu.scss`                  | `c-card--menu` modifier に移行・旧ルール削除                          | 🔲   |
+| 8-5  | 🟡 中  | `_p-news.scss`                  | `c-card--news` modifier に移行・旧ルール削除                          | 🔲   |
+| 8-6  | 🟡 中  | `_p-about.scss`                 | `c-card--seat` modifier に移行・旧ルール削除                          | 🔲   |
+| 8-7  | 🟡 中  | `_c-heading.scss`               | 見出しフォント変数を適用・レベル別スタイル整理                        | 🔲   |
+| 8-8  | 🟢 低  | `taxonomy-menu_category.php`    | 中身確認・不要なら削除                                                | 🔲   |
+| 8-9  | 🟢 低  | `docs/`                         | 連番整理（07→05・08→06 に改番）                                       | 🔲   |
+| 8-10 | 🔴 高  | `archive-menu.php`              | 不正文字（`ï`）バグ修正                                               | 🔲   |
+| 8-11 | 🔴 高  | `_header.scss`                  | `.p-drawer` スタイルを `_p-drawer.scss` として分離                    | 🔲   |
+| 8-12 | 🟡 中  | `_header.scss` / `_footer.scss` | `_l-header.scss` / `_l-footer.scss` にリネーム・`app.scss` import更新 | 🔲   |
+| 8-13 | 🟡 中  | 各SCSSファイル                  | 未定義クラス4件追加（`.p-archive__pagination` 等）                    | 🔲   |
 
 ### STEP 8 完了条件
 
@@ -144,7 +144,7 @@ c-card--seat   → ステータスバッジあり
 
 | STEP                        | 件数 | 状態      |
 | --------------------------- | ---- | --------- |
-| STEP 7 フォーマット統一     | 6件  | ✅ 完了 |
+| STEP 7 フォーマット統一     | 6件  | ✅ 完了   |
 | STEP 8 コンポーネント共通化 | 13件 | 🔲 未着手 |
 | STEP 9 運用マニュアル       | 4件  | 🔲 未着手 |
 
