@@ -1,6 +1,6 @@
 # HanaCAFE ACFフィールド依存マップ
 
-最終更新: 2026-03-21
+最終更新: 2026-03-22
 対象: wp/wp-content/themes/hanacafe-theme
 
 ## 1. 依存マップの見方
@@ -18,7 +18,7 @@
 - マスター解決: get_hanacafe_master_page_id('common-info')
 - フィールド: pic
 - 参照箇所: template-parts/home/hero.php
-- フォールバック: assets/images/hero.jpg, altは固定文言
+- フォールバック: assets/images/coming-soon.jpg, altは固定文言
 - 影響: トップヒーロー画像とalt
 
 - フィールド: site_default_image
