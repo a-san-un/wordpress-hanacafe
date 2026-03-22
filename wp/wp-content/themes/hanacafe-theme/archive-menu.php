@@ -10,7 +10,7 @@
 get_header(); ?>
 
 <main class="l-main">
-    <section class="p-page">
+    <section class="p-page">ï
         <div class="l-container">
             <div class="p-page__header">
                 <p class="p-page__subtitle">MENU</p>
@@ -19,18 +19,21 @@ get_header(); ?>
 
             <div class="p-page__content">
                 <?php
-$target_slugs = get_hanacafe_menu_categories();
+                $target_slugs = get_hanacafe_menu_categories();
                 $ordered_ids = [];
 
-                foreach ($target_slugs as $slug) {
+                foreach ($target_slugs as $slug)
+                {
                     $term = get_term_by('slug', $slug, 'menu_category');
-                    if ($term && !is_wp_error($term)) {
+                    if ($term && !is_wp_error($term))
+                    {
                         $ordered_ids[] = $term->term_id;
                     }
                 }
 
                 // [表示保証] ターム設定ミスがある場合に警告を表示
-                if (empty($ordered_ids)) {
+                if (empty($ordered_ids))
+                {
                     echo '<p class="p-menu-archive-alert">メニューカテゴリー（food, drink, dessert）が見つかりません。<br>管理画面のスラッグ設定を確認してください。</p>';
                 }
 

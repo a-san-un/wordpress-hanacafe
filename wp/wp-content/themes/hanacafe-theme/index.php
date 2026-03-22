@@ -12,12 +12,16 @@ get_header(); ?>
     <section class="l-section">
         <div class="l-container">
             <?php
-            if (have_posts()) {
-                while (have_posts()) {
+            if (have_posts())
+            {
+                while (have_posts())
+                {
                     the_post();
                     the_content();
                 }
-            } else {
+            }
+            else
+            {
                 // style属性を消し、必要なら共通のユーティリティクラス（u-text-center等）を当てる
                 echo '<p class="u-text-center">記事が見つかりませんでした。</p>';
             }

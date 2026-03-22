@@ -18,7 +18,7 @@ get_header(); ?>
 
             <div class="p-page__content">
                 <p><?php echo esc_html('お探しのページは移動または削除された可能性があります。'); ?></p>
-            </div>
+            </div>ï
 
             <div class="p-page__footer">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="p-page__back-link">
