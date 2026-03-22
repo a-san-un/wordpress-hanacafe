@@ -18,8 +18,8 @@
           "slug": "sans"
         },
         {
-          "fontFamily": "\"Noto Serif JP\", serif",
-          "name": "Noto Serif JP (本文・説明文)",
+          "fontFamily": "\"Montserrat\", \"Noto Serif JP\", serif",
+          "name": "Montserrat / Noto Serif JP (本文・説明文)",
           "slug": "serif"
         }
       ]
