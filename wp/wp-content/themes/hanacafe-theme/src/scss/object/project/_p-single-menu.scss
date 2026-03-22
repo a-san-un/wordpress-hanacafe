@@ -10,97 +10,107 @@
 @use "../../global/mixins" as m;
 
 .p-single-menu {
-    padding: m.vw-clamp(60, 100) 0;
-    background-color: v.$c-white;
-    opacity: 1;
+  padding: m.vw-clamp(60, 100) 0;
+  background-color: v.$c-white;
+  opacity: 1;
 
-    &__header {
-        margin-bottom: m.vw-clamp(40, 60);
+  &__header {
+    margin-bottom: m.vw-clamp(40, 60);
+  }
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @include m.mq {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 60px;
+      align-items: start;
+    }
+  }
+
+  // メイン画像セクション
+  &__img-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+
+    @include m.mq {
+      max-width: 480px;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: v.$radius-m; // 優しい角丸
+    background-color: v.$c-border-subtle; // [透過黄金律 0.05]
+  }
+
+  &__sub {
+    display: block;
+    font-family: v.$f-sans; // [戦略的例外] 日本語キャッチコピーの可読性を優先
+    font-size: 14px;
+    color: v.$c-text;
+    margin-bottom: 16px;
+    opacity: 1; // [戦略的例外] 主役級の字幕として不透明化
+  }
+
+  &__price {
+    font-family: v.$f-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: v.$c-main;
+    margin-bottom: 24px;
+    border-bottom: 1px solid v.$c-border; // [透過黄金律 0.1]
+    padding-bottom: 16px;
+
+    &-unit {
+      font-size: 18px;
+      margin-right: 4px;
+    }
+  }
+
+  &__desc {
+    line-height: 1.8;
+    color: v.$c-text;
+    opacity: 0.7;
+    margin-bottom: 32px;
+  }
+
+  &__specs {
+    opacity: 0.7;
+  }
+
+  &__spec-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 0;
+    border-bottom: 1px dotted v.$c-border;
+
+    dt {
+      font-weight: 700;
+      font-size: 13px;
+    }
+    dd {
+      font-size: 14px;
+      margin-left: 0;
     }
 
-    &__inner {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 32px;
-
-        @include m.mq {
-            grid-template-columns: repeat(2, 1fr);
-            column-gap: 60px;
-            align-items: start;
-        }
+    @include m.mq {
+      flex-direction: row;
+      dt {
+        width: 110px;
+      }
+      dd {
+        flex: 1;
+      }
     }
-
-    // メイン画像セクション 
-    &__img-wrapper {
-        position: relative;
-        width: 100%;
-        margin: 0 auto;
-
-        @include m.mq {
-            max-width: 480px; 
-        }
-    }
-
-    &__img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 3 / 2;
-        object-fit: cover;
-        border-radius: v.$radius-m; // 優しい角丸
-        background-color: v.$c-border-subtle; // [透過黄金律 0.05]
-    }
-
-    &__sub {
-        display: block;
-        font-family: v.$f-sans; // [戦略的例外] 日本語キャッチコピーの可読性を優先
-        font-size: 14px;
-        color: v.$c-text;
-        margin-bottom: 16px;
-        opacity: 1; // [戦略的例外] 主役級の字幕として不透明化
-    }
-
-    &__price {
-        font-family: v.$f-serif;
-        font-size: 28px;
-        font-weight: 700;
-        color: v.$c-main;
-        margin-bottom: 24px;
-        border-bottom: 1px solid v.$c-border; // [透過黄金律 0.1]
-        padding-bottom: 16px;
-
-        &-unit {
-            font-size: 18px;
-            margin-right: 4px;
-        }
-    }
-
-    &__desc {
-        line-height: 1.8;
-        color: v.$c-text;
-        opacity: 0.7; 
-        margin-bottom: 32px;
-    }
-
-    &__specs {
-        opacity: 0.7;
-    }
-
-    &__spec-item {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        padding: 12px 0;
-        border-bottom: 1px dotted v.$c-border;
-        
-        dt { font-weight: 700; font-size: 13px; }
-        dd { font-size: 14px; margin-left: 0; }
-
-        @include m.mq {
-            flex-direction: row;
-            dt { width: 110px; }
-            dd { flex: 1; }
-        }
-    }
+  }
 }
 
 /* =========================================================
@@ -108,39 +118,39 @@
    [独立ブロック] p-single-menu の外側に配置されるため別途定義
 ========================================================= */
 .p-menu-related {
-    &__header {
-        text-align: center;
-        margin-bottom: m.vw-clamp(32, 48);
-    }
+  &__header {
+    text-align: center;
+    margin-bottom: m.vw-clamp(32, 48);
+  }
 
-    &__title {
-        font-family: v.$f-sans;
-        font-size: 24px;
-        font-weight: 700;
-        color: v.$c-main;
-        margin-bottom: 8px;
-        letter-spacing: 0.1em;
-    }
+  &__title {
+    font-family: v.$f-sans;
+    font-size: 24px;
+    font-weight: 700;
+    color: v.$c-main;
+    margin-bottom: 8px;
+    letter-spacing: 0.1em;
+  }
 
-    &__subtitle {
-        font-size: 14px;
-        color: v.$c-text;
-        opacity: 0.7; // 補足情報の黄金律
-    }
+  &__subtitle {
+    font-size: 14px;
+    color: v.$c-text;
+    opacity: 0.7; // 補足情報の黄金律
+  }
 
-    .p-menu__list {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: m.vw-clamp(24, 40); // SP〜PCで滑らかにスケール
+  .p-menu__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: m.vw-clamp(24, 40); // SP〜PCで滑らかにスケール
 
-        @include m.mq {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-        }
+    @include m.mq {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
     }
+  }
 
-    // 説明文は関連メニューでは非表示
-    .p-menu__desc {
-        display: none;
-    }
+  // 説明文は関連メニューでは非表示
+  .p-menu__desc {
+    display: none;
+  }
 }

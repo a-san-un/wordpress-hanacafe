@@ -8,70 +8,70 @@
    * SP版での Blackout を防ぎ、確実に情報を届ける設計に統合。
 ============================================ */
 html body .p-page {
-    // 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
-    padding-top: m.vw-clamp(120, 160);
-    padding-bottom: m.vw-clamp(80, 120);
+  // 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
+  padding-top: m.vw-clamp(120, 160);
+  padding-bottom: m.vw-clamp(80, 120);
 
-    // --- 第7の黄金律：表示保証（Anti-Blackout） ---
-    // 親コンテナ全体の透明化はSP版での不具合（Intersection Observerの空振り）の原因となるため
-    // 不透明（1.0）を常に維持する。
-    opacity: 1;
-    transform: none;
-    transition: none;
+  // --- 第7の黄金律：表示保証（Anti-Blackout） ---
+  // 親コンテナ全体の透明化はSP版での不具合（Intersection Observerの空振り）の原因となるため
+  // 不透明（1.0）を常に維持する。
+  opacity: 1;
+  transform: none;
+  transition: none;
 
-    &__header {
-        text-align: center;
-        margin-bottom: m.vw-clamp(40, 60);
+  &__header {
+    text-align: center;
+    margin-bottom: m.vw-clamp(40, 60);
+  }
+
+  &__title {
+    font-size: m.vw-clamp(24, 32);
+    font-weight: 700;
+    color: v.$c-main;
+    margin-bottom: 8px;
+  }
+
+  &__subtitle {
+    display: block;
+    font-family: v.$f-sans;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: v.$c-main;
+    margin-bottom: 4px;
+    opacity: 0.7; // 補足情報の黄金律
+  }
+
+  &__content {
+    line-height: 2;
+    color: v.$c-text;
+
+    p {
+      margin-bottom: 24px;
+    }
+  }
+
+  &__footer {
+    margin-top: m.vw-clamp(60, 80);
+    text-align: center;
+  }
+
+  &__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: v.$c-text;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    transition: opacity v.$t-duration;
+
+    &:hover {
+      opacity: 0.7; // 黄金律: 透過0.7
     }
 
-    &__title {
-        font-size: m.vw-clamp(24, 32);
-        font-weight: 700;
-        color: v.$c-main;
-        margin-bottom: 8px;
+    .material-symbols-outlined {
+      font-size: 20px;
     }
-
-    &__subtitle {
-        display: block;
-        font-family: v.$f-sans;
-        font-size: 14px;
-        font-weight: 700;
-        letter-spacing: 0.2em;
-        color: v.$c-main;
-        margin-bottom: 4px;
-        opacity: 0.7; // 補足情報の黄金律
-    }
-
-    &__content {
-        line-height: 2;
-        color: v.$c-text;
-        
-        p {
-            margin-bottom: 24px;
-        }
-    }
-
-    &__footer {
-        margin-top: m.vw-clamp(60, 80);
-        text-align: center;
-    }
-
-    &__back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        color: v.$c-text;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 700;
-        transition: opacity v.$t-duration;
-
-        &:hover {
-            opacity: 0.7; // 黄金律: 透過0.7
-        }
-
-        .material-symbols-outlined {
-            font-size: 20px;
-        }
-    }
+  }
 }

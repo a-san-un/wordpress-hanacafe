@@ -1,5 +1,5 @@
 @use "../../global/variables" as v; // 変数（カラー・フォント・イージング等）を名前空間 v でインポート
-@use "../../global/mixins" as m;    // カスタムmixin（mq・vw-clamp等）を名前空間 m でインポート
+@use "../../global/mixins" as m; // カスタムmixin（mq・vw-clamp等）を名前空間 m でインポート
 
 /* ==========================================================================
    Project: Hero Section (p-hero)
@@ -9,156 +9,160 @@
    3. 非破壊: z-index体系、グラデーション、既存のトランジション秒数を完全維持。
    ========================================================================== */
 
-$z-filter: 1;   // フィルター要素（オーバーレイ等）のz-index基準値
-$z-content: 2;  // コンテンツ要素のz-index基準値（フィルターより前面）
+$z-filter: 1; // フィルター要素（オーバーレイ等）のz-index基準値
+$z-content: 2; // コンテンツ要素のz-index基準値（フィルターより前面）
 
 .p-hero {
-    height: 70vh;        // モバイル時のヒーロー高さ（ビューポートの70%）
-    min-height: 500px;   // 小画面でも最低限の高さを確保
-    position: relative;  // 子要素（__content）の absolute 配置の基準
-    overflow: hidden;    // ズームアニメーション時にはみ出した画像を隠す
+  height: 70vh; // モバイル時のヒーロー高さ（ビューポートの70%）
+  min-height: 500px; // 小画面でも最低限の高さを確保
+  position: relative; // 子要素（__content）の absolute 配置の基準
+  overflow: hidden; // ズームアニメーション時にはみ出した画像を隠す
 
-    @include m.mq {
-        height: 100vh;   // PC時はフルビューポート高さに拡張
-    }
+  @include m.mq {
+    height: 100vh; // PC時はフルビューポート高さに拡張
+  }
 
-    &__inner {
-        width: 100%;  // 親要素いっぱいに広げる
-        height: 100%; // 親のheight（70vh / 100vh）を継承
-    }
+  &__inner {
+    width: 100%; // 親要素いっぱいに広げる
+    height: 100%; // 親のheight（70vh / 100vh）を継承
+  }
 
-    &__img {
-        width: 100%;              // 親要素いっぱいに広げる
-        height: 100%;             // 親の高さを継承
-        background-color: v.$c-main; // 画像ロード前のフォールバック背景色
-        position: relative; // ← 追加：疑似要素の基準
+  &__img {
+    width: 100%; // 親要素いっぱいに広げる
+    height: 100%; // 親の高さを継承
+    background-color: v.$c-main; // 画像ロード前のフォールバック背景色
+    position: relative; // ← 追加：疑似要素の基準
 
     // 1層目：乗算フィルター（深緑 20%）
     &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background-color: rgba(v.$c-main, 0.2);
-        mix-blend-mode: multiply;
-        z-index: $z-filter;
-        pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: rgba(v.$c-main, 0.2);
+      mix-blend-mode: multiply;
+      z-index: $z-filter;
+      pointer-events: none;
     }
 
     // 2層目：縦グラデーション（透明→深緑20%→透明）
     &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-            to bottom,
-            transparent 0%,
-            rgba(v.$c-main, 0.2) 50%,
-            transparent 100%
-        );
-        z-index: $z-filter;
-        pointer-events: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(v.$c-main, 0.2) 50%, transparent 100%);
+      z-index: $z-filter;
+      pointer-events: none;
     }
 
-        img {
-            width: 100%;              // 親コンテナ全体を覆う
-            height: 100%;             // 親コンテナ全体を覆う
-            object-fit: cover;        // アスペクト比を維持しつつトリミング
-            object-position: 50% 35%; // フォーカスポイントを上寄りに設定（人物・料理等の主役を中央上に）
+    img {
+      width: 100%; // 親コンテナ全体を覆う
+      height: 100%; // 親コンテナ全体を覆う
+      object-fit: cover; // アスペクト比を維持しつつトリミング
+      object-position: 50% 35%; // フォーカスポイントを上寄りに設定（人物・料理等の主役を中央上に）
 
-            // --- デフォルト表示保証 ---
-            opacity: 1;           // [Anti-Blackout] JS無効時はこの値が維持され、画像が確実に表示される
-            transform: scale(1);  // [Anti-Blackout] ズームオフセットなしの初期状態
-            transition:
-                opacity   1.5s ease-out, // フェードイン: 1.5s でゆっくり浮かび上がる
-                transform 2.0s ease-out; // ズームアウト: 2.0s でゆっくり等倍に戻る
+      // --- デフォルト表示保証 ---
+      opacity: 1; // [Anti-Blackout] JS無効時はこの値が維持され、画像が確実に表示される
+      transform: scale(1); // [Anti-Blackout] ズームオフセットなしの初期状態
+      transition:
+        opacity 1.5s ease-out,
+        // フェードイン: 1.5s でゆっくり浮かび上がる
+        transform 2s ease-out; // ズームアウト: 2.0s でゆっくり等倍に戻る
 
-            // --- JS有効時のみの読み込み演出 ---
-            .js-enabled body .p-hero:not(.is-start) & { // .is-start が付く前（ロード待機中）の初期状態
-                opacity: 0;            // 画像を非表示で待機
-                transform: scale(1.05); // わずかにズームインした状態で待機（ケン・バーンズ効果の起点）
-            }
+      // --- JS有効時のみの読み込み演出 ---
+      .js-enabled body .p-hero:not(.is-start) & {
+        // .is-start が付く前（ロード待機中）の初期状態
+        opacity: 0; // 画像を非表示で待機
+        transform: scale(1.05); // わずかにズームインした状態で待機（ケン・バーンズ効果の起点）
+      }
 
-            .p-hero.is-start & { // main.js が .is-start を付与したタイミングで発火
-                opacity: 1;           // フェードイン完了
-                transform: scale(1);  // 等倍に戻りズームアウト完了
-            }
-        }
+      .p-hero.is-start & {
+        // main.js が .is-start を付与したタイミングで発火
+        opacity: 1; // フェードイン完了
+        transform: scale(1); // 等倍に戻りズームアウト完了
+      }
+    }
+  }
+
+  &__content {
+    position: absolute; // ヒーロー画像に重ねて配置
+    top: 50%; // 垂直方向の中央揃え起点（transform と組み合わせて使用）
+    left: 0; // 左端から開始
+    width: 100%; // 横幅全体に広げる
+    transform: translateY(-50%); // top: 50% の補正。要素自身の高さ分だけ上に戻して真ん中に
+    z-index: $z-content; // フィルター（$z-filter: 1）より前面（2）に配置
+  }
+
+  &__title-box {
+    width: fit-content; // タイトルの実幅に合わせて収縮
+    margin-left: auto; // 左右 auto で水平中央揃え
+    margin-right: auto; // 同上
+  }
+
+  &__title {
+    display: flex; // 子要素（&-en, &-jp）を縦並びにするためフレックスコンテナ化
+    flex-direction: column; // 縦方向に積み重ねる
+    gap: 8px; // 英語タイトルと日本語サブタイトルの間隔
+    text-align: left; // テキストを左揃え
+    color: v.$c-white; // テキストカラーをホワイトに（背景画像との対比）
+    text-shadow: 0 2px 10px v.$c-black-overlay; // 可読性向上のための影（背景が明るい場合の保険）
+
+    &-en,
+    &-jp {
+      // --- デフォルト表示保証 ---
+      opacity: 1; // [Anti-Blackout] JS無効時のフォールバック表示
+      transform: translateY(0); // [Anti-Blackout] オフセットなしの初期位置
+      transition:
+        opacity 1s ease-out,
+        // フェードイン: 1s
+        transform 1s ease-out; // スライドアップ: 1s
     }
 
-    &__content {
-        position: absolute;   // ヒーロー画像に重ねて配置
-        top: 50%;             // 垂直方向の中央揃え起点（transform と組み合わせて使用）
-        left: 0;              // 左端から開始
-        width: 100%;          // 横幅全体に広げる
-        transform: translateY(-50%); // top: 50% の補正。要素自身の高さ分だけ上に戻して真ん中に
-        z-index: $z-content;  // フィルター（$z-filter: 1）より前面（2）に配置
+    &-en {
+      font-family: v.$f-sans; // 英語用フォントファミリー（variables.scss で定義）
+      font-size: 48px; // モバイル時の英語タイトルサイズ
+      font-weight: 700; // 太字（インパクト重視）
+      line-height: 1.1; // 行間を詰めてコンパクトに
+      transition-delay: 0.8s; // 画像フェードイン（1.5s）より後に登場させる演出上の遅延
+
+      @include m.mq {
+        font-size: 80px; // PC時は大きく表示
+      }
+
+      // --- JS有効時のみの隠し設定 ---
+      .js-enabled body .p-hero:not(.is-start) & {
+        // .is-start 付与前の待機状態
+        opacity: 0; // 非表示で待機
+        transform: translateY(20px); // 20px 下からスライドアップさせる起点
+      }
+
+      .p-hero.is-start & {
+        // .is-start 付与で発火（transition-delay: 0.8s 後に実行）
+        opacity: 1; // フェードイン完了
+        transform: translateY(0); // 元の位置に戻りスライドアップ完了
+      }
     }
 
-    &__title-box {
-        width: fit-content;   // タイトルの実幅に合わせて収縮
-        margin-left: auto;    // 左右 auto で水平中央揃え
-        margin-right: auto;   // 同上
+    &-jp {
+      font-size: 16px; // 日本語サブタイトルのサイズ（英語より小さく）
+      font-weight: 700; // 太字
+      letter-spacing: 0.15em; // 日本語の可読性向上のため字間を広めに
+      margin-top: 16px; // 英語タイトルとの追加余白（gap: 8px に加算）
+      // 黄金律: 補足情報の透過(0.7)
+      color: v.$c-white-sub; // 英語タイトルより少し薄くして視覚的な階層を作る
+      transition-delay: 1.2s; // 英語タイトル（0.8s）より後に登場させる時差演出
+
+      // --- JS有効時のみの隠し設定 ---
+      .js-enabled body .p-hero:not(.is-start) & {
+        // .is-start 付与前の待機状態
+        opacity: 0; // 非表示で待機
+        transform: translateY(15px); // 15px 下からスライドアップさせる起点（英語の20pxより控えめ）
+      }
+
+      .p-hero.is-start & {
+        // .is-start 付与で発火（transition-delay: 1.2s 後に実行）
+        opacity: 1; // フェードイン完了
+        transform: translateY(0); // 元の位置に戻りスライドアップ完了
+      }
     }
-
-    &__title {
-        display: flex;          // 子要素（&-en, &-jp）を縦並びにするためフレックスコンテナ化
-        flex-direction: column; // 縦方向に積み重ねる
-        gap: 8px;               // 英語タイトルと日本語サブタイトルの間隔
-        text-align: left;       // テキストを左揃え
-        color: v.$c-white;      // テキストカラーをホワイトに（背景画像との対比）
-        text-shadow: 0 2px 10px v.$c-black-overlay; // 可読性向上のための影（背景が明るい場合の保険）
-
-        &-en, &-jp {
-            // --- デフォルト表示保証 ---
-            opacity: 1;              // [Anti-Blackout] JS無効時のフォールバック表示
-            transform: translateY(0); // [Anti-Blackout] オフセットなしの初期位置
-            transition:
-                opacity   1s ease-out, // フェードイン: 1s
-                transform 1s ease-out; // スライドアップ: 1s
-        }
-
-        &-en {
-            font-family: v.$f-sans;  // 英語用フォントファミリー（variables.scss で定義）
-            font-size: 48px;       // モバイル時の英語タイトルサイズ
-            font-weight: 700;      // 太字（インパクト重視）
-            line-height: 1.1;      // 行間を詰めてコンパクトに
-            transition-delay: 0.8s; // 画像フェードイン（1.5s）より後に登場させる演出上の遅延
-
-            @include m.mq {
-                font-size: 80px; // PC時は大きく表示
-            }
-
-            // --- JS有効時のみの隠し設定 ---
-            .js-enabled body .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
-                opacity: 0;               // 非表示で待機
-                transform: translateY(20px); // 20px 下からスライドアップさせる起点
-            }
-
-            .p-hero.is-start & { // .is-start 付与で発火（transition-delay: 0.8s 後に実行）
-                opacity: 1;              // フェードイン完了
-                transform: translateY(0); // 元の位置に戻りスライドアップ完了
-            }
-        }
-
-        &-jp {
-            font-size: 16px;         // 日本語サブタイトルのサイズ（英語より小さく）
-            font-weight: 700;        // 太字
-            letter-spacing: 0.15em;  // 日本語の可読性向上のため字間を広めに
-            margin-top: 16px;        // 英語タイトルとの追加余白（gap: 8px に加算）
-            // 黄金律: 補足情報の透過(0.7)
-            color: v.$c-white-sub; // 英語タイトルより少し薄くして視覚的な階層を作る
-            transition-delay: 1.2s;  // 英語タイトル（0.8s）より後に登場させる時差演出
-
-            // --- JS有効時のみの隠し設定 ---
-            .js-enabled body .p-hero:not(.is-start) & { // .is-start 付与前の待機状態
-                opacity: 0;               // 非表示で待機
-                transform: translateY(15px); // 15px 下からスライドアップさせる起点（英語の20pxより控えめ）
-            }
-
-            .p-hero.is-start & { // .is-start 付与で発火（transition-delay: 1.2s 後に実行）
-                opacity: 1;              // フェードイン完了
-                transform: translateY(0); // 元の位置に戻りスライドアップ完了
-            }
-        }
-    }
+  }
 }

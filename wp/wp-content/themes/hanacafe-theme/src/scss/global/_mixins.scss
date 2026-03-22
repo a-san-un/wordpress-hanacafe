@@ -14,19 +14,18 @@
   $slope: math.div($max-size - $min-size, $max-vw - $min-vw);
   $y-axis-intersection: $min-size - ($slope * $min-vw);
   $preferred-value: calc(#{$y-axis-intersection}px + #{$slope * 100}vw);
-  
+
   @return clamp(#{$min-size}px, #{$preferred-value}, #{$max-size}px);
 }
-
 
 // --- Mixins (CSSプロパティを注入する) ---
 
 // PC向けレイアウトを適用するためのメディアクエリ
 // 使い方: @include m.mq { ...PC用のスタイル... }
 @mixin mq {
-	@media screen and (min-width: 768px) {
-		@content;
-	}
+  @media screen and (min-width: 768px) {
+    @content;
+  }
 }
 
 // WordPress管理バー表示時の top オフセットを付与

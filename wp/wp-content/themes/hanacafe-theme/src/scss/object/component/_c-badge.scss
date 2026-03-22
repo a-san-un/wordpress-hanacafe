@@ -8,42 +8,46 @@
 
 @use "../../global/variables" as v; // 変数（カラー・フォント・radius等）を名前空間 v でインポート
 
-
 /* ===============================================
    ステータスバッジ（丸型：右上）
    用途: About セクションの席状況表示（空席・混雑・満席）
 =============================================== */
 .c-badge-status {
   display: inline-flex;
-  align-items: center;     // アイコンとテキストを垂直中央揃え
-  gap: 6px;                // アイコンとテキストの間隔
-  position: absolute;      // 親要素（画像ラッパー等）の右上に重ねて配置
-  top: 20px;               // 上端からの距離
-  right: 20px;             // 右端からの距離
-  padding: 4px 12px;       // バッジの内側余白（縦: 4px、横: 12px）
+  align-items: center; // アイコンとテキストを垂直中央揃え
+  gap: 6px; // アイコンとテキストの間隔
+  position: absolute; // 親要素（画像ラッパー等）の右上に重ねて配置
+  top: 20px; // 上端からの距離
+  right: 20px; // 右端からの距離
+  padding: 4px 12px; // バッジの内側余白（縦: 4px、横: 12px）
   background-color: rgba(v.$c-white, 0.9); // 背景画像が透けて見える半透明白
   border-radius: v.$radius-round; // 完全な丸形（variables.scss の round 値）
-  white-space: nowrap;     // テキストの折り返しを防ぐ
+  white-space: nowrap; // テキストの折り返しを防ぐ
   font-size: 11px;
-  font-weight: 700;        // 太字で視認性を確保
-  z-index: 2;              // 画像より前面に表示
+  font-weight: 700; // 太字で視認性を確保
+  z-index: 2; // 画像より前面に表示
 
   .material-symbols-outlined {
     font-size: 14px; // バッジテキスト（11px）より少し大きくアイコンを設定
-    line-height: 1;  // アイコンの余分な行間を除去して縦位置を安定させる
+    line-height: 1; // アイコンの余分な行間を除去して縦位置を安定させる
   }
 
   // 状態に応じたカラー（about.php のロジックと連動）
-  &.is-success { color: v.$c-main;   border: 1px solid v.$c-main;   } // 空席: メインカラー（緑系）
-  &.is-alert   { color: v.$c-accent; border: 1px solid v.$c-accent; } // 混雑: アクセントカラー（警告色）
+  &.is-success {
+    color: v.$c-main;
+    border: 1px solid v.$c-main;
+  } // 空席: メインカラー（緑系）
+  &.is-alert {
+    color: v.$c-accent;
+    border: 1px solid v.$c-accent;
+  } // 混雑: アクセントカラー（警告色）
 
   // ★シミュレーション反映：満席は透過させず、はっきり表示
   &.is-full {
-    color: v.$c-text;              // 100%不透明（透過なし）で満席をクッキリ表示
-    border: 1px solid v.$c-text;  // 境界線も同色で統一
+    color: v.$c-text; // 100%不透明（透過なし）で満席をクッキリ表示
+    border: 1px solid v.$c-text; // 境界線も同色で統一
   }
 }
-
 
 /* ===============================================
    特徴バッジ（角丸：左下）
@@ -51,21 +55,20 @@
 =============================================== */
 .c-badge-feature {
   display: inline-flex;
-  align-items: center;     // アイコンとテキストを垂直中央揃え
-  gap: 6px;                // アイコンとテキストの間隔
-  position: absolute;      // 親要素（画像ラッパー）の左下に重ねて配置
-  bottom: 20px;            // 下端からの距離
-  left: 20px;              // 左端からの距離
-  padding: 6px 16px;       // ステータスバッジより縦に余裕を持たせた内側余白
+  align-items: center; // アイコンとテキストを垂直中央揃え
+  gap: 6px; // アイコンとテキストの間隔
+  position: absolute; // 親要素（画像ラッパー）の左下に重ねて配置
+  bottom: 20px; // 下端からの距離
+  left: 20px; // 左端からの距離
+  padding: 6px 16px; // ステータスバッジより縦に余裕を持たせた内側余白
   background-color: rgba(v.$c-white, 0.9); // 半透明白の背景
   border-radius: v.$radius-s; // 小サイズの角丸（丸型の .c-badge-status と差別化）
-  color: v.$c-main;        // メインカラーでテキストを表示
-  font-family: v.$f-sans;    // 英語用フォント（variables.scss で定義）
+  color: v.$c-main; // メインカラーでテキストを表示
+  font-family: v.$f-sans; // 英語用フォント（variables.scss で定義）
   font-size: 12px;
-  font-weight: 700;        // 太字
-  z-index: 2;              // 画像より前面に表示
+  font-weight: 700; // 太字
+  z-index: 2; // 画像より前面に表示
 }
-
 
 /* ===============================================
    おすすめバッジ（角丸：左上）
@@ -73,18 +76,18 @@
 =============================================== */
 .c-badge-recommend {
   display: inline-flex;
-  align-items: center;     // 垂直中央揃え
+  align-items: center; // 垂直中央揃え
   justify-content: center; // 水平中央揃え
-  position: absolute;      // 親要素（画像ラッパー）の左上に重ねて配置
-  top: 15px;               // 上端からの距離
-  left: 15px;              // 左端からの距離
-  padding: 4px 12px;       // バッジの内側余白
+  position: absolute; // 親要素（画像ラッパー）の左上に重ねて配置
+  top: 15px; // 上端からの距離
+  left: 15px; // 左端からの距離
+  padding: 4px 12px; // バッジの内側余白
   background-color: v.$c-accent; // アクセントカラーで目立たせる（塗りつぶし）
-  color: v.$c-white;             // 背景（アクセントカラー）との対比で白テキスト
-  border-radius: v.$radius-s;    // マジックナンバー排除: 小サイズ角丸を変数から参照
+  color: v.$c-white; // 背景（アクセントカラー）との対比で白テキスト
+  border-radius: v.$radius-s; // マジックナンバー排除: 小サイズ角丸を変数から参照
   font-size: 12px;
-  font-weight: 700;         // 太字
-  letter-spacing: 0.05em;   // 字間をわずかに広げて英語大文字の視認性を向上
-  z-index: 2;               // 画像より前面に表示
-  pointer-events: none;     // クリック・ホバーイベントを透過（バッジ自体は操作不要）
+  font-weight: 700; // 太字
+  letter-spacing: 0.05em; // 字間をわずかに広げて英語大文字の視認性を向上
+  z-index: 2; // 画像より前面に表示
+  pointer-events: none; // クリック・ホバーイベントを透過（バッジ自体は操作不要）
 }

@@ -10,171 +10,173 @@
    ========================================================================== */
 
 .l-header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	z-index: v.$z-header;
-	background-color: rgba(v.$c-base, 0.95); // 初期状態
-	transition: background-color v.$t-duration, border-color v.$t-duration;
-	border-bottom: 1px solid transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: v.$z-header;
+  background-color: rgba(v.$c-base, 0.95); // 初期状態
+  transition:
+    background-color v.$t-duration,
+    border-color v.$t-duration;
+  border-bottom: 1px solid transparent;
 
-	// スクロール時の変化 (Food Science準拠)
-	&.is-scrolled {
-		background-color: v.$c-white;
-		border-bottom: 1px solid rgba(v.$c-text, 0.1); // 透過黄金律 0.1
-	}
+  // スクロール時の変化 (Food Science準拠)
+  &.is-scrolled {
+    background-color: v.$c-white;
+    border-bottom: 1px solid rgba(v.$c-text, 0.1); // 透過黄金律 0.1
+  }
 
-	@include m.admin-bar-top();
+  @include m.admin-bar-top();
 
-	&__inner {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		height: 70px;
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
 
-		@include m.mq {
-			height: 90px;
-		}
-	}
+    @include m.mq {
+      height: 90px;
+    }
+  }
 
-	&__logo {
-		font-family: v.$f-serif;
-		font-size: 20px;
-		font-weight: 700;
-		color: v.$c-main;
-		text-decoration: none;
-		line-height: 1;
+  &__logo {
+    font-family: v.$f-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: v.$c-main;
+    text-decoration: none;
+    line-height: 1;
 
-		@include m.mq {
-			font-size: 26px;
-		}
+    @include m.mq {
+      font-size: 26px;
+    }
 
-		&-sub {
-			font-size: 0.7em;
-			margin-left: 4px;
-		}
+    &-sub {
+      font-size: 0.7em;
+      margin-left: 4px;
+    }
 
-		&:focus-visible {
-			outline: 2px solid v.$c-main;
-			outline-offset: 4px;
-		}
-	}
+    &:focus-visible {
+      outline: 2px solid v.$c-main;
+      outline-offset: 4px;
+    }
+  }
 
-	&__nav {
-		display: none;
+  &__nav {
+    display: none;
 
-		@include m.mq {
-			display: block;
-		}
+    @include m.mq {
+      display: block;
+    }
 
-		&-list {
-			display: flex;
-			gap: 32px;
-			list-style: none;
-		}
+    &-list {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
 
-		&-link {
-			font-family: v.$f-sans;
-			font-size: 14px;
-			font-weight: 700;
-			letter-spacing: 0.1em;
-			color: v.$c-text;
-			text-decoration: none;
-			transition: color v.$t-duration;
+    &-link {
+      font-family: v.$f-sans;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: v.$c-text;
+      text-decoration: none;
+      transition: color v.$t-duration;
 
-			&:hover {
-				color: v.$c-main;
-			}
-			
-			&:focus-visible {
-				outline: 2px solid v.$c-main;
-				outline-offset: 4px;
-			}
-		}
-	}
+      &:hover {
+        color: v.$c-main;
+      }
 
-	&__hamburger {
-		display: flex;
-		align-items: center;
-		background: none;
-		border: none;
-		cursor: pointer;
-		color: v.$c-main;
-		padding: 8px;
+      &:focus-visible {
+        outline: 2px solid v.$c-main;
+        outline-offset: 4px;
+      }
+    }
+  }
 
-		@include m.mq {
-			display: none;
-		}
+  &__hamburger {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: v.$c-main;
+    padding: 8px;
 
-		.material-symbols-outlined {
-			font-size: 32px;
-		}
+    @include m.mq {
+      display: none;
+    }
 
-		&:focus-visible {
-			outline: 2px solid v.$c-main;
-			outline-offset: 4px;
-		}
-	}
+    .material-symbols-outlined {
+      font-size: 32px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid v.$c-main;
+      outline-offset: 4px;
+    }
+  }
 }
 
 /* --- Drawer Menu --- */
 .p-drawer {
-	position: fixed;
-	inset: 0;
-	background-color: v.$c-base;
-	z-index: v.$z-header + 1;
-	transform: translateX(100%); // 初期状態は右側に隠す
-	transition: transform 0.4s ease;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  position: fixed;
+  inset: 0;
+  background-color: v.$c-base;
+  z-index: v.$z-header + 1;
+  transform: translateX(100%); // 初期状態は右側に隠す
+  transition: transform 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-	@include m.mq {
-		display: none;
-	}
+  @include m.mq {
+    display: none;
+  }
 
-	&__close {
-		position: fixed;
-		top: 16px;
-		right: 16px;
-		@include m.admin-bar-top(16px);
-		display: flex;
-		align-items: center;
-		background: none;
-		border: none;
-		cursor: pointer;
-		color: v.$c-main;
-		padding: 8px;
+  &__close {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    @include m.admin-bar-top(16px);
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: v.$c-main;
+    padding: 8px;
 
-		.material-symbols-outlined {
-			font-size: 32px;
-		}
+    .material-symbols-outlined {
+      font-size: 32px;
+    }
 
-		&:focus-visible {
-			outline: 2px solid v.$c-main;
-			outline-offset: 4px;
-		}
-	}
+    &:focus-visible {
+      outline: 2px solid v.$c-main;
+      outline-offset: 4px;
+    }
+  }
 
-	&.is-active {
-		transform: translateX(0);
-	}
+  &.is-active {
+    transform: translateX(0);
+  }
 
-	&__list {
-		list-style: none;
-		text-align: center;
-	}
+  &__list {
+    list-style: none;
+    text-align: center;
+  }
 
-	&__item {
-		margin-bottom: 32px;
-	}
+  &__item {
+    margin-bottom: 32px;
+  }
 
-	&__link {
-		font-family: v.$f-sans;
-		font-size: 24px;
-		font-weight: 700;
-		color: v.$c-main;
-		text-decoration: none;
-	}
+  &__link {
+    font-family: v.$f-sans;
+    font-size: 24px;
+    font-weight: 700;
+    color: v.$c-main;
+    text-decoration: none;
+  }
 }

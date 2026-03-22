@@ -2,25 +2,25 @@
 @use "../global/mixins" as m;
 
 .l-container {
-	max-width: 1200px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 24px;
-	padding-right: 24px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
 
-	// 修正: 引数なしのmqへ
-	@include m.mq {
-		padding-left: 80px;
-		padding-right: 80px;
-	}
+  // 修正: 引数なしのmqへ
+  @include m.mq {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }
 
 /**
  * .u-alignfull: コンテナを無視して画面横幅いっぱい(100vw)に広げる
  */
 .u-alignfull {
-	width: 100vw;
-	margin-left: calc(50% - 50vw);
-	margin-right: calc(50% - 50vw);
-	max-width: none;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: none;
 }

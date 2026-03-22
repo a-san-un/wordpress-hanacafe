@@ -173,19 +173,19 @@
 
 #### 共通ヘルパー経由（get_hanacafe_menu_data）
 
-| フィールド名 | 参照箇所 | 備考 |
-|---|---|---|
-| `menu_sub_img` | functions.php → single-menu.php / loop-menu.php | 画像優先順位1位 |
-| `is_recommended` | functions.php → single-menu.php / loop-menu.php | バッジ表示制御 |
-| `sub_name` | functions.php → single-menu.php / loop-menu.php | 未設定時は空文字 |
-| `price` | functions.php → single-menu.php / loop-menu.php | 未設定時は非表示 |
+| フィールド名     | 参照箇所                                        | 備考             |
+| ---------------- | ----------------------------------------------- | ---------------- |
+| `menu_sub_img`   | functions.php → single-menu.php / loop-menu.php | 画像優先順位1位  |
+| `is_recommended` | functions.php → single-menu.php / loop-menu.php | バッジ表示制御   |
+| `sub_name`       | functions.php → single-menu.php / loop-menu.php | 未設定時は空文字 |
+| `price`          | functions.php → single-menu.php / loop-menu.php | 未設定時は非表示 |
 
 #### single-menu.php 直接参照（ヘルパー対象外）
 
-| フィールド名 | 参照箇所 | 備考 |
-|---|---|---|
-| `calorie` | single-menu.php のみ | スペック表専用 |
-| `allergies` | single-menu.php のみ | スペック表専用 |
+| フィールド名 | 参照箇所             | 備考           |
+| ------------ | -------------------- | -------------- |
+| `calorie`    | single-menu.php のみ | スペック表専用 |
+| `allergies`  | single-menu.php のみ | スペック表専用 |
 
 ## 3. 運用上の要注意ポイント
 

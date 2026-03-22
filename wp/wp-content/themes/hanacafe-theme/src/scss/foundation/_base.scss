@@ -14,7 +14,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: v.$f-serif;
   font-weight: 700;
   color: v.$c-main;

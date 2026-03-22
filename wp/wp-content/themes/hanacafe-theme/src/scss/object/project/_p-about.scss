@@ -10,105 +10,105 @@
 @use "../../global/mixins" as m;
 
 .p-about {
-    // 表示保証：JSを待たずに表示
-    opacity: 1;
-    transform: translateY(0);
+  // 表示保証：JSを待たずに表示
+  opacity: 1;
+  transform: translateY(0);
 
-    &__header {
-        text-align: center;
-        margin-bottom: m.vw-clamp(40, 60);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: m.vw-clamp(16, 24);
+  &__header {
+    text-align: center;
+    margin-bottom: m.vw-clamp(40, 60);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: m.vw-clamp(16, 24);
+  }
+
+  &__heading {
+    margin-bottom: 0;
+  }
+
+  &__text {
+    max-width: 600px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: v.$c-text; // 本文は不透明を維持
+
+    p + p {
+      margin-top: 1em;
     }
+  }
 
-    &__heading {
-        margin-bottom: 0;
+  &__grid {
+    display: grid;
+    gap: m.vw-clamp(32, 48);
+    margin-bottom: m.vw-clamp(48, 60);
+
+    @include m.mq {
+      grid-template-columns: repeat(3, 1fr);
     }
+  }
 
-    &__text {
-        max-width: 600px;
-        font-size: 15px;
-        line-height: 1.8;
-        color: v.$c-text; // 本文は不透明を維持
-
-        p + p {
-            margin-top: 1em;
-        }
-    }
-
-    &__grid {
-        display: grid;
-        gap: m.vw-clamp(32, 48);
-        margin-bottom: m.vw-clamp(48, 60);
-
-        @include m.mq {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    &__footer {
-        display: flex;
-        justify-content: center;
-    }
+  &__footer {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 /* --- Seat Card (Individual) --- */
 .p-seat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+
+  &__img-box {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: v.$radius-m;
+    // 修正点：コンソール確定値同期（背景5%透過のみ、境界線なし）
+    background-color: v.$c-border-subtle;
+    border: none;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1; // 表示保証
+    transition: transform 0.6s ease-out;
+    will-change: transform;
+
+    .p-seat-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__body {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    cursor: pointer;
+    gap: 8px;
+  }
 
-    &__img-box {
-        position: relative; 
-        aspect-ratio: 3 / 2;
-        overflow: hidden;
-        border-radius: v.$radius-m;
-        // 修正点：コンソール確定値同期（背景5%透過のみ、境界線なし）
-        background-color: v.$c-border-subtle;
-        border: none; 
-    }
+  &__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: v.$c-main;
+  }
 
-    &__img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        opacity: 1; // 表示保証
-        transition: transform 0.6s ease-out;
-        will-change: transform;
-
-        .p-seat-card:hover & {
-            transform: scale(1.05);
-        }
-    }
-
-    &__body {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    &__title {
-        font-size: 18px;
-        font-weight: 700;
-        color: v.$c-main;
-    }
-
-    &__text {
-        font-size: 14px;
-        line-height: 1.6;
-        // 修正点：コンソール確定値同期（テキストを70%透過に設定）
-        color: v.$c-text-sub;
-    }
+  &__text {
+    font-size: 14px;
+    line-height: 1.6;
+    // 修正点：コンソール確定値同期（テキストを70%透過に設定）
+    color: v.$c-text-sub;
+  }
 }
 
 /* --- Badge Override (About Section Specific) --- */
 .p-about {
-    .c-badge-status.is-full {
-        // 修正点：満席バッジはシミュレーション通り不透明で力強く表示
-        color: v.$c-text;
-        border-color: v.$c-text;
-    }
+  .c-badge-status.is-full {
+    // 修正点：満席バッジはシミュレーション通り不透明で力強く表示
+    color: v.$c-text;
+    border-color: v.$c-text;
+  }
 }

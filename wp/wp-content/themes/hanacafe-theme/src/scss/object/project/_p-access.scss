@@ -16,7 +16,7 @@
 .p-access {
   // セクションごとの交互配置ルール
   background-color: v.$c-base;
-  
+
   // --- JSが動かなくても表示されるよう保証（非破壊・安定化） ---
   opacity: 1;
   transform: translateY(0);
@@ -49,14 +49,14 @@
     display: flex;
     flex-direction: column;
     // コンソール確定値同期：10%透過
-    border-top: 1px solid v.$c-border; 
+    border-top: 1px solid v.$c-border;
   }
 
   &__row {
     display: flex;
     padding: 16px 0;
     // コンソール確定値同期：10%透過
-    border-bottom: 1px solid v.$c-border; 
+    border-bottom: 1px solid v.$c-border;
 
     &--split {
       display: flex;
@@ -102,7 +102,9 @@
 
     a {
       transition: color 0.3s;
-      &:hover { color: v.$c-accent; }
+      &:hover {
+        color: v.$c-accent;
+      }
     }
   }
 

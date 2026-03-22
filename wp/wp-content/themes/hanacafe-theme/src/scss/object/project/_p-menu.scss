@@ -34,7 +34,7 @@
   // リストグリッド：SPは1列、PCは3列を保証
   &__list {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     gap: m.vw-clamp(40, 60);
 
     @include m.mq {
@@ -50,7 +50,9 @@
     transition: transform 0.3s ease;
 
     &:hover {
-      @include m.mq { transform: translateY(-4px); }
+      @include m.mq {
+        transform: translateY(-4px);
+      }
     }
   }
 
@@ -76,7 +78,9 @@
     height: 100%;
     object-fit: cover;
     transition: transform 0.6s ease;
-    .p-menu__item:hover & { transform: scale(1.05); }
+    .p-menu__item:hover & {
+      transform: scale(1.05);
+    }
   }
 
   // 情報エリア：[透過黄金律 0.1]
@@ -99,7 +103,7 @@
   &__sub {
     font-size: 13px;
     font-weight: 500;
-    color: v.$c-text; 
+    color: v.$c-text;
   }
 
   // 補足情報：[透過黄金律 0.7]
@@ -137,24 +141,24 @@
 
 // アーカイブページ カテゴリーセクション
 .p-menu-archive {
-	position: relative;
+  position: relative;
 
-	// 偶数セクションはパディングを外し、背景を100vwで白ベタ塗り
-	&:nth-child(even) {
-		padding: 0;
-		background-color: transparent;
+  // 偶数セクションはパディングを外し、背景を100vwで白ベタ塗り
+  &:nth-child(even) {
+    padding: 0;
+    background-color: transparent;
 
-		&::before {
-			content: "";
-			position: absolute;
-			top: 0;
-			right: 50%;
-			bottom: 0;
-			left: 50%;
-			width: 100vw;
-			margin-left: -50vw;
-			background-color: v.$c-white;
-			z-index: -1;
-		}
-	}
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 50%;
+      bottom: 0;
+      left: 50%;
+      width: 100vw;
+      margin-left: -50vw;
+      background-color: v.$c-white;
+      z-index: -1;
+    }
+  }
 }
