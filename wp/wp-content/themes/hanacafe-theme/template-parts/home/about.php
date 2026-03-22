@@ -24,11 +24,11 @@ $about = get_hanacafe_about_data(); ?>
 
     <div class="p-about__grid">
         <?php foreach ($about["seats"] as $seat): ?>
-            <article class="p-seat-card">
-                <figure class="p-seat-card__img-box">
+            <article class="c-card c-card--seat">
+                <figure class="c-card__media">
                     <img src="<?php echo esc_url($seat["image_url"]); ?>"
                         alt="<?php echo esc_attr($seat["image_alt"]); ?>"
-                        class="p-seat-card__img"
+                        class="c-card__img"
                         loading="lazy">
 
                     <div class="c-badge-status <?php echo esc_attr($seat["badge_modifier"]); ?>">
@@ -43,9 +43,9 @@ $about = get_hanacafe_about_data(); ?>
                         </div>
                     <?php endif; ?>
                 </figure>
-                <div class="p-seat-card__body">
-                    <h3 class="p-seat-card__title"><?php echo esc_html($seat["title"]); ?></h3>
-                    <p class="p-seat-card__text"><?php echo nl2br(esc_html($seat["text"])); ?></p>
+                <div class="c-card__body">
+                    <h3 class="c-card__title"><?php echo esc_html($seat["title"]); ?></h3>
+                    <p class="c-card__text"><?php echo nl2br(esc_html($seat["text"])); ?></p>
                 </div>
             </article>
         <?php endforeach; ?>
