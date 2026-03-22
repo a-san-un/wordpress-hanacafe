@@ -6,7 +6,7 @@
   position: fixed;
   inset: 0;
   background-color: v.$c-base;
-  z-index: v.$z-header + 1;
+  z-index: v.$z-drawer;
   transform: translateX(100%); // 初期状態は右側に隠す
   transition: transform 0.4s ease;
   display: flex;

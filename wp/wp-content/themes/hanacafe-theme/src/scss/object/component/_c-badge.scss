@@ -25,7 +25,7 @@
   white-space: nowrap; // テキストの折り返しを防ぐ
   font-size: 11px;
   font-weight: 700; // 太字で視認性を確保
-  z-index: 2; // 画像より前面に表示
+  z-index: v.$z-badge; // 画像より前面に表示
 
   .material-symbols-outlined {
     font-size: 14px; // バッジテキスト（11px）より少し大きくアイコンを設定
@@ -67,7 +67,7 @@
   font-family: v.$f-heading; // 英語用フォント（variables.scss で定義）
   font-size: 12px;
   font-weight: 700; // 太字
-  z-index: 2; // 画像より前面に表示
+  z-index: v.$z-badge; // 画像より前面に表示
 }
 
 /* ===============================================
@@ -88,6 +88,6 @@
   font-size: 12px;
   font-weight: 700; // 太字
   letter-spacing: 0.05em; // 字間をわずかに広げて英語大文字の視認性を向上
-  z-index: 2; // 画像より前面に表示
+  z-index: v.$z-badge; // 画像より前面に表示
   pointer-events: none; // クリック・ホバーイベントを透過（バッジ自体は操作不要）
 }
