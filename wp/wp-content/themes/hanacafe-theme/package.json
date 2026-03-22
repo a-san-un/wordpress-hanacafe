@@ -2,7 +2,6 @@
   "name": "hanacafe-theme",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "lint": "eslint assets/js/**/*.js",
     "lint:fix": "eslint assets/js/**/*.js --fix"
