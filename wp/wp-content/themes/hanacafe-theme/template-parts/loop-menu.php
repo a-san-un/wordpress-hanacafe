@@ -12,8 +12,8 @@
 <article <?php post_class('p-menu__item'); ?>>
     <a href="<?php the_permalink(); ?>" class="p-menu__link">
         <div class="p-menu__img-wrapper">
-            <?php // [実装] おすすめバッジの動的表示（表示保証：SCSS側の relative に依存） 
-            ?>
+            <?php // [実装] おすすめバッジの動的表示（表示保証：SCSS側の relative に依存）
+			?>
             <?php if ($menu['is_recommended']) : ?>
                 <span class="c-badge-recommend">RECOMMEND</span>
             <?php endif; ?>
@@ -24,7 +24,7 @@
         <div class="p-menu__info">
             <div class="p-menu__titles">
                 <h3 class="p-menu__name"><?php // [fix 1-4]
-                                            echo esc_html(get_the_title()); ?></h3>
+											echo esc_html(get_the_title()); ?></h3>
                 <?php if ($menu['sub_name']) : ?>
                     <p class="p-menu__sub"><?php echo $menu['sub_name']; ?></p>
                 <?php endif; ?>

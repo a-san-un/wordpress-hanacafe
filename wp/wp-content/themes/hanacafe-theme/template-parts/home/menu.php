@@ -19,9 +19,9 @@
  */
 [$food_slug, $drink_slug, $dessert_slug] = get_hanacafe_menu_categories();
 $menu_slots = [
-    'food'    => get_hanacafe_top_menu_post('top_menu_food', $food_slug),
-    'drink'   => get_hanacafe_top_menu_post('top_menu_drink', $drink_slug),
-    'dessert' => get_hanacafe_top_menu_post('top_menu_dessert', $dessert_slug),
+	'food'    => get_hanacafe_top_menu_post('top_menu_food', $food_slug),
+	'drink'   => get_hanacafe_top_menu_post('top_menu_drink', $drink_slug),
+	'dessert' => get_hanacafe_top_menu_post('top_menu_dessert', $dessert_slug),
 ];
 ?>
 
@@ -42,14 +42,14 @@ $menu_slots = [
             <?php foreach ($menu_slots as $type => $post_obj) : ?>
                 <?php if ($post_obj) : ?>
                     <?php
-                    /*
-                     * グローバル変数 $post を一時的に上書きし、setup_postdata を実行。
-                     * これにより loop-menu.php 内で get_the_title() 等の標準関数が利用可能になる。
-                     */
-                    $post = $post_obj;
-                    setup_postdata($post);
-                    get_template_part('template-parts/loop', 'menu');
-                    ?>
+					/*
+					 * グローバル変数 $post を一時的に上書きし、setup_postdata を実行。
+					 * これにより loop-menu.php 内で get_the_title() 等の標準関数が利用可能になる。
+					 */
+					$post = $post_obj;
+                	setup_postdata($post);
+                	get_template_part('template-parts/loop', 'menu');
+                	?>
                 <?php else : ?>
                     <article class="p-menu__item is-preparing">
                         <div class="p-menu__img-wrapper">
@@ -63,9 +63,9 @@ $menu_slots = [
                 <?php endif; ?>
             <?php endforeach; ?>
             <?php
-            /* setup_postdata で変更されたグローバルな $post 状態をリセットし、後続のクエリへの影響を防ぐ */
-            wp_reset_postdata();
-            ?>
+			/* setup_postdata で変更されたグローバルな $post 状態をリセットし、後続のクエリへの影響を防ぐ */
+			wp_reset_postdata();
+?>
         </div>
     </div>
 </section>

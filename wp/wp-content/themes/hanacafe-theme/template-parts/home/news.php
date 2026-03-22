@@ -7,15 +7,15 @@
 
         <div class="p-news__list">
             <?php
-            $args = array(
-                'post_type'      => 'post',
-                'posts_per_page' => 3,
-            );
+			$args = array(
+				'post_type'      => 'post',
+				'posts_per_page' => 3,
+			);
             $news_query = new WP_Query($args);
 
             if ($news_query->have_posts()) :
-                while ($news_query->have_posts()) : $news_query->the_post();
-            ?>
+            	while ($news_query->have_posts()) : $news_query->the_post();
+            		?>
                     <article class="p-news-card">
                         <a href="<?php the_permalink(); ?>" class="p-news-card__link">
                             <div class="p-news-card__img-box">
@@ -32,16 +32,16 @@
                                 </time>
                                 <h3 class="p-news-card__title">
                                     <?php // [fix 1-4]
-                                    echo esc_html(get_the_title()); ?>
+            								echo esc_html(get_the_title()); ?>
                                 </h3>
                             </div>
                         </a>
                     </article>
                 <?php
-                endwhile;
-                wp_reset_postdata();
+            	endwhile;
+            wp_reset_postdata();
             else :
-                ?>
+            	?>
                 <p class="p-news__empty">現在、新しいお知らせはありません。</p>
             <?php endif; ?>
         </div>

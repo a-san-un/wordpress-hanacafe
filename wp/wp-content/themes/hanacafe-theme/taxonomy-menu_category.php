@@ -20,14 +20,14 @@ get_header(); ?>
                 <section class="p-menu-archive">
                     <div class="p-menu__list">
                         <?php
-                        if (have_posts()) :
-                            while (have_posts()) : the_post();
-                                get_template_part('template-parts/loop', 'menu');
-                            endwhile;
-                        else :
-                            echo '<p class="u-text-center">準備中です。</p>';
-                        endif;
-                        ?>
+						if (have_posts()) :
+							while (have_posts()) : the_post();
+								get_template_part('template-parts/loop', 'menu');
+							endwhile;
+						else :
+							echo '<p class="u-text-center">準備中です。</p>';
+						endif;
+?>
                     </div>
                 </section>
             </div>

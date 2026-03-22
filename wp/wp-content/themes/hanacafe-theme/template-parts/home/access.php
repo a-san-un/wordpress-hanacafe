@@ -20,8 +20,8 @@ $access = get_hanacafe_access_data();
       </div>
 
       <dl class="p-access__list">
-        <?php // --- 住所 --- 
-        ?>
+        <?php // --- 住所 ---
+		?>
         <?php if ($val = $access['shop_address']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Address</dt>
@@ -34,8 +34,8 @@ $access = get_hanacafe_access_data();
           </div>
         <?php endif; ?>
 
-        <?php // --- 交通アクセス --- 
-        ?>
+        <?php // --- 交通アクセス ---
+		?>
         <?php if ($train1 = $access['shop_access_train_1']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Access</dt>
@@ -54,8 +54,8 @@ $access = get_hanacafe_access_data();
           </div>
         <?php endif; ?>
 
-        <?php // --- 営業時間 --- 
-        ?>
+        <?php // --- 営業時間 ---
+		?>
         <?php if ($hours = $access['shop_open_hours']) : ?>
           <div class="p-access__row">
             <dt class="p-access__label">Open</dt>
@@ -65,8 +65,8 @@ $access = get_hanacafe_access_data();
           </div>
         <?php endif; ?>
 
-        <?php // --- 電話・定休日 --- 
-        ?>
+        <?php // --- 電話・定休日 ---
+		?>
         <div class="p-access__row p-access__row--split">
           <?php if ($tel = $access['shop_tel']) : ?>
             <div class="p-access__col">
@@ -90,8 +90,8 @@ $access = get_hanacafe_access_data();
         </div>
       </dl>
 
-      <?php // --- お席の確認ボタン --- 
-      ?>
+      <?php // --- お席の確認ボタン ---
+	  ?>
       <?php if ($url = $access['seat_check_url']) : ?>
         <div class="p-access__action">
           <a href="<?php echo esc_url($url); ?>" class="p-access__btn" target="_blank" rel="noopener">
@@ -102,22 +102,22 @@ $access = get_hanacafe_access_data();
       <?php endif; ?>
     </div>
 
-    <?php // --- 地図エリア --- 
-    ?>
+    <?php // --- 地図エリア ---
+	?>
     <div class="p-access__map">
       <?php
-      // 1. 画像データの取得（堅牢なフォールバック）
-      $map_img_src = $access['shop_map_image_url'];
-      $map_img_alt = $access['shop_map_image_alt'];
+	  // 1. 画像データの取得（堅牢なフォールバック）
+	  $map_img_src = $access['shop_map_image_url'];
+$map_img_alt = $access['shop_map_image_alt'];
 
-      // 2. リンクURLとボタン文言の取得
-      $map_url = $access['shop_map_url'];
-      $map_btn_text = $access['shop_map_btn_text'];
-      ?>
+// 2. リンクURLとボタン文言の取得
+$map_url = $access['shop_map_url'];
+$map_btn_text = $access['shop_map_btn_text'];
+?>
 
       <?php if ($map_url) : ?>
-        <?php // URLがある場合：リンク化し、オーバーレイボタンを表示する 
-        ?>
+        <?php // URLがある場合：リンク化し、オーバーレイボタンを表示する
+		?>
         <a href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener" class="p-access__map-link">
           <img src="<?php echo esc_url($map_img_src); ?>"
             alt="<?php echo esc_attr($map_img_alt); ?>"
@@ -129,8 +129,8 @@ $access = get_hanacafe_access_data();
           </div>
         </a>
       <?php else : ?>
-        <?php // URLがない場合：画像のみをシンプルに表示する（リンク・ボタンなし） 
-        ?>
+        <?php // URLがない場合：画像のみをシンプルに表示する（リンク・ボタンなし）
+		?>
         <img src="<?php echo esc_url($map_img_src); ?>"
           alt="<?php echo esc_attr($map_img_alt); ?>"
           width="810" height="673"

@@ -64,7 +64,7 @@ $access = get_hanacafe_access_data();
             <p class="l-footer__tagline">NATURAL. PEACEFUL. HEARTFUL.</p>
             <p class="l-footer__copyright">
                 &copy; <?php // [fix 1-2]
-                        echo esc_html(wp_date('Y')); ?> HanaCAFE nappa69
+						echo esc_html(wp_date('Y')); ?> HanaCAFE nappa69
             </p>
         </div>
 

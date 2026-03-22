@@ -25,8 +25,8 @@ $about = get_hanacafe_about_data();
 
     <div class="p-about__grid">
         <?php
-        foreach ($about['seats'] as $seat) :
-        ?>
+		foreach ($about['seats'] as $seat) :
+			?>
             <article class="p-seat-card">
                 <figure class="p-seat-card__img-box">
                     <img src="<?php echo esc_url($seat['image_url']); ?>"

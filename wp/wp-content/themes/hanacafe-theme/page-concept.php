@@ -15,12 +15,12 @@ get_header(); ?>
 
             <div class="p-page__content">
                 <?php
-                if (have_posts()) :
-                    while (have_posts()) : the_post();
-                        the_content(); // ★ ここに管理画面の文章が出ます
-                    endwhile;
-                endif;
-                ?>
+				if (have_posts()) :
+					while (have_posts()) : the_post();
+						the_content(); // ★ ここに管理画面の文章が出ます
+					endwhile;
+				endif;
+?>
             </div>
 
             <div class="p-page__footer">
