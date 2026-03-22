@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Header template
  *
@@ -24,7 +23,7 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
         // [fix 1-1]
         document.documentElement.classList.add('js-enabled');
     </script>
-    <meta charset="<?php bloginfo('charset'); ?>">
+    <meta charset="<?php bloginfo("charset"); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php wp_head(); ?>
 </head>
@@ -38,23 +37,21 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
 
                 <!-- ロゴエリア -->
                 <div class="l-header__logo-wrapper">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="l-header__logo">
+                    <a href="<?php echo esc_url(home_url("/")); ?>" class="l-header__logo">
                         HanaCAFE <span class="l-header__logo-sub">nappa69</span>
                     </a>
                 </div>
 
                 <!-- PC用ナビゲーション (CMS連動版) -->
                 <nav class="l-header__nav u-desktop" aria-label="PC用ナビゲーション">
-                    <?php
-					wp_nav_menu([
-						'theme_location' => 'global-nav',
-						'container'      => false,
-						'menu_class'     => 'l-header__nav-list',
-						'fallback_cb'    => false,
-						'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-						'depth'          => 1,
-					]);
-?>
+                    <?php wp_nav_menu([
+                      "theme_location" => "global-nav",
+                      "container" => false,
+                      "menu_class" => "l-header__nav-list",
+                      "fallback_cb" => false,
+                      "items_wrap" => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                      "depth" => 1,
+                    ]); ?>
                 </nav>
 
                 <!-- ハンバーガーボタン（モバイル専用） -->
@@ -77,16 +74,14 @@ wp_head() より前に実行する必要があるため、<head> 外に配置し
                 <span class="material-symbols-outlined" aria-hidden="true">close</span>
             </button>
             <nav class="p-drawer__nav" aria-label="モバイル用ナビゲーション">
-                <?php
-				wp_nav_menu([
-'theme_location' => 'drawer-nav',
-'container'      => false,
-'menu_class'     => 'p-drawer__list',
-'fallback_cb'    => false,
-'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-'depth'          => 1,
-				]);
-?>
+                <?php wp_nav_menu([
+                  "theme_location" => "drawer-nav",
+                  "container" => false,
+                  "menu_class" => "p-drawer__list",
+                  "fallback_cb" => false,
+                  "items_wrap" => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+                  "depth" => 1,
+                ]); ?>
             </nav>
         </div>
     </div>

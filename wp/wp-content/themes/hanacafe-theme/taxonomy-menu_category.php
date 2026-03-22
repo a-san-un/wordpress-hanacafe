@@ -19,21 +19,20 @@ get_header(); ?>
             <div class="p-page__content">
                 <section class="p-menu-archive">
                     <div class="p-menu__list">
-                        <?php
-						if (have_posts()) :
-							while (have_posts()) : the_post();
-								get_template_part('template-parts/loop', 'menu');
-							endwhile;
-						else :
-							echo '<p class="u-text-center">準備中です。</p>';
-						endif;
-?>
+                        <?php if (have_posts()):
+                          while (have_posts()):
+                            the_post();
+                            get_template_part("template-parts/loop", "menu");
+                          endwhile;
+                        else:
+                          echo '<p class="u-text-center">準備中です。</p>';
+                        endif; ?>
                     </div>
                 </section>
             </div>
 
             <div class="p-page__footer">
-                <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-page__back-link">
+                <a href="<?php echo esc_url(get_post_type_archive_link("menu")); ?>" class="p-page__back-link">
                     <span class="material-symbols-outlined">arrow_back</span>
                     全メニュー一覧へ戻る
                 </a>

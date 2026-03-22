@@ -9,8 +9,7 @@
  * 4. SSOTの徹底: 店舗情報ページ(access-info)をマスターとし、そこから住所・SNS情報を取得。DRY原則を遵守。
  */
 
-$access = get_hanacafe_access_data();
-?>
+$access = get_hanacafe_access_data(); ?>
 
 <!-- =============================================
      サイトフッター
@@ -22,7 +21,9 @@ $access = get_hanacafe_access_data();
 
             <!-- ロゴエリア: クリックでトップページへ遷移 -->
             <div class="l-footer__logo-wrapper">
-                <a href="<?php echo esc_url(home_url('/')); /* esc_url でXSS対策 */ ?>" class="l-footer__logo-text">
+                <a href="<?php echo esc_url(home_url("/"));
+/* esc_url でXSS対策 */
+?>" class="l-footer__logo-text">
                     HanaCAFE<br>nappa69
                 </a>
             </div>
@@ -32,12 +33,14 @@ $access = get_hanacafe_access_data();
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <?php echo esc_html($access['shop_address']); ?>
+                    <?php echo esc_html($access["shop_address"]); ?>
                 </li>
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">call</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <a href="tel:<?php echo esc_attr(str_replace('-', '', $access['shop_tel'])); ?>"><?php echo esc_html($access['shop_tel']); ?></a>
+                    <a href="tel:<?php echo esc_attr(
+                      str_replace("-", "", $access["shop_tel"]),
+                    ); ?>"><?php echo esc_html($access["shop_tel"]); ?></a>
                 </li>
             </ul>
 
@@ -46,13 +49,17 @@ $access = get_hanacafe_access_data();
 
                 <!-- SNSリンク: target="_blank" + rel="noopener" でセキュリティ確保（タブナビング対策） -->
                 <div class="l-footer__sns-links">
-                    <a href="<?php echo esc_url($access['shop_sns_instagram']); ?>" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
-                    <a href="<?php echo esc_url($access['shop_sns_facebook']); ?>" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
+                    <a href="<?php echo esc_url(
+                      $access["shop_sns_instagram"],
+                    ); ?>" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+                    <a href="<?php echo esc_url(
+                      $access["shop_sns_facebook"],
+                    ); ?>" target="_blank" rel="noopener noreferrer">FACEBOOK</a>
                 </div>
 
                 <!-- ポリシーリンク: 法的必須ページへの導線 -->
                 <div class="l-footer__policy-links">
-                    <a href="<?php echo esc_url($access['privacy_url']); ?>">プライバシーポリシー</a>
+                    <a href="<?php echo esc_url($access["privacy_url"]); ?>">プライバシーポリシー</a>
                     <a href="#" aria-disabled="true" tabindex="-1">特定商取引法に基づく表記</a>
                 </div>
 
@@ -64,14 +71,17 @@ $access = get_hanacafe_access_data();
             <p class="l-footer__tagline">NATURAL. PEACEFUL. HEARTFUL.</p>
             <p class="l-footer__copyright">
                 &copy; <?php // [fix 1-2]
-						echo esc_html(wp_date('Y')); ?> HanaCAFE nappa69
+
+echo esc_html(wp_date("Y")); ?> HanaCAFE nappa69
             </p>
         </div>
 
     </div>
 </footer>
 
-<?php wp_footer(); /* </body>直前のフック。JSの読み込み・GTM等のスクリプト挿入に使用 */ ?>
+<?php wp_footer();
+/* </body>直前のフック。JSの読み込み・GTM等のスクリプト挿入に使用 */
+?>
 </body>
 
 </html>

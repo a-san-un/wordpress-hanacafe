@@ -17,11 +17,11 @@ get_header(); ?>
             </header>
 
             <div class="p-page__content">
-                <p><?php echo esc_html('お探しのページは移動または削除された可能性があります。'); ?></p>
+                <p><?php echo esc_html("お探しのページは移動または削除された可能性があります。"); ?></p>
             </div>
 
             <div class="p-page__footer">
-                <a href="<?php echo esc_url(home_url('/')); ?>" class="p-page__back-link">
+                <a href="<?php echo esc_url(home_url("/")); ?>" class="p-page__back-link">
                     <span class="material-symbols-outlined">arrow_back</span>
                     TOPページへ戻る
                 </a>

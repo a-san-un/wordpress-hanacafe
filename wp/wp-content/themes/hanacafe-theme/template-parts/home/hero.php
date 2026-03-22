@@ -5,9 +5,9 @@
  */
 
 // ACF pic フィールドから画像取得（common-info 固定ページ）
-$pic         = get_field('pic', get_hanacafe_master_page_id('common-info'));
-$hero_img_url = $pic ? $pic['url'] : get_template_directory_uri() . '/assets/images/hero.jpg';
-$hero_alt     = ($pic && !empty($pic['alt'])) ? $pic['alt'] : 'HanaCAFE nappa69 メインビジュアル';
+$pic = get_field("pic", get_hanacafe_master_page_id("common-info"));
+$hero_img_url = $pic ? $pic["url"] : get_template_directory_uri() . "/assets/images/hero.jpg";
+$hero_alt = $pic && !empty($pic["alt"]) ? $pic["alt"] : "HanaCAFE nappa69 メインビジュアル";
 ?>
 
 <section class="p-hero u-alignfull">

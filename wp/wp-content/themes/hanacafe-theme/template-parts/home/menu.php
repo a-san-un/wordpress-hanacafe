@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Project: HanaCAFE nappa69 - Home Menu Section
  * [制作意図]
@@ -19,9 +18,9 @@
  */
 [$food_slug, $drink_slug, $dessert_slug] = get_hanacafe_menu_categories();
 $menu_slots = [
-	'food'    => get_hanacafe_top_menu_post('top_menu_food', $food_slug),
-	'drink'   => get_hanacafe_top_menu_post('top_menu_drink', $drink_slug),
-	'dessert' => get_hanacafe_top_menu_post('top_menu_dessert', $dessert_slug),
+  "food" => get_hanacafe_top_menu_post("top_menu_food", $food_slug),
+  "drink" => get_hanacafe_top_menu_post("top_menu_drink", $drink_slug),
+  "dessert" => get_hanacafe_top_menu_post("top_menu_dessert", $dessert_slug),
 ];
 ?>
 
@@ -32,28 +31,30 @@ $menu_slots = [
                 <span class="c-heading__sub">Menu</span>
                 <h2 class="c-heading__main">身体が喜ぶ、旬の味覚</h2>
             </div>
-            <a href="<?php echo esc_url(get_post_type_archive_link('menu')); ?>" class="p-menu__view-all">
+            <a href="<?php echo esc_url(get_post_type_archive_link("menu")); ?>" class="p-menu__view-all">
                 VIEW ALL MENU
                 <span class="material-symbols-outlined">arrow_forward</span>
             </a>
         </div>
 
         <div class="p-menu__list">
-            <?php foreach ($menu_slots as $type => $post_obj) : ?>
-                <?php if ($post_obj) : ?>
+            <?php foreach ($menu_slots as $type => $post_obj): ?>
+                <?php if ($post_obj): ?>
                     <?php
-					/*
-					 * グローバル変数 $post を一時的に上書きし、setup_postdata を実行。
-					 * これにより loop-menu.php 内で get_the_title() 等の標準関数が利用可能になる。
-					 */
-					$post = $post_obj;
-                	setup_postdata($post);
-                	get_template_part('template-parts/loop', 'menu');
-                	?>
-                <?php else : ?>
+                    /*
+                     * グローバル変数 $post を一時的に上書きし、setup_postdata を実行。
+                     * これにより loop-menu.php 内で get_the_title() 等の標準関数が利用可能になる。
+                     */
+                    $post = $post_obj;
+                    setup_postdata($post);
+                    get_template_part("template-parts/loop", "menu");
+                    ?>
+                <?php else: ?>
                     <article class="p-menu__item is-preparing">
                         <div class="p-menu__img-wrapper">
-                            <img src="<?php echo get_hanacafe_default_image_url('menu-info'); ?>" alt="準備中" class="p-menu__img">
+                            <img src="<?php echo get_hanacafe_default_image_url(
+                              "menu-info",
+                            ); ?>" alt="準備中" class="p-menu__img">
                         </div>
                         <div class="p-menu__info">
                             <h3 class="p-menu__name"><?php echo esc_html(strtoupper($type)); ?> 準備中</h3>
@@ -62,10 +63,8 @@ $menu_slots = [
                     </article>
                 <?php endif; ?>
             <?php endforeach; ?>
-            <?php
-			/* setup_postdata で変更されたグローバルな $post 状態をリセットし、後続のクエリへの影響を防ぐ */
-			wp_reset_postdata();
-?>
+            <?php /* setup_postdata で変更されたグローバルな $post 状態をリセットし、後続のクエリへの影響を防ぐ */
+            wp_reset_postdata(); ?>
         </div>
     </div>
 </section>
