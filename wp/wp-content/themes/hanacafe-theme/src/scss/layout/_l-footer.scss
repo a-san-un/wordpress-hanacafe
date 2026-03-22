@@ -151,6 +151,20 @@
     }
   }
 
+  &__bottom {
+    border-top: 1px solid rgba(v.$c-white, 0.1);
+    margin-top: 40px;
+    padding-top: 24px;
+    text-align: center;
+  }
+
+  &__tagline {
+    font-family: v.$f-sans;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
   &__copyright {
     text-align: center;
     font-family: v.$f-sans;
