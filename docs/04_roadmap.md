@@ -82,19 +82,19 @@ c-card--seat   → ステータスバッジあり
 
 | #    | 優先度 | 対象                            | 内容                                                                  | 状態 |
 | ---- | ------ | ------------------------------- | --------------------------------------------------------------------- | ---- |
-| 8-1  | 🔴 高  | `_variables.scss`               | フォント変数を見出し用・本文用に整理                                  | 🔲   |
-| 8-2  | 🔴 高  | `_c-card.scss`（新規）          | 共通カードコンポーネント作成                                          | 🔲   |
-| 8-3  | 🔴 高  | `loop-menu.php`                 | `template-parts/menu/` に移動・呼び出し元を更新                       | 🔲   |
-| 8-4  | 🟡 中  | `_p-menu.scss`                  | `c-card--menu` modifier に移行・旧ルール削除                          | 🔲   |
-| 8-5  | 🟡 中  | `_p-news.scss`                  | `c-card--news` modifier に移行・旧ルール削除                          | 🔲   |
-| 8-6  | 🟡 中  | `_p-about.scss`                 | `c-card--seat` modifier に移行・旧ルール削除                          | 🔲   |
-| 8-7  | 🟡 中  | `_c-heading.scss`               | 見出しフォント変数を適用・レベル別スタイル整理                        | 🔲   |
-| 8-8  | 🟢 低  | `taxonomy-menu_category.php`    | 中身確認・不要なら削除                                                | 🔲   |
-| 8-9  | 🟢 低  | `docs/`                         | 連番整理（07→05・08→06 に改番）                                       | 🔲   |
-| 8-10 | 🔴 高  | `archive-menu.php`              | 不正文字（`ï`）バグ修正                                               | 🔲   |
-| 8-11 | 🔴 高  | `_header.scss`                  | `.p-drawer` スタイルを `_p-drawer.scss` として分離                    | 🔲   |
-| 8-12 | 🟡 中  | `_header.scss` / `_footer.scss` | `_l-header.scss` / `_l-footer.scss` にリネーム・`app.scss` import更新 | 🔲   |
-| 8-13 | 🟡 中  | 各SCSSファイル                  | 未定義クラス4件追加（`.p-archive__pagination` 等）                    | 🔲   |
+| 8-1  | 🔴 高  | `_variables.scss`               | フォント変数を見出し用・本文用に整理                                  | ✅   |
+| 8-2  | 🔴 高  | `_c-card.scss`（新規）          | 共通カードコンポーネント作成                                          | ✅   |
+| 8-3  | 🔴 高  | `loop-menu.php`                 | `template-parts/menu/` に移動・呼び出し元を更新                       | ✅   |
+| 8-4  | 🟡 中  | `_p-menu.scss`                  | `c-card--menu` modifier に移行・旧ルール削除                          | ✅   |
+| 8-5  | 🟡 中  | `_p-news.scss`                  | `c-card--news` modifier に移行・旧ルール削除                          | ✅   |
+| 8-6  | 🟡 中  | `_p-about.scss`                 | `c-card--seat` modifier に移行・旧ルール削除                          | ✅   |
+| 8-7  | 🟡 中  | `_c-heading.scss`               | 見出しフォント変数を適用・レベル別スタイル整理                        | ✅   |
+| 8-8  | 🟢 低  | `taxonomy-menu_category.php`    | 中身確認・不要なら削除                                                | ✅（削除せず最小修正で存続） |
+| 8-9  | 🟢 低  | `docs/`                         | 連番整理（07→05・08→06 に改番）                                       | ✅   |
+| 8-10 | 🔴 高  | `archive-menu.php`              | 不正文字（`ï`）バグ修正                                               | ✅   |
+| 8-11 | 🔴 高  | `_header.scss`                  | `.p-drawer` スタイルを `_p-drawer.scss` として分離                    | ✅   |
+| 8-12 | 🟡 中  | `_header.scss` / `_footer.scss` | `_l-header.scss` / `_l-footer.scss` にリネーム・`app.scss` import更新 | ✅   |
+| 8-13 | 🟡 中  | 各SCSSファイル                  | 未定義クラス4件追加（`.p-archive__pagination` 等）                    | ✅   |
 
 ### STEP 8 完了条件
 
@@ -109,9 +109,18 @@ c-card--seat   → ステータスバッジあり
 
 ### STEP 8 コミット履歴
 
-| コミット   | 内容 |
-| ---------- | ---- |
-| （未実施） | —    |
+| コミット | 内容 |
+|---|---|
+| 02f3fe2 | fix: 未定義クラス4件追加（8-10〜8-13） |
+| e7eb05e | refactor: フォント変数を用途ベース（$f-heading/$f-body）に移行（8-1） |
+| 211c5b9 | feat: _c-card.scss を新規作成（共通カードコンポーネント）（8-2） |
+| 94b03ce | refactor: loop-menu.php を template-parts/menu/ に移動（8-3） |
+| 3189fc3 | refactor: メニューカードを c-card--menu に移行（8-4） |
+| 28aaf52 | refactor: ニュースカードを c-card--news に移行（8-5） |
+| bc91171 | refactor: 席カードを c-card--seat に移行（8-6） |
+| 3006bee | feat: h1〜h4 の font-size 階層を明示（8-7） |
+| 6563d60 | fix: taxonomy-menu_category.php の空表示に p-archive__empty を適用（8-8） |
+| 8ab316d | docs: ロードマップを 04_roadmap.md にリネーム・.DS_Store 削除（8-9） |
 
 ---
 
