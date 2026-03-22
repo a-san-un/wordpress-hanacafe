@@ -22,7 +22,7 @@ get_header(); ?>
                         <?php if (have_posts()):
                           while (have_posts()):
                             the_post();
-                            get_template_part("template-parts/loop", "menu");
+                                get_template_part("template-parts/menu/loop", "menu");
                           endwhile;
                         else:
                           echo '<p class="u-text-center">準備中です。</p>';

@@ -121,7 +121,7 @@ get_header(); ?>
                 <div class="p-menu__list">
                     <?php while ($related_query->have_posts()):
                       $related_query->the_post();
-                      get_template_part("template-parts/loop", "menu");
+                        get_template_part("template-parts/menu/loop", "menu");
                     endwhile; ?>
                 </div>
             </div>

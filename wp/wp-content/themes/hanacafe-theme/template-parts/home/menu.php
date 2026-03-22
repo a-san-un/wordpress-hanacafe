@@ -47,7 +47,7 @@ $menu_slots = [
                      */
                     $post = $post_obj;
                     setup_postdata($post);
-                    get_template_part("template-parts/loop", "menu");
+                    get_template_part("template-parts/menu/loop", "menu");
                     ?>
                 <?php else: ?>
                     <article class="p-menu__item is-preparing">

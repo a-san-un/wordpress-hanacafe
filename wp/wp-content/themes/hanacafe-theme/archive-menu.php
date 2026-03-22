@@ -88,7 +88,7 @@ get_header(); ?>
                 if ($menu_query->have_posts()):
                   while ($menu_query->have_posts()):
                     $menu_query->the_post();
-                    get_template_part("template-parts/loop", "menu");
+                    get_template_part("template-parts/menu/loop", "menu");
                   endwhile;
                   wp_reset_postdata();
                 else:
