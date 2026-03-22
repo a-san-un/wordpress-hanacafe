@@ -7,7 +7,7 @@
    * [最終修正] 第7の黄金律（表示保証）に基づき、親コンテナの演出を廃止。
    * SP版での Blackout を防ぎ、確実に情報を届ける設計に統合。
 ============================================ */
-html body .p-page {
+.p-page {
   // 下層ページはヘッダー分の余白が必要なため、l-sectionは使わず個別にclamp設定
   padding-top: m.vw-clamp(120, 160);
   padding-bottom: m.vw-clamp(80, 120);

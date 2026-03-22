@@ -2,7 +2,7 @@
 @use "../global/mixins" as m;
 
 /* ==========================================================================
-   Layout: Header & Drawer (_header.scss)
+  Layout: Header & Drawer (_l-header.scss)
    [設計意図]
    1. 表示保証: JS無効時でもヘッダーが見えるよう初期背景を0.95透過で設定。
    2. スクロール連動: .is-scrolled 付与時に背景色と境界線（0.1透過）を変化。

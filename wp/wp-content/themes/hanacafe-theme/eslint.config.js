@@ -8,7 +8,6 @@ module.exports = [
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.jquery,
       },
       sourceType: "script",
     },

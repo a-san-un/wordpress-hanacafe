@@ -22,9 +22,9 @@
 // ==========================================================================
 // Object - Component（再利用可能な最小単位）
 // ==========================================================================
-@use "object/component/c-button"; // ★修正: ファイル名統一ルールに準拠
+@use "object/component/c-button";
 @use "object/component/c-badge";
-@use "object/component/c-heading"; // ★新規追加: 共通見出しコンポーネント
+@use "object/component/c-heading";
 @use "object/component/c-card";
 
 // ==========================================================================
@@ -37,4 +37,4 @@
 @use "object/project/p-drawer";
 @use "object/project/p-access";
 @use "object/project/p-news";
-@use "object/project/p-single-menu"; // ★新規追加: メニュー個別ページのスタイル
+@use "object/project/p-single-menu";

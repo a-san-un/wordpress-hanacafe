@@ -17,7 +17,6 @@ get_header(); ?>
                 the_content();
               }
             } else {
-              // style属性を消し、必要なら共通のユーティリティクラス（u-text-center等）を当てる
               echo '<p class="u-text-center">記事が見つかりませんでした。</p>';
             } ?>
         </div>

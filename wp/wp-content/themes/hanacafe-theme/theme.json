@@ -14,12 +14,12 @@
       "fontFamilies": [
         {
           "fontFamily": "\"Montserrat\", \"Noto Sans JP\", sans-serif",
-          "name": "Montserrat / Noto Sans JP (英数字・本文共通)",
+          "name": "Montserrat / Noto Sans JP (Headings)",
           "slug": "sans"
         },
         {
           "fontFamily": "\"Noto Serif JP\", serif",
-          "name": "Noto Serif JP (Headings)",
+          "name": "Noto Serif JP (本文・説明文)",
           "slug": "serif"
         }
       ]
@@ -27,7 +27,7 @@
   },
   "styles": {
     "typography": {
-      "fontFamily": "var(--wp--preset--font-family--sans)"
+      "fontFamily": "var(--wp--preset--font-family--serif)"
     }
   }
 }

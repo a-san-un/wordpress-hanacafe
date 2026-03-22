@@ -10,7 +10,7 @@
 body {
   background-color: v.$c-base;
   color: v.$c-text;
-  font-family: v.$f-heading;
+  font-family: v.$f-body;
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
 }
@@ -19,7 +19,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: v.$f-body;
+  font-family: v.$f-heading;
   font-weight: 700;
   color: v.$c-main;
 }

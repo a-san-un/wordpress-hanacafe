@@ -11,12 +11,12 @@ get_header(); ?>
 
 <main class="l-main">
     <?php if (have_posts()):
-      while (have_posts()):
+        while (have_posts()):
 
-        the_post();
-        $current_post_id = get_the_ID();
-        $menu = get_hanacafe_menu_data();
-        ?>
+            the_post();
+            $current_post_id = get_the_ID();
+            $menu = get_hanacafe_menu_data();
+    ?>
 
             <article id="post-<?php the_ID(); ?>" <?php post_class("p-single-menu"); ?>>
                 <div class="l-container">
@@ -27,14 +27,12 @@ get_header(); ?>
                     ?>
 
                     <?php
-        // セクションヘッダー: 3/11 17時台の構造を完全同期
-        ?>
+                    // セクションヘッダー: 3/11 17時台の構造を完全同期
+                    ?>
                     <header class="p-single-menu__header p-menu__header">
                         <div class="p-menu__heading c-heading">
                             <span class="c-heading__sub"><?php echo esc_html($category_display); ?></span>
-                            <h1 class="c-heading__main"><?php // [fix 1-4]
-
-        echo esc_html(get_the_title()); ?></h1>
+                            <h1 class="c-heading__main"><?php echo esc_html(get_the_title()); ?></h1>
                         </div>
                         <a href="<?php echo esc_url(get_post_type_archive_link("menu")); ?>" class="p-menu__view-all">
                             VIEW ALL MENU
@@ -91,24 +89,24 @@ get_header(); ?>
             </article>
 
     <?php
-      endwhile;
+        endwhile;
     endif; ?>
 
     <?php
     $term_id = $terms && !is_wp_error($terms) ? $terms[0]->term_id : 0;
     $related_query = new WP_Query([
-      "post_type" => "menu",
-      "posts_per_page" => 3,
-      "post__not_in" => [$current_post_id],
-      "orderby" => "date",
-      "order" => "DESC",
-      "tax_query" => [
-        [
-          "taxonomy" => "menu_category",
-          "field" => "term_id",
-          "terms" => $term_id,
+        "post_type" => "menu",
+        "posts_per_page" => 3,
+        "post__not_in" => [$current_post_id],
+        "orderby" => "date",
+        "order" => "DESC",
+        "tax_query" => [
+            [
+                "taxonomy" => "menu_category",
+                "field" => "term_id",
+                "terms" => $term_id,
+            ],
         ],
-      ],
     ]);
 
     if ($related_query->have_posts()): ?>
@@ -120,13 +118,14 @@ get_header(); ?>
                 </div>
                 <div class="p-menu__list">
                     <?php while ($related_query->have_posts()):
-                      $related_query->the_post();
+                        $related_query->the_post();
                         get_template_part("template-parts/menu/loop", "menu");
                     endwhile; ?>
                 </div>
             </div>
         </section>
-    <?php wp_reset_postdata();endif;
+    <?php wp_reset_postdata();
+    endif;
     ?>
 </main>
 
