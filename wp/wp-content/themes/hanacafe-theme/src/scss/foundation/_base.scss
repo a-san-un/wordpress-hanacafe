@@ -1,4 +1,5 @@
 @use "../global/variables" as v;
+@use "../global/mixins" as m;
 
 * {
   margin: 0;
@@ -22,6 +23,11 @@ h4 {
   font-weight: 700;
   color: v.$c-main;
 }
+
+h1 { font-size: m.vw-clamp(28, 40); }
+h2 { font-size: m.vw-clamp(22, 32); }
+h3 { font-size: m.vw-clamp(18, 24); }
+h4 { font-size: 1rem; }
 
 a {
   text-decoration: none;
