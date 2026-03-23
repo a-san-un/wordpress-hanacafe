@@ -125,7 +125,7 @@
 
   .c-card__title {
     color: v.$c-text;
-    transition: color v.$t-duration;
+    transition: color v.$t-duration ease;
   }
 
   .c-card__text {
@@ -133,6 +133,7 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    line-clamp: 3;
   }
 
   .c-card__link:hover .c-card__title {

@@ -55,6 +55,7 @@ $wp-admin-bar-desktop: 32px;
 
 // --- Assets ---
 $t-duration: 0.3s;
+$t-base: $t-duration ease; // 汎用トランジション省略変数
 $radius-s: 4px;
 $radius-m: 8px;
 $radius-round: 50px;

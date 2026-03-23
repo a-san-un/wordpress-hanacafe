@@ -19,7 +19,7 @@
   font-size: 14px;
   font-weight: 700; // 太字でクリッカブルな印象を強調
   letter-spacing: 0.2em; // 字間を広めに設定（英語大文字の視認性向上）
-  transition: v.$t-duration; // サイト共通のアニメーション速度を適用（hover演出に影響）
+transition: opacity v.$t-duration ease, transform v.$t-duration ease, box-shadow v.$t-duration ease;
   box-shadow: 0 4px 12px rgba(v.$c-black, 0.1); // 黄金律 0.1: 影の主張を抑える
 
   // ホバーアクション：透過黄金律 0.7 を適用しつつ浮遊感を演出

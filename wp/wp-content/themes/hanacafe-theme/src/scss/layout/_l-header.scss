@@ -83,7 +83,7 @@
       letter-spacing: 0.1em;
       color: v.$c-text;
       text-decoration: none;
-      transition: color v.$t-duration;
+      transition: color v.$t-duration ease;
 
       &:hover {
         color: v.$c-main;
