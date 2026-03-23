@@ -64,7 +64,7 @@
     text-decoration: none;
     font-size: 14px;
     font-weight: 700;
-    transition: opacity v.$t-duration;
+    transition: opacity v.$t-duration ease;
 
     &:hover {
       opacity: 0.7; // 黄金律: 透過0.7

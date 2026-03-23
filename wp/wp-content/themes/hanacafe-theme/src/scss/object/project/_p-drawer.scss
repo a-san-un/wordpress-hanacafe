@@ -59,5 +59,6 @@
     font-weight: 700;
     color: v.$c-main;
     text-decoration: none;
+    transition: opacity v.$t-duration ease;
   }
 }

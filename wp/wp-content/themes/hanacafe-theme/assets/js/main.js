@@ -1,5 +1,9 @@
 /**
  * HanaCAFE nappa69 Main JS
+ * 2026-03-23:
+ * - グループ③-A: SP→PCリサイズ時のドロワーis-active残留バグを修正
+ * - グループ③-B: scrollイベントにpassive: trueを付与しパフォーマンス改善
+ * - グループ③-C: フォーカストラップのロジックを改善しA11Yを向上
  * 2026-03-21:
  * - jQuery -> Vanilla JS 全面書き換え完了（STEP 5-9）
  * - DOMContentLoaded ラッパーに統一・jQuery依存を完全撤去
@@ -24,40 +28,85 @@ document.addEventListener("DOMContentLoaded", function () {
    * ユーザーに「隠れ家に入っていく」ような視覚的変化を促す。
    */
   let rafId = null;
-  window.addEventListener("scroll", function () {
-    if (rafId) return;
-    rafId = requestAnimationFrame(function () {
-      if (window.scrollY > 0) {
-        header.classList.add("is-scrolled");
-      } else {
-        header.classList.remove("is-scrolled");
-      }
-      rafId = null;
-    });
-  });
+  // passive: true でブラウザのスクロール先読みを有効化（パフォーマンス改善）
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (rafId) return;
+      rafId = requestAnimationFrame(function () {
+        if (window.scrollY > 0) {
+          header.classList.add("is-scrolled");
+        } else {
+          header.classList.remove("is-scrolled");
+        }
+        rafId = null;
+      });
+    },
+    { passive: true },
+  );
 
   /**
    * 1. ハンバーガーメニュー開閉（A11Y対応）
    */
+  // フォーカストラップ（ドロワー開放中のみ document にアタッチ）
+  function getFocusable() {
+    return Array.from(drawer.querySelectorAll('a, button, [tabindex]:not([tabindex="-1"])')).filter(function (el) {
+      return el.offsetParent !== null && !el.disabled;
+    });
+  }
+
+  function trapFocus(e) {
+    if (e.key !== "Tab") return;
+    const focusable = getFocusable();
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   function closeDrawer() {
     hamburger.setAttribute("aria-expanded", "false");
     drawer.setAttribute("aria-hidden", "true");
     drawer.classList.remove("is-active");
     document.body.style.overflow = "";
+    document.removeEventListener("keydown", trapFocus); // トラップ解除
   }
+
+  // リサイズ時にドロワーを強制クローズ（SP→PC切り替え時の残留防止）
+  let resizeRafId = null;
+  window.addEventListener("resize", function () {
+    if (resizeRafId) return;
+    resizeRafId = requestAnimationFrame(function () {
+      if (window.innerWidth >= 768) {
+        closeDrawer();
+      }
+      resizeRafId = null;
+    });
+  });
 
   hamburger.addEventListener("click", function () {
     const isExpanded = hamburger.getAttribute("aria-expanded") === "true";
 
-    hamburger.setAttribute("aria-expanded", String(!isExpanded));
-    drawer.setAttribute("aria-hidden", String(isExpanded));
-    drawer.classList.toggle("is-active");
-
-    // 背景固定（スクロール抑制）
-    if (!isExpanded) {
-      document.body.style.overflow = "hidden";
+    if (isExpanded) {
+      closeDrawer();
     } else {
-      document.body.style.overflow = "";
+      hamburger.setAttribute("aria-expanded", "true");
+      drawer.setAttribute("aria-hidden", "false");
+      drawer.classList.add("is-active");
+      document.body.style.overflow = "hidden";
+      document.addEventListener("keydown", trapFocus); // トラップ開始
+      const focusable = getFocusable();
+      if (focusable.length > 0) focusable[0].focus(); // 先頭にフォーカス移動
     }
   });
 
@@ -82,30 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  /* フォーカストラップ：ドロワー開放中はTab/Shift+Tabをドロワー内に閉じ込める */
-  drawer.addEventListener("keydown", function (e) {
-    if (e.key !== "Tab") return;
-    const focusable = Array.from(drawer.querySelectorAll("a, button, [tabindex]:not([tabindex='-1'])")).filter(
-      function (el) {
-        return getComputedStyle(el).display !== "none";
-      }
-    );
-    if (focusable.length === 0) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
-    } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    }
-  });
-
   /**
    * 2. Intersection Observer によるフェードイン
    * スクロールに合わせて各要素（.l-section）を下から浮上させる
@@ -116,14 +141,17 @@ document.addEventListener("DOMContentLoaded", function () {
     threshold: 0.1,
   };
 
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-inview");
-        sectionObserver.unobserve(entry.target); // 一度表示されたら監視終了
-      }
-    });
-  }, observerOptions);
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-inview");
+          sectionObserver.unobserve(entry.target); // 一度表示されたら監視終了
+        }
+      });
+    },
+    observerOptions,
+  );
 
   document.querySelectorAll(".l-section").forEach(function (el) {
     sectionObserver.observe(el);
