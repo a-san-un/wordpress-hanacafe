@@ -116,14 +116,10 @@
 
     &-en {
       font-family: v.$f-heading; // 英語用フォントファミリー（variables.scss で定義）
-      font-size: 48px; // モバイル時の英語タイトルサイズ
+      font-size: m.vw-clamp(48, 80); // 英語タイトルのサイズ（モバイルは48px、PCは80pxを上限にビューポート幅に応じて拡大）
       font-weight: 700; // 太字（インパクト重視）
       line-height: 1.1; // 行間を詰めてコンパクトに
       transition-delay: 0.8s; // 画像フェードイン（1.5s）より後に登場させる演出上の遅延
-
-      @include m.mq {
-        font-size: 80px; // PC時は大きく表示
-      }
 
       // --- JS有効時のみの隠し設定 ---
       .js-enabled body .p-hero:not(.is-start) & {

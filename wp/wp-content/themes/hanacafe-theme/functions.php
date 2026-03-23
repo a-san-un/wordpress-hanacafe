@@ -51,9 +51,9 @@ add_action("wp_enqueue_scripts", function () {
     "hanacafe-app-style",
     $uri . "/assets/css/app.css",
     ["hanacafe-fonts"],
-    filemtime($dir . "/assets/css/app.css"),
+    file_exists($dir . "/assets/css/app.css") ? filemtime($dir . "/assets/css/app.css") : null,
   );
-  wp_enqueue_script("hanacafe-main-js", $uri . "/assets/js/main.js", [], filemtime($dir . "/assets/js/main.js"), [
+  wp_enqueue_script("hanacafe-main-js", $uri . "/assets/js/main.js", [], file_exists($dir . "/assets/js/main.js")  ? filemtime($dir . "/assets/js/main.js")  : null, [
     "strategy" => "defer",
     "in_footer" => true,
   ]);
