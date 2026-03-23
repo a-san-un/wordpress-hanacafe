@@ -224,7 +224,7 @@ c-card--seat   → ステータスバッジあり
 | STEP 9 運用マニュアル           | 4件  | ✅ 完了   |
 | STEP 9.5 CSS設計・品質補強      | 5件  | ✅ 完了   |
 | STEP 10 リファクタリング・品質改善 | 7件 | ✅ 完了 |
-| STEP 10 リファクタリング・品質改善 | 11件 | ✅ 完了 |
+| STEP 10 リファクタリング・品質改善 | 14件 | ✅ 完了 |
 
 ---
 
@@ -263,6 +263,9 @@ c-card--seat   → ステータスバッジあり
 | 10-④ | 🟡 中 | `_base.scss` | `a` タグの `transition` に `ease` を明示 | ✅ |
 | 10-④ | 🟡 中 | `_p-news.scss` | `&__header` の無効プロパティ `align-items: center` を削除 | ✅ |
 | 10-④ | 🟢 低 | `main.js` | 旧変更ログコメント（日付付き履歴行）を物理削除 | ✅ |
+| 10-④ | 🟡 中 | `_p-hero.scss` | hero `font-size` を `vw-clamp(48, 80)` に変更（No.29） | ✅ |
+| 10-④ | 🟡 中 | `functions.php` | `filemtime()` に `file_exists()` ガード追加（No.53） | ✅ |
+| 10-④ | 🟢 低 | `_p-access.scss` | `__map-img` の `aspect-ratio` / `border-radius` 重複削除（No.31） | ✅ |
 
 #### コミット履歴:
 
