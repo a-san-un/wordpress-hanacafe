@@ -1,18 +1,5 @@
 /**
  * HanaCAFE nappa69 Main JS
- * 2026-03-23:
- * - グループ③-A: SP→PCリサイズ時のドロワーis-active残留バグを修正
- * - グループ③-B: scrollイベントにpassive: trueを付与しパフォーマンス改善
- * - グループ③-C: フォーカストラップのロジックを改善しA11Yを向上
- * 2026-03-21:
- * - jQuery -> Vanilla JS 全面書き換え完了（STEP 5-9）
- * - DOMContentLoaded ラッパーに統一・jQuery依存を完全撤去
- * * 2026-03-13:
- * - スクロール連動ヘッダー（.is-scrolled）の実装を追加
- * - 表示保証（Anti-Blackout）のため、監視対象から .p-page を除外
- * - Intersection Observer によるセクション（.l-section）フェードイン実装
- * - Heroセクションのトリガークラス名を SSOT(is-start) に再統合
- * - A11Y対応ドロワーロジックの維持
  */
 document.addEventListener("DOMContentLoaded", function () {
   const header = document.querySelector(".js-header");
