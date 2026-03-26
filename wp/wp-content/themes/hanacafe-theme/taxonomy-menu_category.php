@@ -12,6 +12,7 @@ get_header(); ?>
     <section class="p-page">
         <div class="l-container">
             <div class="p-page__header">
+                <?php get_template_part('template-parts/breadcrumb'); ?>
                 <p class="p-page__subtitle">MENU CATEGORY</p>
                 <h1 class="p-page__title"><?php single_term_title(); ?></h1>
             </div>
@@ -20,10 +21,10 @@ get_header(); ?>
                 <section class="p-menu-archive">
                     <div class="p-menu__list">
                         <?php if (have_posts()):
-                          while (have_posts()):
-                            the_post();
+                            while (have_posts()):
+                                the_post();
                                 get_template_part("template-parts/menu/loop", "menu");
-                          endwhile;
+                            endwhile;
                         else:
                             echo '<p class="p-archive__empty">準備中です。</p>';
                         endif; ?>
