@@ -88,9 +88,8 @@ add_filter("template_include", function ($template) {
 // 他のヘルパーが内部依存するため、このグループを先頭に置く
 
 /** menu_category の正規スラッグ一覧を返す（順序保証） */
-function get_hanacafe_menu_categories()
-{
-  return ["food", "drink", "dessert"];
+function get_hanacafe_menu_categories() {
+  return ["meal", "drink", "dessert"];
 }
 
 /** スラッグから固定ページIDを取得 */

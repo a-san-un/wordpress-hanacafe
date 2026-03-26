@@ -32,7 +32,7 @@ get_header(); ?>
 
         // [表示保証] ターム設定ミスがある場合に警告を表示
         if (empty($ordered_ids)) {
-          echo '<p class="p-menu-archive-alert">メニューカテゴリー（food, drink, dessert）が見つかりません。<br>管理画面のスラッグ設定を確認してください。</p>';
+          echo '<p class="p-menu-archive-alert">メニューカテゴリー（meal, drink, dessert）が見つかりません。<br>管理画面のスラッグ設定を確認してください。</p>';
         }
 
         $terms = get_terms([
