@@ -223,8 +223,7 @@ c-card--seat   → ステータスバッジあり
 | STEP 8.5 技術的負債クリーニング | 11件 | ✅ 完了   |
 | STEP 9 運用マニュアル           | 4件  | ✅ 完了   |
 | STEP 9.5 CSS設計・品質補強      | 5件  | ✅ 完了   |
-| STEP 10 リファクタリング・品質改善 | 7件 | ✅ 完了 |
-| STEP 10 リファクタリング・品質改善 | 14件 | ✅ 完了 |
+| STEP 10 リファクタリング・品質改善 | 21件 | ✅ 完了 |
 | STEP 11 本番公開チェック・移行  | 9件  | 🔲 進行中 |
 
 ---
@@ -294,8 +293,8 @@ c-card--seat   → ステータスバッジあり
 | 11-3+ | `functions.php` / `robots.txt` | データ保管専用5ページに noindex 設定・robots.txt 配置 | — | ✅ |
 | 11-4  | ブラウザ実機 | ローカル表示・動作確認 | [docs/10 セクション3](./10_deploy-checklist.md#3-表示デザイン確認)（全14項目） | ✅ |
 | 11-5  | ブラウザ実機 | セキュリティ確認 | [docs/10 セクション4](./10_deploy-checklist.md#4-セキュリティ確認) | ✅ |
-| 11-6  | ブラウザ実機 | SEO・アクセシビリティ確認 | [docs/10 セクション5](./10_deploy-checklist.md#5-seoアクセシビリティ確認) | ✅ |
-| 11-7  | ブラウザ実機 | パフォーマンス確認 | [docs/10 セクション6](./10_deploy-checklist.md#6-パフォーマンス確認) | 🔲 |
+| 11-6  | ブラウザ実機 | SEO・アクセシビリティ確認 + LocalBusiness JSON-LD 実装 | [docs/10 セクション5](./10_deploy-checklist.md#5-seoアクセシビリティ確認) | ✅ |
+| 11-7  | ブラウザ実機 | パフォーマンス確認（6-4は本番移行後） | [docs/10 セクション6](./10_deploy-checklist.md#6-パフォーマンス確認) | ✅ |
 | 11-8〜11-11 | 本番サーバー | 本番移行（All-in-One WP Migration） | [docs/10 セクション7](./10_deploy-checklist.md#7-all-in-one-wp-migration-本番移行手順) | 🔲 |
 
 ### STEP 11 完了条件
@@ -313,3 +312,5 @@ c-card--seat   → ステータスバッジあり
 | 4345550  | fix: メニューカテゴリーページにパンくず呼び出しを追加 |
 | 9fb6688  | fix: メニューカテゴリースラッグを food → meal に変更 |
 | eb03dd2  | docs: 04_roadmap STEP 11 — 11-4 完了・コミット履歴追記 |
+| 924de8e  | docs: STEP 11 — 11-5・11-6 完了を記録 |
+| 0e52a85  | feat: LocalBusiness JSON-LD を wp_head に追加（11-6追加） |
