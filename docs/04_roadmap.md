@@ -1,4 +1,4 @@
-﻿# HanaCAFE nappa69 リファクタリングロードマップ Phase 2
+# HanaCAFE nappa69 リファクタリングロードマップ Phase 2
 
 最終更新: 2026-03-26
 
@@ -293,8 +293,8 @@ c-card--seat   → ステータスバッジあり
 | 11-3  | WordPress 管理画面 | ACFマスターデータ入力（17項目） | — | ✅ |
 | 11-3+ | `functions.php` / `robots.txt` | データ保管専用5ページに noindex 設定・robots.txt 配置 | — | ✅ |
 | 11-4  | ブラウザ実機 | ローカル表示・動作確認 | [docs/10 セクション3](./10_deploy-checklist.md#3-表示デザイン確認)（全14項目） | ✅ |
-| 11-5  | ブラウザ実機 | セキュリティ確認 | [docs/10 セクション4](./10_deploy-checklist.md#4-セキュリティ確認) | 🔲 |
-| 11-6  | ブラウザ実機 | SEO・アクセシビリティ確認 | [docs/10 セクション5](./10_deploy-checklist.md#5-seoアクセシビリティ確認) | 🔲 |
+| 11-5  | ブラウザ実機 | セキュリティ確認 | [docs/10 セクション4](./10_deploy-checklist.md#4-セキュリティ確認) | ✅ |
+| 11-6  | ブラウザ実機 | SEO・アクセシビリティ確認 | [docs/10 セクション5](./10_deploy-checklist.md#5-seoアクセシビリティ確認) | ✅ |
 | 11-7  | ブラウザ実機 | パフォーマンス確認 | [docs/10 セクション6](./10_deploy-checklist.md#6-パフォーマンス確認) | 🔲 |
 | 11-8〜11-11 | 本番サーバー | 本番移行（All-in-One WP Migration） | [docs/10 セクション7](./10_deploy-checklist.md#7-all-in-one-wp-migration-本番移行手順) | 🔲 |
 
@@ -312,4 +312,4 @@ c-card--seat   → ステータスバッジあり
 | 5f59a0d  | fix: 標準投稿のパーマリンクに /news/ プレフィックスを付与 |
 | 4345550  | fix: メニューカテゴリーページにパンくず呼び出しを追加 |
 | 9fb6688  | fix: メニューカテゴリースラッグを food → meal に変更 |
-
+| eb03dd2  | docs: 04_roadmap STEP 11 — 11-4 完了・コミット履歴追記 |
