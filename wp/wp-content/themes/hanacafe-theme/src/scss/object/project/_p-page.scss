@@ -74,4 +74,33 @@
       font-size: 20px;
     }
   }
+
+  &__breadcrumb {
+    text-align: left; // .p-page__header の center を上書き
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: v.$c-text-sub; // rgba($c-text, 0.7)
+
+    // Yoast SEO が出力するアンカー
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color v.$t-base;
+
+      &:hover {
+        color: v.$c-main;
+      }
+    }
+
+    // Yoast SEO が出力する区切り文字（span）
+    span[class*="breadcrumb_last"] {
+      color: v.$c-main;
+      font-weight: 700;
+    }
+  }
+}
+
+// single-menu.php 用ラッパー
+.p-page__breadcrumb-wrapper {
+  padding-top: m.vw-clamp(100, 140); // .p-page の padding-top に合わせる
 }

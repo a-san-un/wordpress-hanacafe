@@ -10,13 +10,14 @@ get_header(); ?>
 
 <main class="l-main">
     <?php if (have_posts()):
-      while (have_posts()):
-        the_post(); ?>
+        while (have_posts()):
+            the_post(); ?>
 
             <article id="post-<?php the_ID(); ?>" <?php post_class("p-page"); ?>>
                 <div class="l-container">
 
                     <header class="p-page__header">
+                        <?php get_template_part('template-parts/breadcrumb'); ?>
                         <h1 class="p-page__title"><?php echo esc_html(get_the_title()); ?></h1>
                         <time class="p-page__date" datetime="<?php echo get_the_date("c"); ?>">
                             <?php echo esc_html(get_the_date("Y.m.d")); ?>
@@ -38,7 +39,7 @@ get_header(); ?>
             </article>
 
     <?php
-      endwhile;
+        endwhile;
     endif; ?>
 </main>
 

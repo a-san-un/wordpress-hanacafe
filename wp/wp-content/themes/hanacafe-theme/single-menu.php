@@ -19,6 +19,9 @@ get_header(); ?>
     ?>
 
             <article id="post-<?php the_ID(); ?>" <?php post_class("p-single-menu"); ?>>
+                <div class="p-page__breadcrumb-wrapper l-container">
+                    <?php get_template_part('template-parts/breadcrumb'); ?>
+                </div>
                 <div class="l-container">
 
                     <?php

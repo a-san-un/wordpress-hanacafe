@@ -14,6 +14,7 @@ get_header(); ?>
         <div class="l-container">
 
             <div class="p-page__header">
+                <?php get_template_part('template-parts/breadcrumb'); ?>
                 <p class="p-page__subtitle">NEWS</p>
                 <h1 class="p-page__title">大切なお知らせ</h1>
             </div>

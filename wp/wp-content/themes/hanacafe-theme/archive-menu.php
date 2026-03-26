@@ -13,6 +13,7 @@ get_header(); ?>
   <section class="p-page">
     <div class="l-container">
       <div class="p-page__header">
+        <?php get_template_part('template-parts/breadcrumb'); ?>
         <p class="p-page__subtitle">MENU</p>
         <h1 class="p-page__title">メニュー一覧</h1>
       </div>
