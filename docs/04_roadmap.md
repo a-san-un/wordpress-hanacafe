@@ -295,7 +295,17 @@ c-card--seat   → ステータスバッジあり
 | 11-5  | ブラウザ実機 | セキュリティ確認 | [docs/10 セクション4](./10_deploy-checklist.md#4-セキュリティ確認) | ✅ |
 | 11-6  | ブラウザ実機 | SEO・アクセシビリティ確認 + LocalBusiness JSON-LD 実装 | [docs/10 セクション5](./10_deploy-checklist.md#5-seoアクセシビリティ確認) | ✅ |
 | 11-7  | ブラウザ実機 | パフォーマンス確認（6-4は本番移行後） | [docs/10 セクション6](./10_deploy-checklist.md#6-パフォーマンス確認) | ✅ |
-| 11-8〜11-11 | 本番サーバー | 本番移行（All-in-One WP Migration） | [docs/10 セクション7](./10_deploy-checklist.md#7-all-in-one-wp-migration-本番移行手順) | 🔲 |
+| 11-8  | FTP | WordPress本体・index.php・.htaccessをサーバーにアップロード | [docs/10 セクション7](./10_deploy-checklist.md#7-本番移行手順all-in-one-wp-migration--ftp-直接アップロード併用) | ✅ |
+| 11-9  | 本番サーバー | DB接頭辞 `hc_` でWordPress新規インストール | — | ✅ |
+| 11-10 | All-in-One WP Migration | ローカルでURL置換・除外設定して `.wpress` エクスポート | — | ✅ |
+| 11-11 | All-in-One WP Migration | 本番へインポート → パーマリンク再保存 → テーマ有効化 | — | ✅ |
+| 11-12 | 本番サーバー | セキュリティ設定（wp-config.php パーミッション400・.htaccess追記） | — | ✅ |
+| 11-13 | 本番ブラウザ | 表示・動作確認（ヘッダー透過・ドロワー・メニューカード等） | [docs/10 セクション3](./10_deploy-checklist.md#3-表示デザイン確認) | 🔲 一部確認済み |
+| 11-14 | 本番ブラウザ | パンくずリンクURLに `/wp/` 混入バグ修正（`breadcrumb.php` 要確認） | — | 🔲 |
+| 11-15 | 本番ブラウザ | OGP・SNSシェア確認 | [docs/10 7-22](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
+| 11-16 | 本番ブラウザ | 予約リンク遷移確認 | [docs/10 7-23](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
+| 11-17 | Google Search Console | サイトマップ送信 | [docs/10 7-24](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
+| 11-18 | PageSpeed Insights | モバイルスコア 70以上確認 | [docs/10 6-4](./10_deploy-checklist.md#6-パフォーマンス確認) | 🔲 |
 
 ### STEP 11 完了条件
 
@@ -314,3 +324,4 @@ c-card--seat   → ステータスバッジあり
 | eb03dd2  | docs: 04_roadmap STEP 11 — 11-4 完了・コミット履歴追記 |
 | 924de8e  | docs: STEP 11 — 11-5・11-6 完了を記録 |
 | 0e52a85  | feat: LocalBusiness JSON-LD を wp_head に追加（11-6追加） |
+| ca1f713  | docs: 10_deploy-checklist v1.3 — 本番移行手順をAll-in-One + 直接アップロード方式に更新 |
