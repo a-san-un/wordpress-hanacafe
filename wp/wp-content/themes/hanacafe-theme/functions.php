@@ -399,6 +399,50 @@ add_filter(
 remove_action("wp_head", "wp_generator");
 
 // ============================================================
+// 7.5. LocalBusiness JSON-LD（構造化データ）
+// ============================================================
+add_action('wp_head', function () {
+  if (!is_front_page()) {
+    return;
+  }
+
+  $data = get_hanacafe_access_data();
+
+  $same_as = [];
+  if (!empty($data['shop_sns_instagram']) && $data['shop_sns_instagram'] !== '#') {
+    $same_as[] = esc_url($data['shop_sns_instagram']);
+  }
+  if (!empty($data['shop_sns_facebook']) && $data['shop_sns_facebook'] !== '#') {
+    $same_as[] = esc_url($data['shop_sns_facebook']);
+  }
+
+  $schema = [
+    '@context' => 'https://schema.org',
+    '@type'    => ['Restaurant', 'CafeOrCoffeeShop'],
+    'name'     => 'HanaCAFE nappa69',
+    'address'  => [
+      '@type'           => 'PostalAddress',
+      'streetAddress'   => esc_html($data['shop_address']),
+      'addressLocality' => '川崎市中原区',
+      'addressRegion'   => '神奈川県',
+      'addressCountry'  => 'JP',
+    ],
+    'telephone'     => esc_html($data['shop_tel']),
+    'openingHours'  => esc_html($data['shop_open_hours']),
+    'priceRange'    => '¥¥',
+  ];
+
+  if (!empty($data['shop_map_url'])) {
+    $schema['hasMap'] = esc_url($data['shop_map_url']);
+  }
+  if (!empty($same_as)) {
+    $schema['sameAs'] = $same_as;
+  }
+
+  echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) . '</script>' . "\n";
+});
+
+// ============================================================
 // 8. 標準投稿パーマリンクに /news/ プレフィックスを付与
 // ============================================================
 
