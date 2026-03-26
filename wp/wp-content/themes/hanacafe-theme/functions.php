@@ -398,3 +398,36 @@ add_filter(
 // 7. セキュリティ最適化
 // ============================================================
 remove_action("wp_head", "wp_generator");
+
+// ============================================================
+// 8. 標準投稿パーマリンクに /news/ プレフィックスを付与
+// ============================================================
+
+/**
+ * /news/記事名/ というURLを通常の投稿として認識させるリライトルールを追加
+ */
+add_action('init', function () {
+  add_rewrite_rule('news/([^/]+)/?$', 'index.php?name=$matches[1]', 'top');
+});
+
+/**
+ * 投稿（post）のパーマリンク生成時に /news/ を付与する
+ * 標準投稿の場合は post_type_link ではなく post_link を使用する
+ */
+add_filter('post_link', function ($url, $post) {
+  if ($post->post_type === 'post' && !str_contains($url, '/news/')) {
+    $url = home_url('/news/' . $post->post_name . '/');
+  }
+  return $url;
+}, 20, 2);
+
+/**
+ * 管理画面（編集画面）のパーマリンクプレビュー表示も /news/ 付きにする
+ */
+add_filter('get_sample_permalink', function ($permalink, $post_id, $title, $name, $post) {
+  if ($post->post_type === 'post') {
+    // [0] がベースURL、[1] がスラッグ
+    $permalink[0] = str_replace(home_url('/'), home_url('/news/'), $permalink[0]);
+  }
+  return $permalink;
+}, 10, 5);
