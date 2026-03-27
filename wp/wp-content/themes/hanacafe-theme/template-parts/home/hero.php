@@ -23,11 +23,11 @@ $hero_alt = $pic && !empty($pic["alt"]) ? $pic["alt"] : "HanaCAFE nappa69 メイ
         <div class="p-hero__content">
             <div class="l-container">
                 <div class="p-hero__title-box">
-                    <h2 class="p-hero__title">
+                    <h1 class="p-hero__title">
                         <span class="p-hero__title-en">Slow Time,</span>
                         <span class="p-hero__title-en">Slow Life.</span>
                         <span class="p-hero__title-jp">木漏れ日と、手作りの温もり。</span>
-                    </h2>
+                    </h1>
                 </div>
             </div>
         </div>
