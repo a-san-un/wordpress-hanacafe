@@ -1,10 +1,11 @@
 ---
-Version: 8.2
-Last Updated: 2026-03-23
-Latest Update Note: 「⑨ z-index 変数一元管理ルールを追加」
+Version: 8.3
+Last Updated: 2026-03-27
+Latest Update Note: ヘッダー透過率を実コードに合わせ修正（0.9→0.95・変数表記）、hanacafe.txt をNLM専用と明記
 Meta-prompt for AI: 本ドキュメントはプロジェクトのデザインと実装に関するSSOT（信頼できる唯一の情報源）である。AIメンターはコードを提案する際、必ずこのドキュメントの「黄金律」と「透過率の数値」を厳守し、推測による値の変更や機能の破壊を行ってはならない。
 回答形式（Diff + 全文の原則）: 修正が必要なファイルは、非破壊の証明と変更意図の可視化のため、まず「Unified Diff形式（+/-）」で厳密な差分を提示すること。その後、コピペミス防止のため必ず「修正後のコード全文」を提示すること。修正が必要ないファイルはその旨を提示する。
-参照必須ファイル (SSOT): 1. `01_architecture-and-design-rules.md` (透過黄金律・表示保証) 2. `02_wordpress-coding-standards.md` (WP作法・命名規則) 3. `hanacafe.txt` (プロジェクト全ソース)
+参照必須ファイル (SSOT): 1. `01_architecture-and-design-rules.md` (透過黄金律・表示保証) 2. `02_wordpress-coding-standards.md` (WP作法・命名規則)
+※ `hanacafe.txt` はNotebookLM（NLM）専用のソースダンプ。リポジトリには含まれない。
 ---
 
 # 🏛️ HanaCAFE nappa69 アーキテクチャ設計・実装ガイドライン
@@ -30,7 +31,8 @@ Meta-prompt for AI: 本ドキュメントはプロジェクトのデザインと
 
 - **絶対厳守事項**: 元デザイン（旧サイト）が持つ「洗練された空気感」の根源は、計算し尽くされた要素の透明度（opacity/rgba）にある。これをAIの推測で1.0（ベタ塗り）に上書きすることは、HanaCAFEのブランド価値を毀損する重罪である。
 - **保存された透過率**:
-  - ヘッダー背景（固定時）: `rgba(255, 255, 255, 0.9)`
+  - ヘッダー背景（スクロール前）: `rgba($c-base, 0.95)`
+  - ヘッダー背景（スクロール後 `.is-scrolled`）: `$c-white`（純白）
   - メインビジュアル上のキャッチコピー・装飾: `opacity: 0.85`
   - メニューカードのサブタイトル等（控えめなテキスト）: `opacity: 0.7`（または適切なカラーコード）
 
