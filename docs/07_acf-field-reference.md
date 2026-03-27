@@ -1,4 +1,4 @@
-# HanaCAFE ACFフィールドリファレンス
+# HanaCAFE ACF フィールドリファレンス（開発者向け）
 
 最終更新: 2026-03-27
 対象: wp/wp-content/themes/hanacafe-theme
