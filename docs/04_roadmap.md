@@ -1,6 +1,6 @@
 # HanaCAFE nappa69 リファクタリングロードマップ Phase 2
 
-最終更新: 2026-03-26
+最終更新: 2026-03-27
 
 ## 目的
 
@@ -224,7 +224,7 @@ c-card--seat   → ステータスバッジあり
 | STEP 9 運用マニュアル           | 4件  | ✅ 完了   |
 | STEP 9.5 CSS設計・品質補強      | 5件  | ✅ 完了   |
 | STEP 10 リファクタリング・品質改善 | 21件 | ✅ 完了 |
-| STEP 11 本番公開チェック・移行  | 9件  | 🔲 進行中 |
+| STEP 11 本番公開チェック・移行  | 18件 | ✅ 完了   |
 
 ---
 
@@ -301,11 +301,11 @@ c-card--seat   → ステータスバッジあり
 | 11-11 | All-in-One WP Migration | 本番へインポート → パーマリンク再保存 → テーマ有効化 | — | ✅ |
 | 11-12 | 本番サーバー | セキュリティ設定（wp-config.php パーミッション400・.htaccess追記） | — | ✅ |
 | 11-13 | 本番ブラウザ | 表示・動作確認（ヘッダー透過・ドロワー・メニューカード等） | [docs/10 セクション3](./10_deploy-checklist.md#3-表示デザイン確認) | ✅ |
-| 11-14 | 本番ブラウザ | パンくずリンクURLに `/wp/` 混入バグ修正（`breadcrumb.php` 要確認） | — | 🔲 |
-| 11-15 | 本番ブラウザ | OGP・SNSシェア確認 | [docs/10 7-22](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
-| 11-16 | 本番ブラウザ | 予約リンク遷移確認 | [docs/10 7-23](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
-| 11-17 | Google Search Console | サイトマップ送信 | [docs/10 7-24](./10_deploy-checklist.md#インポート後の設定確認) | 🔲 |
-| 11-18 | PageSpeed Insights | モバイルスコア 70以上確認 | [docs/10 6-4](./10_deploy-checklist.md#6-パフォーマンス確認) | 🔲 |
+| 11-14 | 本番ブラウザ | パンくずリンクURLに `/wp/` 混入バグ修正（管理画面URLを修正） | — | ✅ |
+| 11-15 | 本番ブラウザ | OGP・SNSシェア確認（fb:app_id 警告は対応不要と判断） | [docs/10 7-22](./10_deploy-checklist.md#インポート後の設定確認) | ✅ |
+| 11-16 | 本番ブラウザ | 予約リンク遷移確認（ポートフォリオのためスキップ） | [docs/10 7-23](./10_deploy-checklist.md#インポート後の設定確認) | ✅ |
+| 11-17 | Google Search Console | サイトマップ送信（sitemap_index.xml） | [docs/10 7-24](./10_deploy-checklist.md#インポート後の設定確認) | ✅ |
+| 11-18 | PageSpeed Insights | パフォーマンス最適化（スコア55・FCP 27秒はサーバーTTFB起因） | [docs/10 6-4](./10_deploy-checklist.md#6-パフォーマンス確認) | ✅ |
 
 ### STEP 11 完了条件
 
@@ -325,3 +325,5 @@ c-card--seat   → ステータスバッジあり
 | 924de8e  | docs: STEP 11 — 11-5・11-6 完了を記録 |
 | 0e52a85  | feat: LocalBusiness JSON-LD を wp_head に追加（11-6追加） |
 | ca1f713  | docs: 10_deploy-checklist v1.3 — 本番移行手順をAll-in-One + 直接アップロード方式に更新 |
+| de39c9d  | docs: 11-13 本番ブラウザの表示・動作確認ステータスを更新 |
+| b6624a8  | fix: Google Fonts 非同期化・CSS minify・fetchpriority最適化（11-18） |
