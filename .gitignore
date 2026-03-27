@@ -29,6 +29,8 @@
 /wp/wp-content/ai1wm-backups/
 /wp/wp-content/bksiteguard/
 /wp/wp-content/siteguard/
+/wp/wp-content/advanced-cache.php
+/wp/wp-content/wp-cache-config.php
 
 # fonts
 /wp/wp-content/fonts

@@ -23,30 +23,43 @@ add_filter("document_title_separator", function ($sep) {
   return "|";
 });
 
-
 // ============================================================
 // 2. アセット読み込み
 // ============================================================
 
-// Google Fonts preconnect タグ変換（グローバルで1回だけ登録）
-add_filter(
-  "style_loader_tag",
-  function ($html, $handle) {
-    $preconnects = ["hanacafe-fonts-preconnect-1", "hanacafe-fonts-preconnect-2"];
-    return in_array($handle, $preconnects, true)
-      ? str_replace("rel='stylesheet'", "rel='preconnect' crossorigin", $html)
-      : $html;
-  },
-  10,
-  2,
-);
+
+// preconnect を wp_head の最上位に直接出力
+add_action('wp_head', function () {
+  echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+  echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+}, 1);
+
+
+// Google Fonts を preload（非同期）で読み込み
+add_filter('style_loader_tag', function ($html, $handle) {
+  if ($handle !== 'hanacafe-fonts') {
+    return $html;
+  }
+  $preload = str_replace("rel='stylesheet'", "rel='preload' as='style' onload=\"this.onload=null;this.rel='stylesheet'\"", $html);
+  $noscript = '<noscript>' . $html . '</noscript>';
+  return $preload . $noscript;
+}, 20, 2);
+
+
+// app.min.css に fetchpriority="high" を付与
+add_filter('style_loader_tag', function ($html, $handle) {
+  if ($handle !== 'hanacafe-app-style') {
+    return $html;
+  }
+  return str_replace("rel='stylesheet'", "rel='stylesheet' fetchpriority='high'", $html);
+}, 20, 2);
+
 
 add_action("wp_enqueue_scripts", function () {
   $dir = get_template_directory();
   $uri = get_template_directory_uri();
 
-  wp_enqueue_style("hanacafe-fonts-preconnect-1", "https://fonts.googleapis.com", [], null);
-  wp_enqueue_style("hanacafe-fonts-preconnect-2", "https://fonts.gstatic.com", [], null);
+
   wp_enqueue_style(
     "hanacafe-fonts",
     "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap",
@@ -55,16 +68,15 @@ add_action("wp_enqueue_scripts", function () {
   );
   wp_enqueue_style(
     "hanacafe-app-style",
-    $uri . "/assets/css/app.css",
+    $uri . "/assets/css/app.min.css",
     ["hanacafe-fonts"],
-    file_exists($dir . "/assets/css/app.css") ? filemtime($dir . "/assets/css/app.css") : null,
+    file_exists($dir . "/assets/css/app.min.css") ? filemtime($dir . "/assets/css/app.min.css") : null,
   );
-  wp_enqueue_script("hanacafe-main-js", $uri . "/assets/js/main.js", [], file_exists($dir . "/assets/js/main.js")  ? filemtime($dir . "/assets/js/main.js")  : null, [
+  wp_enqueue_script("hanacafe-main-js", $uri . "/assets/js/main.js", [], file_exists($dir . "/assets/js/main.js") ? filemtime($dir . "/assets/js/main.js") : null, [
     "strategy" => "defer",
     "in_footer" => true,
   ]);
 });
-
 // ============================================================
 // 3. クエリ・テンプレート制御
 // ============================================================
