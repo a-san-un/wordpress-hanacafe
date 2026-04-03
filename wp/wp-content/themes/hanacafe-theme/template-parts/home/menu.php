@@ -17,9 +17,9 @@
  * 各カテゴリの投稿オブジェクトを配列化し、ループ処理を簡素化。
  * get_hanacafe_top_menu_post は管理画面で選択された投稿を取得する独自関数。
  */
-[$food_slug, $drink_slug, $dessert_slug] = get_hanacafe_menu_categories();
+[$meal_slug, $drink_slug, $dessert_slug] = get_hanacafe_menu_categories();
 $menu_slots = [
-    "food" => get_hanacafe_top_menu_post("top_menu_food", $food_slug),
+    "meal" => get_hanacafe_top_menu_post("top_menu_meal", $meal_slug),
     "drink" => get_hanacafe_top_menu_post("top_menu_drink", $drink_slug),
     "dessert" => get_hanacafe_top_menu_post("top_menu_dessert", $dessert_slug),
 ];

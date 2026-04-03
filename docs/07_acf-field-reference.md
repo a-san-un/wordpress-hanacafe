@@ -97,7 +97,7 @@
 ### C. menu-info（【マスター】メニュー設定）
 
 - マスター解決: get_hanacafe_master_page_id('menu-info')
-- フィールド: top_menu_food
+- フィールド: top_menu_meal
 - 参照箇所: template-parts/home/menu.php -> functions.php(get_hanacafe_top_menu_post)
 - フォールバック: taxonomy menu_category=food の最新1件
 - 影響: トップMenuのFoodCard
