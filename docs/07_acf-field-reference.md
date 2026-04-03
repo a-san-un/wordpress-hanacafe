@@ -1,6 +1,6 @@
 # HanaCAFE ACF フィールドリファレンス（開発者向け）
 
-最終更新: 2026-03-27
+最終更新: 2026-04-03
 対象: wp/wp-content/themes/hanacafe-theme
 
 ## 1. 見方
@@ -13,7 +13,7 @@
 
 ## 2. マスター別フィールド一覧
 
-### A. common-info マスター
+### A. common-info（【マスター】共通設定）
 
 - マスター解決: get_hanacafe_master_page_id('common-info')
 - フィールド: pic
@@ -26,7 +26,7 @@
 - フォールバック: assets/images/coming-soon.jpg
 - 影響: アイキャッチ未設定時の全体フォールバック画像
 
-### B. access-info マスター
+### B. access-info（【マスター】店舗情報）
 
 - マスター解決: get_hanacafe_master_page_id('access-info')
 - フィールド: shop_address
@@ -94,7 +94,7 @@
 - フォールバック: #
 - 影響: フッターSNSリンク
 
-### C. menu-info マスター
+### C. menu-info（【マスター】メニュー設定）
 
 - マスター解決: get_hanacafe_master_page_id('menu-info')
 - フィールド: top_menu_food
@@ -105,7 +105,7 @@
 - フィールド: top_menu_drink
 - 参照箇所: template-parts/home/menu.php -> functions.php(get_hanacafe_top_menu_post)
 - フォールバック: taxonomy menu_category=drink の最新1件
-- 影韱: トップMenuのDrinkCard
+- 影響: トップMenuのDrinkCard
 
 - フィールド: top_menu_dessert
 - 参照箇所: template-parts/home/menu.php -> functions.php(get_hanacafe_top_menu_post)
@@ -115,7 +115,7 @@
 > スラッグ値（food / drink / dessert）は STEP 6-5 より
 > `get_hanacafe_menu_categories()`（functions.php）で一元管理。
 
-### D. about-seats マスター
+### D. about-seats（【マスター】席情報・About）
 
 - マスター解決: functions.php(get_hanacafe_about_data) → template-parts/home/about.php
 - フィールド: about_section_title
@@ -138,7 +138,18 @@
 - フォールバック: title未設定はカード出力スキップ。img未設定は assets/images/{slug}.jpg
 - 影響: 席種カード表示、満空バッジ、Pet Friendlyバッジ
 
-### E. menu 投稿（post_type=menu）
+### E. news-info（【マスター】ニュース設定）
+
+> ⚠️ 現時点（2026-04-03）ではACFフィールド未設定。スラッグのみ予約済み。
+> ニュース機能の拡張時（表示件数上限・ピックアップ指定等）にフィールドを追加する予定。
+
+- マスター解決: get_hanacafe_master_page_id('news-info')
+- フィールド: （未設定）
+- 参照箇所: （未設定）
+- フォールバック: （未設定）
+- 影響: 現状なし
+
+### F. menu 投稿（post_type=menu）
 
 - マスター解決: 個別menu投稿文脈
 - フィールド: is_recommended
@@ -193,3 +204,4 @@
 - about-seats の ID 解決は get_hanacafe_master_page_id() に統一済み（STEP 6-1 解消）。
 - menu-info 未設定でも taxonomy フォールバックが効くが、menu_category の slug（food, drink, dessert）が前提。
 - menu投稿の ACF 入力不足は非表示化で吸収されるが、情報量が減るため運用チェックが必要。
+- news-info は現在フィールド未設定。将来拡張時は get_hanacafe_master_page_id('news-info') で解決する。
