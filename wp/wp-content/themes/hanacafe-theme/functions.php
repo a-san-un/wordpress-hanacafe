@@ -184,8 +184,9 @@ function get_hanacafe_about_data($slug = "about-seats")
 
   /**
    * 席種ごとのスロット定義（ACFフィールド名の接尾辞と対応）
+   * ※ acf-fields.json に定義済みの3種のみ。private は未定義のため除外。
    */
-  $slots = ["counter", "table", "terrace", "private"];
+  $slots = ["counter", "table", "terrace"];
   $seats = [];
 
   foreach ($slots as $slot_slug) {
@@ -202,8 +203,11 @@ function get_hanacafe_about_data($slug = "about-seats")
     $text = get_field("text_{$slot_slug}", $about_id) ?: "";
     $image = get_field("img_{$slot_slug}", $about_id);
 
-    // 特定の席（テラス等）に紐付く個別フラグの取得
-    $is_pet = (bool) get_field("is_pet_{$slot_slug}", $about_id);
+    // ペット可フラグ: is_pet_terrace のみ acf-fields.json に定義済み
+    // counter / table はフィールド未定義のため、terrace のみ取得する
+    $is_pet = $slot_slug === "terrace"
+      ? (bool) get_field("is_pet_terrace", $about_id)
+      : false;
 
     /**
      * バッジの状態判定ロジック
