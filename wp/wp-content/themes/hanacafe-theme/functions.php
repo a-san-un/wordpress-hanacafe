@@ -275,21 +275,23 @@ function get_hanacafe_access_data(string $slug = "access-info"): array
   $map_image_alt = is_array($map_image) ? $map_image["alt"] ?? "" : "";
 
   return [
-    "shop_address" => get_field("shop_address", $access_id) ?: "神奈川県川崎市中原区新丸子東1-983-1",
-    "shop_tel" => get_field("shop_tel", $access_id) ?: "044-872-9288",
-    "shop_access_note" => get_field("shop_access_note", $access_id) ?: "",
+    // 店舗住所・電話はフォールバック値なし（SSOT: ACFフィールドが唯一の倡写ソース）
+    // 未入力時は空文字を返し、ビュー側の !empty() ガードにより出力をスキップする
+    "shop_address"     => get_field("shop_address", $access_id) ?: "",
+    "shop_tel"         => get_field("shop_tel",     $access_id) ?: "",
+    "shop_access_note"    => get_field("shop_access_note", $access_id) ?: "",
     "shop_access_train_1" => get_field("shop_access_train_1", $access_id) ?: "",
     "shop_access_train_2" => get_field("shop_access_train_2", $access_id) ?: "",
-    "shop_open_hours" => get_field("shop_open_hours", $access_id) ?: "",
-    "shop_closed" => get_field("shop_closed", $access_id) ?: "",
-    "seat_check_url" => get_field("seat_check_url", $access_id) ?: "",
-    "shop_map_image_url" => $map_image_url ?: get_theme_file_uri("/assets/images/map.png"),
-    "shop_map_image_alt" => $map_image_alt ?: "店舗地図",
-    "shop_map_url" => get_field("shop_map_url", $access_id) ?: "",
-    "shop_map_btn_text" => get_field("shop_map_btn_text", $access_id) ?: "Google Maps で開く",
-    "shop_sns_instagram" => get_field("shop_sns_instagram", $access_id) ?: "#",
-    "shop_sns_facebook" => get_field("shop_sns_facebook", $access_id) ?: "#",
-    "privacy_url" => get_privacy_policy_url() ?: "#",
+    "shop_open_hours"     => get_field("shop_open_hours", $access_id) ?: "",
+    "shop_closed"         => get_field("shop_closed", $access_id) ?: "",
+    "seat_check_url"      => get_field("seat_check_url", $access_id) ?: "",
+    "shop_map_image_url"  => $map_image_url ?: get_theme_file_uri("/assets/images/map.png"),
+    "shop_map_image_alt"  => $map_image_alt ?: "店舗地図",
+    "shop_map_url"        => get_field("shop_map_url", $access_id) ?: "",
+    "shop_map_btn_text"   => get_field("shop_map_btn_text", $access_id) ?: "Google Maps で開く",
+    "shop_sns_instagram"  => get_field("shop_sns_instagram", $access_id) ?: "#",
+    "shop_sns_facebook"   => get_field("shop_sns_facebook", $access_id) ?: "#",
+    "privacy_url"         => get_privacy_policy_url() ?: "#",
   ];
 }
 

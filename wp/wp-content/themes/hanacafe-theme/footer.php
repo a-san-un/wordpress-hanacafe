@@ -7,6 +7,8 @@
  * 2. 黄金律遵守: 背景が濃色のため、白（$c-white）の透過度（70%）を用いて情報の階層化を実現
  * 3. 非破壊の原則: 文言、SNSリンク、ポリシーリンクの構造、およびPHPによる動的年号出力を完全保持
  * 4. SSOTの徹底: 店舗情報ページ(access-info)をマスターとし、そこから住所・SNS情報を取得。DRY原則を遵守。
+ * 5. ガードの役割: shop_address / shop_tel は ACF 未入力時に空文字を返すため、
+ *    !empty() ガードで <li> 全体をスキップし空タグ・不完全 tel: リンクの出力を防ぐ。
  */
 
 $access = get_hanacafe_access_data(); ?>
@@ -30,18 +32,25 @@ $access = get_hanacafe_access_data(); ?>
 
             <!-- 店舗情報リスト: アイコン（Material Symbols）+ テキストの構成 -->
             <ul class="l-footer__info-list">
+
+                <?php if ( ! empty( $access['shop_address'] ) ) : ?>
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <?php echo esc_html($access["shop_address"]); ?>
+                    <?php echo esc_html( $access['shop_address'] ); ?>
                 </li>
+                <?php endif; ?>
+
+                <?php if ( ! empty( $access['shop_tel'] ) ) : ?>
                 <li class="l-footer__info-item">
                     <span class="material-symbols-outlined" aria-hidden="true">call</span>
                     <!-- aria-hidden="true": アイコン文字列をスクリーンリーダーから除外 -->
-                    <a href="tel:<?php echo esc_attr(
-                      str_replace("-", "", $access["shop_tel"]),
-                    ); ?>"><?php echo esc_html($access["shop_tel"]); ?></a>
+                    <a href="<?php echo esc_url( 'tel:' . $access['shop_tel'] ); ?>">
+                        <?php echo esc_html( $access['shop_tel'] ); ?>
+                    </a>
                 </li>
+                <?php endif; ?>
+
             </ul>
 
             <!-- ナビゲーショングループ: SNSリンク + ポリシーリンクをまとめて管理 -->
@@ -59,7 +68,7 @@ $access = get_hanacafe_access_data(); ?>
 
                 <!-- ポリシーリンク: 法的必須ページへの導線 -->
                 <div class="l-footer__policy-links">
-                    <a href="<?php echo esc_url($access["privacy_url"]); ?>">プライバシーポリシー</a>
+                    <a href="<?php echo esc_url($access["privacy_url"]); ?>"> プライバシーポリシー</a>
                     <a href="#" aria-disabled="true" tabindex="-1">特定商取引法に基づく表記</a>
                 </div>
 
