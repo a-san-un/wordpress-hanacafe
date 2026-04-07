@@ -129,7 +129,7 @@
 - 影響: About本文
 
 - 動的フィールド群（slots = counter, table, terrace, private）
-- フィールド: title_counter, title_table, title_terrace, title_private
+- フィールド: title_counter, title_table, title_terrace
 - フィールド: status_counter, status_table, status_terrace, status_private
 - フィールド: text_counter, text_table, text_terrace, text_private
 - フィールド: img_counter, img_table, img_terrace, img_private
