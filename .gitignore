@@ -101,3 +101,19 @@ GEMINI.md
 # Serena MCP local data
 .serena/
 .gemini/
+
+# AI Output
+repo-output/
+
+# WordPress Temp
+wp/wp-content/upgrade-temp-backup/
+
+# Build tools
+node_modules/
+.eslintcache
+
+# 秘密情報を含む一時ファイルやエクスポートデータ
+hanacafe.xml
+hanacafe-context.md
+repo-output/
+yoast-settings.txt
