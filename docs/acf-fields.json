@@ -923,7 +923,7 @@
                 "label": "お席の確認URL",
                 "name": "seat_check_url",
                 "aria-label": "",
-                "type": "text",
+                "type": "url",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -933,11 +933,8 @@
                     "id": ""
                 },
                 "default_value": "",
-                "maxlength": "",
                 "allow_in_bindings": 0,
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
+                "placeholder": ""
             },
             {
                 "key": "field_69b6363c72336",
