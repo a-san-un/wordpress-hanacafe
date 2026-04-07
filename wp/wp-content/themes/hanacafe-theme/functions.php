@@ -284,7 +284,8 @@ function get_hanacafe_access_data(string $slug = "access-info"): array
     "shop_access_train_2" => get_field("shop_access_train_2", $access_id) ?: "",
     "shop_open_hours"     => get_field("shop_open_hours", $access_id) ?: "",
     "shop_closed"         => get_field("shop_closed", $access_id) ?: "",
-    "seat_check_url"      => get_field("seat_check_url", $access_id) ?: "",
+    // seat_check_url: 未入力時は '#' にフォールバック（access.php で常時ボタン表示するため）
+    "seat_check_url"      => get_field("seat_check_url", $access_id) ?: '#',
     "shop_map_image_url"  => $map_image_url ?: get_theme_file_uri("/assets/images/map.png"),
     "shop_map_image_alt"  => $map_image_alt ?: "店舗地図",
     "shop_map_url"        => get_field("shop_map_url", $access_id) ?: "",
