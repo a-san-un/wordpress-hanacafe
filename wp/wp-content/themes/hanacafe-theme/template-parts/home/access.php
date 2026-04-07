@@ -94,16 +94,19 @@ $access = get_hanacafe_access_data(); ?>
       </dl>
 
       <?php
-// --- お席の確認ボタン ---
+// --- お席の確認ボタン（URLが空でも常時表示。外部URLのときのみ target="_blank"）---
+$seat_url    = $access["seat_check_url"] ?: '#';
+$is_external = ( $seat_url !== '#' );
 ?>
-      <?php if ($url = $access["seat_check_url"]): ?>
-        <div class="p-access__action">
-          <a href="<?php echo esc_url($url); ?>" class="p-access__btn" target="_blank" rel="noopener">
-            <span class="material-symbols-outlined">calendar_month</span>
-            お席の確認
-          </a>
-        </div>
-      <?php endif; ?>
+      <div class="p-access__action">
+        <a href="<?php echo esc_url( $seat_url ); ?>"
+           class="p-access__btn"
+           <?php if ( $is_external ): ?>target="_blank" rel="noopener"<?php endif; ?>
+        >
+          <span class="material-symbols-outlined">calendar_month</span>
+          お席の確認
+        </a>
+      </div>
     </div>
 
     <?php
