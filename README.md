@@ -160,12 +160,12 @@ cd wordpress-hanacafe
 | ファイル | 内容 | バージョン |
 |---|---|---|
 | [プロジェクト仕様書](docs/HanaCAFE%20nappa69%20プロジェクト仕様書.md) | **★ SSOT** — 全体像（階層図・データ構造・FLOCSS設計） | 1.3.0 |
-| [01_architecture-and-design-rules.md](docs/01_architecture-and-design-rules.md) | 開発者の作法・実装黄金律（透過率・z-index・Anti-Blackout 等の詳細ルール） | v8.3 |
-| [02_wordpress-coding-standards.md](docs/02_wordpress-coding-standards.md) | コーディング規約・環境定義（インデント・エスケープ・Git規約・theme.json同期） | v8.1 |
-| [08_本番移行手順書.md](docs/08_本番移行手順書.md) | 本番移行手順（ランタイム前提・All-in-One移行手順・インポート後設定） | v1.0 |
-| [09_cms運用マニュアル.md](docs/09_cms運用マニュアル.md) | CMS 運用マニュアル（メニュー追加・席情報更新・ニュース投稿の操作手順） | v1.4 |
-| [10_サイト品質チェックリスト.md](docs/10_サイト品質チェックリスト.md) | 本番公開済みサイトの定期品質確認（管理画面・目視・DevToolsコマンド） | v3.2 |
+| [アーキテクチャ設計](docs/アーキテクチャ設計.md) | 開発者の作法・実装黄金律（透過率・z-index・Anti-Blackout 等の詳細ルール） | v8.3 |
+| [コーディング規約](docs/コーディング規約.md) | コーディング規約・環境定義（インデント・エスケープ・Git規約・theme.json同期） | v8.1 |
+| [本番移行手順書](docs/本番移行手順書.md) | 本番移行手順（ランタイム前提・All-in-One移行手順・インポート後設定） | v1.0.1 |
+| [CMS運用マニュアル](docs/CMS運用マニュアル.md) | CMS 運用マニュアル（メニュー追加・席情報更新・ニュース投稿の操作手順） | v1.4 |
+| [品質チェックリスト](docs/品質チェックリスト.md) | 本番公開済みサイトの定期品質確認（管理画面・目視・DevToolsコマンド） | v3.2 |
 
 ---
 
-_最終更新: 2026-04-07_
+_最終更新: 2026-04-08_
