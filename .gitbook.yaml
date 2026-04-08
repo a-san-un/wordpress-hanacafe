@@ -1,0 +1,4 @@
+# .gitbook.yaml
+root: ./docs
+structure:
+  summary: SUMMARY.md
