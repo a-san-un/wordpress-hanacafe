@@ -138,7 +138,7 @@ cd wordpress-hanacafe
 
 1. VS Code でプロジェクトを開く
 2. ステータスバーの「Watch Sass」をクリック
-3. `src/scss/` 以下の `.scss` ファイルを編集すると、`assets/css/` に自動コンパイルされます
+3. `src/scss/` 以下の `.scss` ファイルを編集すると、`assets/css/` に **圧縮版（app.min.css）** として自動コンパイルされます
 
 ---
 
