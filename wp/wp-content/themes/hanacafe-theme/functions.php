@@ -477,7 +477,10 @@ add_action('init', function () {
  * 標準投稿の場合は post_type_link ではなく post_link を使用する
  */
 add_filter('post_link', function ($url, $post) {
-  if ($post->post_type === 'post' && !str_contains($url, '/news/')) {
+  if ($post->post_type !== 'post') return $url;
+  // パスの先頭が /news/ で始まるかをチェック（部分一致ではなくパス比較）
+  $path = parse_url($url, PHP_URL_PATH);
+  if (!preg_match('#^/(?:[^/]+/)?news/#', $path)) {
     $url = home_url('/news/' . $post->post_name . '/');
   }
   return $url;
