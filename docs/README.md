@@ -1,169 +1,105 @@
-# HanaCAFE nappa69 — WordPress テーマ開発リポジトリ
+# 🏛️ HanaCAFE nappa69 アーキテクチャ設計・実装ガイドライン
 
-HanaCAFE のカスタム WordPress テーマ「hanacafe-theme」の開発・リファクタリング用リポジトリです。
+本ドキュメントは、HanaCAFEプロジェクトにおける「ファイル構造」と「具体的な実装・リファクタリングルール」を定義する実務用ガイドです。
 
----
+> **SSOT**: データ構造・テンプレート階層・FLOCSS設計の概要は [`docs/HanaCAFE nappa69 プロジェクト仕様書.md`](<HanaCAFE nappa69 プロジェクト仕様書.md>) を参照すること。本ドキュメントはコードを書く際に守るべき実装精度の詳細ルールを定義する。
 
-## 目次
+***
 
-1. [プロジェクト概要](#1-プロジェクト概要)
-2. [ディレクトリ構成](#2-ディレクトリ構成)
-3. [環境構築手順](#3-環境構築手順)
-4. [開発フロー](#4-開発フロー)
-5. [ドキュメント一覧](#5-ドキュメント一覧)
+## 🌟 実装・リファクタリング「黄金律」
 
----
+### ① 究極のモバイルファースト設計
 
-## 1. プロジェクト概要
+* **基本思想**: 常にスマホサイズからのUI/UXを最優先し、SCSSのメディアクエリはPC版への「拡張（`@include m.mq`）」として記述する。
+* **脱・絶対値**: 要素の配置やサイズに固定のピクセル値（`px`）を乱用せず、コンテナ幅に対する割合（`%`, `vw`）や、最新のCSS関数（`clamp`, `aspect-ratio`）を用いて、あらゆるデバイスサイズで破綻しない「流体レイアウト」を構築する。
 
-| 項目 | 内容 |
-|---|---|
-| サイト名 | HanaCAFE |
-| テーマ名 | hanacafe-theme（nappa69） |
-| WordPress バージョン | 6.9.x |
-| ローカル環境 | MAMP |
-| 使用プラグイン | Advanced Custom Fields (ACF) / Custom Post Type UI (CPT UI) / All-in-One WP Migration and Backup / WP Super Cache / Yoast SEO |
-| パーマリンク形式 | 投稿名形式 |
-| ローカル WordPress アドレス | http://hanacafe.local/wp |
-| ローカル サイトアドレス | http://hanacafe.local |
-| 本番 WordPress アドレス | https://intp.site/2999/WordPress/hanacafe/wp |
-| 本番 サイトアドレス | https://intp.site/2999/WordPress/hanacafe |
+### ② BEM規約による「影響の封じ込め」
 
-### 使用プラグイン 用途一覧
+* **命名規則厳守**: Block, Element, Modifier の法則を徹底し、クラス名から「それがどのコンポーネントに属しているか」を100%特定できるようにする。（例: `.p-card__title`, `.c-btn--primary`）
+* **カスケーディングの禁止**: 親要素のタグ名やIDに依存したスタイリングを禁止し、独立したコンポーネントとしてどこに配置してもデザインが崩れない状態を維持する。
+* **layoutファイルの命名規則**: `layout/` レイヤーのSCSSファイル名は必ず `l-` プレフィックスを付与すること。（例: `_l-header.scss`, `_l-footer.scss`, `_l-container.scss`）
 
-| プラグイン | 用途 |
-|---|---|
-| Advanced Custom Fields (ACF) | カスタムフィールド管理 |
-| Custom Post Type UI (CPT UI) | カスタム投稿タイプ・タクソノミー登録 |
-| All-in-One WP Migration and Backup | ローカル→本番へのデータ移行（投稿・設定のエクスポート／インポート・URL置換） |
-| WP Super Cache | キャッシュ管理・サイト高速化 |
-| Yoast SEO | SEO設定・OGP画像・XMLサイトマップ・noindex管理 |
+### ③ 「透明度の魔法」の継承（透過黄金律）
 
----
+* **絶対厳守事項**: 元デザイン（旧サイト）が持つ「洗練された空気感」の根源は、計算し尽くされた要素の透明度（opacity/rgba）にある。これをAIの推測で1.0（ベタ塗り）に上書きすることは、HanaCAFEのブランド価値を毀損する重罪である。
+* **保存された透過率**:
+  * ヘッダー背景（スクロール前）: `rgba($c-base, 0.95)`
+  * ヘッダー背景（スクロール後 `.is-scrolled`）: `$c-white`（純白）
+  * メインビジュアル上のキャッチコピー・装飾: `opacity: 0.85`
+  * メニューカードのサブタイトル等（控えめなテキスト）: `opacity: 0.7`（または適切なカラーコード）
 
-## 2. ディレクトリ構成
+### ④ HTMLのセマンティック（意味論的）構造化
 
-```
-wordpress-hanacafe/
-├── docs/                              # 設計・運用ドキュメント群
-│   ├── HanaCAFE nappa69 プロジェクト仕様書.md  # ★ SSOT（v1.2.0）
-│   ├── 01_architecture-and-design-rules.md    # 実装黄金律・詳細ルール
-│   ├── 02_wordpress-coding-standards.md       # コーディング規約・環境定義
-│   ├── 08_本番移行手順書.md
-│   ├── 09_cms運用マニュアル.md
-│   ├── 10_サイト品質チェックリスト.md
-│   ├── acf-fields.json                # ACF フィールド定義（インポート用）
-│   ├── cptui-post-types.json          # CPT UI 定義（インポート用）
-│   ├── cptui-taxonomies.json          # CPT UI タクソノミー定義（インポート用）
-│   └── archive/                       # 旧ドキュメント保管庫
-└── wp/
-    └── wp-content/
-        └── themes/
-            └── hanacafe-theme/        # テーマ本体
-                ├── assets/            # CSS(コンパイル済み)・JS・画像
-                ├── src/               # SCSS ソースファイル
-                ├── template-parts/    # テンプレートパーツ
-                ├── functions.php      # テーマ関数・ヘルパー
-                ├── header.php
-                ├── footer.php
-                ├── front-page.php
-                ├── style.css
-                └── theme.json
-```
+* **見出しの階層化**: `h1` から `h6` までを論理的な順序で使用し、デザイン上の見た目だけで見出しタグを選ばない（見た目はCSSクラス `.c-heading` 等で制御する）。
+* **ランドマークの活用**: `<main>`, `<section>`, `<article>`, `<nav>` 等のHTML5セマンティックタグを正確に使い分け、スクリーンリーダーや検索エンジンにとって「美しい骨格」を提供する。
 
----
+### ⑤ 店舗情報のマスターデータ化 (SSOT設計)
 
-## 3. 環境構築手順
+* **ハードコーディングの禁止**: 住所、電話番号、営業時間、SNSリンク等の店舗情報は、テンプレートファイル（header.php, footer.php 等）に直接記述（ハードコーディング）してはならない。
+* **一元管理**: 固定ページ「アクセス・店舗情報（スラッグ: `access-info`）」をマスターデータとし、ACF等を利用して一元管理する。出力時は必ずこのマスターデータから値を取得する。
+* **フィールド命名規則例**: `shop_address`, `shop_tel`, `shop_open_hours`, `shop_sns_instagram`, `shop_sns_facebook`
 
-### 前提条件
+### ⑥ レイアウトの背骨（l-mainの統一）
 
-- MAMP がインストール済みであること
-- VS Code に **Live Sass Compiler** 拡張機能がインストール済みであること
+* **メインコンテナ**: `index.php`, `front-page.php` 等のメインコンテンツを包むタグは、一律 **`<main class="l-main">`** とする。
+* **旧来クラスの排除**: テーマ由来の `site-main` や、不要な ID (`primary`) はクリンネスのため物理削除する。
 
-### 手順
+### ⑦ 第7の黄金律：表示保証 (Anti-Blackout)
 
-#### 3-1. リポジトリのクローン
+* **opacity制御**: セクションやメインビジュアル（MV）はデフォルトで `opacity: 1` とし、JSの実行成否に左右されない描画を保証する。
+* **システムレベルのフォールバック (CMS連動)**:
+  * 画像未設定時（ハードコーディングの禁止）: `post_thumbnail_html` フィルターや共通関数を活用し、共通設定マスター（`common-info`, `menu-info` 等）で設定された画像を自動的に呼び出す。
+  * マスター未設定時: 最終防衛ラインとしてテーマ内のデフォルト画像（`coming-soon.jpg` 等）を表示する。
+* **究極のアクセシビリティ強制 (動的alt属性)**:
+  * 運用者が画像の代替テキスト(`alt`)の入力を忘れた場合でも、システムが正規表現を用いて自動的に記事タイトルを補完する。
+  * これにより、ヒューマンエラーによるSEOや音声読み上げ等の「情報の欠落（Blackout）」を完全に防止する。
 
-```bash
-git clone https://github.com/a-san-un/wordpress-hanacafe.git
-cd wordpress-hanacafe
-```
+### ⑧ タイポグラフィのシステム化（個別設定の排除）
 
-#### 3-2. MAMP の設定
+* **自動継承の原則**: ユーザー（クライアント）にエディタ上でフォントを個別に選択させる運用を禁止する。
+* **theme.jsonの活用**: `theme.json` の `styles` セクションを用いて、以下のフォント設計をシステムレベルで強制適用し、ヒューマンエラーによるデザインの破綻を未然に防ぐ。
+  * **見出し（h1〜h4）**: Montserrat（英数字）+ Noto Sans JP（日本語）
+  * **本文・説明文**: Montserrat（英数字）+ Noto Serif JP（日本語）
+* **フォント使い分けルール（SSOT）**: SCSSでクラスに `font-family` を明示する場合は以下の原則に従う。
+  * **Noto Sans JP（ゴシック）を使う箇所**: UI・英語ラベル・商品名・価格・ナビゲーション・ボタン等、「情報を明快に伝える」要素
+  * **Noto Serif JP（明朝）を使う箇所**: セクション見出し（`.c-heading__main`）・日本語キャッチコピー等、「情緒・ブランド表現」の要素
+  * **`font-family` 未指定の要素**: 親タグ（h1〜h4 または body）の継承に委ねる。ただし見出しタグ（h1〜h4）の子要素で明朝が必要な場合は必ず `font-family: $f-body` を明示すること。
 
-1. MAMP を起動し、「Preferences」→「Web Server」でドキュメントルートを確認
-2. WordPress を `wp/` 以下に配置、または MAMP のルートに合わせてシンボリックリンクを設定
-3. データベースを作成し、`wp-config.php` に接続情報を設定
+### ⑨ z-index の一元管理（スタックコンテキストの可視化）
 
-#### 3-3. WordPress の初期設定
+* **変数による一元管理**: z-index のハードコードを禁止する。全ての z-index 値は `_variables.scss` の変数で定義し、`v.$z-*` として参照する。
+* **定義済み変数一覧**:
+  * `$z-below: -1` — 疑似要素などを親の背面に沈める用途
+  * `$z-badge: 2` — バッジ・ラベル等の小さな浮き要素
+  * `$z-filter: 1` — ヒーローのオーバーレイフィルター（疑似要素）
+  * `$z-content: 2` — ヒーローのテキストコンテンツ（フィルターより前面）
+  * `$z-header: 100` — ヘッダー（既存）
+  * `$z-drawer: 101` — ドロワー（ヘッダーより1段上）
+* **算術式の禁止**: `$z-header + 1` のような算術式による定義は禁止する。意図が不明瞭になるため、必ず名前付き変数を使用する。
 
-1. ブラウザで `http://hanacafe.local/wp` にアクセス
-2. WordPress のインストール画面に従ってセットアップ
-3. 管理画面「外観」→「テーマ」→「hanacafe-theme」を有効化
-4. 必須プラグインをインストール・有効化
-   - Advanced Custom Fields (ACF)
-   - Custom Post Type UI (CPT UI)
-   - All-in-One WP Migration and Backup
-   - WP Super Cache
-   - Yoast SEO
-5. 設定 → パーマリンク → 「投稿名」を選択して保存
+***
 
-#### 3-4. ACF・CPT UI のインポート
+## 🛠 エリア別実装ルール
 
-`docs/` 以下の JSON ファイルを管理画面からインポートしてください。
+### ヘッダー (Layout: Header)
 
-| ファイル | インポート先 |
-|---|---|
-| `docs/acf-fields.json` | Advanced Custom Fields → ツール → フィールドグループをインポート |
-| `docs/cptui-post-types.json` | CPT UI → ツール → インポート/エクスポート → 投稿タイプ |
-| `docs/cptui-taxonomies.json` | CPT UI → ツール → インポート/エクスポート → タクソノミー |
+* **動的ナビゲーション**: `wp_nav_menu` を使用するが、フィルターフック (`nav_menu_css_class`) を用いて BEM クラスを強制注入し、既存のデザインを維持する。
+* **境界線**: スクロール時に出現する境界線には透過率 **0.1** を適用する。
+* **ドロワーの分離**: ドロワーメニュー（`.p-drawer`）のスタイルは `layout/` ファイルに同居させず、`object/project/_p-drawer.scss` として独立管理すること。
 
-#### 3-5. マスター固定ページの作成
+### メインビジュアル (Project: Hero)
 
-以下の固定ページをスラッグ通りに作成してください。
+* **構造**: `p-hero` クラスを使用。
+* **画像ソース**: ACF `pic` フィールド（`get_field('pic')`）で管理。配列の場合は `['url']`、文字列の場合はそのまま使用。未設定時はテーマ内 `coming-soon.jpg` にフォールバック。CPT `main-visual` は廃止済み。
+* **フィルター（オーバーレイ）**: `__img` 要素に疑似要素2層構造を実装する。HTMLにdivを追加しない。
+  * `::before`: `background-color: rgba(46, 77, 7, 0.2)` + `mix-blend-mode: multiply`（深緑乗算）
+  * `::after`: 縦グラデーション `rgba(0,0,0,0) → rgba(46,77,7,0.2) → rgba(0,0,0,0)`
+* **`js-enabled` の付与先**: WordPressは `<html>` タグに `js-enabled` を付与する。SCSSのアニメーション待機セレクターは必ず `.js-enabled body .p-hero:not(.is-start)` と記述すること。`.js-enabled .p-hero:not(.is-start)` では `body` を挟まないと機能しない。
+* **アクセシビリティ**: `img` タグの `alt` は固定ページのタイトルを動的に出力し、`esc_attr()` で保護する。
+* **表示保証**: スケルトン表示やフェードイン待ちによる「真っ白な時間」を排除するため、CSSで `opacity: 1` を担保する。
 
-| 固定ページ名 | スラッグ | 用途 |
-|---|---|---|
-| 共通情報 | `common-info` | ヒーロー画像・デフォルト画像 |
-| アクセス・店舗情報 | `access-info` | 住所・電話・営業時間・SNS |
-| メニュー設定 | `menu-info` | トップ表示メニューのピックアップ |
-| 席情報 | `about-seats` | 席種・ステータス管理 |
-| ニュース設定 | `news-info` | ニュース共通設定 |
+### フッター (Layout: Footer)
 
-#### 3-6. SCSS のコンパイル（開発時）
-
-本プロジェクトは **VS Code の Live Sass Compiler** 拡張機能を使用しています。
-
-1. VS Code でプロジェクトを開く
-2. ステータスバーの「Watch Sass」をクリック
-3. `src/scss/` 以下の `.scss` ファイルを編集すると、`assets/css/` に自動コンパイルされます
-
----
-
-## 4. 開発フロー
-
-1. `main` ブランチから作業ブランチを切る（例: `feature/step-9`）
-2. タスク単位でコミット・プッシュ
-3. コミットメッセージは Conventional Commits に準拠
-   - `feat:` 新機能
-   - `fix:` バグ修正
-   - `refactor:` リファクタリング
-   - `docs:` ドキュメント更新
-4. 作業完了後、`main` にマージ
-
----
-
-## 5. ドキュメント一覧
-
-| ファイル | 内容 | バージョン |
-|---|---|---|
-| [HanaCAFE nappa69 プロジェクト仕様書.md](HanaCAFE%20nappa69%20%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BB%95%E6%A7%98%E6%9B%B8.md) | **★ SSOT** — テンプレート階層・データ構造・FLOCSS設計・主要ロジック仕様の全体像 | v1.2.0 |
-| [01_architecture-and-design-rules.md](01_architecture-and-design-rules.md) | 開発者の作法・実装黄金律（透過率・z-index・Anti-Blackout 等の詳細ルール） | v8.3 |
-| [02_wordpress-coding-standards.md](02_wordpress-coding-standards.md) | コーディング規約・環境定義（インデント・エスケープ・Git規約・theme.json同期） | v8.1 |
-| [08_本番移行手順書.md](08_%E6%9C%AC%E7%95%AA%E7%A7%BB%E8%A1%8C%E6%89%8B%E9%A0%86%E6%9B%B8.md) | 本番移行手順（ランタイム前提・All-in-One移行手順・インポート後設定） | v1.0 |
-| [09_cms運用マニュアル.md](09_cms%E9%81%8B%E7%94%A8%E3%83%9E%E3%83%8B%E3%83%A5%E3%82%A2%E3%83%AB.md) | CMS 運用マニュアル（メニュー追加・席情報更新・ニュース投稿の操作手順） | v1.4 |
-| [10_サイト品質チェックリスト.md](10_%E3%82%B5%E3%82%A4%E3%83%88%E5%93%81%E8%B3%AA%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88.md) | 本番公開済みサイトの定期品質確認（管理画面・目視・DevToolsコマンド） | v3.2 |
-
----
-
-_最終更新: 2026-04-07_
+* **命名**: `l-footer` を使用し、内部要素はBEM (`&__copyright` 等) で定義する。
+* **クリンネス**: 住所・SNS等のリストからブラウザ標準のドット (`list-style: none`) および余白 (`padding: 0`) を物理削除すること。
+* **透過率**: 補足情報には **0.7** を適用する。境界線には **0.1** を適用する。
