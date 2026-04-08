@@ -533,7 +533,54 @@ add_action('pre_get_posts', function($query) {
 
 ---
 
-### ⑩ `template_include` フィルター — ニュースURLのカスタムルーティング
+### ⑩ `add_rewrite_rule` — `/news/{slug}` パターンの登録
+
+```php
+add_action('init', function() {
+    add_rewrite_rule(
+        'news/([^/]+)/?$',
+        'index.php?name=$matches',[1]
+        'top'
+    );
+});
+```
+
+WordPress のデフォルトルールより優先（`'top'`）で `news/{slug}` を単一投稿ルーティングに解決する。変更後は管理画面「設定 → パーマリンク」を一度保存し、リライトルールをフラッシュすること。
+
+---
+
+### ⑪ `post_link` フィルター — フロントエンド URL への `/news/` 付与
+
+```php
+add_filter('post_link', function($url, $post) {
+    if ($post->post_type === 'post') {
+        $url = home_url('/news/' . $post->post_name . '/');
+    }
+    return $url;
+}, 10, 2);
+```
+
+`get_permalink()` が返す投稿 URL を `/news/{slug}/` 形式に変換する。テンプレート・ウィジェット・サイトマップ等すべての `get_permalink()` 呼び出しに自動適用される。
+
+---
+
+### ⑫ `get_sample_permalink` フィルター — 管理画面プレビュー URL の同期
+
+```php
+add_filter('get_sample_permalink', function($permalink, $post_id) {
+    $post = get_post($post_id);
+    if ($post && $post->post_type === 'post') {
+        $permalink = home_url('/news/%postname%/');
+    }
+    return $permalink;
+}, 10, 2);
+```
+
+管理画面の「パーマリンク」欄と「プレビュー」ボタンの URL を `/news/` 形式に同期する。`post_link` フィルターのみでは管理画面の表示が旧 URL のままになるため、このフィルターが必須。
+
+---
+
+### ⑬ `template_include` フィルター — ニュース一覧テンプレートの切替
 
 ```php
 add_filter('template_include', function($template) {
@@ -541,11 +588,11 @@ add_filter('template_include', function($template) {
 });
 ```
 
-WordPress がブログ投稿一覧（`is_home()`）に使う `home.php` の代わりに `archive-post.php` を読み込む。これによりパンくずリスト・ページヘッダーを含む統一されたUIが実現される。
+WordPress がブログ投稿一覧（`is_home()`）に使う `home.php` の代わりに `archive-post.php` を読み込む。これによりパンくずリスト・ページヘッダーを含む統一された UI が実現される。
 
 ---
 
-### ⑪ メニューカテゴリの表示順固定
+### ⑭ メニューカテゴリの表示順固定
 
 ```php
 function get_hanacafe_menu_categories(): array {
