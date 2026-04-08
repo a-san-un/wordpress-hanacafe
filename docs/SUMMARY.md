@@ -1,11 +1,13 @@
 # Table of contents
 
-## ドキュメント一覧
-* [プロジェクト仕様書](HanaCAFE%20nappa69%20%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BB%95%E6%A7%98%E6%9B%B8.md)
-* [アーキテクチャ設計](%E3%82%A2%E3%83%BC%E3%82%AD%E3%83%86%E3%82%AF%E3%83%81%E3%83%A3%E8%A8%AD%E8%A8%88.md)
-* [コーディング規約](%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0%E8%A6%8F%E7%B4%84.md)
+## ドキュメント
+* [プロジェクト仕様書](HanaCAFE%20nappa69%20プロジェクト仕様書.md)
+* [アーキテクチャ設計](アーキテクチャ設計.md)
+* [コーディング規約](コーディング規約.md)
+* [CMS運用マニュアル](CMS運用マニュアル.md)
+* [本番移行手順書](本番移行手順書.md)
+* [品質チェックリスト](品質チェックリスト.md)
 
-## マニュアル・手順書
-* [CMS運用マニュアル](CMS%20%E9%81%8B%E7%94%A8%E3%83%91%E3%83%83%E3%82%B1%E3%83%BC%E3%82%B8.md)
-* [本番移行手順書](%E6%9C%AC%E7%95%AA%E7%A7%BB%E8%A1%8C%E6%89%8B%E9%A0%86%E6%9B%B8.md)
-* [品質チェックリスト](%E5%93%81%E8%B3%AA%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88.md)
+## 外部リンク
+* [GitHub Repository](https://github.com/a-san-un/wordpress-hanacafe)
+* [GitBook Docs](https://a-san-un.gitbook.io/wordpress-hanacafe)

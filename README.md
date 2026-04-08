@@ -2,6 +2,8 @@
 
 HanaCAFE のカスタム WordPress テーマ「hanacafe-theme」の開発・リファクタリング用リポジトリです。
 
+[![GitHub](https://img.shields.io/badge/GitHub-a--san--un%2Fwordpress--hanacafe-181717?logo=github)](https://github.com/a-san-un/wordpress-hanacafe)
+[![GitBook](https://img.shields.io/badge/GitBook-Docs-blue)](https://a-san-un.gitbook.io/wordpress-hanacafe)
 ---
 
 ## 目次
@@ -157,7 +159,7 @@ cd wordpress-hanacafe
 
 | ファイル | 内容 | バージョン |
 |---|---|---|
-| [HanaCAFE nappa69 プロジェクト仕様書.md](docs/HanaCAFE%20nappa69%20%E3%83%97%E3%83%AD%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E4%BB%95%E6%A7%98%E6%9B%B8.md) | **★ SSOT** — テンプレート階層・データ構造・FLOCSS設計・主要ロジック仕様の全体像 | v1.2.0 |
+| [プロジェクト仕様書](docs/HanaCAFE%20nappa69%20プロジェクト仕様書.md) | **★ SSOT** — 全体像（階層図・データ構造・FLOCSS設計） | 1.3.0 |
 | [01_architecture-and-design-rules.md](docs/01_architecture-and-design-rules.md) | 開発者の作法・実装黄金律（透過率・z-index・Anti-Blackout 等の詳細ルール） | v8.3 |
 | [02_wordpress-coding-standards.md](docs/02_wordpress-coding-standards.md) | コーディング規約・環境定義（インデント・エスケープ・Git規約・theme.json同期） | v8.1 |
 | [08_本番移行手順書.md](docs/08_本番移行手順書.md) | 本番移行手順（ランタイム前提・All-in-One移行手順・インポート後設定） | v1.0 |

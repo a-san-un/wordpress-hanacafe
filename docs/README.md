@@ -2,6 +2,8 @@
 
 HanaCAFE のカスタム WordPress テーマ「hanacafe-theme」の開発・リファクタリング用リポジトリです。
 
+[![GitHub](https://img.shields.io/badge/GitHub-a--san--un%2Fwordpress--hanacafe-181717?logo=github)](https://github.com/a-san-un/wordpress-hanacafe)
+[![GitBook](https://img.shields.io/badge/GitBook-Docs-blue)](https://a-san-un.gitbook.io/wordpress-hanacafe)
 ---
 
 ## 目次
