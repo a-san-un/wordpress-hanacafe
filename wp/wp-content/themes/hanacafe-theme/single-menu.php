@@ -15,6 +15,14 @@ get_header(); ?>
 
             the_post();
             $current_post_id = get_the_ID();
+
+            // $terms をループ内で定義し、スコープをループ内に閉じる（ループ外参照を排除）
+            $terms            = get_the_terms($current_post_id, "menu_category");
+            $category_display = $terms && !is_wp_error($terms) ? $terms[0]->name : "Menu";
+
+            // get_hanacafe_menu_data() の戻り値はすべてエスケープ済み
+            // image_url: esc_url() 済み  image_alt: esc_attr() 済み
+            // sub_name / price_display: esc_html() 済み — echo 直前での再エスケープ不要
             $menu = get_hanacafe_menu_data();
     ?>
 
@@ -23,11 +31,6 @@ get_header(); ?>
                     <?php get_template_part('template-parts/breadcrumb'); ?>
                 </div>
                 <div class="l-container">
-
-                    <?php
-                    $terms = get_the_terms(get_the_ID(), "menu_category");
-                    $category_display = $terms && !is_wp_error($terms) ? $terms[0]->name : "Menu";
-                    ?>
 
                     <?php
                     // セクションヘッダー: 3/11 17時台の構造を完全同期
@@ -96,18 +99,24 @@ get_header(); ?>
     endif; ?>
 
     <?php
-    $term_id = $terms && !is_wp_error($terms) ? $terms[0]->term_id : 0;
+    // ループ外で $terms を再取得して $current_post_id に依存させる
+    // （ループスコープ外での $terms 参照を排除し、Undefined variable 警告を防止）
+    $terms_for_related = get_the_terms($current_post_id, "menu_category");
+    $term_id           = $terms_for_related && !is_wp_error($terms_for_related)
+        ? $terms_for_related[0]->term_id
+        : 0;
+
     $related_query = new WP_Query([
-        "post_type" => "menu",
+        "post_type"      => "menu",
         "posts_per_page" => 3,
-        "post__not_in" => [$current_post_id],
-        "orderby" => "date",
-        "order" => "DESC",
-        "tax_query" => [
+        "post__not_in"   => [$current_post_id],
+        "orderby"        => "date",
+        "order"          => "DESC",
+        "tax_query"      => [
             [
                 "taxonomy" => "menu_category",
-                "field" => "term_id",
-                "terms" => $term_id,
+                "field"    => "term_id",
+                "terms"    => $term_id,
             ],
         ],
     ]);
